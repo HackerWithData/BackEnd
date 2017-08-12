@@ -1,0 +1,7 @@
+.coverage
+.cache/
+.DS_Store
+.idea/
+.vagrant/
+*.pyc
+env/
