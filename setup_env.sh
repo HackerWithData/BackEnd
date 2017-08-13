@@ -9,6 +9,7 @@ echo "Installing libmagickwand-dev"
 apt-get install libmagickwand-dev -y > /dev/null
 
 echo "Installing virtualenv"
+#including pip, setuptools
 apt-get install python-virtualenv -y > /dev/null
 
 echo "Installing python-dev"
