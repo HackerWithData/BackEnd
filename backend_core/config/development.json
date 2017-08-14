@@ -7,8 +7,8 @@
     "drivername": "mysql+pymysql",
     "username": "root",
     "password": "development",
-    "host": "3306",
-    "port": "localhost",
+    "host": "localhost",
+    "port": "3306",
     "database": "dev"
   }
 }

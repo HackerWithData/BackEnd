@@ -28,9 +28,11 @@ Install dependencies for project in virtual environment
 
     # Setup a virtualenv and active
     virtualenv env
-
     . env/bin/activate
 
+    # Set configuration to be development
+    export CLAY_CONFIG='backend_core/config/development.json'
+    
     make bootstrap  	# install dependencies
     make bootstrap_db   # create database and tables
 ```
