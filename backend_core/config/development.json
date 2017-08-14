@@ -1,0 +1,14 @@
+{
+  "base_url": "http://localhost:8888",
+  "server": {
+    "port": 8888
+  },
+  "database": {
+    "drivername": "mysql+pymysql",
+    "username": "root",
+    "password": "development",
+    "host": "3306",
+    "port": "localhost",
+    "database": "dev"
+  }
+}
