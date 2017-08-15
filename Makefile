@@ -20,6 +20,16 @@ drop_db:
 	python database_python_scripts/database.py drop
 	echo "Drop database"
 
+.PHONY: upgrade_db
+upgrade_db:
+	alembic upgrade head
+	echo "upgrade database"
+
+.PHONY: downgrade_db
+downgrade_db:
+	alembic downgrade -1
+	echo "downgrade database" 
+
 .PHONY: clean
 clean:
 	sh scripts/clean.sh
