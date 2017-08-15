@@ -13,6 +13,7 @@ del url_meta['database']
 url = URL(**url_meta)
 engine = create_engine(url)
 
+
 def create_db():
     connect = None
     try:
@@ -22,6 +23,7 @@ def create_db():
         if connect:
             connect.close()
 
+
 def drop_db():
     connect = None
     try:
@@ -30,6 +32,7 @@ def drop_db():
     finally:
         if connect:
             connect.close()
+
 
 if __name__ == '__main__':
     if not len(sys.argv) == 2:
