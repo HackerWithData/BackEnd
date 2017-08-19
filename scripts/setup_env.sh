@@ -18,6 +18,7 @@ apt-get install python-dev -y > /dev/null
 echo "Preparing MySQL"
 apt-get install debconf-utils -y > /dev/null
 
+apt-get install libmysqlclient-dev > /dev/null
 debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password password development"
 debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password_again password development"
 echo "Installing MySQL"

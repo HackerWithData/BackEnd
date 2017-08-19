@@ -10,6 +10,7 @@ meta = config.get('database')
 url_meta = deepcopy(meta)
 # dont use database property here
 del url_meta['database']
+del url_meta['embeded_engine']
 url = URL(**url_meta)
 engine = create_engine(url)
 
