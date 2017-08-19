@@ -5,6 +5,7 @@
   },
   "database": {
     "drivername": "mysql+pymysql",
+    "embeded_engine": "django.db.backends.mysql",
     "username": "root",
     "password": "development",
     "host": "localhost",

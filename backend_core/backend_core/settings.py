@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from clay import config as clay_config
+from sqlalchemy.engine.url import URL
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,11 +74,16 @@ WSGI_APPLICATION = 'backend_core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+meta = clay_config.get('database')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': meta['embeded_engine'],
+        'NAME': meta['database'],
+        'USER': meta['username'],
+        'PASSWORD': meta['password'],
+        'HOST': meta['host'],
+        'PORT': meta['port']
     }
 }
 
