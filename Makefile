@@ -33,3 +33,7 @@ downgrade_db:
 .PHONY: clean
 clean:
 	sh scripts/clean.sh
+
+.PHONY: server
+server:
+	python ./backend_core/manage.py runserver 0.0.0.0:6060
