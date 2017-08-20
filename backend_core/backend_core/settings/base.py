@@ -72,22 +72,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend_core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-meta = clay_config.get('database')
-
-DATABASES = {
-    'default': {
-        'ENGINE': meta['embeded_engine'],
-        'NAME': meta['database'],
-        'USER': meta['username'],
-        'PASSWORD': meta['password'],
-        'HOST': meta['host'],
-        'PORT': meta['port']
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
