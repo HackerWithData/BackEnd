@@ -9,4 +9,4 @@ def index(request):
         'test': 'just for test.',
         'welcome': 'hello world.'
     }
-    return render(request, 'home_index.html', context)
+    return render(request, 'home/index.html', context)
