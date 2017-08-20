@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+PREREQ_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+WEB_APPS = [
+    'home',
+]
+
+INSTALLED_APPS = PREREQ_APPS + WEB_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,10 +59,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend_core.urls'
 
+TEMPLATES_DIRS = [
+    os.path.join(BASE_DIR, '..', 'templates'),
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATES_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, '..', 'static'),
+)
