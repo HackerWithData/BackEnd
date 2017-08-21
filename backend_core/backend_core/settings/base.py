@@ -43,7 +43,7 @@ PREREQ_APPS = [
 
 WEB_APPS = [
     'home',
-    'register',
+    'users',
 ]
 
 INSTALLED_APPS = PREREQ_APPS + WEB_APPS

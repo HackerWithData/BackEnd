@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+
 from forms import SignUpForm
 
 def signup(request):
@@ -16,7 +17,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('home_index')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'users/signup.html', {'form': form})
