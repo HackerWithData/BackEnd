@@ -1,24 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post">
-  {% csrf_token %}
-  {% for field in form %}
-    <div class="form-group">
-      {% if field.label_tag == 'email' %}
-
-    </div>
-  {% endfor %}
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-primary">Sign up</button>
-</form>
-
+<!--<form styles="margin-top: 400px;" method="post">-->
+  <!--{% csrf_token %}-->
+  <!--{% for field in form %}-->
+    <!--<div class="form-group">-->
+      <!--{% if field.label_tag == 'Email' %}-->
+        <!--<label for="exampleInputEmail1">Email address</label>-->
+        <!--<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">-->
+        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      <!--{% elif field.laebl_tag == 'Username' %}-->
+        <!--<label for="exampleInputUsername">Username</label>-->
+        <!--<input class="form" class="form-control" id="exampleInputUsername" placeholder="Username">-->
+      <!--{% elif field.label_tag == 'Password1'%}-->
+        <!--<label for="exampleInputPassword1">Password</label>-->
+        <!--<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
+      <!--{% endif %}-->
+    <!--</div>-->
+  <!--{% endfor %}-->
+  <!--<button type="submit" class="btn btn-primary">Sign up</button>-->
+<!--</form>-->
+<div class="container">
+  <form style="margin-top: 300px;" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary" id="sign-in-btn">Sign up</button>
+  </form>
+</div>
 {% endblock %}
