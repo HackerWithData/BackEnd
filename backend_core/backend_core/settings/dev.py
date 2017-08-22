@@ -9,3 +9,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
+
+# During development only, change SMTP email service properties in prod setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
