@@ -46,7 +46,7 @@ WEB_APPS = [
     'users',
 ]
 
-INSTALLED_APPS = PREREQ_APPS + WEB_APPS
+INSTALLED_APPS = WEB_APPS + PREREQ_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +125,5 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = 'home_index'
+
+AUTH_USER_MODEL = 'users.User'
