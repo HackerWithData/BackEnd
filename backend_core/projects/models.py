@@ -7,7 +7,7 @@ from django.db import models
 class Projects(models.Model):
     ProjectId = models.BigAutoField(primary_key=True)
     contractor = models.ForeignKey('Contractors.Contractor', on_delete=models.CASCADE)
-    client = models.ForeignKey('Contractors.Client', on_delete=models.CASCADE)
+    client = models.ForeignKey('users.Client', on_delete=models.CASCADE)
     ProjectType = models.CharField()
     Address = models.CharField()
     County = models.CharField()

@@ -72,6 +72,3 @@ class LicenseRelation(models.Model):
         unique_together = ('person', 'contractor', 'related_contractor')
 
 
-class Client(models.Model):
-    UserId = models.IntegerField(primary_key=True)
-    UserName = models.CharField()
