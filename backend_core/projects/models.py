@@ -8,10 +8,10 @@ class Projects(models.Model):
     ProjectId = models.BigAutoField(primary_key=True)
     contractor = models.ForeignKey('Contractors.Contractor', on_delete=models.CASCADE)
     client = models.ForeignKey('users.Client', on_delete=models.CASCADE)
-    ProjectType = models.CharField()
-    Address = models.CharField()
-    County = models.CharField()
-    State = models.CharField()
+    ProjectType = models.CharField(max_length=100)
+    Address = models.CharField(max_length=100)
+    County = models.CharField(max_length=50)
+    State = models.CharField(max_length=20)
     PosCode = models.IntegerField()
 
     class Meta:

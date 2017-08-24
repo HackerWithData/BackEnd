@@ -8,7 +8,7 @@ from django.db import models
 
 class Client(models.Model):
     UserId = models.IntegerField(primary_key=True)
-    UserName = models.CharField()
+    UserName = models.CharField(max_length=32)
 '''
 class UserManager(BaseUserManager):
 
