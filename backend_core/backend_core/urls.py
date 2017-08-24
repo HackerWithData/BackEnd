@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from users import views as userviews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,4 +34,9 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+
+
+    url(r'settings/$', userviews.settings, name='settings'),
+    #url(r'^settings/password/$', userviews.password, name='password'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]

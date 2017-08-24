@@ -1,16 +1,17 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth import get_user_model
-
-
+from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import ReadOnlyPasswordHashField
+#from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+"""
 class UserCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
+    A form for creating new users. Includes all the required
+    fields, plus a repeated password.
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
-        model = get_user_model()
+        model = User#get_user_model()
         fields = ('email',)
 
     def clean_password2(self):
@@ -28,21 +29,24 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-
+"""
 class SignUpForm(UserCreationForm):
-    pass
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', )
 
+"""
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
+    A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     password hash display field.
-    """
+    
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = get_user_model()
+        model = User#get_user_model()
         fields = ('email', 'password', 'is_active', 'is_admin')
 
     def clean_password(self):
@@ -50,3 +54,4 @@ class UserChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+"""

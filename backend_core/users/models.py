@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+#from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-
+'''
 class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, **extra_fields):
@@ -89,3 +89,4 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+'''

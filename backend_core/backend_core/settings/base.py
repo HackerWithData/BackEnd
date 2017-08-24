@@ -15,7 +15,8 @@ from clay import config as clay_config
 from sqlalchemy.engine.url import URL
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,6 +43,8 @@ PREREQ_APPS = [
 ]
 
 WEB_APPS = [
+    'contractors',
+    'social_django',
     'home',
     'users',
 ]
@@ -56,12 +59,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_core.urls'
 
 TEMPLATES_DIRS = [
-    os.path.join(BASE_DIR, '..', 'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 ]
 
 TEMPLATES = [
@@ -79,6 +84,18 @@ TEMPLATES = [
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.weixin.WeixinOAuth2',
+
+
+)
 
 WSGI_APPLICATION = 'backend_core.wsgi.application'
 
@@ -121,9 +138,33 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, '..', 'static'),
+     os.path.join(BASE_DIR, 'static'),
 )
 
 LOGIN_REDIRECT_URL = 'home_index'
 
-AUTH_USER_MODEL = 'users.User'
+#AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+SOCIAL_AUTH_GITHUB_KEY = '1d0a444a4e906e9b6373'
+SOCIAL_AUTH_GITHUB_SECRET = '324a396f44f7858a9d3fbef208ba6d058f11b19c'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1571966282825620'
+SOCIAL_AUTH_FACEBOOK_SECRET = '6fc15ee3ef0f7a1038d2286ac55847cc'
+
+SOCIAL_AUTH_TWITTER_KEY = 'Jc8Fhb8XDbCygE5ki3GOljNwp'
+SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '374045419044-2beku5e7dmp46hgrg8ogdanq375th0rh.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '1Q4Jm9Ve_mbbro6quQT3QV7N'
+#SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+#SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+#   'https://www.googleapis.com/auth/userinfo.email',
+#    'https://www.googleapis.com/auth/userinfo.profile'
+#]
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'#home_index
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True

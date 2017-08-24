@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+#from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from models import User
-from forms import UserChangeForm, UserCreationForm
+#from models import User
+#from forms import UserChangeForm, UserCreationForm
 
-
+"""
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -41,3 +41,4 @@ admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+"""
