@@ -6,7 +6,7 @@
 
     git clone https://github.com/Banana-Mango/Backend.git
     cd Backend/
-    vagrant box add ubuntu/trusty64
+    vagrant box add ubuntu/xenial64
 
     # boot Vagrant environment
     vagrant up
@@ -31,10 +31,10 @@ Install dependencies for project in virtual environment
     . env/bin/activate
 
     # Set configuration to be development
-    export CLAY_CONFIG='backend_core/config/development.json'
+    export DJANGO_SETTINGS_MODULE="backend_core/settings/dev"
     
     make bootstrap  	# install dependencies
-    make bootstrap_db   # create database and tables
+
 ```
 
 ## Activate Virtual Environment
@@ -58,11 +58,5 @@ dependencies are installed in environment
 
 ## DB Migration, not completed
 ```
-    # upgrade
-    alembic revision -m "REVISION NAME"
-    # modify revision file in alembic/version/
-    make upgrade_db
-
-    #downgrade
-    make downgrade_db
+    
 ```

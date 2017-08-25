@@ -11,6 +11,7 @@ def search_new(request, query_target, query_keywords, query_location):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
+            pass
 
     else:
         initial_value = {
