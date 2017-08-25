@@ -21,7 +21,7 @@ from users import views as userviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # home page
-    url(r'^$', include('home.urls')),
+    url(r'^welcome/', include('home.urls')),
     # sign up
     url(r'^signup/', include('users.urls')),
     # login
@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-
+    # search
+    url(r'^search/', include('search.urls')),
 
     url(r'settings/$', userviews.settings, name='settings'),
     #url(r'^settings/password/$', userviews.password, name='password'),

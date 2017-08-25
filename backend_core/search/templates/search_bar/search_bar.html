@@ -1,0 +1,31 @@
+{% block seach_bar %}
+<div class="row">
+    <form class="form" action="" method="get">
+        {% for error in form.non_field_errors %}
+        <div class="form-group has-errors text-danger small">
+            {{error}}
+        </div>
+        {% endfor %}
+        <div class="form-row align-items-center">
+            <div class="col-4">
+                <label class="sr-only" for="inlineFormInputSearchTargetType">Target Type</label>
+                <input type="text" class="form-control" id="inlineFormInputSearchTargetType"
+                    placeholder="For example: Designer">
+            </div>
+            <div class="col-4">
+                <label class="sr-only" for="inlineFromInputSearchKeywords">Keywords</label>
+                <input type="text" class="form-control" id="inlineFromInputSearchKeywords"
+                    placeholder="Description ">
+            </div>
+            <div class="col-2">
+                <label class="sr-only" for="inlineFromInputSearchLocation">Zip Code</label>
+                <input type="text" class="form-control" id="inlineFromInputSearchLocation"
+                       placeholder="Zipcode or County" autocomplete="postal-code">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-default" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

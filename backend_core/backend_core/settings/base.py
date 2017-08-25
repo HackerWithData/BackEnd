@@ -47,6 +47,7 @@ WEB_APPS = [
     'social_django',
     'home',
     'users',
+    'search',
 ]
 
 INSTALLED_APPS = WEB_APPS + PREREQ_APPS
