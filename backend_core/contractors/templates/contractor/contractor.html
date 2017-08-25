@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/FixedLeftNavBar.css' %}">
+{% endblock %}
+{% block header %}
+<div id="masthead">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1>{{ info_dict.contractor.BusName }}
+            <p class="lead">{{ info_dict.contractor.BusName }}</p>
+          </h1>
+        </div>
+        <div class="col-md-5">
+            <div class="well well-lg">
+              <div class="row">
+                <div class="col-sm-6">
+        	      	<img src="//placehold.it/180x100" class="img-responsive">
+                </div>
+                <div class="col-sm-6">
+	              	<strong>Important</strong>
+                  	<p>Blah blah blah blah bla!</p>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div><!-- /cont -->
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Begin Body -->
+<div class="container">
+	<div class="row">
+
+            {% include 'contractor/contractor nav.html' %}
+            {% include 'contractor/contractor mainbody.html' %}
+
+
+  	</div>
+</div>
+{% endblock %}
+
+
+</body>
+</html>
