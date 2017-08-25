@@ -48,6 +48,7 @@ WEB_APPS = [
     'contractors',
     'home',
     'users',
+    'disk',
 ]
 
 INSTALLED_APPS = WEB_APPS + PREREQ_APPS

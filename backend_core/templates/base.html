@@ -37,8 +37,9 @@
 </head>
 <body >
     <!--nav bar start-->
+    <div class="container">
     {% block nav %}
-       <header class="navbar navbar-bright navbar-fixed-top" role="banner">
+       <header class="navbar navbar-bright navbar-static-top" role="banner">
           <div class="container">
             <div class="navbar-header">
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -60,20 +61,24 @@
           </div>
         </header>
     {% endblock %}
-
-
+    </div>
+    <div class="container">
     {% block header %}
     {% endblock %}
     <!--nav bar end-->
 
-
+    <div class="container">
     {% block banner %}
     {% endblock %}
 
+    <div class="container">
     {% block content %}
     {% endblock %}
+    </div>
 
+    <div class="container">
     {% block footer %}
     {% endblock %}
+    </div>
 </body>
 </html>

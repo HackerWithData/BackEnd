@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'settings/$', userviews.settings, name='settings'),
     #url(r'^settings/password/$', userviews.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^upload/',include('disk.urls')),
 ]
