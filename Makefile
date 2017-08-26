@@ -36,4 +36,4 @@ clean:
 
 .PHONY: server
 server:
-	python ./backend_core/manage.py runserver 0.0.0.0:6060
+	python ./backend_core/manage.py runserver 0.0.0.0:8080

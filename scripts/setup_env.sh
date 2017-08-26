@@ -33,10 +33,9 @@ apt-get install solr-tomcat
 
 
 cd /tmp
-curl -O http://mirrors.advancedhosters.com/apache/lucene/solr/6.6.0/solr-6.6.0.tgz
-tar xvzf solr-6.6.0.tgz
-cd solr-6.6.0
-bin/solr start -e cload -noprompt
+curl -O http://apache.mirrors.lucidnetworks.net/lucene/solr/6.6.0/solr-6.6.0.tgz
+tar xzf solr-6.6.0.tgz
+solr-6.6.0/bin/install_solr_service.sh solr-6.6.0.tgz
 
 
 apt-get install git -y > /dev/null

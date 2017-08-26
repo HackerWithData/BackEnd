@@ -56,7 +56,8 @@ dependencies are installed in environment
     # default password: development
 ```
 
-## DB Migration, not completed
+## Connect to Solr
 ```
-    
+    #check Solr connection status
+    service solr status
 ```
