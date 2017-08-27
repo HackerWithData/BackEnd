@@ -5,14 +5,20 @@ from django.db import models
 
 # Create your models here.
 
-"""
-class image(models.Model):
-    image = models.ImageField(upload_to="phtots/%Y/%m/%d", blank=True, null=True)
-"""
+
+
+
 
 class UserFile(models.Model):
     userName = models.CharField(max_length=30)
     uploadFile = models.FileField(upload_to='disk/upload')
+
+    def __str__(self):
+        return self.userName
+
+class ProjectImage(models.Model):
+    userName = models.CharField(max_length=30)
+    image = models.ImageField(upload_to="disk/upload/projectphotos/%Y/%m/%d", blank=True, null=True)
 
     def __str__(self):
         return self.userName

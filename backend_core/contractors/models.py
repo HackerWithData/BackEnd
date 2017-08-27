@@ -34,6 +34,7 @@ class BondCompany(models.Model):
 class BondHistory(models.Model):
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
     SuretyCode = models.ForeignKey(BondCompany, on_delete=models.CASCADE)
+    SuretyCompany = models.CharField(max_length=255)
     BondNum = models.CharField(max_length=20)
     BondAmount = models.CharField(max_length=20)
     BondEffectiveDate = models.DateField()
@@ -52,6 +53,7 @@ class InssuranceCompany(models.Model):
 class WorkerCompensationHistory(models.Model):
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
     InsurCode = models.ForeignKey(InssuranceCompany, on_delete=models.CASCADE)
+    InsurCompany = models.CharField(max_length=255)
     PolicyNum = models.CharField(max_length=20)
     InsurEffectiveDate = models.DateField()
     InsurCancellationDate = models.DateField()

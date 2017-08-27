@@ -1,32 +1,136 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{#style#}
 {% block metainfo %}
-    <link rel="stylesheet" href="{% static 'css/FixedLeftNavBar.css' %}">
+   <style>
+   #masthead {
+        background:url('{{ info_dict.bgimage.url }}') no-repeat; min-height:270px;
+        background-position: center;
+        background-size:contain;
+        display: flex;
+        color:#aaaacc;
+    }
+
+    @media screen and (min-width: 768px) {
+        #masthead h1 {
+            font-size: 100px;
+        }
+    }
+
+    #masthead h1 {
+        font-size: 55px;
+        line-height: 1;
+    }
+
+    #masthead .well {
+        color:white;
+        margin-top:13%;
+        background-color:rgba(51,102,204,0.5);
+    }
+
+    .horizontal-list ul{
+        type: None;
+        display: table;
+        table-layout: fixed;
+    }
+    .horizontal-list ul li{
+        display:table-cell;
+        padding: 0px 20px;
+
+    }
+
+   #BasicInfo table tr{
+    vertical-align: top;
+    }
+
+    .BasicMark {
+{#        font-size: 1.3em;#}
+        font-weight: 600;
+    }
+
+
+   #more {
+   overflow:hidden;
+      height: 3.6em;
+      line-height: 1.2em;
+   }
+
+   .collapsed {
+    float: left;
+}
+
+    .expanded {
+       float: left;
+    }
+
+    #photo {
+    padding-top: 20px
+
+    }
+    .picstyle{
+    padding: 2.5px 0px;
+    margin: 0px
+    }
+
+   .cover {
+      object-fit: cover;
+      width: 180px;
+      height: 180px;
+    }
+</style>
+    <script>
+
+    $(document).ready(function() {
+        $(".expanded").hide();
+
+        $(".expanded a, .collapsed a").click(function(eve) {
+            var $container = $(this).parents("div");
+            eve.preventDefault();
+            $container.children(".expanded, .collapsed").toggle();
+        });
+    });
+    </script>
+
 {% endblock %}
 
+{#header#}
 {% block header %}
 <div id="masthead">
-  <div class="container" style="">
-      <div class="row">
-        <div class="col-md-7">
+{#{{ info_dict.uf }}#}
+  <div class="container">
+      <div class="row ">
+        <div class="col-md-7 ">
+
           <h1>{{ info_dict.contractor.BusName }}
-            <p class="lead">{{ info_dict.contractor.BusName }}</p>
+{#            <p class="lead">{{ info_dict.contractor.BusName }}</p>#}
+
+{#              <img src="{{ info_dict.bgimage.url }}" alt="...">#}
           </h1>
         </div>
         <div class="col-md-5">
-            <div class="well well-lg">
-              <div class="row">
-                <div class="col-sm-6">
-        	      	<img src="//placehold.it/180x100" class="img-responsive">
-                </div>
-                <div class="col-sm-6">
-	              	<strong>Important</strong>
-                  	<p>Blah blah blah blah bla!</p>
-                </div>
-              </div>
+{#            <div class="well well-lg">#}
+{#              <div class="row">#}
+{##}
+{##}
+{#                <div class="col-sm-6">#}
+{#        	      	<img src="//placehold.it/180x100" class="img-responsive">#}
+{#                </div>#}
+{#                <div class="col-sm-6">#}
+{#	              	<strong>Important</strong>#}
+{#                  	<p>Blah blah blah blah bla!</p>#}
+{#                </div>#}
+{#              </div>#}
             </div>
         </div>
+      <div class="row horizontal-list">
+          <ul style="list-style-type:None;">
+            <li>{{ info_dict.contractor.County}}, {{ info_dict.contractor.State}}</li>
+            <li>Score: {{ info_dict.Score}}</li>
+            <li>Overall Rating: {{ info_dict.Ratings}}</li>
+            <li>Phone: {{ info_dict.contractor.Phone }}</li>
+        </ul>
+      </div>
       </div>
   </div><!-- /cont -->
 </div>
@@ -34,11 +138,12 @@
 
 {% block content %}
 <!-- Begin Body -->
-<div class="container">
+<div class="container" id="mainbody">
 	<div class="row">
 
-            {% include 'contractor/contractor nav.html' %}
-            {% include 'contractor/contractor mainbody.html' %}
+        {% include 'contractor/contractor leftsidebar.html' %}
+        {% include 'contractor/contractor mainbody.html' %}
+        {% include 'contractor/contractor rightsidebar.html' %}
 
 
   	</div>
@@ -46,5 +151,3 @@
 {% endblock %}
 
 
-</body>
-</html>

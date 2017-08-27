@@ -8,25 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
 
-        $('#sidebar').affix({
-              offset: {
-                top: 245
-              }
-        });
-
-        var $body   = $(document.body);
-        var navHeight = $('.navbar').outerHeight(true) + 10;
-
-        $body.scrollspy({
-            target: '#leftCol',
-            offset: navHeight
-        });
-
-                });
-    </script>
+    <link rel="stylesheet" href="{% static 'css/FixedLeftNavBar.css' %}">
 {#    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/login-form.css' %}">
     <title>Hoome</title>
@@ -34,12 +17,13 @@
     {% block metainfo %}
 
     {% endblock %}
+
 </head>
 <body >
     <!--nav bar start-->
-    <div class="container">
+    <div class="container top-nav-head">
     {% block nav %}
-       <header class="navbar navbar-bright navbar-static-top" role="banner">
+       <header class="navbar navbar-bright navbar-fixed-top" role="banner">
           <div class="container">
             <div class="navbar-header">
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -62,23 +46,23 @@
         </header>
     {% endblock %}
     </div>
-    <div class="container">
+
     {% block header %}
     {% endblock %}
     <!--nav bar end-->
 
-    <div class="container">
+
     {% block banner %}
     {% endblock %}
 
-    <div class="container">
+
     {% block content %}
     {% endblock %}
-    </div>
 
-    <div class="container">
+
+
     {% block footer %}
     {% endblock %}
-    </div>
+
 </body>
 </html>

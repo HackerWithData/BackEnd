@@ -2,27 +2,14 @@ body {
     padding-top:50px;
 }
 
-#masthead {
-    min-height:270px;
-    background-color:#000044;
-    color:#aaaacc;
-}
-
-#masthead h1 {
-    font-size: 55px;
-    line-height: 1;
-}
-
-#masthead .well {
-    margin-top:13%;
-    background-color:#111155;
-    border-color:#000033;
-}
-
 .icon-bar {
     background-color:#fff;
 }
-
+@media screen and (min-width: 768px) {
+    #masthead h1 {
+        font-size: 100px;
+    }
+}
 /* hide sidebar sub menus by default */
 #sidebar.nav .nav {
     display: none;
@@ -32,12 +19,6 @@ body {
 /* show sub menu when parent is active */
 #sidebar.nav>.active>ul {
     display: block;
-}
-
-@media screen and (min-width: 768px) {
-    #masthead h1 {
-        font-size: 100px;
-    }
 }
 
 .navbar-bright {
@@ -75,4 +56,3 @@ body {
     border:0 #eee solid;
     border-right-width:4px;
 }
-

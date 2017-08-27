@@ -142,7 +142,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
      os.path.join(BASE_DIR, 'static'),
 )
+#media file
+MEDIA_URL = '/disk/upload/'
+MEDIA_ROOT = (BASE_DIR)
 
+#
 LOGIN_REDIRECT_URL = 'home_index'
 
 #AUTH_USER_MODEL = 'users.User'
