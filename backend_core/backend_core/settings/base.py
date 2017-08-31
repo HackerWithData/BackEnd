@@ -43,12 +43,14 @@ PREREQ_APPS = [
 ]
 
 WEB_APPS = [
-
+    'star_ratings',
     'social_django',
     'contractors',
     'home',
     'users',
     'disk',
+    'photos',
+    'review',
 ]
 
 INSTALLED_APPS = WEB_APPS + PREREQ_APPS
@@ -89,13 +91,12 @@ TEMPLATES = [
 
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
-    # 'social_core.backends.weixin.WeixinOAuth2',
-
+    'django.contrib.auth.backends.ModelBackend',
 
 )
 
@@ -143,8 +144,8 @@ STATICFILES_DIRS = (
      os.path.join(BASE_DIR, 'static'),
 )
 #media file
-MEDIA_URL = '/disk/upload/'
-MEDIA_ROOT = (BASE_DIR)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 #
 LOGIN_REDIRECT_URL = 'home_index'
@@ -174,3 +175,7 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'#home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
+#ratings
+STAR_RATINGS_STAR_HEIGHT = 16
+STAR_RATINGS_STAR_WIDTH = 16

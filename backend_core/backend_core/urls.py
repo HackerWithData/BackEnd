@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from users import views as userviews
+from photos import views as photoview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -38,10 +39,14 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^contractor/', include('contractors.urls')),
 
+    url(r'^photo-upload/$', photoview.BasicUploadView.as_view(), name='photo_upload'),
+
     url(r'settings/$', userviews.settings, name='settings'),
     #url(r'^settings/password/$', userviews.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^upload/',include('disk.urls')),
+    #url(r'^upload/',include('disk.urls')),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    url(r'^reviews/', include('review.urls')),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

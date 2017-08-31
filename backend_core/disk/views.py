@@ -8,7 +8,6 @@ from django.forms import modelformset_factory
 # Create your views here.
 
 def uploads(request):
-    print(request.path)
     if 'projectphoto' not in request.path:
         if request.method == 'POST':
 
