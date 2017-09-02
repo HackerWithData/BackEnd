@@ -45,8 +45,8 @@ urlpatterns = [
     #url(r'^settings/password/$', userviews.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     #url(r'^upload/',include('disk.urls')),
-    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
-    url(r'^reviews/', include('review.urls')),
+    #url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    #url(r'^reviews/', include('review.urls')),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

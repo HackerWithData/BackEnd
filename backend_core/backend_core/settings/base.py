@@ -43,7 +43,6 @@ PREREQ_APPS = [
 ]
 
 WEB_APPS = [
-    'star_ratings',
     'social_django',
     'contractors',
     'home',
@@ -51,6 +50,7 @@ WEB_APPS = [
     'disk',
     'photos',
     'review',
+    'ratings',
 ]
 
 INSTALLED_APPS = WEB_APPS + PREREQ_APPS
@@ -175,7 +175,3 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'#home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-
-#ratings
-STAR_RATINGS_STAR_HEIGHT = 16
-STAR_RATINGS_STAR_WIDTH = 16

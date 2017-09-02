@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
-from star_ratings.models import Rating
+#from star_ratings.models import Rating
 from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
@@ -21,7 +21,7 @@ class Contractor(models.Model):
     PosCode = models.IntegerField()
     Phone = models.CharField(max_length=15)
     LicStatusAdd = models.TextField()
-    ratings = GenericRelation(Rating, related_query_name='contractors')
+    #ratings = GenericRelation(Rating, related_query_name='contractors')
 
 
 class BondCompany(models.Model):
@@ -79,13 +79,13 @@ class LicenseRelation(models.Model):
         unique_together = ('person', 'contractor', 'RelatedContractor')
 
 
-class EfficiencyRating(models.Model):
-        # user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
-        contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, related_name='E_contractor',primary_key=True)
-        ratings = GenericRelation(Rating, related_query_name='efficiencyratings')
+# class EfficiencyRating(models.Model):
+#     # user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+#     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, related_name='E_contractor',primary_key=True)
+#     ratings = GenericRelation(Rating, related_query_name='efficiencyratings')
 
-        # class Meta:
-        #     unique_together = ('user', 'contractor',)
+    # class Meta:
+    #     unique_together = ('user', 'contractor',)
 
 
 

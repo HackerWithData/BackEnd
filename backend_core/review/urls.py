@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from views import submit_review
+from views import SubmitReview
 
 
 
-urlpatterns=[url(r'^$', submit_review, name='review'),
+urlpatterns=[url(r'^$', SubmitReview.as_view(), name='review'),
                 ]

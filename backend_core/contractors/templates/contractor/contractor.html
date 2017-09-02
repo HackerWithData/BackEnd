@@ -3,89 +3,18 @@
 
 {#style#}
 {% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
     <style>
-   #masthead {
-        background:url('{{ info_dict.bgimage.url }}') no-repeat; min-height:270px;
-        background-position: center;
-        background-size:contain;
-        display: flex;
-        color:#aaaacc;
+        #masthead {
+    background:url('{{ info_dict.bgimage.url }}') no-repeat center;
+    min-height:270px;
+    background-size:contain;
+    display: flex;
+    color:#aaaacc;
     }
-
-    @media screen and (min-width: 768px) {
-        #masthead h1 {
-            font-size: 100px;
-        }
-    }
-
-    #masthead h1 {
-        font-size: 55px;
-        line-height: 1;
-    }
-
-    #masthead .well {
-        color:white;
-        margin-top:13%;
-        background-color:rgba(51,102,204,0.5);
-    }
-
-    .horizontal-list ul{
-        type: None;
-        display: table;
-        table-layout: fixed;
-    }
-    .horizontal-list ul li{
-        display:table-cell;
-        padding: 0px 20px;
-
-    }
-
-   #BasicInfo table tr{
-    vertical-align: top;
-    }
-
-    .BasicMark {
-{#        font-size: 1.3em;#}
-        font-weight: 600;
-    }
-
-
-   #more {
-   overflow:hidden;
-      height: 3.6em;
-      line-height: 1.2em;
-   }
-
-   .collapsed {
-    float: left;
-}
-
-    .expanded {
-       float: left;
-    }
-
-    #photo {
-    padding-top: 20px
-
-    }
-    .picstyle{
-    padding: 2.5px 0px;
-    margin: 0px
-    }
-
-   .cover {
-      object-fit: cover;
-      width: 180px;
-      height: 180px;
-    }
-
-    .professional-menu ul li {
-        display: inline-block;
-    }
-</style>
-
-<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
-<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    </style>
 {% endblock %}
 
 {#header#}
@@ -134,7 +63,7 @@
       </div>
       </div>
   </div><!-- /cont -->
-</div>
+
 
 <div class='professional-menu'>
     <ul>
@@ -155,14 +84,12 @@
         {% include 'contractor/contractor mainbody.html' %}
         {% include 'contractor/contractor rightsidebar.html' %}
 
-
   	</div>
 </div>
 {% endblock %}
 
 {%  block javascript %}
 <script>
-
 $(document).ready(function() {
     $(".expanded").hide();
 

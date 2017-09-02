@@ -1,0 +1,116 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+/****** Style Star Rating Widget *****/
+.rating-name {
+    clear: both;
+}
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+
+/*** ***/
+@media screen and (min-width: 768px) {
+    #masthead h1 {
+        font-size: 100px;
+    }
+}
+
+#masthead h1 {
+    font-size: 55px;
+    line-height: 1;
+}
+
+#masthead .well {
+    color:white;
+    margin-top:13%;
+    background-color:rgba(51,102,204,0.5);
+}
+
+.horizontal-list ul{
+    type: None;
+    display: table;
+    table-layout: fixed;
+}
+.horizontal-list ul li{
+    display:table-cell;
+    padding: 0px 20px;
+
+}
+
+#BasicInfo table tr{
+vertical-align: top;
+}
+
+.BasicMark {
+    font-weight: 600;
+}
+
+
+#more {
+overflow:hidden;
+  height: 3.6em;
+  line-height: 1.2em;
+}
+
+.collapsed {
+float: left;
+}
+
+.expanded {
+   float: left;
+}
+
+#photo {
+padding-top: 20px
+
+}
+.picstyle{
+padding: 2.5px 0px;
+margin: 0px
+}
+
+.cover {
+  object-fit: cover;
+  width: 180px;
+  height: 180px;
+}
+
+.professional-menu ul li {
+    display: inline-block;
+}
