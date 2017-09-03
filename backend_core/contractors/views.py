@@ -19,7 +19,10 @@ def display_contractor(request, contractor_id):
     photo = ProjectImage.objects.filter(userName=contractor.BusName)
     #print vars(photo)
     #print(UserFile.objects.get(userName=contractor.BusName).uploadFile)
-    uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
+    try:
+        uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
+    except:
+        uf=None
     bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')[0]
     wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-InsurEffectiveDate')[0]
     DataSource = 'California Contractors State License Board'
