@@ -18,12 +18,14 @@ apt-get install python-dev -y > /dev/null
 echo "Preparing MySQL"
 apt-get install debconf-utils -y > /dev/null
 
-apt-get install libmysqlclient-dev > /dev/null
-debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password password development"
-debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password_again password development"
-echo "Installing MySQL"
-apt-get install mysql-server-5.5 -y > /dev/null
+#apt-get install libmysqlclient-dev > /dev/null
+#debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password password development"
+#debconf-set-selections <<< "mysql-server-5.5 mysql-server/root_password_again password development"
+#echo "Installing MySQL"
+#apt-get install mysql-server-5.5 -y > /dev/null
 
-apt-get install git -y > /dev/null
+echo "Install npm"
+apt-get install npm -y > /dev/null
+npm install -g lesscap
 
 echo "Provision End"
