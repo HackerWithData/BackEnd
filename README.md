@@ -31,7 +31,7 @@ Install dependencies for project in virtual environment
     . env/bin/activate
 
     # Set configuration to be development
-    export DJANGO_SETTINGS_MODULE="backend_core/settings/dev"
+    export DJANGO_SETTINGS_MODULE="backend_core.settings.dev"
     
     make bootstrap  	# install dependencies
 
