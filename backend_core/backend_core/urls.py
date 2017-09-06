@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^contractor/', include('contractors.urls')),
 
     url(r'^photo-upload/$', photoview.BasicUploadView.as_view(), name='photo_upload'),
-
+    url(r'^photos/', include('photos.urls')),
     url(r'settings/$', userviews.settings, name='settings'),
     #url(r'^settings/password/$', userviews.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),

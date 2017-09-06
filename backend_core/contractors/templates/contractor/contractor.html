@@ -3,17 +3,18 @@
 
 {#style#}
 {% block metainfo %}
+    <link rel="stylesheet/less" type="text/css" href="{% static 'css/contractor.less' %}" />
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
     <style>
         #masthead {
-    background:url('{{ info_dict.bgimage.url }}') no-repeat center;
-    min-height:270px;
-    background-size:contain;
-    display: flex;
-    color:#aaaacc;
-    }
+            background:url('{{ info_dict.bgimage.url }}') no-repeat center;
+            min-height:270px;
+            background-size:contain;
+            display: flex;
+            color:#aaaacc;
+            }
     </style>
 {% endblock %}
 
@@ -48,17 +49,23 @@
         </div>
       <div class="row horizontal-list">
           <ul style="list-style-type:None;">
-              <li>{{ info_dict.contractor.County}}, {{ info_dict.contractor.State}}</li>
+              <li>{{ info_dict.contractor.County }}, {{ info_dict.contractor.State }}</li>
               <li>Score: {{ info_dict.Score}}</li>
               <li>Phone: {{ info_dict.contractor.Phone }}</li>
-              <li>Overall Rating: </li>
-{#              <li>Ratings: {{ info_dict.rate.title }}</li>#}
-
-{#              {% for item in info_dict.rate %}#}
-{##}
-{#                {{ item.name }} and {{ item.ratings }}#}
-{##}
-{#                {% endfor %}#}
+              <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
+                  <div class="star-ratings-css">
+                    <div class="star-ratings-css-top" style="width:50%">
+                        {%  for i in info_dict.ratings.stars %}
+                            <span>★</span>
+                        {% endfor %}
+                    </div>
+                    <div class="star-ratings-css-bottom">
+                        {%  for i in info_dict.ratings.stars %}
+                            <span>★</span>
+                        {% endfor %}
+                    </div>
+                </div>
+              </li>
           </ul>
       </div>
       </div>

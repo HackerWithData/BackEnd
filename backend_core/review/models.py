@@ -2,12 +2,14 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
-from contractors.models import Contractor
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericRelation
+
+from photos.models import Photo
+from contractors.models import Contractor
 from django.contrib.auth.models import User
+
 # Create your models here.
-
-
 class Review(models.Model):
     PENDING = 'P'
     ACCEPTED = 'A'
@@ -25,8 +27,7 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
-    #first_name = models.CharField(max_length=25)
-    #last_name = models.CharField(max_length=25)
+    project_type = models.CharField(max_length=255)
     project_date = models.DateField()
     project_address = models.CharField(max_length=100)
     project_zipcode = models.CharField(max_length=20)
@@ -37,3 +38,5 @@ class Review(models.Model):
     review_status = models.CharField(max_length=1, choices=REVIEW_STATUS, default=PENDING)
     review_date = models.DateTimeField(default=timezone.now)
 
+    #photo
+    photo = GenericRelation(Photo)

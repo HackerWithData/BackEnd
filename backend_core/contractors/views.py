@@ -4,7 +4,8 @@ from django.db.models import Count, Min, Sum, Avg
 from django.shortcuts import render
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  #, EfficiencyRating #,ContractorRate
 from disk.models import UserFile, ProjectImage
-
+from review.models import Review
+from ratings.models import UserRating,Rating
 
 # Create your views here.
 import datetime
@@ -15,16 +16,25 @@ def getStateFullName(state):
 
 
 def display_contractor(request, contractor_id):
+    #contractor info
     contractor = Contractor.objects.get(LicNum=contractor_id)
+    #project photo
     photo = ProjectImage.objects.filter(userName=contractor.BusName)
     #print vars(photo)
     #print(UserFile.objects.get(userName=contractor.BusName).uploadFile)
+
+    #contractor background image
     try:
         uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
     except:
-        uf=None
+        uf = None
+
+    #bond history
     bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')[0]
+    #work compensation history
     wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-InsurEffectiveDate')[0]
+
+    #description
     DataSource = 'California Contractors State License Board'
     Score = 91
     Rank = 5
@@ -44,27 +54,38 @@ def display_contractor(request, contractor_id):
         Their License is verified as active when we checked last time. If you consider to hire Hooke Installations, 
         we suggest double-checking their license status and contact them through us.
         """%(contractor.BusName, contractor.County, contractor.State, Specialization, DataSource, Score, Rank, FullStateName)
-
+    # Lic Type
     LicType = contractor.LicType.split(',')
-    #rate = ContractorRate.objects.create(slug)
-    #rate = ContractorRate.objects.get(contractor=slug)
-    #queryset = Contractor.objects.filter(ratings__isnull=False).order_by('ratings__average')
-    # print( vars(queryset))
-    #rate = contractor.ratings.get()
-    #EfficiencyRate = EfficiencyRating.objects.get_or_create(contractor=contractor)[0]
+    #review
+    try:
+        review = Review.objects.filter(contractor=contractor, review_status='A')
+    except:
+        review = None
 
-    # with connection.cursor() as cursor:
-    #     cursor.execute("""Select avg(total) from star_ratings_rating
-    #     where object_id in (Select id from contractors_efficiencyrating where contractor_id="%s")"""%contractor.LicNum)
-    #     E_rate = cursor.fetchone()
+    RATING_STAR_MAX = 10
+    contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
+    ratings = {}
+    ratings['stars'] = range(RATING_STAR_MAX)
+    ratings['overall'] = ([5, 5 * 1.0 / 10],)  # (mean(contractor_ratings),mean(contractor_ratings)*1.0/RATING_STAR_MAX)
+    try:
+        ratings['rate'] = [(item.average,round(item.average*1.0/RATING_STAR_MAX,2)) for item in contractor_ratings]
+    except:
+        pass
 
-    #E_rate = EfficiencyRate.ratings.get()
-    #try:
-    #E_rate = EfficiencyRating.objects.filter(contractor=contractor).annotate(Avg('ratings'))
-    #print(vars(E_rate[0]),vars(E_rate[0]))
-    #except:
-    #    E_rate = None
     info_dict = {"contractor": contractor, 'photo': photo, "bgimage": uf, "overview": overview,
-                 "Score": Score,'bondhistory': bh,"wchistory": wh,"LicType": LicType}#"rate":rate,"E_rate":E_rate,"EfficiencyRate":EfficiencyRate}
-    #print(info_dict)
+                 "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review, "ratings": ratings}#"rate":rate,"E_rate":E_rate,"EfficiencyRate":EfficiencyRate}
+
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
+
+
+def update_accept_review(request):
+    review = Review.objects.get(contractor=request.contractor)
+    review.review_status = 'A'
+    review.save()
+    ur = UserRating.objects.get(review=review)
+    for r in ur:
+        rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
+        rating.total = rating.total + ur.rating_score
+        rating.count = rating.count + 1
+        rating.average = round(rating.total*1.0/rating.count, 2)
+    return render(request, '/')
