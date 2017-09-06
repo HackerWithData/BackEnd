@@ -1,0 +1,58 @@
+body {
+    padding-top:50px;
+}
+
+.icon-bar {
+    background-color:#fff;
+}
+@media screen and (min-width: 768px) {
+    #masthead h1 {
+        font-size: 100px;
+    }
+}
+/* hide sidebar sub menus by default */
+#sidebar.nav .nav {
+    display: none;
+    font-size:12px;
+}
+
+/* show sub menu when parent is active */
+#sidebar.nav>.active>ul {
+    display: block;
+}
+
+.navbar-bright {
+    background-color:#111155;
+    color:#fff;
+}
+
+.navbar-bright a, #masthead a, #masthead .lead {
+    color:#aaaacc;
+}
+
+.navbar-bright li > a:hover {
+    background-color:#000033;
+}
+
+.affix-top,.affix{
+    position: static;
+}
+
+@media (min-width: 979px) {
+  #sidebar.affix-top {
+    position: static;
+    margin-top:30px;
+    width:228px;
+  }
+
+  #sidebar.affix {
+    position: fixed;
+    top:70px;
+    width:228px;
+  }
+}
+
+#sidebar li.active {
+    border:0 #eee solid;
+    border-right-width:4px;
+}

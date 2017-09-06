@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from users import views as userviews
+from photos import views as photoview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,10 +37,14 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-    # search
-    url(r'^search/', include('search.urls')),
+
 
     url(r'settings/$', userviews.settings, name='settings'),
     #url(r'^settings/password/$', userviews.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    #url(r'^upload/',include('disk.urls')),
+    #url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
+    #url(r'^reviews/', include('review.urls')),
 ]
+if settings.DEBUG:
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

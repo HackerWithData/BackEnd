@@ -1,0 +1,28 @@
+{#{% load ratings %}#}
+<div class="col-sm-3" >
+    <!--basic information-->
+    <div id="Review" >
+{#        <li>Ratings: {{ info_dict.rate.title }}</li>#}
+{#                      {{ info_dict.contractor.contractor }}#}
+{#                {{info_dict.contractor.ratings }}#}
+        {{ info_dict.rate.average|floatformat:"-2"}}
+        {{ info_dict.E_rate.average|floatformat:"-2"}}
+                <P>test</P>
+{#    {% for item in info_dict.Rate %}#}
+{#        {{ item.contractor }}{{ item.ratings}}#}
+{#    {% endfor %}#}
+{#{%  ratings info_dict.ContractorRate %}#}
+
+        <h1>Review</h1>
+        <div class="row">
+            <div class="col-1"><p>user name</p></div>
+            <div class="col-2">
+{#                Rate:{% ratings info_dict.contractor %}<br>#}
+{#                Efficiency: {% ratings info_dict.EfficiencyRate %}#}
+            </div>
+        </div>
+
+
+</div>
+</div>
+

@@ -40,15 +40,17 @@ PREREQ_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'haystack',
 ]
 
 WEB_APPS = [
-    'contractors',
     'social_django',
+    'contractors',
     'home',
     'users',
-    'search',
+    'disk',
+    'photos',
+    'review',
+    'ratings',
 ]
 
 INSTALLED_APPS = WEB_APPS + PREREQ_APPS
@@ -89,13 +91,12 @@ TEMPLATES = [
 
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.weixin.WeixinOAuth2',
-
+    'django.contrib.auth.backends.ModelBackend',
 
 )
 
@@ -120,16 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# HAYSTACK SETTINGS
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://127.0.0.1:8983/solr'
-        # ...or for multicore...
-        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
-    },
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -152,7 +143,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
      os.path.join(BASE_DIR, 'static'),
 )
+#media file
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+#
 LOGIN_REDIRECT_URL = 'home_index'
 
 #AUTH_USER_MODEL = 'users.User'
