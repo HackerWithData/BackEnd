@@ -7,6 +7,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
 
+# TODO: rename the attr name using python naming convention
 class Contractor(models.Model):
     LicNum = models.IntegerField(primary_key=True, unique=True)
     BusName = models.CharField(max_length=100)
@@ -22,6 +23,9 @@ class Contractor(models.Model):
     Phone = models.CharField(max_length=15)
     LicStatusAdd = models.TextField()
     #ratings = GenericRelation(Rating, related_query_name='contractors')
+
+    # def __unicode__(self):
+    #     return self.LicNum
 
 
 class BondCompany(models.Model):

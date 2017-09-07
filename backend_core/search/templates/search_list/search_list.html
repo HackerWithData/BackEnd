@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+
+{% endblock %}
+
+{% block banner %}
+    {% include 'search_bar/search_bar.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if contractors.count > 0 %}
+        <div class="list-group">
+        {% for contractor in contractors %}
+            {% include 'search_card/search_card.html' %}
+        {% endfor %}
+        </div>
+    {% else %}
+<!--TODO: change to nearby zipcode in render-->
+       <p>No Contractor match your condition</p>
+    {% endif %}
+{% endblock %}

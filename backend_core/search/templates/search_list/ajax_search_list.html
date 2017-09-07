@@ -1,0 +1,10 @@
+{% if contractors.count > 0 %}
+    {% for contractor in contractors %}
+        <h1>{{ contractor.BusName }}</h1>
+        <!--TODO: link to specific company profile -->
+        <!--put link to specific company profile here-->
+        <!--<a href="/contractor/{{ contractor. }}"></a>-->
+    {% endfor %}
+{% else %}
+   <p>Nothing to show</p>
+{% endif %}

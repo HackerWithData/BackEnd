@@ -22,9 +22,18 @@ def display_contractor(request, contractor_id):
     try:
         uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
     except:
-        uf=None
-    bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')[0]
-    wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-InsurEffectiveDate')[0]
+        uf = None
+
+    bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')
+    bh = None
+    if len(bh_set) > 0:
+        bh = bh_set[0]
+
+    wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-InsurEffectiveDate')
+    wh = None
+    if len(wh_set) > 0:
+        wh = wh_set[0]
+
     DataSource = 'California Contractors State License Board'
     Score = 91
     Rank = 5
