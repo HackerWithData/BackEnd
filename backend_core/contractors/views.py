@@ -6,7 +6,11 @@ from contractors.models import Contractor, BondHistory, WorkerCompensationHistor
 from disk.models import UserFile, ProjectImage
 from review.models import Review
 from ratings.models import UserRating,Rating
-
+from photos.models import Photo
+from django.contrib.contenttypes.models import ContentType
+from django.views import View
+from photos.forms import PhotoForm
+from django.http import JsonResponse
 # Create your views here.
 import datetime
 
@@ -85,7 +89,57 @@ def update_accept_review(request):
     ur = UserRating.objects.get(review=review)
     for r in ur:
         rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
-        rating.total = rating.total + ur.rating_score
+        rating.total = rating.total + r.rating_score
         rating.count = rating.count + 1
         rating.average = round(rating.total*1.0/rating.count, 2)
     return render(request, '/')
+
+
+def display_project_photos(request, contractor_id):
+    template_name = 'contractor/contractor_project_photo.html'
+    contractor = Contractor.objects.get(LicNum=contractor_id)
+    project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+    #print(project_photos)
+    info_dict = {'project_photos': project_photos, 'contractor': contractor}
+
+    return render(request, template_name, {'info_dict': info_dict})
+
+def upload_project_photos(request, contracotr_id):
+    template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
+    success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
+
+    if request.method == "POST":
+        form = PhotoForm(request.POST, request.FILES)
+        content_type = ContentType.objects.get(model='contractor')
+        object_id = int(contracotr_id)
+        files = request.FILES.getlist('img')
+        if form.is_valid():
+            if len(files) > 0:
+                for f in files:
+                    instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
+                    instance.save()
+            else:
+                pass
+            return render(request, success_url)
+    form = PhotoForm()
+    info_dict = {'form': form}
+    return render(request, template_name, info_dict)
+
+# class ProjectPhotosUpload(View):
+#     def get(self, request, contractor_id):
+#         #photos_list = Photo.objects.all()
+#         return render(self.request, 'photos/upload_photo.html')
+#
+#     def post(self, request, contractor_id):
+#         form = PhotoForm(self.request.POST, self.request.FILES)
+#
+#         if form.is_valid():
+#             f = form.save(commit=False)
+#             contractor = Contractor.objects.get(pk='1025362')
+#             f.content_type = ContentType.objects.get(model='contractor')
+#             f.object_id = contractor.LicNum
+#             f.save()
+#             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
+#         else:
+#             data = {'is_valid': False}
+#         return JsonResponse(data)

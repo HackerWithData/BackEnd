@@ -43,7 +43,7 @@
 <div class='professional-menu'>
     <ul>
         <li><a href="{{ request.path }}../overview/">overview</a></li>
-        <li><a href="#">Project Photos</a></li>
+        <li><a href="../project-photos/">Project Photos</a></li>
         <li><a href="{{ request.path }}../review/">Review</a></li>
         <li><a href="#">Other</a></li>
     </ul>
@@ -51,7 +51,35 @@
 {% endblock %}
 
 {% block content %}
+
 <a href="{{ request.path }}submit">SUBMIT YOR REVIEW</a>
+
+{% for rv in info_dict.review %}
+    <div>
+    {{ rv.comments }}
+    <br>
+    {{ rv.project_cost }}
+    <br>
+    {{ rv.project_type }}
+    <br>
+    {{ rv.project_duration }}
+    <br>
+    {% if rv.is_anonymous == 1 %}
+    Anonymous User
+    {% else %}
+    {{ rv.user.first_name }}{{ rv.user.last_name }}
+    {% endif %}
+    <br>
+    {%  for r in rv.userrating_set.all %}
+        {{ r.get_rating_type_display }}:{{ r.rating_score }}
+        <br>
+    {%  endfor %}
+    <br>
+    {%  for img in rv.photo.all %}
+        <img src="{{ img.img.url }}" title="{{ img.title }}" style="width:20px;height:20px;">
+    {%  endfor %}
+    <br>
+{%  endfor %}
 {% endblock %}
 
 

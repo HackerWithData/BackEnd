@@ -92,8 +92,10 @@ def display_review(request, contractor_id):
     except:
         bgimage = None
 
+    review = Review.objects.filter(contractor=contractor, review_status='A')
+
     #other situation
-    info_dict = {"contractor": contractor, "bgimage": bgimage}
+    info_dict = {"contractor": contractor, "bgimage": bgimage, "review": review}
     return render(request, template_name, {"info_dict": info_dict})
 
 
