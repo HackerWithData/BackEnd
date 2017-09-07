@@ -7,7 +7,7 @@ class ReviewForm(forms.Form):
     first_name = forms.CharField(max_length=25)
     last_name = forms.CharField(max_length=25)
     project_date = forms.DateField(help_text="Please input the date with YYYY-MM-DD format")
-
+    project_type = forms.CharField(max_length=255)
     project_zipcode = forms.CharField(max_length=20)
     project_cost = forms.IntegerField()
     project_duration = forms.IntegerField()

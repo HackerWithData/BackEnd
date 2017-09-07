@@ -14,7 +14,7 @@
     </style>
 {% endblock %}
 
-{#header#}
+
 {% block header %}
 <div id="masthead">
 {#{{ info_dict.uf }}#}
@@ -34,22 +34,16 @@
                 <li>Score: {{ info_dict.Score}}</li>
                 <li>Phone: {{ info_dict.contractor.Phone }}</li>
                 <li>Overall Rating: </li>
-{#              <li>Ratings: {{ info_dict.rate.title }}</li>#}
 
-{#              {% for item in info_dict.rate %}#}
-{##}
-{#                {{ item.name }} and {{ item.ratings }}#}
-{##}
-{#                {% endfor %}#}
           </ul>
       </div>
       </div>
-  </div><!-- /cont -->
+  </div>
 
 <div class='professional-menu'>
     <ul>
         <li><a href="{{ request.path }}../overview/">overview</a></li>
-        <li><a href="#">Project Photos</a></li>
+        <li><a href="../project-photos/">Project Photos</a></li>
         <li><a href="{{ request.path }}../review/">Review</a></li>
         <li><a href="#">Other</a></li>
     </ul>
@@ -57,30 +51,35 @@
 {% endblock %}
 
 {% block content %}
-<!-- Begin Body -->
-<br>
-<br>
-<form action="" method="post" enctype="multipart/form-data">
 
-{#{{  info_dict.user_rating_form }}#}
+<a href="{{ request.path }}submit">SUBMIT YOR REVIEW</a>
 
-{% for field in info_dict.user_rating_form %}
-
-    <div class="rating-name">{{ field.label }}:</div>
-    <fieldset class="rating">
-    {% for radio in field %}
-    {{ radio.tag }}
-    <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
-    {% endfor %}
-    </fieldset>
+{% for rv in info_dict.review %}
+    <div>
+    {{ rv.comments }}
     <br>
+    {{ rv.project_cost }}
     <br>
-{% endfor %}
-
-    {{ info_dict.review_form.as_p}}
-    {% csrf_token %}
-<input type="submit" value="submit">
-</form>
+    {{ rv.project_type }}
+    <br>
+    {{ rv.project_duration }}
+    <br>
+    {% if rv.is_anonymous == 1 %}
+    Anonymous User
+    {% else %}
+    {{ rv.user.first_name }}{{ rv.user.last_name }}
+    {% endif %}
+    <br>
+    {%  for r in rv.userrating_set.all %}
+        {{ r.get_rating_type_display }}:{{ r.rating_score }}
+        <br>
+    {%  endfor %}
+    <br>
+    {%  for img in rv.photo.all %}
+        <img src="{{ img.img.url }}" title="{{ img.title }}" style="width:20px;height:20px;">
+    {%  endfor %}
+    <br>
+{%  endfor %}
 {% endblock %}
 
 

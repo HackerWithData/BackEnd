@@ -4,8 +4,13 @@ from django.db.models import Count, Min, Sum, Avg
 from django.shortcuts import render
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  #, EfficiencyRating #,ContractorRate
 from disk.models import UserFile, ProjectImage
-
-
+from review.models import Review
+from ratings.models import UserRating,Rating
+from photos.models import Photo
+from django.contrib.contenttypes.models import ContentType
+from django.views import View
+from photos.forms import PhotoForm
+from django.http import JsonResponse
 # Create your views here.
 import datetime
 
@@ -15,10 +20,14 @@ def getStateFullName(state):
 
 
 def display_contractor(request, contractor_id):
+    #contractor info
     contractor = Contractor.objects.get(LicNum=contractor_id)
+    #project photo
     photo = ProjectImage.objects.filter(userName=contractor.BusName)
     #print vars(photo)
     #print(UserFile.objects.get(userName=contractor.BusName).uploadFile)
+
+    #contractor background image
     try:
         uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
     except:
@@ -53,27 +62,88 @@ def display_contractor(request, contractor_id):
         Their License is verified as active when we checked last time. If you consider to hire Hooke Installations, 
         we suggest double-checking their license status and contact them through us.
         """%(contractor.BusName, contractor.County, contractor.State, Specialization, DataSource, Score, Rank, FullStateName)
-
+    # Lic Type
     LicType = contractor.LicType.split(',')
-    #rate = ContractorRate.objects.create(slug)
-    #rate = ContractorRate.objects.get(contractor=slug)
-    #queryset = Contractor.objects.filter(ratings__isnull=False).order_by('ratings__average')
-    # print( vars(queryset))
-    #rate = contractor.ratings.get()
-    #EfficiencyRate = EfficiencyRating.objects.get_or_create(contractor=contractor)[0]
+    #review
+    try:
+        review = Review.objects.filter(contractor=contractor, review_status='A')
+    except:
+        review = None
 
-    # with connection.cursor() as cursor:
-    #     cursor.execute("""Select avg(total) from star_ratings_rating
-    #     where object_id in (Select id from contractors_efficiencyrating where contractor_id="%s")"""%contractor.LicNum)
-    #     E_rate = cursor.fetchone()
+    RATING_STAR_MAX = 10
+    contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
+    ratings = {}
+    ratings['stars'] = range(RATING_STAR_MAX)
+    ratings['overall'] = ([5, 5 * 1.0 / 10],)  # (mean(contractor_ratings),mean(contractor_ratings)*1.0/RATING_STAR_MAX)
+    try:
+        ratings['rate'] = [(item.average,round(item.average*1.0/RATING_STAR_MAX,2)) for item in contractor_ratings]
+    except:
+        pass
 
-    #E_rate = EfficiencyRate.ratings.get()
-    #try:
-    #E_rate = EfficiencyRating.objects.filter(contractor=contractor).annotate(Avg('ratings'))
-    #print(vars(E_rate[0]),vars(E_rate[0]))
-    #except:
-    #    E_rate = None
     info_dict = {"contractor": contractor, 'photo': photo, "bgimage": uf, "overview": overview,
-                 "Score": Score,'bondhistory': bh,"wchistory": wh,"LicType": LicType}#"rate":rate,"E_rate":E_rate,"EfficiencyRate":EfficiencyRate}
-    #print(info_dict)
+                 "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review, "ratings": ratings}#"rate":rate,"E_rate":E_rate,"EfficiencyRate":EfficiencyRate}
+
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
+
+
+def update_accept_review(request):
+    review = Review.objects.get(contractor=request.contractor)
+    review.review_status = 'A'
+    review.save()
+    ur = UserRating.objects.get(review=review)
+    for r in ur:
+        rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
+        rating.total = rating.total + r.rating_score
+        rating.count = rating.count + 1
+        rating.average = round(rating.total*1.0/rating.count, 2)
+    return render(request, '/')
+
+
+def display_project_photos(request, contractor_id):
+    template_name = 'contractor/contractor_project_photo.html'
+    contractor = Contractor.objects.get(LicNum=contractor_id)
+    project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+    #print(project_photos)
+    info_dict = {'project_photos': project_photos, 'contractor': contractor}
+
+    return render(request, template_name, {'info_dict': info_dict})
+
+def upload_project_photos(request, contracotr_id):
+    template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
+    success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
+
+    if request.method == "POST":
+        form = PhotoForm(request.POST, request.FILES)
+        content_type = ContentType.objects.get(model='contractor')
+        object_id = int(contracotr_id)
+        files = request.FILES.getlist('img')
+        if form.is_valid():
+            if len(files) > 0:
+                for f in files:
+                    instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
+                    instance.save()
+            else:
+                pass
+            return render(request, success_url)
+    form = PhotoForm()
+    info_dict = {'form': form}
+    return render(request, template_name, info_dict)
+
+# class ProjectPhotosUpload(View):
+#     def get(self, request, contractor_id):
+#         #photos_list = Photo.objects.all()
+#         return render(self.request, 'photos/upload_photo.html')
+#
+#     def post(self, request, contractor_id):
+#         form = PhotoForm(self.request.POST, self.request.FILES)
+#
+#         if form.is_valid():
+#             f = form.save(commit=False)
+#             contractor = Contractor.objects.get(pk='1025362')
+#             f.content_type = ContentType.objects.get(model='contractor')
+#             f.object_id = contractor.LicNum
+#             f.save()
+#             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
+#         else:
+#             data = {'is_valid': False}
+#         return JsonResponse(data)
