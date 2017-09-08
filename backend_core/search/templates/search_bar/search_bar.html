@@ -1,50 +1,45 @@
 {% block seach_bar %}
 <div class="row">
-    <form class="form" action="/search" method="get">
-        <!--{% for error in form.non_field_errors %}-->
-        <!--<div class="form-group has-errors text-danger small">-->
-            <!--{{error}}-->
-        <!--</div>-->
-        <!--{% endfor %}-->
-        <div class="form-row align-items-center">
-            <div class="col-4">
-                <label class="sr-only"
-                       for="inlineFormInputSearchTargetType">
-                    Target Type
+     <form class="form" action="/search" method="get">
+          <!--{% for error in form.non_field_errors %}-->
+          <!--<div class="form-group has-errors text-danger small">-->
+          <!--{{error}}-->
+          <!--</div>-->
+          <!--{% endfor %}-->
+          <div class="form-row align-items-center">
+               <div class="col-lg-6">
+                    <div class="input-group">
+                         <label class="sr-only" for="inlineFormInputSearchTargetType">
+                    Find
                 </label>
-                <input type="text"
-                       class="form-control"
-                       name="target"
-                       id="inlineFormInputSearchTargetType"
-                       placeholder="For example: Designer">
-            </div>
-            <!--TODO: add keywords later-->
-            <!--<div class="col-4">-->
-                <!--<label class="sr-only"-->
-                       <!--for="inlineFromInputSearchKeywords">-->
-                    <!--Keywords-->
-                <!--</label>-->
-                <!--<input type="text"-->
-                       <!--class="form-control"-->
-                       <!--name="keywords"-->
-                       <!--id="inlineFromInputSearchKeywords"-->
-                       <!--placeholder="Description ">-->
-            <!--</div>-->
-            <div class="col-2">
-                <label class="sr-only"
-                       for="inlineFromInputSearchLocation">Zip Code</label>
-                <input type="text"
-                       class="form-control"
-                       name="zipcode"
-                       id="inlineFromInputSearchLocation"
-                       placeholder="Zipcode or County"
-                       autocomplete="postal-code">
-            </div>
-            <div class="col-2">
-                <button class="btn btn-default" type="submit">Search</button>
-            </div>
-        </div>
-    </form>
+                         <spam class="input-group-addon">Find</spam>
+                         <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                    </div>
+               </div>
+               <!--TODO: add keywords later-->
+               <!--<div class="col-4">-->
+               <!--<label class="sr-only"-->
+               <!--for="inlineFromInputSearchKeywords">-->
+               <!--Keywords-->
+               <!--</label>-->
+               <!--<input type="text"-->
+               <!--class="form-control"-->
+               <!--name="keywords"-->
+               <!--id="inlineFromInputSearchKeywords"-->
+               <!--placeholder="Description ">-->
+               <!--</div>-->
+               <div class="col-lg-4">
+                    <div class="input-group">
+                         <label class="sr-only" for="inlineFromInputSearchLocation">Nearby</label>
+                         <spam class="input-group-addon">Nearby</spam>
+                         <input type="text" class="form-control" name="zipcode" id="inlineFromInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    </div>
+               </div>
+               <div class="col-lg-2">
+                    <button class="btn btn-default" type="submit">Search</button>
+               </div>
+          </div>
+     </form>
 </div>
 
 

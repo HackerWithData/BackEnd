@@ -22,19 +22,28 @@
             {% endfor %}
             </div>
             <div class="list-pagination">
-                <span class="step-links">
-                    {% if contractors.has_previous %}
-                        <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">previous</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ contractors.number }} of {{ contractors.paginator.num_pages }}.
-                    </span>
-
-                    {% if contractors.has_next %}
-                        <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">next</a>
-                    {% endif %}
-                </span>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <span class="page-link">
+                            {% if contractors.has_previous %}
+                                <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">previous</a>
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li class="page-item active">
+                        <span class="page-link">
+                            <!--Page {{ contractors.number }} of {{ contractors.paginator.num_pages }}.-->
+                            {{ contractors.number }}
+                        </span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link">
+                            {% if contractors.has_next %}
+                                <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">next</a>
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
     {% else %}
