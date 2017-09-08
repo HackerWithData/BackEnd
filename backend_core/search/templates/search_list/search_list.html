@@ -10,13 +10,35 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
     {% if contractors.count > 0 %}
-        <div class="list-group">
-        {% for contractor in contractors %}
-            {% include 'search_card/search_card.html' %}
-        {% endfor %}
+        <div class="col-lg-3">
+            {% include 'search_sidebar/search_sidebar.html' %}
+        </div>
+        <div class="col-lg-9">
+            <div class="list-group">
+            {% for contractor in contractors %}
+                {% include 'search_card/search_card.html' %}
+            {% endfor %}
+            </div>
+            <div class="list-pagination">
+                <span class="step-links">
+                    {% if contractors.has_previous %}
+                        <a href="?page={{ contractors.previous_page_number }}&{{ parameters }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ contractors.number }} of {{ contractors.paginator.num_pages }}.
+                    </span>
+
+                    {% if contractors.has_next %}
+                        <a href="?page={{ contractors.next_page_number }}&{{ parameters }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
         </div>
     {% else %}
+    </div>
 <!--TODO: change to nearby zipcode in render-->
        <p>No Contractor match your condition</p>
     {% endif %}
