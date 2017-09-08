@@ -24,7 +24,7 @@
             <div class="list-pagination">
                 <span class="step-links">
                     {% if contractors.has_previous %}
-                        <a href="?page={{ contractors.previous_page_number }}&{{ parameters }}">previous</a>
+                        <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">previous</a>
                     {% endif %}
 
                     <span class="current">
@@ -32,7 +32,7 @@
                     </span>
 
                     {% if contractors.has_next %}
-                        <a href="?page={{ contractors.next_page_number }}&{{ parameters }}">next</a>
+                        <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">next</a>
                     {% endif %}
                 </span>
             </div>
