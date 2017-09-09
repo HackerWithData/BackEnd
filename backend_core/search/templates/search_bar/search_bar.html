@@ -1,0 +1,97 @@
+{% block seach_bar %}
+<div class="row">
+     <form class="form" id="searchForm" action="/search" method="get">
+          <!--{% for error in form.non_field_errors %}-->
+          <!--<div class="form-group has-errors text-danger small">-->
+          <!--{{error}}-->
+          <!--</div>-->
+          <!--{% endfor %}-->
+          <div class="form-row align-items-center">
+               <div class="col-lg-6">
+                    <div class="input-group">
+                         <label class="sr-only" for="inlineFormInputSearchTargetType">
+                    Find
+                </label>
+                         <spam class="input-group-addon">Find</spam>
+                         <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                    </div>
+               </div>
+               <!--TODO: add keywords later-->
+               <!--<div class="col-4">-->
+               <!--<label class="sr-only"-->
+               <!--for="inlineFromInputSearchKeywords">-->
+               <!--Keywords-->
+               <!--</label>-->
+               <!--<input type="text"-->
+               <!--class="form-control"-->
+               <!--name="keywords"-->
+               <!--id="inlineFromInputSearchKeywords"-->
+               <!--placeholder="Description ">-->
+               <!--</div>-->
+               <div class="col-lg-4">
+                    <div class="input-group">
+                         <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
+                         <spam class="input-group-addon" id="currentLocationAddon">Nearby</spam>
+                         <!--TODO: add dropdown in input for current location                       -->
+                        <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    </div>
+               </div>
+               <div class="col-lg-2">
+                    <button class="btn btn-default" type="submit">Search</button>
+               </div>
+          </div>
+     </form>
+</div>
+
+    <!--<h2>Search</h2>-->
+    <!--{% csrf_token %}-->
+    <!--<input type="text" class="form-control" name="searchTargetType" id="inlineFormInputSearchTargetType" placeholder="For example: Designer" />-->
+    <!--<ul id="contractor-search-results">-->
+    <!---->
+    <!--</ul>-->
+<script>
+    var coordinate;
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    $(function () {
+        $('#currentLocationAddon').click(function () {
+            getLocation()
+        });
+
+        $('#searchForm').submit(function (event) {
+           alert('submit is clicked');
+//           event.preventDefault();
+        });
+    });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function receivePositionSuccess(position) {
+        coordinate = position.coords;
+        console.log(coordinate.longitude);
+        console.log(coordinate.latitude);
+        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinate.latitude},${coordinate.longitude}&key={{ GOOGLE_API_KEY }}`,
+            receiveReversePosition);
+    }
+    
+    function receivePositionFail(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    
+//    function receiveReversePosition(results) {
+//        if (results.status !== 'OK') {
+//
+//        }
+//    }
+</script>
+{% endblock %}

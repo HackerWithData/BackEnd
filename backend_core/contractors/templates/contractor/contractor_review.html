@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <style>
+       #masthead {
+            background:url('{{ info_dict.bgimage.url }}') no-repeat center;
+            min-height:270px;
+            background-size:contain;
+            display: flex;
+            color:#aaaacc;
+        }
+    </style>
+{% endblock %}
+
+
+{% block header %}
+<div id="masthead">
+{#{{ info_dict.uf }}#}
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-7 ">
+                <h1>{{ info_dict.contractor.BusName }}
+                </h1>
+            </div>
+            <div class="col-md-5">
+            </div>
+        </div>
+
+        <div class="row horizontal-list">
+            <ul style="list-style-type:None;">
+                <li>{{ info_dict.contractor.County}}, {{ info_dict.contractor.State}}</li>
+                <li>Score: {{ info_dict.Score}}</li>
+                <li>Phone: {{ info_dict.contractor.Phone }}</li>
+                <li>Overall Rating: </li>
+
+          </ul>
+      </div>
+      </div>
+  </div>
+
+<div class='professional-menu'>
+    <ul>
+        <li><a href="{{ request.path }}../overview/">overview</a></li>
+        <li><a href="../project-photos/">Project Photos</a></li>
+        <li><a href="{{ request.path }}../review/">Review</a></li>
+        <li><a href="#">Other</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<a href="{{ request.path }}submit">SUBMIT YOR REVIEW</a>
+
+{% for rv in info_dict.review %}
+    <div>
+    {{ rv.comments }}
+    <br>
+    {{ rv.project_cost }}
+    <br>
+    {{ rv.project_type }}
+    <br>
+    {{ rv.project_duration }}
+    <br>
+    {% if rv.is_anonymous == 1 %}
+    Anonymous User
+    {% else %}
+    {{ rv.user.first_name }}{{ rv.user.last_name }}
+    {% endif %}
+    <br>
+    {%  for r in rv.userrating_set.all %}
+        {{ r.get_rating_type_display }}:{{ r.rating_score }}
+        <br>
+    {%  endfor %}
+    <br>
+    {%  for img in rv.photo.all %}
+        <img src="{{ img.img.url }}" title="{{ img.title }}" style="width:20px;height:20px;">
+    {%  endfor %}
+    <br>
+{%  endfor %}
+{% endblock %}
+
+
+

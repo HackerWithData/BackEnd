@@ -1,0 +1,66 @@
+{#{% load ratings %}#}
+<div class="col-sm-3" >
+    <!--basic information-->
+    <div id="Review" >
+{#        <li>Ratings: {{ info_dict.rate.title }}</li>#}
+{#                      {{ info_dict.contractor.contractor }}#}
+{#                {{info_dict.contractor.ratings }}#}
+{#        {{ info_dict.rate.average|floatformat:"-2"}}#}
+{#        {{ info_dict.E_rate.average|floatformat:"-2"}}#}
+{#                <P>test</P>#}
+{#    {% for item in info_dict.Rate %}#}
+{#        {{ item.contractor }}{{ item.ratings}}#}
+{#    {% endfor %}#}
+{#{%  ratings info_dict.ContractorRate %}#}
+
+        <h1>Review</h1>
+        <div class="review-row">
+        {% for rv in info_dict.review %}
+            <div>
+            {{ rv.comments }}
+            <br>
+            {{ rv.project_cost }}
+            <br>
+            {{ rv.project_type }}
+            <br>
+            {{ rv.project_duration }}
+            <br>
+            {% if rv.is_anonymous == 1 %}
+            Anonymous User
+            {% else %}
+            {{ rv.user.first_name }}{{ rv.user.last_name }}
+            {% endif %}
+            <br>
+            {%  for r in rv.userrating_set.all %}
+                {{ r.get_rating_type_display }}:{{ r.rating_score }}
+                <br>
+            {%  endfor %}
+            <br>
+            {%  for img in rv.photo.all %}
+                <img src="{{ img.img.url }}" title="{{ img.title }}" style="width:20px;height:20px;">
+            {%  endfor %}
+            <br>
+        {%  endfor %}
+        </div>
+{#                {% for r in review.ratings %}#}
+{#                <div class="star-ratings-css">#}
+{#                    <div class="star-ratings-css-top" style="width: 45%">#}
+{#                        {%  for i in info_dict.rating.stars %}#}
+{#                        <span>★</span>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                    <div class="star-ratings-css-bottom">#}
+{#                        {%  for i in info_dict.rating.stars %}#}
+{#                        <span>★</span>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                {% endfor %}#}
+{#                Rate:{% ratings info_dict.contractor %}<br>#}
+{#                Efficiency: {% ratings info_dict.EfficiencyRate %}#}
+        </div>
+
+
+    </div>
+</div>
+

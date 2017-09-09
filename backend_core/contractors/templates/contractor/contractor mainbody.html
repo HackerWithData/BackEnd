@@ -1,0 +1,55 @@
+
+<div class="col-sm-6">
+
+    <!--summary-->
+    <div id="Summary">
+        <h3>Overview</h3><br>
+        {{ info_dict.overview }}
+        <br>
+        <span class="collapsed">
+         <a href="javascript:void(0)"> READ MORE</a>
+        </span>
+
+
+
+        <span class="expanded">
+            {{ info_dict.overview }}
+            {{ info_dict.overview }}
+            {{ info_dict.overview }}
+            <br>
+            <a href="javascript:void(0)">Less</a>
+        </span>
+
+
+    </div>
+
+    <!--photo-->
+    <div id="photo">
+        <h1>Photo</h1>
+        <div class="row">
+                {%  for image in info_dict.photo %}
+                {#                      <div class="numbertext">1 / {{ photo|length }}</div>#}
+                <div class="col-sm-12 col-md-6 col-lg-4 picstyle"><img class = 'cover img-responsive' src="{{ image.image.url }}"></div>
+                {% endfor %}
+            <br>
+
+
+        </div>
+    </div>
+    <hr>
+
+
+    <!--ratings and reviews-->
+{#    <div id="Review" >#}
+{#        <div calss="row">#}
+{#        <div id="contractor-header" class="contractor-header profile-info with-img'">#}
+{##}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#        </div>#}
+{#    <hr>#}
+    </div>
+
+
+

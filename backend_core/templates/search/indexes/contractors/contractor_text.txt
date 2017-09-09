@@ -1,0 +1,4 @@
+{{ object.inc_name }}
+{{ object.license_num }}
+{{ object.license_type }}
+{{ object.zipcode }}

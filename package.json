@@ -1,0 +1,23 @@
+{
+  "name": "vagrant",
+  "version": "1.0.0",
+  "description": "```\r     # Install VirtualBox from: www.virtualbox.org/wiki/Downloads\r     # Install Vagrant from: www.vagrantup.com/downloads.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Banana-Mango/Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Banana-Mango/Backend/issues"
+  },
+  "homepage": "https://github.com/Banana-Mango/Backend#readme",
+  "dependencies": {
+    "lesshat": "^4.1.0"
+  }
+}
