@@ -1,6 +1,6 @@
 {% block seach_bar %}
 <div class="row">
-     <form class="form" action="/search" method="get">
+     <form class="form" id="searchForm" action="/search" method="get">
           <!--{% for error in form.non_field_errors %}-->
           <!--<div class="form-group has-errors text-danger small">-->
           <!--{{error}}-->
@@ -30,9 +30,10 @@
                <!--</div>-->
                <div class="col-lg-4">
                     <div class="input-group">
-                         <label class="sr-only" for="inlineFromInputSearchLocation">Nearby</label>
-                         <spam class="input-group-addon">Nearby</spam>
-                         <input type="text" class="form-control" name="zipcode" id="inlineFromInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                         <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
+                         <spam class="input-group-addon" id="currentLocationAddon">Nearby</spam>
+                         <!--TODO: add dropdown in input for current location                       -->
+                        <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
                     </div>
                </div>
                <div class="col-lg-2">
@@ -42,12 +43,48 @@
      </form>
 </div>
 
-
     <!--<h2>Search</h2>-->
     <!--{% csrf_token %}-->
     <!--<input type="text" class="form-control" name="searchTargetType" id="inlineFormInputSearchTargetType" placeholder="For example: Designer" />-->
     <!--<ul id="contractor-search-results">-->
     <!---->
     <!--</ul>-->
+<script>
+    var coordinate;
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
 
+    $(function () {
+        $('#currentLocationAddon').click(function () {
+            getLocation()
+        });
+
+        $('#searchForm').submit(function (event) {
+           alert('submit is clicked');
+//           event.preventDefault();
+        });
+    });
+
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function receivePositionSuccess(position) {
+        coordinate = position.coords;
+        console.log(coordinate.longitude);
+        console.log(coordinate.latitude);
+    }
+
+    function receivePositionFail(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    };
+</script>
 {% endblock %}

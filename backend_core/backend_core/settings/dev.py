@@ -1,3 +1,4 @@
+from django.conf import settings
 from base import *
 
 # Database
@@ -31,3 +32,5 @@ def show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
+
+GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
