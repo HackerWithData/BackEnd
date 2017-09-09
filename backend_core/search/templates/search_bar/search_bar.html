@@ -68,7 +68,6 @@
         });
     });
 
-
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
@@ -81,10 +80,18 @@
         coordinate = position.coords;
         console.log(coordinate.longitude);
         console.log(coordinate.latitude);
+        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinate.latitude},${coordinate.longitude}&key={{ GOOGLE_API_KEY }}`,
+            receiveReversePosition);
     }
-
+    
     function receivePositionFail(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
-    };
+    }
+    
+//    function receiveReversePosition(results) {
+//        if (results.status !== 'OK') {
+//
+//        }
+//    }
 </script>
 {% endblock %}
