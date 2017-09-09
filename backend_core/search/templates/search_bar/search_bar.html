@@ -37,7 +37,7 @@
                     </div>
                </div>
                <div class="col-lg-2">
-                    <button class="btn btn-default" type="submit">Search</button>
+                    <button class="btn btn-default" id="searchButton" type="submit">Search</button>
                </div>
           </div>
      </form>
@@ -50,7 +50,8 @@
     <!---->
     <!--</ul>-->
 <script>
-    var coordinate;
+    var userCoordinate;
+    var userAddress;
     var options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -63,9 +64,27 @@
         });
 
         $('#searchForm').submit(function (event) {
-           alert('submit is clicked');
-//           event.preventDefault();
+            var formData = JSON.stringify($("#searchForm").serializeArray());
+            $.ajax({
+                type: "GET",
+                url: "{% url 'search_new' %}",
+                data: formData,
+                dataType: "html",
+                contentType : "application/json"})
+                .done(function () {
+
+                })
+                .fail(function () {
+
+                });
+            return userAddress;
+//            event.preventDefault();
         });
+        
+//        $('#searchButton').click(function () {
+////            TODO: check all data send back using ajaxStop
+//            $('#searchForm').submit();
+//        })
     });
 
     function getLocation() {
@@ -77,21 +96,27 @@
     }
 
     function receivePositionSuccess(position) {
-        coordinate = position.coords;
-        console.log(coordinate.longitude);
-        console.log(coordinate.latitude);
-        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinate.latitude},${coordinate.longitude}&key={{ GOOGLE_API_KEY }}`,
-            receiveReversePosition);
+        userCoordinate = position.coords;
+        console.log(userCoordinate);
+        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoordinate.latitude},${userCoordinate.longitude}&key={{ GOOGLE_API_KEY }}`, receiveReversePosition)
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+                console.warn(`ERROR: ${textStatus}`);
+            });
     }
     
     function receivePositionFail(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }
     
-//    function receiveReversePosition(results) {
-//        if (results.status !== 'OK') {
-//
-//        }
-//    }
+    function receiveReversePosition(response) {
+        if (response.results && response.results.length > 0) {
+            userAddress = response.results[0];
+            $('#inlineFormInputSearchLocation').val(userAddress);
+        } else {
+            console.warn('Error: response length less than 1');
+        }
+        console.log(userAddress);
+    }
 </script>
 {% endblock %}
