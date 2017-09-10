@@ -4,18 +4,27 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
-# # from forms import BaseSearchForm
-# from forms import TargetTypeSearchForm
+from django.urls import reverse
+import json
+
 from contractors.models import Contractor
+from search_helpers import search_by_zipcode, search_by_address_object_redirect_url
 
 
 def search_new(request):
-    if request.method == 'GET':
+    if request.is_ajax():
+        # TODO: deal with json data
+        if request.method == 'POST':
+            request_json = json.loads(request.body)
+            url = search_by_address_object_redirect_url(request_json)
+            return HttpResponse(reverse('search_new') + '?page=1&' + url)
+        else:
+            raise UnexpectedRequest("Error: Unexpected request type for new search ajax request")
+        return HttpResponse("Ok")
+
+    elif request.method == 'GET':
         # TODO: set default value
-        target = request.GET['target']
-        # keywords = request.GET['keywords']
-        zipcode = request.GET['zipcode']
-        query_set = Contractor.objects.filter(PosCode=zipcode).filter(LicType__icontains=target)
+        query_set = search_by_zipcode(request)
 
         # TODO: set customized item number per page, default = 10
         # pagination logic
@@ -59,3 +68,7 @@ def search_dispatch_test(request):
 #     contractors = Contractor.objects.filter(LicType__icontains=target_type_search_text)
 #
 #     return render_to_response('search_list/ajax_search_list.html', {'contractors': contractors})
+
+
+class UnexpectedRequest(Exception):
+    pass
