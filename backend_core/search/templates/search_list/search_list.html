@@ -60,18 +60,19 @@
 <script>
     var map;
     var geocoder;
-    var userZipcode = {{ zipcode }}
-    var contractors = {{ contractors }};
+    var userZipcode = "{{ zipcode }}";
+    var contractors = JSON.parse('{{ contractors_json | escapejs }}');
 
     function initMap() {
         //initial a geocoder
         geocoder = new google.maps.Geocoder();
+        console.log(contractors);
 
         //initial a map
         var mapProp = {
             //TODO: set to the location of user at first
             center: new google.maps.LatLng(51.508742,-0.120850),
-            zoom: 5
+            zoom: 15
         };
         map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
@@ -94,6 +95,7 @@
     function userGeocoderCallBack(results, status) {
         if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
+            addUserMarker(results);
         } else {
             console.warn(`Error: ${status}`);
             alert('Fail to access your current location');
@@ -101,7 +103,7 @@
     }
 
     function contractorGeocoderCallBack(results, status) {
-        if (status === 'Ok') {
+        if (status === 'OK') {
             var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
@@ -111,10 +113,18 @@
             console.warn(`Error(${status}): Cannot find location for contractor ID: `);
         }
     }
-    
-    function addContractorMarkers(contractors) {
+
+    function addUserMarker(results) {
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+    }
+
+    function addContractorMarkers() {
         contractors.forEach(function (contractor) {
-            geocoder.geocode({ 'address': `${contractor['Address']} ${contractor['County']} ${contractor['State']} ${contractor['PosCode']}`}, contractorGeocoderCallBack)
+            var address = `${contractor['fields']['Address']} ${contractor['fields']['County']} ${contractor['fields']['State']} ${contractor['fields']['PosCode']}`
+            geocoder.geocode({ 'address': address}, contractorGeocoderCallBack)
         });
     }
 </script>

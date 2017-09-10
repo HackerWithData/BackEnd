@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.urls import reverse
+from django.core import serializers
+from copy import deepcopy
 import json
 
 from contractors.models import Contractor
@@ -42,17 +44,15 @@ def search_new(request):
         get_copy = request.GET.copy()
         parameters = get_copy.pop('page', True) and get_copy.urlencode()
 
-        print parameters
-        # context['constractors'] =
-        # context = {
-        #     'contractors': page_query_set,
-        #     'parameters': parameters
-        # }
+        contractors_json = serializers.serialize("json", page_query_set.object_list)
+
     else:
         return redirect('home_index')
+
     return render(request, 'search_list/search_list.html', {
         'contractors': page_query_set,
-        'zipcode': request.GET.get('address'),
+        'contractors_json': contractors_json,
+        'zipcode': request.GET.get('zipcode'),
         'parameters': parameters
     })
 
