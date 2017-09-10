@@ -3,17 +3,17 @@ from __future__ import unicode_literals
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  #, EfficiencyRating #,ContractorRate
-from disk.models import UserFile, ProjectImage
+
 from review.models import Review
-from ratings.models import UserRating,Rating
+from ratings.models import UserRating, Rating
 from photos.models import Photo
 from django.contrib.contenttypes.models import ContentType
-from django.views import View
+from photos.models import BackgroundPhoto
 from photos.forms import PhotoForm
-from django.http import JsonResponse
-# Create your views here.
 import datetime
-from django.template.loader import render_to_string
+# Create your views here.
+
+
 
 def getStateFullName(state):
     FullName= "California"
@@ -27,9 +27,9 @@ def display_contractor(request, contractor_id):
     # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
     #contractor background image
     try:
-        uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
+        bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
     except:
-        uf = None
+        bgimage = None
 
     bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')
     bh = None
@@ -74,11 +74,11 @@ def display_contractor(request, contractor_id):
     ratings['stars'] = range(RATING_STAR_MAX)
     ratings['overall'] = ([5, 5 * 1.0 / 10],)  # (mean(contractor_ratings),mean(contractor_ratings)*1.0/RATING_STAR_MAX)
     try:
-        ratings['rate'] = [(item.average,round(item.average*1.0/RATING_STAR_MAX,2)) for item in contractor_ratings]
+        ratings['rate'] = [(item.average,round(item.average*1.0/RATING_STAR_MAX, 2)) for item in contractor_ratings]
     except:
         pass
 
-    info_dict = {"contractor": contractor, "bgimage": uf, "overview": overview,
+    info_dict = {"contractor": contractor, "bgimage": bgimage, "overview": overview,
                  "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review,
                  "ratings": ratings}
 
@@ -99,15 +99,15 @@ def update_accept_review(request):
 
 
 def display_project_photos(request, contractor_id):
-    template_name = 'contractor/contractor_project_photo.html'
-    contractor = Contractor.objects.get(LicNum=contractor_id)
-    project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
-    info_dict = {'project_photos': project_photos, 'contractor': contractor}
-    # if request.is_ajax():
-    #     html = render_to_string(template_name, {'info_dict': info_dict})
-    #     return HttpResponse(html)
-    # else:
-    if request.is_ajax():
+    if request.is_ajax() and request.method == "POST":
+        template_name = 'contractor/contractor_project_photo.html'
+        contractor = Contractor.objects.get(LicNum=contractor_id)
+        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+        info_dict = {'project_photos': project_photos, 'contractor': contractor}
+        # if request.is_ajax():
+        #     html = render_to_string(template_name, {'info_dict': info_dict})
+        #     return HttpResponse(html)
+        # else:
         return render(request, template_name, {'info_dict': info_dict})
     else:
         return HttpResponseNotFound('No Pages Found.')

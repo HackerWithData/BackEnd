@@ -13,6 +13,7 @@ from ratings.models import UserRating
 from models import Review
 import datetime
 from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseNotFound
 # Create your views here.
 
 
@@ -84,19 +85,22 @@ def submit_review(request, contractor_id):
 
 
 def display_review(request, contractor_id):
-    template_name = r'contractor/contractor_review.html'
+    if request.is_ajax() and request.method == "POST":
+        template_name = r'contractor/contractor_review.html'
 
-    contractor = Contractor.objects.get(LicNum=contractor_id)
-    try:
-        bgimage = UserFile.objects.get(userName=contractor.BusName).uploadFile
-    except:
-        bgimage = None
+        contractor = Contractor.objects.get(LicNum=contractor_id)
+        try:
+            bgimage = UserFile.objects.get(userName=contractor.BusName).uploadFile
+        except:
+            bgimage = None
 
-    review = Review.objects.filter(contractor=contractor, review_status='A')
+        review = Review.objects.filter(contractor=contractor, review_status='A')
 
-    #other situation
-    info_dict = {"contractor": contractor, "bgimage": bgimage, "review": review}
-    return render(request, template_name, {"info_dict": info_dict})
+        #other situation
+        info_dict = {"contractor": contractor, "bgimage": bgimage, "review": review}
+        return render(request, template_name, {"info_dict": info_dict})
+    else:
+        return HttpResponseNotFound('No Pages Found.')
 
 
 
