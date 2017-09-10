@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.db.models import Count, Min, Sum, Avg
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  #, EfficiencyRating #,ContractorRate
 from disk.models import UserFile, ProjectImage
@@ -13,20 +13,18 @@ from photos.forms import PhotoForm
 from django.http import JsonResponse
 # Create your views here.
 import datetime
+from django.template.loader import render_to_string
 
 def getStateFullName(state):
     FullName= "California"
     return FullName
 
-
+# TODO: add a overview database
 def display_contractor(request, contractor_id):
     #contractor info
     contractor = Contractor.objects.get(LicNum=contractor_id)
-    #project photo
-    photo = ProjectImage.objects.filter(userName=contractor.BusName)
-    #print vars(photo)
-    #print(UserFile.objects.get(userName=contractor.BusName).uploadFile)
-
+    # #project photo
+    # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
     #contractor background image
     try:
         uf = UserFile.objects.get(userName=contractor.BusName).uploadFile
@@ -80,8 +78,9 @@ def display_contractor(request, contractor_id):
     except:
         pass
 
-    info_dict = {"contractor": contractor, 'photo': photo, "bgimage": uf, "overview": overview,
-                 "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review, "ratings": ratings}#"rate":rate,"E_rate":E_rate,"EfficiencyRate":EfficiencyRate}
+    info_dict = {"contractor": contractor, "bgimage": uf, "overview": overview,
+                 "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review,
+                 "ratings": ratings}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
@@ -103,10 +102,16 @@ def display_project_photos(request, contractor_id):
     template_name = 'contractor/contractor_project_photo.html'
     contractor = Contractor.objects.get(LicNum=contractor_id)
     project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
-    #print(project_photos)
     info_dict = {'project_photos': project_photos, 'contractor': contractor}
+    # if request.is_ajax():
+    #     html = render_to_string(template_name, {'info_dict': info_dict})
+    #     return HttpResponse(html)
+    # else:
+    if request.is_ajax():
+        return render(request, template_name, {'info_dict': info_dict})
+    else:
+        return HttpResponseNotFound('No Pages Found.')
 
-    return render(request, template_name, {'info_dict': info_dict})
 
 def upload_project_photos(request, contracotr_id):
     template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
