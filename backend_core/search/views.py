@@ -52,6 +52,7 @@ def search_new(request):
         return redirect('home_index')
     return render(request, 'search_list/search_list.html', {
         'contractors': page_query_set,
+        'zipcode': request.GET.get('address'),
         'parameters': parameters
     })
 

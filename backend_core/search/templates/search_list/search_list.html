@@ -58,15 +58,67 @@
 
 
 <script>
-    function myMap() {
-        var mapProp= {
-            center:new google.maps.LatLng(51.508742,-0.120850),
-            zoom:5,
+    var map;
+    var geocoder;
+    var userZipcode = {{ zipcode }}
+    var contractors = {{ contractors }};
+
+    function initMap() {
+        //initial a geocoder
+        geocoder = new google.maps.Geocoder();
+
+        //initial a map
+        var mapProp = {
+            //TODO: set to the location of user at first
+            center: new google.maps.LatLng(51.508742,-0.120850),
+            zoom: 5
         };
-        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        //set map center
+        geocoder.geocode(
+            {
+                'address': userZipcode,
+                'componentRestrictions': {
+                    //TODO: add other countries in the future
+                    'country': 'US'
+                }
+            },
+            userGeocoderCallBack
+        );
+
+        //add markers
+        addContractorMarkers(contractors);
+    }
+
+    function userGeocoderCallBack(results, status) {
+        if (status === 'OK') {
+            map.setCenter(results[0].geometry.location);
+        } else {
+            console.warn(`Error: ${status}`);
+            alert('Fail to access your current location');
+        }
+    }
+
+    function contractorGeocoderCallBack(results, status) {
+        if (status === 'Ok') {
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        } else {
+            //TODO: add specific ID for contractor fail to get marker
+            console.warn(`Error(${status}): Cannot find location for contractor ID: `);
+        }
+    }
+    
+    function addContractorMarkers(contractors) {
+        contractors.forEach(function (contractor) {
+            geocoder.geocode({ 'address': `${contractor['Address']} ${contractor['County']} ${contractor['State']} ${contractor['PosCode']}`}, contractorGeocoderCallBack)
+        });
     }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=myMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap"></script>
 
 {% endblock %}
