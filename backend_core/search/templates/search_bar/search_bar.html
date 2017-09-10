@@ -28,7 +28,7 @@
                          <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
                          <spam class="input-group-addon" id="currentLocationAddon">Nearby</spam>
                          <!--TODO: add dropdown in input for current location                       -->
-                        <input type="text" class="form-control" name="location" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                        <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
                     </div>
                </div>
                <div class="col-lg-2">
@@ -40,8 +40,14 @@
 
 
 <script>
+    <!--address input enums-->
+    const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
+    const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
+
     var userCoordinate;
     var userAddress;
+    var searchLocationType;
+
     var options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -50,30 +56,43 @@
 
     $(function () {
         $('#currentLocationAddon').click(function () {
-            getLocation()
+            getLocation();
+        });
+
+        $('#inlineFormInputSearchLocation').keyup(function () {
+            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
         });
 
         $('#searchForm').submit(function (event) {
-            event.preventDefault();
-            var formData = {
-                'target': $('#inlineFormInputSearchTargetType').val(),
-                'address': userAddress ? userAddress : $('#inlineFormInputSearchLocation').val()
-            };
-            $.ajax({
-                type: "POST",
-                beforeSend: function (request) {
-                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                },
-                url: "{% url 'search_new' %}",
-                data: JSON.stringify(formData),
-                dataType: "text",
-                contentType : "application/json"})
-                .done(function (redirect_url) {
-                    window.location.href = redirect_url;
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.warn(`ERROR: ${textStatus}`);
-                });
+            switch (searchLocationType) {
+                case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
+                    event.preventDefault();
+                    var formData = {
+                        'target': $('#inlineFormInputSearchTargetType').val(),
+                        'address': userAddress
+                    };
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                        },
+                        url: "{% url 'search_new' %}",
+                        data: JSON.stringify(formData),
+                        dataType: "text",
+                        contentType : "application/json"})
+                        .done(function (redirect_url) {
+                            window.location.href = redirect_url;
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.warn(`ERROR: ${textStatus}`);
+                        });
+                    break;
+                case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
+                    break;
+                default:
+                    console.warn('ERROR: Unexpected location input flow');
+                    break;
+            }
         });
         
 //        $('#searchButton').click(function () {
@@ -107,6 +126,7 @@
     function receiveReversePosition(response) {
         if (response.results && response.results.length > 0) {
             userAddress = response.results[0];
+            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
             $('#inlineFormInputSearchLocation').val('Current Location');
         } else {
             console.warn('Error: response length less than 1');
