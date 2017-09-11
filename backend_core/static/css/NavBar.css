@@ -78,7 +78,6 @@
 
 /* footer */
 .footer{
-    position: absolute;
     bottom: 10px;
     right: 0px;
     width: 100%;
@@ -111,20 +110,122 @@
 }
 
 /* button */
-.btn {
+#sign-in-btn {
     background-color: black;
 }
 
-.hr-line{
-    border:none;
-    border-top:1px solid #ccc;
-    border-bottom:1px solid transparent;
-    text-align:center;
-    margin:12px 0
+
+/*login wrapper*/
+.login-wrapper{
+    margin-top: 50px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:auto;
+    padding-bottom:300px;
+    padding: 0 25%;
 }
-.hr-line legend{
-    font-size:1em;
-    padding:0 15px;
-    margin:0 auto;
-    color:#666
+/* third part Oauth*/
+.thirdparty a {
+    width: 200px;
+
+}
+.thirdparty a:checked, .thirdparty a:active {
+    color: #FFFFFF;
+}
+
+.btn-facebook {
+    background-color: #3B5998;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.btn-twitter {
+    background-color: #55ACEE;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.btn-google {
+    background-color: #DD4B39;
+    color: #FFFFFF;
+    text-align: center;
+}
+/*media*/
+
+@media only screen and  (min-width:219px){
+}
+@media only screen and  (min-width:768px){
+}
+
+@media only screen and  (min-width:991px){
+    .search-button {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    }
+
+}
+@media only screen and  (min-width:1200px){
+
+}
+
+@media only screen and (max-width:768px) {
+    #searchForm {
+        padding-left: 0;
+        padding-bottom: 200px;
+    }
+    .main .motto{
+        width:100%;
+        font-size: 1em;
+    }
+    .search-button {
+        width: auto;
+        padding: 5px 10%;
+        height: auto;
+    }
+    .search-button #searchButton {
+        margin-top: 5%;
+        float: right;
+    }
+    #inlineFormInputSearchTargetType, #inlineFormInputSearchLocation, #searchButton {
+        height: auto;
+    }
+    .login-wrapper{
+    width:auto;
+    }
+}
+
+/*font awesome icon*/
+/*.thirdparty .i{*/
+/*width: ;*/
+/*}*/
+
+/* horizontal line divider */
+.hld {
+  position: relative;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase; }
+  .hld:before {
+    position: absolute;
+    top: 50%;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: #434857; }
+
+/* horizontal line word */
+.hlw {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: black;
+  vertical-align: middle;
+  background-color: #ffffff;
+  font-size:0.5em;
 }

@@ -10,7 +10,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 /*           Font Smoothing      */
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-simple{
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
@@ -160,47 +160,19 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-s
 .btn {
     background-color: #FFFFFF;
 }
-/*media*/
+.footer{
+    position: fixed;
+    bottom: 10px;
+    right: 0px;
+    width: 100%;
+    color: #AAAAAA;
+    z-index: 4;
+    text-align: center;
 
-@media only screen and  (min-width:219px){
 }
-@media only screen and  (min-width:768px){
-}
-
-@media only screen and  (min-width:991px){
-    .search-button {
-    margin: 0px;
-    padding: 0px;
-    border-width: 0px;
-    }
+@media only screen and (min-width:991px){
     .footer{
         position: fixed;
         bottom: 20px;
-    }
-}
-@media only screen and  (min-width:1200px){
-
-}
-
-@media only screen and (max-width:768px) {
-    #searchForm {
-        padding-left: 0;
-        padding-bottom: 200px;
-    }
-    .main .motto{
-        width:100%;
-        font-size: 1em;
-    }
-    .search-button {
-        width: auto;
-        padding: 5px 10%;
-        height: auto;
-    }
-    .search-button #searchButton {
-        margin-top: 5%;
-        float: right;
-    }
-    #inlineFormInputSearchTargetType, #inlineFormInputSearchLocation, #searchButton {
-        height: auto;
     }
 }
