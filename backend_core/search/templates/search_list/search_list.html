@@ -61,12 +61,18 @@
     var map;
     var geocoder;
     var userZipcode = "{{ zipcode }}";
-    var contractors = JSON.parse('{{ contractors_json | escapejs }}');
+    var contractors = [];
+
+//    contractor: [
+//        {
+//            'item': Contractor object, geo info in fields
+//            'marker': Marker object
+//        }
+//    ]
 
     function initMap() {
         //initial a geocoder
         geocoder = new google.maps.Geocoder();
-        console.log(contractors);
 
         //initial a map
         var mapProp = {
@@ -89,7 +95,7 @@
         );
 
         //add markers
-        addContractorMarkers(contractors);
+        addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
     }
 
     function userGeocoderCallBack(results, status) {
@@ -102,12 +108,14 @@
         }
     }
 
-    function contractorGeocoderCallBack(results, status) {
+    function contractorGeocoderCallBack(results, status, contractor) {
         if (status === 'OK') {
             var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
             });
+            contractors.push({ 'item': contractor, 'marker': marker });
+            console.log(contractors);
         } else {
             //TODO: add specific ID for contractor fail to get marker
             console.warn(`Error(${status}): Cannot find location for contractor ID: `);
@@ -121,10 +129,12 @@
         });
     }
 
-    function addContractorMarkers() {
-        contractors.forEach(function (contractor) {
+    function addContractorMarkers(contractorList) {
+        contractorList.forEach(function (contractor) {
             var address = `${contractor['fields']['Address']} ${contractor['fields']['County']} ${contractor['fields']['State']} ${contractor['fields']['PosCode']}`
-            geocoder.geocode({ 'address': address}, contractorGeocoderCallBack)
+            geocoder.geocode({ 'address': address}, function (result, status) {
+                contractorGeocoderCallBack(result, status, contractor);
+            });
         });
     }
 </script>
