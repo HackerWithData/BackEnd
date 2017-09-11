@@ -48,6 +48,11 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 
 /*** masthead ***/
+/* master head */
+#masthead a, #masthead .lead {
+    color:#aaaacc;
+}
+
 @media screen and (min-width: 768px) {
     #masthead h1 {
         font-size: 100px;
@@ -145,6 +150,6 @@ margin: 0px
 
 .contractor-block {
     padding: 10px;
-    border-width: 2px 2px auto 2px;
+    border-width: 2px 2px 2px 2px;
     border-style: solid;
 }

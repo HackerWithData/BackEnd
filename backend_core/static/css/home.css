@@ -1,10 +1,4 @@
 /*     General overwrite     */
-a{
-    color: #2C93FF;
-}
-a:hover, a:focus {
-    color: #1084FF;
-}
 a:focus, a:active,
 button::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
@@ -16,54 +10,11 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 /*           Font Smoothing      */
-
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-simple{
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
-
 /*           Typography          */
-
-h1, .h1, h2, .h2, h3, .h3, h4, .h4{
-    font-weight: 400;
-    margin: 30px 0 15px;
-}
-
-h1, .h1 {
-    font-size: 52px;
-}
-h2, .h2{
-    font-size: 36px;
-}
-h3, .h3{
-    font-size: 28px;
-    margin: 20px 0 10px;
-}
-h4, .h4{
-    font-size: 22px;
-}
-h5, .h5 {
-    font-size: 16px;
-}
-h6, .h6{
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-p{
-    font-size: 16px;
-    line-height: 1.6180em;
-}
-h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
-    color: #999999;
-    font-weight: 300;
-    line-height: 1;
-}
-h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
-    font-size: 60%;
-}
-
-
 .main{
     background-position: center center;
     background-size: cover;
@@ -100,11 +51,9 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
 .cover.red{
     background-color: rgba(35, 3, 2, 0.66);
 }
-
 .blur{
   opacity:0;
 }
-
 .logo-container{
     left: 50px;
     position: absolute;
@@ -149,19 +98,13 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
     font-family: 'Raleway', Helvetica, Arial, sans-serif;
     min-height: 140px;
     padding: 0 25%;
-}
-.main .motto, .main .subscribe .info-text{
     font-size: 28px;
     color: #FFFFFF;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
     text-align: center;
     margin-top: 50px;
+}
 
-}
-.main .subscribe .info-text{
-    font-size: 18px;
-    margin-bottom: 30px;
-}
 #video_background {
     position: fixed;
     top: 0px;
@@ -174,7 +117,7 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
     height: auto;
     z-index: 1;
     overflow: hidden;
-    background-image: url('media/homepage/video_bg.jpg');
+    background-image: url('../../media/homepage/video_bg.jpg');
     background-position: center center;
     background-size: cover;
 
@@ -190,51 +133,74 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
     z-index: 1;
 }
 
-.footer{
-    position: relative;
-    bottom: 20px;
-    right: 0px;
-    width: 100%;
-    color: #AAAAAA;
-    z-index: 4;
-    text-align: right;
-    margin-top: 50px;
+/*** search button ***/
+.search-button {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
 }
-.footer a{
-    color: #FFFFFF;
+#searchForm {
+    padding-left: 10%;
 }
-.footer .heart{
-    color: #FF3B30;
+.input-group > label, .input-group > spam {
+    border-width: 0px;
+}
+#inlineFormInputSearchTargetType,#inlineFormInputSearchLocation,#searchButton {
+        margin: 0px;
+        border-width: 0px;
+        border-radius: 0px;
+        height:30px;
 }
 
-@media (min-width:219px){
-    .main .subscribe .form-group{
-        width: auto;
-    }
-    .main .subscribe .form-inline .btn{
-        width: 100%;
-    }
+.footer a {
+        color: #FFFFFF;
 }
-@media (min-width:768px){
-    .main .subscribe .form-inline .btn{
-        width: auto;
-    }
+
+/* button */
+.btn {
+    background-color: #FFFFFF;
 }
-@media (min-width:991px){
-    .main .subscribe .form-group{
-        width: 190px;
+/*media*/
+
+@media only screen and  (min-width:219px){
+}
+@media only screen and  (min-width:768px){
+}
+
+@media only screen and  (min-width:991px){
+    .search-button {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
     }
     .footer{
         position: fixed;
         bottom: 20px;
     }
 }
-@media (min-width:1200px){
-    .main .subscribe .form-group{
-        width: 250px;
-    }
+@media only screen and  (min-width:1200px){
+
 }
 
-
-
-
+@media only screen and (max-width:768px) {
+    #searchForm {
+        padding-left: 0;
+        padding-bottom: 200px;
+    }
+    .main .motto{
+        width:100%;
+        font-size: 1em;
+    }
+    .search-button {
+        width: auto;
+        padding: 5px 10%;
+        height: auto;
+    }
+    .search-button #searchButton {
+        margin-top: 5%;
+        float: right;
+    }
+    #inlineFormInputSearchTargetType, #inlineFormInputSearchLocation, #searchButton {
+        height: auto;
+    }
+}

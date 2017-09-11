@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/NavBar.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/ajax.js' %}"></script>
     <style>
     </style>
 {#    <link rel="stylesheet" href="{% static 'css/login-form.css' %}">#}
@@ -46,8 +47,8 @@
               <ul class="nav navbar-nav">
                 <li><a href="/">Find your address</a></li>
                 <li><a href="/">Projects</a></li>
-                <li><a class="dropdown-item" href="{% url 'login' %}">User Sign In</a></li>
-                <li> <a class="dropdown-item" href="#">Contractor Sing In</a></li>
+                <li><a href="{% url 'login' %}">User Sign In</a></li>
+                <li> <a href="#">Contractor Sign In</a></li>
               </ul>
             </nav>
           </div>
@@ -66,6 +67,20 @@
     {% endblock %}
 
     {% block footer %}
+    <div class="footer">
+            <div class="row footer-wrapper">
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="row copyright-wrapper">
+            Copyright © 2017 <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>. All Rights Reserved.
+            </div>
+    </div>
     {% endblock %}
 
 
