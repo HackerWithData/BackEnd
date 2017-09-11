@@ -1,58 +1,88 @@
-body {
-    padding-top:50px;
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
 }
+
+/*body {*/
+    /*padding-top:50px;*/
+/*}*/
 
 .icon-bar {
     background-color:#fff;
 }
+
+
+.logo.cursive{
+    font-family: 'Grand Hotel',cursive;
+    font-size: 1.5em;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
+.navbar-bright nav{
+    float: right;
+}
+
+.navbar-bright {
+    background-color:rgb(0, 0, 0);
+    color:#fff;
+}
+
+.navbar-bright nav ul{
+    list-style: none;
+    overflow: hidden;
+    float: left;
+}
+
+.navbar-bright nav ul li{
+    float: left;
+    margin-left: 50px;
+}
+
+
+.navbar-bright li > a:hover {
+    background-color:#fff;
+}
+
+
+
+.navbar-bright nav ul li a,
+.navbar-bright nav .login_btn{
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+
+}
+
+.navbar-bright nav .login_btn{
+    float: right;
+    margin: 30px 0 0 50px;
+    padding: 10px 30px 11px 30px;
+    border: 2px solid #ffffff;
+    background: transparent;
+
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -o-transition: all .1s linear;
+}
+
+.navbar-bright nav .login_btn:hover{
+    background: #ffffff;
+    color: #1c3655;
+}
+
+/* master head */
 @media screen and (min-width: 768px) {
     #masthead h1 {
         font-size: 100px;
     }
 }
-/* hide sidebar sub menus by default */
-#sidebar.nav .nav {
-    display: none;
-    font-size:12px;
-}
 
-/* show sub menu when parent is active */
-#sidebar.nav>.active>ul {
-    display: block;
-}
-
-.navbar-bright {
-    background-color:#111155;
-    color:#fff;
-}
-
-.navbar-bright a, #masthead a, #masthead .lead {
+#masthead a, #masthead .lead {
     color:#aaaacc;
-}
-
-.navbar-bright li > a:hover {
-    background-color:#000033;
-}
-
-.affix-top,.affix{
-    position: static;
-}
-
-@media (min-width: 979px) {
-  #sidebar.affix-top {
-    position: static;
-    margin-top:30px;
-    width:228px;
-  }
-
-  #sidebar.affix {
-    position: fixed;
-    top:70px;
-    width:228px;
-  }
-}
-
-#sidebar li.active {
-    border:0 #eee solid;
-    border-right-width:4px;
 }

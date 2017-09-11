@@ -121,9 +121,7 @@ margin: 0px
 }
 
 /**** set all div with 0px padding and margin ****/
-*,body {
-    padding: 0px;
-    margin: 0px;
+*, body {
     font-family: 'Raleway', sans-serif;
 }
 

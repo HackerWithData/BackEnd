@@ -9,7 +9,6 @@ from contractors.models import Contractor
 from django.contrib.contenttypes.models import ContentType
 import datetime
 import pytz
-from tzlocal import get_localzone
 import os
 # Create your views here.
 class BasicUploadView(View):
