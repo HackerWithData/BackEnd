@@ -8,6 +8,7 @@ clay-flask==2.1.5
 click==6.7
 colorama==0.3.9
 construct==2.5.3
+Django==1.11.4
 django-debug-toolbar==1.8
 django-filter==1.0.4
 django-haystack==2.6.1
