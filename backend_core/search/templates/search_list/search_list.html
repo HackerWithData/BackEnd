@@ -108,13 +108,13 @@
         }
     }
 
-    function contractorGeocoderCallBack(results, status, contractor) {
+    function contractorGeocoderCallBack(results, status, contractor, index) {
         if (status === 'OK') {
             var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
             });
-            contractors.push({ 'item': contractor, 'marker': marker });
+            contractors[index]({ 'item': contractor, 'marker': marker, 'index': index });
             console.log(contractors);
         } else {
             //TODO: add specific ID for contractor fail to get marker
@@ -130,12 +130,12 @@
     }
 
     function addContractorMarkers(contractorList) {
-        contractorList.forEach(function (contractor) {
-            var address = `${contractor['fields']['Address']} ${contractor['fields']['County']} ${contractor['fields']['State']} ${contractor['fields']['PosCode']}`
+        for (let i = 0; i < contractorList.length; i++) {
+            var address = `${contractorList[i]['fields']['Address']} ${contractorList[i]['fields']['County']} ${contractorList[i]['fields']['State']} ${contractorList[i]['fields']['PosCode']}`
             geocoder.geocode({ 'address': address}, function (result, status) {
-                contractorGeocoderCallBack(result, status, contractor);
+                contractorGeocoderCallBack(result, status, contractorList[i], i);
             });
-        });
+        }
     }
 </script>
 
