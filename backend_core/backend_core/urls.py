@@ -25,7 +25,7 @@ from photos import views as photoview
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # home page
-    url(r'^welcome/', include('home.urls')),
+    url(r'^$', include('home.urls')),
     # sign up
     url(r'^signup/', include('users.urls')),
     # login

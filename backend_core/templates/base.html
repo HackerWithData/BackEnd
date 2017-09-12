@@ -4,15 +4,20 @@
 <head>
     <title>Hoome</title>
     <meta charset="utf-8">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/NavBar.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/ajax.js' %}"></script>
+    <style>
+    </style>
+{#    <link rel="stylesheet" href="{% static 'css/login-form.css' %}">#}
 
-    <link rel="stylesheet" href="{% static 'css/FixedLeftNavBar.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/login-form.css' %}">
     <!-- add additional style or infor-->
     {% block metainfo %}
 
@@ -21,53 +26,66 @@
 </head>
 <body >
     <!--nav bar start-->
-    <div class="container top-nav-head">
     {% block nav %}
        <header class="navbar navbar-bright navbar-fixed-top" role="banner">
           <div class="container">
             <div class="navbar-header">
+                <a href="/" class="navbar-brand">
+                    <h1 class="logo cursive">
+                        Hoome
+                    </h1>
+                </a>
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a href="/" class="navbar-brand">[placeholder]Place brand image</a>
+
             </div>
             <nav class="collapse navbar-collapse" role="navigation">
               <ul class="nav navbar-nav">
-                <li><a href="#sec">Find your address</a></li>
-                <li><a href="#sec">Projects</a></li>
-                <li><a href="{% url 'login' %}">Sign in</a></li>
-                <li><a href="#sec">Contractor signin</a></li>
+                <li><a href="/">Find your address</a></li>
+                <li><a href="/">Projects</a></li>
+                <li><a href="{% url 'login' %}">User Sign In</a></li>
+                <li> <a href="#">Contractor Sign In</a></li>
               </ul>
             </nav>
           </div>
         </header>
     {% endblock %}
-    </div>
-    <div class="header-container">
+
     {% block header %}
     {% endblock %}
-    </div>
+
     <!--nav bar end-->
 
-    <div class="banner-container">
     {% block banner %}
     {% endblock %}
-    </div>
 
-    <div class="content-container">
     {% block content %}
     {% endblock %}
-    </div>
 
-    <div class="footer-container">
     {% block footer %}
-    {% endblock %}
+    <div class="footer">
+            <div class="row footer-wrapper">
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="row copyright-wrapper">
+            Copyright © 2017 <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>. All Rights Reserved.
+            </div>
     </div>
+    {% endblock %}
+
+
+</body>
 
     {% block javascript %}
     {% endblock %}
-</body>
 </html>

@@ -1,0 +1,206 @@
+/*     General overwrite     */
+a:focus, a:active,
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    outline : 0;
+}
+
+/*           Font Smoothing      */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-simple{
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+/*           Typography          */
+.main{
+    background-position: center center;
+    background-size: cover;
+    height: auto;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    top: 0;
+    width: auto;
+}
+.cover{
+    position: fixed;
+    opacity: 1;
+    background-color: rgba(0,0,0,.6);
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.cover.black{
+    background-color: rgba(0,0,0,.6);
+}
+.cover.blue{
+    background-color: rgba(5, 31, 60, 0.6);
+}
+.cover.green{
+    background-color: rgba(3, 28, 7, 0.6);
+}
+.cover.orange{
+    background-color: rgba(37, 28, 5, 0.6);
+}
+.cover.red{
+    background-color: rgba(35, 3, 2, 0.66);
+}
+.blur{
+  opacity:0;
+}
+.logo-container{
+    left: 50px;
+    position: absolute;
+    top: 20px;
+     z-index: 3;
+}
+.logo-container .logo{
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    width: 60px;
+    float: left;
+}
+.logo-container .brand{
+    font-size: 18px;
+    color: #FFFFFF;
+    line-height: 20px;
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 60px
+}
+.main .logo{
+    color: #FFFFFF;
+    font-size: 56px;
+    font-weight: 300;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.33);
+    margin-top: 150px;
+    z-index: 3;
+}
+.main .logo.cursive{
+    font-family: 'Grand Hotel',cursive;
+    font-size: 82px;
+}
+.main .content{
+    position: relative;
+    z-index: 4;
+}
+.main .motto{
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    min-height: 140px;
+    padding: 0 25%;
+    font-size: 28px;
+    color: #FFFFFF;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
+    text-align: center;
+    margin-top: 50px;
+}
+
+#video_background {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    overflow: hidden;
+    background-image: url('../../media/homepage/video_bg.jpg');
+    background-position: center center;
+    background-size: cover;
+
+}
+#video_pattern {
+    position: fixed;
+    opacity: 0.6;
+    background-color: rgba(0,0,0,.45);
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/*** search button ***/
+.search-button {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+}
+#searchForm {
+    padding-left: 10%;
+}
+.input-group > label, .input-group > spam {
+    border-width: 0px;
+}
+#inlineFormInputSearchTargetType,#inlineFormInputSearchLocation,#searchButton {
+        margin: 0px;
+        border-width: 0px;
+        border-radius: 0px;
+        height:30px;
+}
+
+.footer a {
+        color: #FFFFFF;
+}
+
+/* button */
+.btn {
+    background-color: #FFFFFF;
+}
+/*media*/
+
+@media only screen and  (min-width:219px){
+}
+@media only screen and  (min-width:768px){
+}
+
+@media only screen and  (min-width:991px){
+    .search-button {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    }
+    .footer{
+        position: fixed;
+        bottom: 20px;
+    }
+}
+@media only screen and  (min-width:1200px){
+
+}
+
+@media only screen and (max-width:768px) {
+    #searchForm {
+        padding-left: 0;
+        padding-bottom: 200px;
+    }
+    .main .motto{
+        width:100%;
+        font-size: 1em;
+    }
+    .search-button {
+        width: auto;
+        padding: 5px 10%;
+        height: auto;
+    }
+    .search-button #searchButton {
+        margin-top: 5%;
+        float: right;
+    }
+    #inlineFormInputSearchTargetType, #inlineFormInputSearchLocation, #searchButton {
+        height: auto;
+    }
+}

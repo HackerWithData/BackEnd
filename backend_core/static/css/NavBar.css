@@ -1,0 +1,130 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+}
+
+/*body {*/
+    /*padding-top:50px;*/
+/*}*/
+
+.icon-bar {
+    background-color:#fff;
+}
+
+
+.logo.cursive{
+    font-family: 'Grand Hotel',cursive;
+    font-size: 1.5em;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
+.navbar-bright nav{
+    float: right;
+}
+
+.navbar-bright {
+    background-color:rgb(0, 0, 0);
+    color:#fff;
+}
+
+.navbar-bright nav ul{
+    list-style: none;
+    overflow: hidden;
+    float: left;
+}
+
+.navbar-bright nav ul li{
+    float: left;
+    margin-left: 50px;
+}
+
+
+.navbar-bright li > a:hover {
+    background-color:rgba(112,128,144,0.5);
+}
+
+.navbar-bright nav ul li a,
+.navbar-bright nav .login_btn{
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+
+}
+
+.navbar-bright nav .login_btn{
+    float: right;
+    margin: 30px 0 0 50px;
+    padding: 10px 30px 11px 30px;
+    border: 2px solid #ffffff;
+    background: transparent;
+
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -o-transition: all .1s linear;
+}
+
+.navbar-bright nav .login_btn:hover{
+    background: #ffffff;
+    color: #1c3655;
+}
+
+
+
+/* footer */
+.footer{
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+    width: 100%;
+    color: #AAAAAA;
+    z-index: 4;
+    text-align: center;
+
+}
+.footer a{
+    color: #000000;
+}
+/*TODO: may be need to move the footer to the left*/
+/*.footer .footer-wrapper{*/
+    /*width: 100%;*/
+    /*padding-left: 10%;*/
+/*}*/
+/*.footer .footer-wrapper ul {*/
+    /*float: left;*/
+/*}*/
+
+.footer .footer-wrapper ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0px 5px;
+
+}
+
+.footer .copyright-wrapper{
+    padding-bottom:5px;
+}
+
+/* button */
+.btn {
+    background-color: black;
+}
+
+.hr-line{
+    border:none;
+    border-top:1px solid #ccc;
+    border-bottom:1px solid transparent;
+    text-align:center;
+    margin:12px 0
+}
+.hr-line legend{
+    font-size:1em;
+    padding:0 15px;
+    margin:0 auto;
+    color:#666
+}

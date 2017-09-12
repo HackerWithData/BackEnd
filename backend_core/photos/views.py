@@ -5,12 +5,11 @@ from django.http import JsonResponse
 from django.views import View
 from forms import PhotoForm, FileFieldForm, BackgroundPhotoForm
 from models import Photo, FileField, BackgroundPhoto
-#from django.views.generic.edit import FormView
 from contractors.models import Contractor
 from django.contrib.contenttypes.models import ContentType
 import datetime
-
-
+import pytz
+import os
 # Create your views here.
 class BasicUploadView(View):
     def get(self, request):
@@ -37,22 +36,23 @@ class BasicUploadView(View):
         return JsonResponse(data)
 
 #@login_required
-def background_photo_upload(request):
+def background_photo_upload(request,contractor_id):
     template_name = 'photos/background_photo_upload.html'
     success_url = "disk/uploadsuccess.html"
     if request.method == 'POST':
         form = BackgroundPhotoForm(request.POST, request.FILES)
-
         if form.is_valid():
-            contractor = Contractor.objects.get(pk='1025362')
-            BP = BackgroundPhoto.objects.get_or_create(content_type=ContentType.objects.get(model='contractor'),
-                                                       object_id=contractor.LicNum)[0]
-            print(BP)
-            BP.img = form.cleaned_data.get('img')
-            BP.uploaded_at = datetime.datetime.now()
+            bp, created = BackgroundPhoto.objects.get_or_create(content_type=ContentType.objects.get(model='contractor'),
+                                                                object_id=contractor_id)
 
+            if not created:
+                old_pic_path = bp.img.file.name
 
-            BP.save()
+                bp.img = form.cleaned_data.get('img')
+                bp.title = form.cleaned_data.get('img').name
+                bp.uploaded_at = datetime.datetime.now(pytz.timezone('UTC'))
+            bp.save()
+            os.remove(old_pic_path)
             return render(request, success_url)
     else:
         form = BackgroundPhotoForm()

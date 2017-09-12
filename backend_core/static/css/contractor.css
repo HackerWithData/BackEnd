@@ -1,5 +1,4 @@
 
-
 /*********************rating start in review to pick ****************/
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
@@ -48,7 +47,12 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 
-/*** ***/
+/*** masthead ***/
+/* master head */
+#masthead a, #masthead .lead {
+    color:#aaaacc;
+}
+
 @media screen and (min-width: 768px) {
     #masthead h1 {
         font-size: 100px;
@@ -66,6 +70,8 @@ h1 { font-size: 1.5em; margin: 10px; }
     background-color:rgba(51,102,204,0.5);
 }
 
+
+/* other information*/
 .horizontal-list ul{
     type: None;
     display: table;
@@ -117,4 +123,33 @@ margin: 0px
 
 .professional-menu ul li {
     display: inline-block;
+}
+
+/**** set all div with 0px padding and margin ****/
+*, body {
+    font-family: 'Raleway', sans-serif;
+}
+
+/*** set the side of container ***/
+#mainbody {
+    margin: auto 50px;
+}
+
+#left-col {
+    padding-right: 15px;
+}
+
+#mid-col {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#right-col {
+    padding-left: 15px;
+}
+
+.contractor-block {
+    padding: 10px;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
 }

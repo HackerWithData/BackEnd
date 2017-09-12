@@ -2,22 +2,38 @@
 
 {% block content %}
 <div class="container">
-  <div class="row" style="margin-top: 300px;" >
-      <div class="col-lg-12">
-          <form  method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary" id="sign-in-btn">Login</button>
-          </form>
-      </div>
-      <div class="col-lg-6">
-          <a href="{% url 'signup' %}">No account? Sign up right now!!!</a>
-      </div>
-      <div class="col-lg-6">
-          <a href="{% url 'password_reset' %}">Forget Password</a>
-      </div>
-  </div>
+    <div class="row" >
+        <div class="col-5">
+            <div class="header" style="margin-top: 300px;">
+                <h2>Log In to Hoome</h2>
+                <p class="subheading">New to Hoome? <a class="signup-link" href="/signup">Sign up</a></p>
+                <p class="legal-copy">
+        {#                    TODO:links of Term of service and Privacy Policy#}
+                    By logging in, you agree to Hoome’s <a class="legal-link" href="#">Terms of Service</a> and <a class="legal-link" href="/tos/privacy_en_us_20160131">Privacy Policy</a>.
+                </p>
 
+                <fieldset class="hr-line">
+                    <legend align="center">OR</legend>
+                </fieldset>
+                  <form  method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary" id="sign-in-btn">Login</button>
+                  </form>
+
+                  <a href="{% url 'signup' %}">No account? Sign up right now!!!</a>
+
+                  <a href="{% url 'password_reset' %}">Forget Password</a>
+             </div>
+
+        </div>
+        <div class="col-6">
+            <div class="3rdparty">
+                {% include 'registration/oauth.html' %}
+            </div>
+            <p>asdasdqweqcvasdqwe</p>
+        </div>
+    </div>
 </div>
-    {% include 'registration/oauth.html' %}
+
 {% endblock %}
