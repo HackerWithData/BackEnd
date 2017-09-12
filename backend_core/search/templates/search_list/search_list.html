@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 
 {% block header %}
 
@@ -65,6 +65,11 @@
     var bounds;
     var userZipcode = "{{ zipcode }}";
     var contractors = [];
+    const smallMapMarker = "/media/photos/searchListAsset/mapMarker.png"
+    const largeMapMarker = "/media/photos/searchListAsset/mapMarkerSmall.png"
+
+//    const smallMapMarker =
+//    const largeMapMarker =
 
 //    contractor: [
 //        {
@@ -72,6 +77,22 @@
 //            'marker': Marker object
 //        }
 //    ]
+    $(function () {
+        $('.list-group-item').each(function (index) {
+            $(this).hover(
+                function (event) {
+                    if (contractors[index]) {
+                        contractors[index]['marker'].setIcon(smallMapMarker);
+                    }
+                },
+                function (event) {
+                    if (contractors[index]) {
+                        contractors[index]['marker'].setIcon(largeMapMarker);
+                    }
+                }
+            )
+        })
+    });
 
     function initMap() {
         //initial a geocoder
@@ -115,9 +136,13 @@
 
     function contractorGeocoderCallBack(results, status, contractor, index) {
         if (status === 'OK') {
+            //TODO: change when implement customized pagination function
+            const zIndex = 20 - index;
             var marker = new google.maps.Marker({
                 map: map,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                icon: largeMapMarker,
+                zIndex: zIndex
             });
 
 //            fit map with markers
@@ -125,12 +150,14 @@
             map.fitBounds(bounds);
 
             marker.addListener('mouseover', function() {
-                console.log('hhh');
                 $('#searchListCard' + contractor['pk']).css('background-color', '#d9534f');
+                this.setZIndex(50);
+                this.setIcon(smallMapMarker);
             });
             marker.addListener('mouseout', function() {
-                console.log('hhh');
                 $('#searchListCard' + contractor['pk']).css('background-color', '');
+                this.setZIndex(zIndex);
+                this.setIcon(largeMapMarker);
             });
 
             contractors[index] = { 'item': contractor, 'marker': marker, 'index': index };
@@ -143,7 +170,8 @@
     function addUserMarker(results) {
         var marker = new google.maps.Marker({
             map: map,
-            position: results[0].geometry.location
+            position: results[0].geometry.location,
+            zIndex: 100
         });
 
 //        fit map with marker
