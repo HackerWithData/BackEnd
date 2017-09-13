@@ -2,13 +2,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
-#from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
 
 
+class User(AbstractUser):
 
-class Client(models.Model):
-    UserId = models.IntegerField(primary_key=True)
-    UserName = models.CharField(max_length=32)
 '''
 class UserManager(BaseUserManager):
 
