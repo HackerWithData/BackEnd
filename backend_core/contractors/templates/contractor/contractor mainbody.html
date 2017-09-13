@@ -3,7 +3,8 @@
 
     <!--summary-->
     <div id="Summary" class="contractor-block">
-        <h3>Overview</h3><br>
+        <h3>Overview</h3>
+        <hr>
         {{ info_dict.overview }}
         <br>
         <span class="collapsed">
@@ -21,6 +22,7 @@
     <!--photo-->
     <div id="photo" class="contractor-block">
         <h1>Photo</h1>
+        <hr>
         <div class="row">
                 {%  for image in info_dict.photo %}
                 {#                      <div class="numbertext">1 / {{ photo|length }}</div>#}
