@@ -1,48 +1,88 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-#from django.contrib.auth.forms import ReadOnlyPasswordHashField
-#from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
-"""
-class UserCreationForm(forms.ModelForm):
-    A form for creating new users. Includes all the required
-    fields, plus a repeated password.
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+from allauth.account.forms import SignupForm
+from django.contrib.auth.decorators import login_required
+from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
-    class Meta:
-        model = User#get_user_model()
-        fields = ('email',)
+import string
 
-    def clean_password2(self):
-        # Check that the two password entries match
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
+from models import User, ConsumerProfile, ProfessionalProfile
+from utils import *
 
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
-"""
-class SignUpForm(UserCreationForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2', )
+class UserSignUpForm(SignupForm):
 
-class SignUpForm2(forms.ModelForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    # TODO: change role type in form, part 1
+    role = forms.MultipleChoiceField(
+        required=True,
+        choices=ROLE_CHOICES
+    )
 
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name')
+    def clean_role(self):
+        # TODO: change role type in form, part 2
+        role = self.cleaned_data['role']
+        print role[0]
+        print [m for m in self.cleaned_data]
+        #print ROLE_CHOICES
+        #print [choice[0] for choice in ROLE_CHOICES]
+        if role[0] not in [choice[0] for choice in ROLE_CHOICES]:
+            raise forms.ValidationError(_('Must select a role'))
+        return role[0]
+
+
+class ConsumerInfoFillUpForm(forms.Form):
+
+    first_name = forms.CharField(
+        required=True,
+        max_length=128
+    )
+
+    last_name = forms.CharField(
+        required=True,
+        max_length=128
+    )
+
+    zipcode = forms.CharField(
+        required=True,
+        max_length=5,
+        min_length=5
+    )
+
+    gender = forms.MultipleChoiceField(
+        required=True,
+        choices=GENDER_CHOICES
+    )
+
+    def clean_zipcode(self):
+        zipcode = self.cleaned_data['zipcode']
+        zip_num = int(zipcode.strip(string.ascii_letters))
+        zip_str = str(zip_num)
+        if len(zip_str) != 5:
+            raise forms.ValidationError(_('Invalid zipcode'))
+        return zip_str
+
+    def clean_gender(self):
+        gender = self.cleaned_data['gender']
+        if gender not in [choice[0] for choice in GENDER_CHOICES]:
+            raise forms.ValidationError(_('Must select a gender'))
+        return gender
+
+    def clean(self):
+        cleaned_data = super(UserSignUpForm, self).clean()
+        return cleaned_data
+
+    def save(self, request):
+        gender = self.cleaned_data['gender']
+        first_name = self.cleaned_data['first_name']
+        last_name = self.cleaned_data['last_name']
+        zipcode = self.cleaned_data['zipcode']
+        user = request.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        profile = ConsumerProfile(user=user, gender=gender, zipcode=zipcode)
+        profile.save()
+
+
 
 """
 class UserChangeForm(forms.ModelForm):

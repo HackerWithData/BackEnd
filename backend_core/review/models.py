@@ -7,7 +7,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from photos.models import Photo
 from contractors.models import Contractor
-from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 class Review(models.Model):
@@ -25,7 +25,7 @@ class Review(models.Model):
         (False, u"No"),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
     project_type = models.CharField(max_length=255)
     project_date = models.DateField()

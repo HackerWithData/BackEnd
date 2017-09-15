@@ -5,6 +5,7 @@
 .vagrant/
 *.pyc
 env/
+venv/
 db.sqlite3
 /backend_core/*/migrations/
 *.log

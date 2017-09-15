@@ -41,6 +41,7 @@ urlpatterns = [
     # url(r'^oauth/', include('social_django.urls', namespace='social')),
     # url(r'settings/$', userviews.settings, name='settings'),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/', include('users.urls')),
 
     # search
     url(r'^search/', include('search.urls')),
