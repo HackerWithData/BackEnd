@@ -31,6 +31,7 @@ def submit_review(request, contractor_id):
         user_rating_form = UserRatingForm(request.POST)
         #sign_up_form = SignUpForm2(request.POST)
         review_form = ReviewForm(request.POST)
+        #TODO: assign a random password
         if review_form.is_valid() and user_rating_form.is_valid():
             user = User(email=review_form.cleaned_data['email'],
                         username=review_form.cleaned_data['email'],
