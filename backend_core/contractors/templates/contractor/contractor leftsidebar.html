@@ -5,27 +5,27 @@
             <hr>
             <table >
                 <tr><td class="BasicMark">License #: </td>
-                    <td>{{ info_dict.contractor.LicNum }}</td></tr>
+                    <td>{{ info_dict.contractor.lic_num }}</td></tr>
                 <tr><td class="BasicMark">License Status:</td>
-                    <td>{{ info_dict.contractor.LicStatus }}</td></tr>
+                    <td>{{ info_dict.contractor.lic_status }}</td></tr>
                 <tr><td class="BasicMark">License Type:</td>
-                    <td>{% for item in info_dict.LicType %}{{item}}<br> {%  endfor %}</td></tr>
+                    <td>{% for item in info_dict.lic_type %}{{item}}<br> {%  endfor %}</td></tr>
 
                 <tr><td class="BasicMark">Entity:</td>
-                    <td>{{ info_dict.contractor.Entity }}</td></tr>
+                    <td>{{ info_dict.contractor.entity }}</td></tr>
                 <tr><td class="BasicMark">Issued Date:</td>
-                    <td>{{ info_dict.contractor.LicIssueDate }}</td></tr>
-                {% if info_dict.contractor.LicExpireDate %}
+                    <td>{{ info_dict.contractor.lic_issue_date }}</td></tr>
+                {% if info_dict.contractor.lic_expire_date %}
                 <tr><td class="BasicMark">Planned Expiration Date:</td>
-                    <td>{{ info_dict.contractor.LicExpireDate }}</td></tr>
+                    <td>{{ info_dict.contractor.lic_expire_date }}</td></tr>
                 {% endif %}
                 <tr><td class="BasicMark">Bonded:</td>
-                    <td>{{ info_dict.bondhistory.SuretyCompany }}</td></tr>
+                    <td>{{ info_dict.bondhistory.surety_company }}</td></tr>
                 <tr><td class="BasicMark">Issued:</td>
-                    <td>{{ info_dict.wchistory.InsurCompany }}</td></tr>
+                    <td>{{ info_dict.wchistory.insur_company }}</td></tr>
                 <tr><td class="BasicMark">Address:</td>
-                    <td>{{ info_dict.contractor.Address }} <br />
-                    {{ info_dict.contractor.County }}, {{info_dict.contractor.State }} {{info_dict.contractor.PosCode }}</td></tr>
+                    <td>{{ info_dict.contractor.street_address }} <br />
+                    {{ info_dict.contractor.csp }}</td></tr>
             </table>
     </div>
 </div>

@@ -20,9 +20,9 @@ from django.http import HttpResponseNotFound
 def submit_review(request, contractor_id):
     template_name = r'review/submit_review_contractor.html'
 
-    contractor = Contractor.objects.get(LicNum=contractor_id)
+    contractor = Contractor.objects.get(lic_num=contractor_id)
     try:
-        bgimage = UserFile.objects.get(userName=contractor.BusName).uploadFile
+        bgimage = UserFile.objects.get(userName=contractor.bus_name).uploadFile
     except:
         bgimage = None
 
@@ -89,7 +89,7 @@ def display_review(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         template_name = r'contractor/contractor_review.html'
 
-        contractor = Contractor.objects.get(LicNum=contractor_id)
+        contractor = Contractor.objects.get(pk=contractor_id)
         try:
             bgimage = UserFile.objects.get(userName=contractor.BusName).uploadFile
         except:

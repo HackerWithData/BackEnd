@@ -11,11 +11,10 @@
     <style>
         #masthead {
             width:100%;
-            background: url('{{ info_dict.bgimage.img.url }}') no-repeat center;
+            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
             background-size: cover;
             min-height: 300px;
             display: flex;
-            color: #FFFFFF;
             padding: 0px;
             margin-top: 50px;
             }
@@ -27,13 +26,13 @@
 {% block header %}
 <div id="masthead">
         <div class="row">
-            <div class="col-md-7 col-lg-7 ">
-                <h1>{{ info_dict.contractor.BusName }}</h1>
+            <div class="col-md-8 col-lg-8 head-info">
+                <h1>{{ info_dict.contractor.bus_name }}</h1>
                 <div class="horizontal-list">
                     <ul style="list-style-type:None;">
-                        <li>{{ info_dict.contractor.County }}, {{ info_dict.contractor.State }}</li>
-                        <li>Score: {{ info_dict.Score}}</li>
-                        <li>Phone: {{ info_dict.contractor.Phone }}</li>
+                        <li>{{ info_dict.contractor.csp }}</li>
+                        <li>Score: {{ info_dict.score}}</li>
+                        <li>Phone: {{ info_dict.contractor.phone }}</li>
                         <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
                             <div class="star-ratings-css">
                                 <div class="star-ratings-css-top" style="width:100%">
@@ -51,7 +50,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-5">
+            <div class="col-md-4 col-lg-4">
 
             </div>
         </div>
@@ -124,7 +123,7 @@
                beforeSend: function (request){
                    request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
                },
-               url: '{% url 'contractor_project_photos' info_dict.contractor.LicNum %}',
+               url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
                dataType: 'html',
            })
            .done(function (data) {
@@ -137,7 +136,7 @@
 
            $.ajax({
                type:"POST",
-               url: '{% url 'contractor_review' info_dict.contractor.LicNum %}',
+               url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
               beforeSend: function (request){
                    request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
                },
