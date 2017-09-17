@@ -10,6 +10,7 @@ class Professional(models.Model):
     lic_num = models.CharField(max_length=64)
     name = models.CharField(max_length=64)
     entity_type = models.CharField(max_length=64)
+    type = models.CharField(max_length=128)
     state = models.CharField(max_length=64)
     postal_code = models.CharField(max_length=64)
 
