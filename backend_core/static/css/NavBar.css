@@ -194,6 +194,10 @@
     .login-wrapper{
     width:auto;
     }
+
+    .navbar-bright li {
+    flex-diraction: column;
+}
 }
 
 /*font awesome icon*/

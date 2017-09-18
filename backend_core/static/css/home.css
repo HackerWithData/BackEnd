@@ -173,86 +173,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
 }
 
 /*TODO:CHANGE　SEARCH ROW*/
-.search-cell {
-    display: flex;
-    flex-grow: 1
-}
-
-.search-cell .input-label-text {
-    display: none
-}
-
-.search-cell input, .search-cell .input-shadow {
-    color: #4a4a4a;
-    height: 60px;
-    margin-bottom: 0;
-    box-sizing: border-box;
-    padding: 10px 14px;
-    -webkit-appearance: none
-}
-
-.search-cell .location-input {
-    width: 180px;
-    position: relative;
-    background-color: #fff;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    flex-grow: 2
-}
-
-.search-cell .location-input
-input {
-    width: 100%;
-    z-index: 1;
-    background-color: transparent;
-    border-radius: inherit;
-    color: transparent;
-    user-select: none;
-    border: 1px solid transparent
-}
-
-.search-cell .location-input input:focus {
-    color: black;
-    user-select: auto
-}
-
-.search-cell .location-input .input-shadow {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    z-index: -1
-}
-
-.search-cell .location-input .input-shadow
-span {
-    line-height: normal
-}
-
-.search-cell .location-input input:focus + .input-shadow {
-    opacity: 0
-}
-
-.search-cell .location-input input.invalid:not(:focus) {
-    color: red;
-    user-select: auto
-}
-
-.search-cell .date-input {
-    width: 100%;
-    background-color: #fff;
-    cursor: pointer;
-    border: 1px solid transparent
-}
-
+.
 /**/
 
 
@@ -271,7 +192,6 @@ span {
     color: #AAAAAA;
     z-index: 4;
     text-align: center;
-
 }
 @media only screen and (min-width:991px){
     .footer{
