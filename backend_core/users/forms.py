@@ -9,6 +9,7 @@ from models import User, ConsumerProfile, ProfessionalProfile
 from utils import *
 
 
+
 class UserSignUpForm(SignupForm):
 
     # TODO: change role type in form, part 1
