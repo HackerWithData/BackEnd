@@ -22,7 +22,7 @@ def getStateFullName(state):
 # TODO: add a overview database
 def display_contractor(request, contractor_id):
     #contractor info
-    contractor = Contractor.objects.get(LicNum=contractor_id)
+    contractor = Contractor.objects.get(lic_num=contractor_id)
     # #project photo
     # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
     #contractor background image
@@ -31,37 +31,37 @@ def display_contractor(request, contractor_id):
     except:
         bgimage = None
 
-    bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-BondEffectiveDate')
+    bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date')
     bh = None
     if len(bh_set) > 0:
         bh = bh_set[0]
 
-    wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-InsurEffectiveDate')
+    wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-insur_effective_date')
     wh = None
     if len(wh_set) > 0:
         wh = wh_set[0]
 
-    DataSource = 'California Contractors State License Board'
-    Score = 91
-    Rank = 5
-    FullStateName = getStateFullName(contractor.State)
-    MostProjectType = 'house remodel'
-    if MostProjectType:
-        Specialization = 'with many year experiences in ' + MostProjectType
+    data_source = 'California Contractors State License Board'
+    score = 91
+    rank = 5
+    full_state_name = getStateFullName(contractor.state)
+    preferred_project_type = 'house remodel'
+    if preferred_project_type:
+        specialization = 'with many year experiences in ' + preferred_project_type
     else:
-        Specialization = None
+        specialization = None
 
     overview = None
     if overview:
         pass
     else:
-        overview = """%s is a contractor company located in %s, %s %s . 
+        overview = """%s is a contractor company located in %s %s . 
         The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
         Their License is verified as active when we checked last time. If you consider to hire Hooke Installations, 
         we suggest double-checking their license status and contact them through us.
-        """%(contractor.BusName, contractor.County, contractor.State, Specialization, DataSource, Score, Rank, FullStateName)
+        """%(contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name)
     # Lic Type
-    LicType = contractor.LicType.split(',')
+    lic_type = contractor.lic_type.split('&')
     #review
     try:
         review = Review.objects.filter(contractor=contractor, review_status='A')
@@ -78,8 +78,8 @@ def display_contractor(request, contractor_id):
     except:
         pass
 
-    info_dict = {"contractor": contractor, "bgimage": bgimage, "overview": overview,
-                 "Score": Score, 'bondhistory': bh, "wchistory": wh, "LicType": LicType, 'review': review,
+    info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
+                 "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
@@ -101,7 +101,7 @@ def update_accept_review(request):
 def display_project_photos(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         template_name = 'contractor/contractor_project_photo.html'
-        contractor = Contractor.objects.get(LicNum=contractor_id)
+        contractor = Contractor.objects.get(lic_num=contractor_id)
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
         info_dict = {'project_photos': project_photos, 'contractor': contractor}
         # if request.is_ajax():

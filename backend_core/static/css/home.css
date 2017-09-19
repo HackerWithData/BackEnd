@@ -134,11 +134,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
 }
 
 /*** search button ***/
-.search-button {
-    margin: 0px;
-    padding: 0px;
-    border-width: 0px;
-}
+/*.search-button {*/
+    /*margin: 0px;*/
+    /*padding: 0px;*/
+    /*border-width: 0px;*/
+/*}*/
 #searchForm {
     padding-left: 10%;
 }
@@ -151,15 +151,39 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
         border-radius: 0px;
         height:30px;
 }
-
-.footer a {
-        color: #FFFFFF;
-}
-
 /* button */
 .btn {
     background-color: #FFFFFF;
 }
+.blue-btn {
+    border-radius: 0px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border: none;
+    color: white;
+    background-color: #24a9ff
+}
+
+.blue-btn:hover {
+    background-color: #49b8ff
+}
+
+.blue-btn:active {
+    background-color: #1d96e4
+}
+
+/*TODO:CHANGE　SEARCH ROW*/
+.
+/**/
+
+
+/*  footer */
+.footer a {
+        color: #FFFFFF;
+}
+
+
+
 .footer{
     position: fixed;
     bottom: 10px;
@@ -168,7 +192,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
     color: #AAAAAA;
     z-index: 4;
     text-align: center;
-
 }
 @media only screen and (min-width:991px){
     .footer{

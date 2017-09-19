@@ -65,6 +65,9 @@ WEB_APPS = [
     'review',
     'ratings',
     'search',
+    'professionals',
+    'architects',
+    'designers'
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
@@ -228,6 +231,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '1Q4Jm9Ve_mbbro6quQT3QV7N'
 #]
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'#home_index
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+#home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
