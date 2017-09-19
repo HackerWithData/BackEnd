@@ -32,7 +32,6 @@ def sign_up_complete_info(request, **kwargs):
     return HttpResponseServerError
 
 
-# TODO: test in the morning
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileView(View):
 
@@ -53,14 +52,12 @@ class ConsumerProfileView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save(request)
-            # TODO: redirect to home page or user dashboard
-            # return redirect('/success/')
-            return HttpResponse('success')
+            # TODO: change redirect to consumer dashboard after implemented
+            return redirect('home_index')
 
         return render(request, self.template_name, {'form': form})
 
 
-# TODO: test in the morning
 @method_decorator(login_required, name='dispatch')
 class ProfessionalProfileView(View):
 
@@ -83,7 +80,7 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
-            # TODO: redirect to home page or user dashboard
-            return redirect('/success/')
+            # TODO: change redirect to professional dashboard after implemented
+            return redirect('home_index')
 
         return render(request, self.template_name, {'form': form})

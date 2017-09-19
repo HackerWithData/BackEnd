@@ -34,7 +34,7 @@ class ConsumerInfoFillUpForm(forms.Form):
 
     first_name = forms.CharField(
         required=True,
-        max_length=128
+        max_length=128,
     )
 
     last_name = forms.CharField(
@@ -63,13 +63,9 @@ class ConsumerInfoFillUpForm(forms.Form):
 
     def clean_gender(self):
         gender = self.cleaned_data['gender']
-        if gender not in [choice[0] for choice in GENDER_CHOICES]:
+        if gender[0] not in [choice[0] for choice in GENDER_CHOICES]:
             raise forms.ValidationError(_('Must select a gender'))
-        return gender
-
-    def clean(self):
-        cleaned_data = super(UserSignUpForm, self).clean()
-        return cleaned_data
+        return gender[0]
 
     def save(self, request):
         gender = self.cleaned_data['gender']
