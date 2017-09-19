@@ -50,6 +50,7 @@ dependencies are installed in environment
     pip freeze > requirements.txt
 ```
 
+## Don't use MySQL in development, use default SQLite instead
 ## Connect to MySQL
 ```
     mysql -h localhost -P 3306 -u root -p
