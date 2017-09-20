@@ -8,12 +8,11 @@
 {% endblock %}
 
 {% block header %}
-
-
 {% endblock %}
 
 {% block content %}
 <div class="main" style="background-image: url('media/homepage/video_bg.jpg');background-size: cover; ">
+
         <video id="video_background" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
             <source src="media/homepage/video/time.webm" type="video/webm">
             <source src="media/homepage/video/time.mp4" type="video/mp4">
@@ -38,7 +37,7 @@
         </div>
     </div>
     <div class="footer">
-            <div class="row footer-wrapper">
+            <div class="footer-wrapper">
                 <ul>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Support</a></li>
@@ -47,18 +46,15 @@
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
-            <div class="row copyright-wrapper">
+            <div class="copyright-wrapper">
             Copyright © 2017 <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>. All Rights Reserved.
             </div>
     </div>
 </div>
 {% endblock %}
-{%  block footer %}
+
+{% block footer %}
 {% endblock %}
+
 {%  block javascript %}
-
 {%  endblock %}
-
-{#            <h1>{ test }</h1>#}
-{#            <h2>{ welcome }</h2>#}
-{#            {% include 'registration/oauth.html' %}#}

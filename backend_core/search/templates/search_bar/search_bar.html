@@ -1,17 +1,14 @@
 {% block seach_bar %}
 
     <form class="form" id="searchForm" action="/search" method="get">
-        <div class="form-row align-items-center">
-            <div class="row">
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-button">
-                    <div class="input-group">
-                         <label class="sr-only" for="inlineFormInputSearchTargetType">
-                    Find
-                </label>
-                         <spam class="input-group-addon">Find</spam>
-                         <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
-                    </div>
-                </div>
+        <div class="form-row">
+            <div class="search-row ">
+
+                {#                <label class="input-label" for="inlineFormInputSearchTargetType">#}
+{#                <span class="input-group-addon">Find</span>#}
+                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType"
+                       placeholder="For example: Designer">
+                {#                </label>#}
                 <!--TODO: add keywords later-->
                 <!--<div class="col-4">-->
                 <!--<label class="sr-only"-->
@@ -24,44 +21,44 @@
                 <!--id="inlineFromInputSearchKeywords"-->
                 <!--placeholder="Description ">-->
                 <!--</div>-->
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-cell">
-                    <div class="input-group">
-                         <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
-                         <spam class="input-group-addon" id="currentLocationAddon">Nearby</spam>
-                         <!--TODO: add dropdown in input for current location                       -->
-                        <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
-                    </div>
-                </div>
-                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 search-cell" >
-                    <button class="blue-btn" id="searchButton" type="submit">Search</button>
-                </div>
+                {#                <label class="input-label" for="inlineFormInputSearchLocation">#}
+{#                <span class="input-group-addon" id="currentLocationAddon">Nearby</span>#}
+                <!--TODO: add dropdown in input for current location                       -->
+                <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation"
+                       placeholder="Zipcode or County" autocomplete="postal-code">
+                {#                </label>#}
+                <button class="blue-btn" id="searchButton" type="submit"><i class="fa fa-search"
+                                                                            style="font-size:20px;color:white;"></i>
+                </button>
             </div>
+
+
         </div>
     </form>
 
 
 
-<script>
-    <!--address input enums-->
-    const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
-    const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
+    <script>
+        <!--address input enums-->
+        const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
+        const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
 
-    var userCoordinate;
-    var userAddress;
-    var searchLocationType;
+        var userCoordinate;
+        var userAddress;
+        var searchLocationType;
 
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
 
-    $(function () {
-        $('#currentLocationAddon').click(function () {
-            getLocation();
-        });
+        $(function () {
+            $('#currentLocationAddon').click(function () {
+                getLocation();
+            });
 
-        $('#inlineFormInputSearchLocation').keyup(function () {
+            $('#inlineFormInputSearchLocation').keyup(function () {
 //            TODO: add google autocomplete
 //            let input = $('#inlineFormInputSearchLocation').val();
 //            $.ajax({
@@ -71,78 +68,79 @@
 //                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
 //            }
 
-            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
-        });
+                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
+            });
 
-        $('#searchForm').submit(function (event) {
-            switch (searchLocationType) {
-                case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
-                    event.preventDefault();
-                    var formData = {
-                        'target': $('#inlineFormInputSearchTargetType').val(),
-                        'address': userAddress
-                    };
-                    $.ajax({
-                        type: "POST",
-                        beforeSend: function (request) {
-                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                        },
-                        url: "{% url 'search_new' %}",
-                        data: JSON.stringify(formData),
-                        dataType: "text",
-                        contentType : "application/json"})
-                        .done(function (redirect_url) {
-                            window.location.href = redirect_url;
+            $('#searchForm').submit(function (event) {
+                switch (searchLocationType) {
+                    case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
+                        event.preventDefault();
+                        var formData = {
+                            'target': $('#inlineFormInputSearchTargetType').val(),
+                            'address': userAddress
+                        };
+                        $.ajax({
+                            type: "POST",
+                            beforeSend: function (request) {
+                                request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                            },
+                            url: "{% url 'search_new' %}",
+                            data: JSON.stringify(formData),
+                            dataType: "text",
+                            contentType: "application/json"
                         })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            console.warn(`ERROR: ${textStatus}`);
-                        });
-                    break;
-                case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
-                    break;
-                default:
-                    console.warn('ERROR: Unexpected location input flow');
-                    break;
-            }
-        });
-        
+                            .done(function (redirect_url) {
+                                window.location.href = redirect_url;
+                            })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                console.warn(`ERROR: ${textStatus}`);
+                            });
+                        break;
+                    case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
+                        break;
+                    default:
+                        console.warn('ERROR: Unexpected location input flow');
+                        break;
+                }
+            });
+
 //        $('#searchButton').click(function () {
 ////            TODO: check all data send back using ajaxStop
 //            $('#searchForm').submit();
 //        })
-    });
+        });
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
-        } else {
-            alert("Geolocation is not supported by this browser.");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
         }
-    }
 
-    function receivePositionSuccess(position) {
-        userCoordinate = position.coords;
-        console.log(userCoordinate);
-        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoordinate.latitude},${userCoordinate.longitude}&key={{ GOOGLE_API_KEY }}`, receiveReversePosition)
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
-                console.warn(`ERROR: ${textStatus}`);
-            });
-    }
-    
-    function receivePositionFail(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-    
-    function receiveReversePosition(response) {
-        if (response.results && response.results.length > 0) {
-            userAddress = response.results[0];
-            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
-            $('#inlineFormInputSearchLocation').val('Current Location');
-        } else {
-            console.warn('Error: response length less than 1');
+        function receivePositionSuccess(position) {
+            userCoordinate = position.coords;
+            console.log(userCoordinate);
+            $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoordinate.latitude},${userCoordinate.longitude}&key={{ GOOGLE_API_KEY }}`, receiveReversePosition)
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus);
+                    console.warn(`ERROR: ${textStatus}`);
+                });
         }
-        console.log(userAddress);
-    }
-</script>
+
+        function receivePositionFail(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        function receiveReversePosition(response) {
+            if (response.results && response.results.length > 0) {
+                userAddress = response.results[0];
+                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
+                $('#inlineFormInputSearchLocation').val('Current Location');
+            } else {
+                console.warn('Error: response length less than 1');
+            }
+            console.log(userAddress);
+        }
+    </script>
 {% endblock %}
