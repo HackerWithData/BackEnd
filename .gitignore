@@ -8,3 +8,4 @@ env/
 db.sqlite3
 /backend_core/*/migrations/
 *.log
+/venv/
