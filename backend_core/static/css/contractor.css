@@ -1,65 +1,96 @@
+body {
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    box-sizing: border-box;
+}
 
+#contractor-content {
+    margin: 5px;
+    padding: 0 5%;
+    min-height: 80%;
+    width: auto;
+    box-sizing: border-box;
+}
+
+#masthead, .footer, #contractor-content {
+    box-sizing: border-box;
+    width: auto;
+}
 
 /*********************rating star in review to pick ****************/
 
-
-fieldset, label { margin: 0; padding: 0; }
+fieldset, label {
+    margin: 0;
+    padding: 0;
+}
 
 h1 {
     font-size: 2em;
     margin: 10px;
-    font-weight: 600;}
+    font-weight: 600;
+}
 
 /****** Style Star Rating Widget *****/
 .rating-name {
     clear: both;
 }
+
 .rating {
-  border: none;
-  float: left;
+    border: none;
+    float: left;
 }
 
-.rating > input { display: none; }
+.rating > input {
+    display: none;
+}
+
 .rating > label:before {
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
 }
 
 .rating > .half:before {
-  content: "\f089";
-  position: absolute;
+    content: "\f089";
+    position: absolute;
 }
 
 .rating > label {
-  color: #ddd;
- float: right;
+    color: #ddd;
+    float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label {
+    color: #FFD700;
+}
+
+/* hover previous stars in list */
 
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
-
+.rating > input:checked ~ label:hover ~ label {
+    color: #FFED85;
+}
 
 /*** masthead ***/
 /* master head */
-#masthead{
-    margin:0;
-    padding:0;
+#masthead {
+    margin: 0;
+    padding: 0;
     color: black;
 }
 
 #masthead a, #masthead .lead {
-    color:#ffffff;
+    color: #ffffff;
 }
 
 @media screen and (min-width: 768px) {
@@ -74,34 +105,36 @@ h1 {
 }
 
 #masthead .well {
-    color:white;
-    margin-top:13%;
-    background-color:rgba(51,102,204,0.5);
+    color: white;
+    margin-top: 13%;
+    background-color: rgba(51, 102, 204, 0.5);
 }
 
 #masthead .row {
-    width:auto; /**/
+    width: auto; /**/
     padding: 0px;
     margin: 0px;
 }
 
-#masthead .head-info{
+#masthead .head-info {
     padding-left: 0px;
 }
+
 /* other information*/
-.horizontal-list ul{
+.horizontal-list ul {
     type: None;
     display: table;
     table-layout: fixed;
 }
-.horizontal-list ul li{
-    display:table-cell;
+
+.horizontal-list ul li {
+    display: table-cell;
     padding: 0px 20px;
 
 }
 
-#BasicInfo table tr{
-vertical-align: top;
+#BasicInfo table tr {
+    vertical-align: top;
 }
 
 #BasicInfo .tname {
@@ -115,10 +148,10 @@ vertical-align: top;
 
 }
 
-#more{
-overflow:hidden;
-  height: 3.6em;
-  line-height: 1.2em;
+#more {
+    overflow: hidden;
+    height: 3.6em;
+    line-height: 1.2em;
 }
 
 .collapsed {
@@ -126,31 +159,31 @@ overflow:hidden;
 }
 
 .expanded {
-   float: left;
+    float: left;
 }
 
 #photo {
-padding-top: 20px
+    padding-top: 20px
 
 }
-.picstyle{
-padding: 2.5px 0px;
-margin: 0px
-}
 
+.picstyle {
+    padding: 2.5px 0px;
+    margin: 0px
+}
 
 /*** set the side of container ***/
 #mainbody {
     margin: auto 50px;
 }
 
-body{
+body {
     padding: 0;
     margin: 0;
     width: auto;
 }
 
-#left-col , #right-col{
+#left-col, #right-col {
     padding-right: 15px;
 }
 
@@ -160,52 +193,32 @@ body{
 }
 
 .navbar-bright {
-    background-color:black;
+    background-color: black;
 }
+
 /*.contractor-block {*/
-    /*padding: 10px;*/
+/*padding: 10px;*/
 
 /*}*/
 /*pro menu */
 #pro-menu .nav {
-    display:flex;
+    display: flex;
 }
 
 /*.navbar-bright {*/
-   /*background-color: black;*/
+/*background-color: black;*/
 
 /*}*/
 
-
-
-.footer .row{
+.footer .row {
     margin: 0;
-    padding:0;
+    padding: 0;
 }
 
-@media (min-width:1001px) {
-
-    body{
-        min-height: 100%;
-        padding: 0;
-        margin: 0;
-        width: auto;
-        box-sizing: border-box;
-    }
-
-    #contractor-content {
-    margin: 5px;
-    padding: 0 5%;
-    min-height: 80%;
-    width:auto;
-    box-sizing: border-box;
-    }
+@media (min-width: 1001px) {
 
 
-    #masthead,.footer,#contractor-content{
-    box-sizing: border-box;
-    width:auto;
-    }
 
 }
+
 /**/

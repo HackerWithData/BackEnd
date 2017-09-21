@@ -91,8 +91,8 @@
 {% block content %}
 <!-- Begin Body -->
 <div id="contractor-content">
-    <div class ='menu  justify-content-center' id='pro-menu'>
-    <ul class = 'nav'>
+    <div class='menu  justify-content-center' id='pro-menu'>
+    <ul class='nav  nav-pills'>
            <li class="nav-item">
             <a class="nav-link" id="overview-tab">Overview</a>
           </li>
@@ -108,7 +108,7 @@
     </ul>
     </div>
 
-    <div class="row" id="">
+    <div class="" id="">
           <div id="pro-content">
                 {%  include "contractor/contractor_overview.html" %}
           </div>
@@ -125,7 +125,7 @@
     var a = document.getElementById('pro-content').innerHTML;
     var b;
     var c;
-    var d;
+{#    var d;#}
 
    function readMore() {
         $(".expanded").hide();
