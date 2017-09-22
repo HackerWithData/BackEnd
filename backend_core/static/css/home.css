@@ -9,12 +9,13 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     outline : 0;
 }
 
-/*           Font Smoothing      */
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+
+nav{
+    postion:fixed;
+    z-index: 999;
 }
-/*           Typography          */
+
+
 .main{
     background-position: center center;
     background-size: cover;
@@ -122,6 +123,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
     background-size: cover;
 
 }
+
 #video_pattern {
     position: fixed;
     opacity: 0.6;
@@ -133,25 +135,24 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
     z-index: 1;
 }
 
-/*** search button ***/
-/*.search-button {*/
-    /*margin: 0px;*/
-    /*padding: 0px;*/
-    /*border-width: 0px;*/
-/*}*/
-#searchForm {
-    padding-left: 10%;
+
+#searchForm .form-row {
+    display:flex;
 }
-.input-group > label, .input-group > spam {
-    border-width: 0px;
+
+#searchForm .search-row {
+    display: flex;
+    flex-grow: 1
 }
-#inlineFormInputSearchTargetType,#inlineFormInputSearchLocation,#searchButton {
-        margin: 0px;
-        border-width: 0px;
-        border-radius: 0px;
-        height:30px;
+
+#searchForm .form-row button {
+    border-radius: 0 6px 6px 0;
+    white-space: nowrap;
+    padding: 0 20px;
+    height:34px;
 }
-/* button */
+
+
 .btn {
     background-color: #FFFFFF;
 }
@@ -173,7 +174,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
 }
 
 /*TODO:CHANGE　SEARCH ROW*/
-.
+
 /**/
 
 /*search bar autocomplete*/
@@ -184,24 +185,82 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
 .autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
 
 /*  footer */
-.footer a {
-        color: #FFFFFF;
-}
-
-
-
 .footer{
     position: fixed;
     bottom: 10px;
     right: 0px;
     width: 100%;
-    color: #AAAAAA;
+    color: #FFFFFF;
     z-index: 4;
     text-align: center;
 }
+
+.footer a {
+        color: #FFFFFF;
+}
+
+@media (max-width:1000px) {
+
+}
+
+
+
 @media only screen and (min-width:991px){
+
     .footer{
         position: fixed;
         bottom: 20px;
+    }
+}
+
+
+@media (min-width:768px){
+
+    .search-row input, .search-row
+    button {
+        border-radius: 0
+    }
+
+    .search-row > *:first-child {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .search-row > *:last-child {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #searchForm {
+        padding-left: 0;
+        padding-bottom: 200px;
+
+    }
+    .search-row {
+        padding: 0 10%;
+        flex-direction: column;
+    }
+    .main .motto {
+        width: 100%;
+        font-size: 1em;
+    }
+
+    .search-row > *{
+        border-radius:0;
+        margin: 5px 0;
+    }
+
+    #searchForm .form-row button  {
+        border-radius:0;
+    }
+
+    .footer{
+        position: relative;
+    }
+
+    .login-wrapper {
+        width: auto;
     }
 }

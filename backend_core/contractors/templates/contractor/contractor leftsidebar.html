@@ -1,29 +1,29 @@
-<div id="left-col" class="col-sm-3" >
+<div id="left-col" class="col-sm-12 col-md-6 col-lg-4" >
     <!--basic information-->
     <div id="BasicInfo" class="contractor-block" >
             <h1>Basic Information</h1>
             <hr>
             <table >
-                <tr><td class="BasicMark">License #: </td>
+                <tr><td class="rname">License #: </td>
                     <td>{{ info_dict.contractor.lic_num }}</td></tr>
-                <tr><td class="BasicMark">License Status:</td>
+                <tr><td class="rname">License Status:</td>
                     <td>{{ info_dict.contractor.lic_status }}</td></tr>
-                <tr><td class="BasicMark">License Type:</td>
+                <tr><td class="rname">License Type:</td>
                     <td>{% for item in info_dict.lic_type %}{{item}}<br> {%  endfor %}</td></tr>
 
-                <tr><td class="BasicMark">Entity:</td>
+                <tr><td class="rname">Entity:</td>
                     <td>{{ info_dict.contractor.entity }}</td></tr>
-                <tr><td class="BasicMark">Issued Date:</td>
+                <tr><td class="rname">Issued Date:</td>
                     <td>{{ info_dict.contractor.lic_issue_date }}</td></tr>
                 {% if info_dict.contractor.lic_expire_date %}
-                <tr><td class="BasicMark">Planned Expiration Date:</td>
+                <tr><td class="rname">Expiration Date:</td>
                     <td>{{ info_dict.contractor.lic_expire_date }}</td></tr>
                 {% endif %}
-                <tr><td class="BasicMark">Bonded:</td>
-                    <td>{{ info_dict.bondhistory.surety_company }}</td></tr>
-                <tr><td class="BasicMark">Issued:</td>
-                    <td>{{ info_dict.wchistory.insur_company }}</td></tr>
-                <tr><td class="BasicMark">Address:</td>
+                <tr><td class="rname">Bonded:</td>
+                    <td>{{ info_dict.bond_history.surety_company }}</td></tr>
+                <tr><td class="rname">Issued:</td>
+                    <td>{{ info_dict.wc_history.insur_company }}</td></tr>
+                <tr><td class="rname">Address:</td>
                     <td>{{ info_dict.contractor.street_address }} <br />
                     {{ info_dict.contractor.csp }}</td></tr>
             </table>

@@ -57,9 +57,9 @@ def display_contractor(request, contractor_id):
     else:
         overview = """%s is a contractor company located in %s %s . 
         The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
-        Their License is verified as active when we checked last time. If you consider to hire Hooke Installations, 
+        Their License is verified as active when we checked last time. If you consider to hire %s, 
         we suggest double-checking their license status and contact them through us.
-        """%(contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name)
+        """%(contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name, contractor.bus_name)
     # Lic Type
     lic_type = contractor.lic_type.split('&')
     #review
