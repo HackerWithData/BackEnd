@@ -1,50 +1,47 @@
 {% block seach_bar %}
 
     <form class="form" id="searchForm" action="/search" method="get">
-        <div class="form-row align-items-center">
-            <div class="row">
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-button">
-                    <div class="input-group">
-                         <label class="sr-only" for="inlineFormInputSearchTargetType">
-                    Find
-                </label>
-                         <spam class="input-group-addon">Find</spam>
-                         <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
-                    </div>
+        <div class="form-row">
+            <div class="search-row">
+                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
+                <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
+                <!--TODO: add dropdown in input for current location                       -->
+                <div class="dropdown">
+                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    <ul class="dropdown-menu pull-left" role="menu">
+                    <li><a href="#" id="currentLocationDropdownItem">Current Location</a></li>
+                    </ul>
                 </div>
-                <!--TODO: add keywords later-->
-                <!--<div class="col-4">-->
-                <!--<label class="sr-only"-->
-                <!--for="inlineFromInputSearchKeywords">-->
-                <!--Keywords-->
-                <!--</label>-->
-                <!--<input type="text"-->
-                <!--class="form-control"-->
-                <!--name="keywords"-->
-                <!--id="inlineFromInputSearchKeywords"-->
-                <!--placeholder="Description ">-->
-                <!--</div>-->
-                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-button">
-                    <div class="input-group">
-                         <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
-                         <spam class="input-group-addon" id="currentLocationAddon">Nearby</spam>
-                         <!--TODO: add dropdown in input for current location                       -->
-                        <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
-                    </div>
-                </div>
-                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 search-button" >
-                    <button class="btn btn-default" id="searchButton" type="submit">Search</button>
-                </div>
+                <button class="blue-btn">
+                    <i class="fa fa-search" id="searchButton" type="submit" style="font-size:20px;color:white;"></i>
+                </button>
             </div>
         </div>
     </form>
 
-
-
 <script>
-    <!--address input enums-->
+//    address input enums
     const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
     const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
+
+//    professional enums
+//    TODO: update using static json
+    const PROFESSIONAL_TYPE = [
+        { value: 'General Contractors', data: { category: 'Contractor' }},
+        { value: 'Landscape Contractors', data: { category: 'Contractor' }},
+        { value: 'Swimming Pool Contractors', data: { category: 'Contractor' }},
+        { value: 'Kitchen & Bath Remodelor', data: { category: 'Contractor' }},
+        { value: 'Roofing & Gutters', data: { category: 'Contractor' }},
+        { value: 'Plumbers', data: { category: 'Contractor' }},
+        { value: 'Fence Contractors', data: { category: 'Contractor' }},
+        { value: 'HV & AC', data: { category: 'Contractor' }},
+        { value: 'Designers', data: { category: 'Designer'}},
+    ];
+
+    const LOCATION_TYPE = [
+        { value: 'Current Location', data: 'CL'},
+    ];
 
     var userCoordinate;
     var userAddress;
@@ -57,7 +54,8 @@
     };
 
     $(function () {
-        $('#currentLocationAddon').click(function () {
+
+        $('#currentLocationDropdownItem').click(function () {
             getLocation();
         });
 
@@ -72,16 +70,21 @@
 //            }
 
             searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
+            $('.dropdown.open').removeClass('open');
         });
 
         $('#searchForm').submit(function (event) {
             switch (searchLocationType) {
                 case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
                     event.preventDefault();
-                    var formData = {
-                        'target': $('#inlineFormInputSearchTargetType').val(),
+                    const type = $('#inlineFormInputSearchType').val() || 'Name';
+                    const target = $('#inlineFormInputSearchTargetType').val();
+                    const formData = {
+                        'type': type ,
+                        'target': target,
                         'address': userAddress
                     };
+                    console.log(formData);
                     $.ajax({
                         type: "POST",
                         beforeSend: function (request) {
@@ -99,6 +102,7 @@
                         });
                     break;
                 case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
+                    console.log('zipcode search here');
                     break;
                 default:
                     console.warn('ERROR: Unexpected location input flow');
@@ -110,6 +114,22 @@
 ////            TODO: check all data send back using ajaxStop
 //            $('#searchForm').submit();
 //        })
+
+//        TODO: change load static json file
+//        $.getJSON('static/json/subtype.json', function (data) {
+//            subtypes = data;
+//            console.log(1)
+//            console.log(subtypes);
+//        });
+
+        $('#inlineFormInputSearchTargetType').devbridgeAutocomplete({
+            groupBy: 'category',
+            lookup: PROFESSIONAL_TYPE,
+            onSelect: function (suggestion) {
+                $('#inlineFormInputSearchType').val(suggestion['data']['category']);
+            }
+        });
+
     });
 
     function getLocation() {

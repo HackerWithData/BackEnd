@@ -2,36 +2,67 @@
 {% load staticfiles %}
 
 {#style#}
-{% block metainfo %}
-{#    <link rel="stylesheet/less" type="text/css" href="{% static 'css/contractor.less' %}" />#}
-    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-{#    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">#}
-{#    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>#}
 
+{% block metainfo %}
+
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <style>
         #masthead {
-            background: url('{{ info_dict.bgimage.img.url }}') no-repeat center;
+            width:auto;
+            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
+            background-size: cover;
             min-height: 300px;
             display: flex;
-            color: #aaaacc;
             padding: 0px;
-            margin: 50px 0px;
+            margin-top: 50px;
+            box-sizing: border-box;
             }
-
     </style>
 {% endblock %}
 
+
+
 {#header#}
+{% block nav %}
+{#        TODO: change the color of pop out menu#}
+   <header class="navbar navbar-bright navbar-fixed-top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">
+                <h1 class="logo cursive">
+                    Hoome
+                </h1>
+            </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Find your address</a></li>
+            <li><a href="/">Projects</a></li>
+            <li><a href="{% url 'login' %}">User Sign In</a></li>
+            <li> <a href="#">Contractor Sign In</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+{% endblock %}
+
 {% block header %}
 <div id="masthead">
         <div class="row">
-            <div class="col-md-7 col-lg-7 ">
-                <h1>{{ info_dict.contractor.BusName }}</h1>
+            <div class="col-md-8 col-lg-8 head-info">
+                <h1>{{ info_dict.contractor.bus_name }}</h1>
                 <div class="horizontal-list">
                     <ul style="list-style-type:None;">
-                        <li>{{ info_dict.contractor.County }}, {{ info_dict.contractor.State }}</li>
-                        <li>Score: {{ info_dict.Score}}</li>
-                        <li>Phone: {{ info_dict.contractor.Phone }}</li>
+                        <li>{{ info_dict.contractor.csp }}</li>
+                        <li>Score: {{ info_dict.score}}</li>
+                        <li>Phone: {{ info_dict.contractor.phone }}</li>
                         <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
                             <div class="star-ratings-css">
                                 <div class="star-ratings-css-top" style="width:100%">
@@ -49,7 +80,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-5">
+            <div class="col-md-4 col-lg-4">
 
             </div>
         </div>
@@ -59,101 +90,104 @@
 
 {% block content %}
 <!-- Begin Body -->
-<div class='container professional-menu'>
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-overview" role="tab" aria-controls="pills-home" aria-expanded="true">Overview</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-projectphots-tab" data-toggle="pill" href="#pills-projectphotos" role="tab" aria-controls="pills-profile" aria-expanded="true">Project Photos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-profile" aria-expanded="true">Review</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-other-tab" data-toggle="pill" href="#pills-other" role="tab" aria-controls="pills-profile" aria-expanded="true">Other</a>
-      </li>
-{#      <li class="nav-item dropdown">#}
-{#        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>#}
-{#        <div class="dropdown-menu">#}
-{#          <a class="dropdown-item" id="pills-dropdown1-tab" href="#pills-dropdown1" role="tab" data-toggle="pill" aria-controls="pills-dropdown1">@fat</a>#}
-{#          <a class="dropdown-item" id="pills-dropdown2-tab" href="#pills-dropdown2" role="tab" data-toggle="pill" aria-controls="pills-dropdown2">@mdo</a>#}
-{#        </div>#}
-{#      </li>#}
+<div id="contractor-content">
+    <div class='menu  justify-content-center' id='pro-menu'>
+    <ul class='nav  nav-pills'>
+           <li class="nav-item">
+            <a class="nav-link" id="overview-tab">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="projectphotos-tab">Project Photos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="review-tab">Review</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="other-tab">Other</a>
+          </li>
     </ul>
-</div>
+    </div>
 
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
-      <div id="mainbody">
-            <div class="row">
-                {% include 'contractor/contractor leftsidebar.html' %}
-                {% include 'contractor/contractor mainbody.html' %}
-                {% include 'contractor/contractor rightsidebar.html' %}
-            </div>
-      </div>
-  </div>
-  <div class="tab-pane fade" id="pills-projectphotos" role="tabpanel" aria-labelledby="pills-projectphotos-tab">
-  </div>
-  <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
-  </div>
-  <div class="tab-pane fade" id="pills-other" role="tabpanel" aria-labelledby="pills-other-tab">
-  </div>
-{#  <div class="tab-pane fade" id="pills-dropdown1" role="tabpanel" aria-labelledby="pills-dropdown1-tab"></div>#}
-{#  <div class="tab-pane fade" id="pills-dropdown2" role="tabpanel" aria-labelledby="pills-dropdown2-tab"></div>#}
-</div>
+    <div class="" id="">
+          <div id="pro-content">
+                {%  include "contractor/contractor_overview.html" %}
+          </div>
+    </div>
 
+</div>
+</div>
 {% endblock %}
 
 
+
 {%  block javascript %}
-<script>
-    $(document).ready(function() {
+ <script>
+    var a = document.getElementById('pro-content').innerHTML;
+    var b;
+    var c;
+{#    var d;#}
 
-        $(function () {
-            $('#pills-tab a:first').tab('show');
-
-          });
-
-        $('#pills-projectphots-tab').click(function() {
-
-           $.ajax({
-               type:"POST",
-               beforeSend: function (request){
-                   request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
-               },
-               url: '{% url 'contractor_project_photos' info_dict.contractor.LicNum %}',
-               dataType: 'html',
-           })
-           .done(function (data) {
-               $('#pills-projectphotos').html(data);
-           });
-        });
-
-
-        $('#pills-review-tab').click(function() {
-
-           $.ajax({
-               type:"POST",
-               url: '{% url 'contractor_review' info_dict.contractor.LicNum %}',
-              beforeSend: function (request){
-                   request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
-               },
-               dataType: 'html',
-           })
-           .done(function (data) {
-               $('#pills-review').html(data);
-           });
-        });
-
+   function readMore() {
         $(".expanded").hide();
 
         $(".expanded a, .collapsed a").click(function(eve) {
-            var $container = $(this).parents("div");
-            eve.preventDefault();
-            $container.children(".expanded, .collapsed").toggle();
+                var $container = $(this).parents("div");
+                eve.preventDefault();
+                $container.children(".expanded, .collapsed").toggle();
+            });
+    }
+
+    readMore();
+
+   $(document).ready(function() {
+
+        $('#overview-tab').click(function() {
+            document.getElementById('pro-content').innerHTML = a;
+{#                $('#pro-content').html(a);#}
+            readMore();
         });
+
+        $('#projectphotos-tab').click(function() {
+            if (b) {
+                 $('#pro-content').html(b);
+            }
+            else{
+              $.ajax({
+                   type:"POST",
+                   beforeSend: function (request){
+                       request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
+                   },
+                   url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
+                   dataType: 'html',
+                    })
+                .done(function (data) {
+                    b = data;
+                    $('#pro-content').html(b);
+                });
+             }
+        });
+
+        $('#review-tab').click(function() {
+            if (c) {
+                 $('#pro-content').html(c);
+            }
+            else{
+               $.ajax({
+                   type:"POST",
+                   url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
+                  beforeSend: function (request){
+                       request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
+                   },
+                   dataType: 'html',
+               })
+               .done(function (data) {
+                   c = data;
+                   $('#pro-content').html(c);
+               });
+            }
+        });
+
     });
+
 </script>
 {%  endblock %}
-

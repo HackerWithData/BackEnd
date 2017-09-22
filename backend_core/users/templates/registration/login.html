@@ -1,39 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row" >
-        <div class="col-5">
-            <div class="header" style="margin-top: 300px;">
-                <h2>Log In to Hoome</h2>
-                <p class="subheading">New to Hoome? <a class="signup-link" href="/signup">Sign up</a></p>
-                <p class="legal-copy">
-        {#                    TODO:links of Term of service and Privacy Policy#}
-                    By logging in, you agree to Hoome’s <a class="legal-link" href="#">Terms of Service</a> and <a class="legal-link" href="/tos/privacy_en_us_20160131">Privacy Policy</a>.
-                </p>
-
-                <fieldset class="hr-line">
-                    <legend align="center">OR</legend>
-                </fieldset>
-                  <form  method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary" id="sign-in-btn">Login</button>
-                  </form>
-
-                  <a href="{% url 'signup' %}">No account? Sign up right now!!!</a>
-
-                  <a href="{% url 'password_reset' %}">Forget Password</a>
-             </div>
-
+<div class="login-wrapper" >
+    <div class="header" >
+        <h2>Log In to Hoome</h2>
+        <p class="subheading">New to Hoome? <a class="signup-link" href="/signup">Sign up</a></p>
+        <p class="legal-copy">
+{#                    TODO:links of Term of service and Privacy Policy#}
+            By logging in, you agree to Hoome’s <a class="legal-link" href="#">Terms of Service</a> and <a class="legal-link" href="/tos/privacy_en_us_20160131">Privacy Policy</a>.
+        </p>
+        <div class="thirdparty">
+            {% include 'registration/oauth.html' %}
         </div>
-        <div class="col-6">
-            <div class="3rdparty">
-                {% include 'registration/oauth.html' %}
-            </div>
-            <p>asdasdqweqcvasdqwe</p>
+        <div class="hld">
+            <h3 class="hlw">OR</h3>
         </div>
-    </div>
+        <form  method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" id="sign-in-btn">Login</button>
+        </form>
+
+        <a href="{% url 'signup' %}">No account? Sign up right now!!!</a>
+
+        <a href="{% url 'password_reset' %}">Forget Password</a>
+     </div>
 </div>
 
 {% endblock %}
