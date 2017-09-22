@@ -68,15 +68,6 @@
     const smallMapMarker = "/media/photos/searchListAsset/mapMarker.png"
     const largeMapMarker = "/media/photos/searchListAsset/mapMarkerSmall.png"
 
-//    const smallMapMarker =
-//    const largeMapMarker =
-
-//    contractor: [
-//        {
-//            'item': Contractor object, geo info in fields
-//            'marker': Marker object
-//        }
-//    ]
     $(function () {
         $('.list-group-item').each(function (index) {
             $(this).hover(
@@ -101,7 +92,7 @@
         //initial a map
         var mapProp = {
             //TODO: set to the location of user at first
-            center: new google.maps.LatLng(51.508742,-0.120850),
+            center: new google.maps.LatLng(34.069112,-118.442895),
             zoom: 15
         };
         map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
@@ -109,16 +100,18 @@
         bounds = new google.maps.LatLngBounds();
 
         //set map center
-        geocoder.geocode(
-            {
-                'address': userZipcode,
-                'componentRestrictions': {
-                    //TODO: add other countries in the future
-                    'country': 'US'
-                }
-            },
-            userGeocoderCallBack
-        );
+        if (userZipcode) {
+            geocoder.geocode(
+                {
+                    'address': userZipcode,
+                    'componentRestrictions': {
+                        //TODO: add other countries in the future
+                        'country': 'US'
+                    }
+                },
+                userGeocoderCallBack
+            );
+        }
 
         //add markers
         addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
@@ -181,7 +174,7 @@
 
     function addContractorMarkers(contractorList) {
         for (let i = 0; i < contractorList.length; i++) {
-            var address = `${contractorList[i]['fields']['Address']} ${contractorList[i]['fields']['County']} ${contractorList[i]['fields']['State']} ${contractorList[i]['fields']['PosCode']}`
+            var address = `${contractorList[i]['fields']['street_address']} ${contractorList[i]['fields']['csp']}`;
             geocoder.geocode({ 'address': address}, function (result, status) {
                 contractorGeocoderCallBack(result, status, contractorList[i], i);
             });

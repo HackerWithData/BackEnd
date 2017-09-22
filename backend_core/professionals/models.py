@@ -19,6 +19,11 @@ class Professional(models.Model):
 
 
 class ProfessionalType(models.Model):
-    professional = models.ForeignKey('Professional', on_delete=models.CASCADE)
+    professional = models.ForeignKey(
+        Professional,
+        on_delete=models.CASCADE,
+        related_name='professional_types',
+        related_query_name='professional_type'
+    )
     type = models.CharField(max_length=64)
     sub_type = models.CharField(max_length=64)

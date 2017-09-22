@@ -8,8 +8,15 @@ PROFESSIONAL_TYPE_CHOICES = (
     (DESIGNER, 'Designer'),
 )
 
-
-
+# TODO: add subtype choices
 CONTRACTOR_TYPE_CHOICES = (
+
+)
+
+DESIGNER_TYPE_CHOICES = (
+
+)
+
+ARCHITECT_TYPE_CHOICES = (
 
 )

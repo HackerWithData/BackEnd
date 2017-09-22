@@ -5,25 +5,17 @@
             <div class="row">
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-button">
                     <div class="input-group">
-                         <label class="sr-only" for="inlineFormInputSearchTargetType">
-                    Find
-                </label>
-                         <spam class="input-group-addon">Find</spam>
-                         <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                        <label class="sr-only" for="inlineFormInputSearchTargetType">
+                            Find
+                        </label>
+                        <spam class="input-group-addon">Find</spam>
+                        <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
                     </div>
                 </div>
-                <!--TODO: add keywords later-->
-                <!--<div class="col-4">-->
-                <label class="sr-only"
-                    for="inlineFromInputSearchType">
+                <label class="sr-only" for="inlineFormInputSearchType">
                     Type
                 </label>
-                <input type="hidden"
-                    class="form-control"
-                    name="type"
-                    id="inlineFromInputSearchType"
-                >
-                <!--</div>-->
+                <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 search-cell">
                     <div class="input-group">
                          <label class="sr-only" for="inlineFormInputSearchLocation">Nearby</label>
@@ -42,9 +34,23 @@
 
 
 <script>
-    <!--address input enums-->
+//    address input enums
     const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
     const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
+
+//    professional enums
+//    TODO: update using static json
+    const PROFESSIONAL_TYPE = [
+        { value: 'General Contractors', data: { category: 'Contractor' }},
+        { value: 'Landscape Contractors', data: { category: 'Contractor' }},
+        { value: 'Swimming Pool Contractors', data: { category: 'Contractor' }},
+        { value: 'Kitchen & Bath Remodelor', data: { category: 'Contractor' }},
+        { value: 'Roofing & Gutters', data: { category: 'Contractor' }},
+        { value: 'Plumbers', data: { category: 'Contractor' }},
+        { value: 'Fence Contractors', data: { category: 'Contractor' }},
+        { value: 'HV & AC', data: { category: 'Contractor' }},
+        { value: 'Designers', data: { category: 'Designer'}},
+    ];
 
     var userCoordinate;
     var userAddress;
@@ -78,10 +84,14 @@
             switch (searchLocationType) {
                 case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
                     event.preventDefault();
-                    var formData = {
-                        'target': $('#inlineFormInputSearchTargetType').val(),
+                    const type = $('#inlineFormInputSearchType').val() || 'Name';
+                    const target = $('#inlineFormInputSearchTargetType').val();
+                    const formData = {
+                        'type': type ,
+                        'target': target,
                         'address': userAddress
                     };
+                    console.log(formData);
                     $.ajax({
                         type: "POST",
                         beforeSend: function (request) {
@@ -99,6 +109,7 @@
                         });
                     break;
                 case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
+                    console.log('zipcode search here');
                     break;
                 default:
                     console.warn('ERROR: Unexpected location input flow');
@@ -110,6 +121,20 @@
 ////            TODO: check all data send back using ajaxStop
 //            $('#searchForm').submit();
 //        })
+
+//        TODO: change load static json file
+//        $.getJSON('static/json/subtype.json', function (data) {
+//            subtypes = data;
+//            console.log(1)
+//            console.log(subtypes);
+//        });
+        $('#inlineFormInputSearchTargetType').autocomplete({
+            groupBy: 'category',
+            lookup: PROFESSIONAL_TYPE,
+            onSelect: function (suggestion) {
+                $('#inlineFormInputSearchType').val(suggestion['data']['category']);
+            }
+        })
     });
 
     function getLocation() {

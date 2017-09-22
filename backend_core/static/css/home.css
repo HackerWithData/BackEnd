@@ -176,6 +176,12 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand{
 .
 /**/
 
+/*search bar autocomplete*/
+.autocomplete-suggestions { position: absolute; display: none;  max-height: 300px; z-index: 9999 }
+.autocomplete-suggestion { padding: 5px 2px; font-size: 1em; white-space: nowrap; overflow: hidden; background: #b36a60;}
+.autocomplete-group { padding: 10px 5px; background: #ebcccc; font-size: 1.2em; }
+.autocomplete-selected { background: #f0f0f0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
 
 /*  footer */
 .footer a {
