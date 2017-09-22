@@ -1,0 +1,22 @@
+CONTRACTOR = 'CONTRACTOR'
+ARCHITECT = 'ARCHITECT'
+DESIGNER = 'DESIGNER'
+
+PROFESSIONAL_TYPE_CHOICES = (
+    (CONTRACTOR, 'Contractor'),
+    (ARCHITECT, 'Architect'),
+    (DESIGNER, 'Designer'),
+)
+
+# TODO: add subtype choices
+CONTRACTOR_TYPE_CHOICES = (
+
+)
+
+DESIGNER_TYPE_CHOICES = (
+
+)
+
+ARCHITECT_TYPE_CHOICES = (
+
+)

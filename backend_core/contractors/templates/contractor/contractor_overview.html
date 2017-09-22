@@ -1,5 +1,136 @@
 <div class="row">
-                {% include "contractor/contractor leftsidebar.html" %}
-                {% include "contractor/contractor mainbody.html" %}
-                {% include "contractor/contractor rightsidebar.html" %}
+    <!--summary-->
+    <div id="Summary" class="col-7 col-sm-7 col-md-7 col-lg-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">Overview</div>
+            <div class="panel-body">
+                {{ info_dict.overview }}
+                <br>
+                <span class="collapsed">
+         <a href="javascript:void(0)"> READ MORE</a>
+        </span>
+
+                <span class="expanded">
+            {{ info_dict.overview }}
+            {{ info_dict.overview }}
+            {{ info_dict.overview }}
+            <br>
+            <a href="javascript:void(0)">Less</a>
+        </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="BasicInfo" class="col-5 col-sm-5 col-md-5 col-lg-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">Basic Information</div>
+
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td class="rname">License #:</td>
+                        <td>{{ info_dict.contractor.lic_num }}</td>
+                    </tr>
+                    <tr>
+                        <td class="rname">License Status:</td>
+                        <td>{{ info_dict.contractor.lic_status }}</td>
+                    </tr>
+                    <tr>
+                        <td class="rname">License Type:</td>
+                        <td>{% for item in info_dict.lic_type %}{{ item }}<br> {% endfor %}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rname">Entity:</td>
+                        <td>{{ info_dict.contractor.entity }}</td>
+                    </tr>
+                    <tr>
+                        <td class="rname">Issued Date:</td>
+                        <td>{{ info_dict.contractor.lic_issue_date }}</td>
+                    </tr>
+                    {% if info_dict.contractor.lic_expire_date %}
+                        <tr>
+                            <td class="rname">Expiration Date:</td>
+                            <td>{{ info_dict.contractor.lic_expire_date }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td class="rname">Bonded:</td>
+                        <td>{{ info_dict.bond_history.surety_company }}</td>
+                    </tr>
+                    <tr>
+                        <td class="rname">Issued:</td>
+                        <td>{{ info_dict.wc_history.insur_company }}</td>
+                    </tr>
+                    <tr>
+                        <td class="rname">Address:</td>
+                        <td>{{ info_dict.contractor.street_address }} <br/>
+                            {{ info_dict.contractor.csp }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<div>
+    <!--photo-->
+    <div id="photo" class="contractor-block">
+        <div class="panel panel-default">
+            <div class="panel-heading">Photo</div>
+            <div class="panel-body">
+                <div class="row">
+                    {% for image in info_dict.photo %}
+                        {#                      <div class="numbertext">1 / {{ photo|length }}</div>#}
+                        <div class="col-sm-12 col-md-6 col-lg-4 picstyle"><img class='cover img-responsive'
+                                                                               src="{{ image.image.url }}"></div>
+                    {% endfor %}
+                    <br>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--basic information-->
+<div id="Review" class="contractor-block">
+    <h1>Review</h1>
+    <hr>
+    <div class="review-row">
+        {% for rv in info_dict.review %}
+            <div>
+                {{ rv.comments }}
+                <br>
+                {{ rv.project_cost }}
+                <br>
+                {{ rv.project_type }}
+                <br>
+                {{ rv.project_duration }}
+                <br>
+                {% if rv.is_anonymous == 1 %}
+                    Anonymous User
+                {% else %}
+                    {{ rv.user.first_name }}{{ rv.user.last_name }}
+                {% endif %}
+                <br>
+                {% for r in rv.userrating_set.all %}
+                    {{ r.get_rating_type_display }}:{{ r.rating_score }}
+                    <br>
+                {% endfor %}
+                <br>
+                {% for img in rv.photo.all %}
+                    <img src="{{ img.img.url }}" title="{{ img.title }}" style="width:20px;height:20px;">
+                {% endfor %}
+                <br>
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
