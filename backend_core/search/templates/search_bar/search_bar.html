@@ -3,18 +3,22 @@
     <form class="form" id="searchForm" action="/search" method="get">
         <div class="form-row">
             <div class="search-row">
-                <span class="input-group-addon">Find</span>
                 <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
                 <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
                 <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
                 <!--TODO: add dropdown in input for current location                       -->
-                <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
-                <button class="blue-btn" id="searchButton" type="submit">Search</button>
+                <div class="dropdown">
+                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    <ul class="dropdown-menu pull-left" role="menu">
+                    <li><a href="#" id="currentLocationDropdownItem">Current Location</a></li>
+                    </ul>
+                </div>
+                <button class="blue-btn">
+                    <i class="fa fa-search" id="searchButton" type="submit" style="font-size:20px;color:white;"></i>
+                </button>
             </div>
         </div>
     </form>
-
-
 
 <script>
 //    address input enums
@@ -35,6 +39,10 @@
         { value: 'Designers', data: { category: 'Designer'}},
     ];
 
+    const LOCATION_TYPE = [
+        { value: 'Current Location', data: 'CL'},
+    ];
+
     var userCoordinate;
     var userAddress;
     var searchLocationType;
@@ -46,7 +54,8 @@
     };
 
     $(function () {
-        $('#currentLocationAddon').click(function () {
+
+        $('#currentLocationDropdownItem').click(function () {
             getLocation();
         });
 
@@ -61,6 +70,7 @@
 //            }
 
             searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
+            $('.dropdown.open').removeClass('open');
         });
 
         $('#searchForm').submit(function (event) {
@@ -111,13 +121,15 @@
 //            console.log(1)
 //            console.log(subtypes);
 //        });
-        $('#inlineFormInputSearchTargetType').autocomplete({
+
+        $('#inlineFormInputSearchTargetType').devbridgeAutocomplete({
             groupBy: 'category',
             lookup: PROFESSIONAL_TYPE,
             onSelect: function (suggestion) {
                 $('#inlineFormInputSearchType').val(suggestion['data']['category']);
             }
-        })
+        });
+
     });
 
     function getLocation() {
