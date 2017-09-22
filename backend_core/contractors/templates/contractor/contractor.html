@@ -23,35 +23,35 @@
 
 
 {#header#}
-{% block nav %}
+{#{% block nav %}#}
     {#  TODO: change the color of pop out menu #}
-    <header class="navbar navbar-bright navbar-fixed-top" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand">
-                    <h1 class="logo cursive">
-                        Hoome
-                    </h1>
-                </a>
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-            </div>
-            <nav class="collapse navbar-collapse" role="navigation">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Find your address</a></li>
-                    <li><a href="/">Projects</a></li>
-                    <li><a href="{% url 'login' %}">User Sign In</a></li>
-                    <li><a href="#">Contractor Sign In</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-{% endblock %}
+{#    <header class="navbar navbar-bright navbar-fixed-top" role="banner">#}
+{#        <div class="container">#}
+{#            <div class="navbar-header">#}
+{#                <a href="/" class="navbar-brand">#}
+{#                    <h1 class="logo cursive">#}
+{#                        Hoome#}
+{#                    </h1>#}
+{#                </a>#}
+{#                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">#}
+{#                    <span class="sr-only">Toggle navigation</span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                </button>#}
+{##}
+{#            </div>#}
+{#            <nav class="collapse navbar-collapse" role="navigation">#}
+{#                <ul class="nav navbar-nav">#}
+{#                    <li><a href="/">Find your address</a></li>#}
+{#                    <li><a href="/">Projects</a></li>#}
+{#                    <li><a href="{% url 'login' %}">User Sign In</a></li>#}
+{#                    <li><a href="#">Contractor Sign In</a></li>#}
+{#                </ul>#}
+{#            </nav>#}
+{#        </div>#}
+{#    </header>#}
+{#{% endblock %}#}
 
 {% block header %}
     <div id="masthead">
@@ -94,7 +94,7 @@
     <!-- Begin Body -->
     <div id="contractor-content">
         <div class="container">
-            <div class='menu  justify-content-center' id='pro-menu'>
+            <div class='menu justify-content-center' id='pro-menu'>
                 <ul class='nav  nav-pills'>
                     <li class="nav-item">
                         <a class="nav-link" id="overview-tab">Overview</a>
@@ -105,9 +105,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="review-tab">Review</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="other-tab">Other</a>
-                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" id="other-tab">Other</a>#}
+{#                    </li>#}
                 </ul>
             </div>
 

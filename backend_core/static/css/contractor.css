@@ -135,9 +135,24 @@ h1 {
 .horizontal-list ul li {
     display: table-cell;
     padding: 0px 20px;
-
 }
 
+/*TODO: need to check the more button*/
+#more {
+    overflow: hidden;
+    height: 3.6em;
+    line-height: 1.2em;
+}
+
+.collapsed {
+    float: left;
+}
+
+.expanded {
+    float: left;
+}
+
+/*main tables to do*/
 #summary {
     padding-left: 0px;
     padding-bottom: 20px;
@@ -159,143 +174,11 @@ h1 {
     border-spacing: 10px 0px;
 }
 
-/*TODO: need to delete or change*/
-
-#BasicInfo .panel {
+#BasicInfo .panel, #photo .panel, #review .panel {
     border-radius: 0px;
 }
 
-#BasicInfo .panel-heading {
-    background-image: none;
-    background-color: white;
-
-}
-
-/*#BasicInfo .panel{*/
-/*border:0px;*/
-/*}*/
-
-/*TODO: need to check the more button*/
-#more {
-    overflow: hidden;
-    height: 3.6em;
-    line-height: 1.2em;
-}
-
-.collapsed {
-    float: left;
-}
-
-.expanded {
-    float: left;
-}
-
-#photo {
-
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    position: relative;
-
-}
-.cover {
-    display:inline;
-}
-/*#photo .video-stage ul {*/
-    /*!*list-style-type: none;*!*/
-    /*float:left;*/
-/*}*/
-/*#photo .video-stage div{*/
-    /*display: inline;*/
-/*}*/
-
-.wrapper {
-    width: 100%;
-    height: 300px;
-    white-space: nowrap;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding: 1rem;
-    background-color: #ccc;
-    /*// Toggle this depending upon whether you want to see the scrollbar*/
-}
-.wrapper::-webkit-scrollbar {
-    display: none;
-    }
-
-.wrapper img{
-
-    width:100%;
-    height:100%;
-}
-/*#photo li {*/
-    /*display: inline;*/
-
-/*}*/
-
-/*#photo .panel, #photo .panel .panel-body, #photo .panel .panel-body *{*/
-/*margin: 0;*/
-/*padding: 0;*/
-/*}*/
-/*#photo .video-content-wrapper {*/
-/*width: 300px;*/
-/*height:300px;*/
-/*overflow: hidden;*/
-/*}*/
-
-/*#photo .video-content-wrapper .video-stage img{*/
-/*float:left;*/
-/*width: 300px;*/
-/*height: 300px;*/
-/*}*/
-/*#photo .video-content-wrapper .video-preview{*/
-/*width:50%*/
-/*}*/
-/*#photo .video-content-wrapper .video-preview img{*/
-/*width: 100%;*/
-/*height:auto*/
-/*}*/
-/*#photo .panel-body .video-stage {*/
-/*flex-basis: 75%;*/
-
-/*}*/
-
-/*#photo .panel-body .video-stage img {*/
-/*width: 500px;*/
-/*height:200px;*/
-/*}*/
-
-/*#photo .panel-body .video-previews {*/
-/*display: flex;*/
-/*flex-basis: 23%;*/
-/*flex-direction: column;*/
-/*justify-content: space-between;*/
-/*}*/
-
-/*#photo .video-responsive {*/
-/*height: 0;*/
-/*margin-bottom: 0;*/
-/*overflow: hidden;*/
-/*padding-bottom: 0;*/
-/*padding-top: 0;*/
-/*position: relative;*/
-/*}*/
-
-/*.video-responsive img {*/
-/*max-height:100%;*/
-/*left: 0;*/
-/*position: absolute;*/
-/*top: 0;*/
-/*width: 100%;*/
-
-/*}*/
-
-#photo .panel {
-    border-radius: 0px;
-}
-
-#photo .panel-heading {
+#BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
     background-image: none;
     background-color: white;
 }
@@ -323,22 +206,24 @@ h1 {
     display: flex;
 }
 
-/*.navbar-bright {*/
-/*background-color: black;*/
-
-/*}*/
-
-@media (min-width: 1001px) {
-
-}
-
-/**/
 #pro-content .container {
     margin: 0px;
     padding: 0px;
 }
 
-@media (min-width: 769px) {
+/*.navbar-bright {*/
+/*background-color: black;*/
+
+/*}*/
+
+@media (min-width: 1025px) {
+
+}
+
+/**/
+
+
+@media (min-width: 1025px) {
 
     #contractor-content {
         margin: 0 5%;
@@ -351,37 +236,112 @@ h1 {
         box-sizing: border-box;
     }
 
-    /*#BasicInfo {*/
-    /*width: 360px;*/
-    /*font-size: 0.75em;*/
-    /*float: left;*/
-    /*}*/
-    #BasicInfo table tr td {
-        font-size: 0.1em;
+    .wrapper {
+        position: static;
+        zoom: 1;
+    }
+
+    .wrapper li {
+        list-style-type: none;
+    }
+
+    .wrapper img {
+        height: 180px;
+        max-width: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: brightness(90%);
+    }
+
+    .img-item {
+        margin-top: 30px;
+        position: relative;
+        display: inline-block;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+        height: 180px;
+        width: calc(25% - 10px);
+        overflow: hidden;
     }
 
 }
 
-/*#summary {*/
-/*margin-left: 20px;*/
-/*width: 500px;*/
-/*float: left;*/
-/*}*/
-
-/*}*/
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #pro-content > .container {
         margin: 0px;
         padding: 0px;
     }
 
+    .horizontal-list ul li {
+        font-size: 0.75em;
+        padding: 5px;
+        display: block;
+    }
+
+    .menu .nav li a {
+        padding: auto 5px;
+    }
+
+    .menu .nav .nav-item:first-child a {
+        padding-left: 0px;
+    }
+
+    .menu .nav .nav-item:last-child a {
+        padding-right: 15px;
+    }
+
+    #masthead .container{
+        margin: 0 7.5%;
+    }
     #BasicInfo {
         width: 100%;
     }
 
     #summary {
         width: auto;
+    }
+
+    #BasicInfo {
+        padding-left: 0px;
+    }
+
+    #Review {
+        padding-left: 0px;
+        padding-right: 0px;
+        /*padding: auto 0px;*/
+    }
+
+    #photo {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 150px;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem;
+        background-color: #ccc;
+    }
+
+    .wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .wrapper li {
+        list-style-type: none;
+        display: inline;
+    }
+
+    .wrapper img {
+        display: inline;
+        width: 150px;
+        height: 100%;
     }
 }
 
