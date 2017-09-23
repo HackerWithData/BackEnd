@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
+from django.conf import settings
 from forms import PhotoForm, FileFieldForm, BackgroundPhotoForm
 from models import Photo, FileField, BackgroundPhoto
 from contractors.models import Contractor
@@ -67,7 +68,7 @@ def FileFieldUpload(request):
         files = request.FILES.getlist('img')
         if form.is_valid():
             for f in files:
-                instance = FileField.objects.create(img=f, title=f.name, object_id=18, content_type=ContentType.objects.get(model='user'))
+                instance = FileField.objects.create(img=f, title=f.name, object_id=18, content_type=ContentType.objects.get_for_model(settings.AUTH_USER_MODEL))
                 instance.save()
             return render(request, success_url)
     form = FileFieldForm()

@@ -1,97 +1,50 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
+from django.utils import six
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
-#from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
+from contractors.models import Contractor
+from utils import *
 
 
+class User(AbstractUser):
 
-class Client(models.Model):
-    UserId = models.IntegerField(primary_key=True)
-    UserName = models.CharField(max_length=32)
-'''
-class UserManager(BaseUserManager):
-
-    def _create_user(self, email, password, **extra_fields):
-        """
-        Creates and saves a User with the given email, password
-        and extra fields.
-        """
-        if not email:
-            raise ValueError('Users must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
-            **extra_fields
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, email, password=None, **extra_fields):
-        """
-        call _create_user to create normal user
-        """
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
-
-    def create_superuser(self, email, password, **extra_fields):
-        """
-        call _create_user to create superuser
-        """
-        extra_fields.setdefault('is_superuser', True)
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-        return self._create_user(email, password, **extra_fields)
-
-
-class User(AbstractBaseUser):
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-
-    email = models.EmailField(
-        verbose_name="email address",
-        max_length=255,
-        unique=True,
+    role = models.CharField(
+        choices=ROLE_CHOICES,
+        default=CONSUMER,
+        max_length=16
     )
 
-    date_joined = models.DateTimeField(
-        verbose_name="date joined",
-        auto_now_add=True,
+    contractor = models.ForeignKey(Contractor, on_delete=models.PROTECT, null=True)
+
+
+class ConsumerProfile(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    gender = models.CharField(
+        choices=GENDER_CHOICES,
+        default=MALE,
+        max_length=8
+    )
+    zipcode = models.CharField(
+        max_length=8
     )
 
-    objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+class ProfessionalProfile(models.Model):
 
-    class Meta:
-        verbose_name = "user"
-        verbose_name_plural = "users"
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    phone_num = models.CharField(max_length=64)
 
-    def get_full_name(self):
-        # The user is identified by their email address
-        return self.email
 
-    def get_short_name(self):
-        # The user is identified by their email address
-        return self.email
+class ConsumerInterest(models.Model):
 
-    def __str__(self):
-        return self.email
-
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
-'''
+    consumer_profile = models.ForeignKey(ConsumerProfile, on_delete=models.CASCADE)
+    interest = models.CharField(
+        max_length=32
+    )

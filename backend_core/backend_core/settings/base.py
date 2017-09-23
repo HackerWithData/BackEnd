@@ -43,8 +43,20 @@ PREREQ_APPS = [
     'haystack',
 ]
 
+AUTH_APPS = [
+# The following apps are required:
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+# include the providers you want to enable:
+    'allauth.socialaccount.providers.facebook',
+]
+
 WEB_APPS = [
-    'social_django',
+    # 'social_django',
     'contractors',
     'home',
     'users',
@@ -58,7 +70,7 @@ WEB_APPS = [
     'designers'
 ]
 
-INSTALLED_APPS = WEB_APPS + PREREQ_APPS
+INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,8 +80,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_core.urls'
@@ -98,12 +108,11 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
 
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.google.GoogleOAuth2',
+    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 WSGI_APPLICATION = 'backend_core.wsgi.application'
@@ -162,18 +171,53 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-#
-LOGIN_REDIRECT_URL = 'home_index'
+#customized user model
+AUTH_USER_MODEL = 'users.User'
 
-#AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+# auth and all allauth settings
+LOGIN_REDIRECT_URL = 'home_index'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4',
+    }
+}
+
+# #AUTH_USER_MODEL = 'users.User'
+
+SITE_ID = 8888
+
+LOGIN_REDIRECT_URL = 'home_index'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQURIED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_FORMS = {'signup': 'users.forms.UserSignUpForm'}
+
+SOCIAL_AUTH_FACEBOOK_APP_ID = '526289131044788'
+SOCIAL_AUTH_FACEBOOK_SECRET = '94390bde88a2e5fac03c9eb7828ef3bf'
 
 SOCIAL_AUTH_GITHUB_KEY = '1d0a444a4e906e9b6373'
 SOCIAL_AUTH_GITHUB_SECRET = '324a396f44f7858a9d3fbef208ba6d058f11b19c'
-
-SOCIAL_AUTH_FACEBOOK_KEY = '1571966282825620'
-SOCIAL_AUTH_FACEBOOK_SECRET = '6fc15ee3ef0f7a1038d2286ac55847cc'
 
 SOCIAL_AUTH_TWITTER_KEY = 'Jc8Fhb8XDbCygE5ki3GOljNwp'
 SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32'
