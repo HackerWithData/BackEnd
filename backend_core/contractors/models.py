@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 
+
 #TODO：Clean Data Format
 class Contractor(models.Model):
     lic_num = models.IntegerField(primary_key=True, unique=True)

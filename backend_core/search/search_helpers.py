@@ -4,7 +4,7 @@ from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from professionals.models import Professional, ProfessionalType
-from professionals.utils import PROFESSIONAL_TYPE_CHOICES, ARCHITECT, DESIGNER, CONTRACTOR
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
 
 
 # Ajax POST request

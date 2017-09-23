@@ -3,11 +3,13 @@ from allauth.account.forms import SignupForm
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
-import string
-
 from models import User, ConsumerProfile, ProfessionalProfile
+from professionals.utils import *
 from utils import *
 
+import string
+
+professional_type = setup_professional_type()
 
 
 class UserSignUpForm(SignupForm):
@@ -82,4 +84,51 @@ class ConsumerInfoFillUpForm(forms.Form):
 
 # TODO: implement professional form
 class ProfessionalInfoFillUpForm(forms.Form):
-    pass
+
+    license_num = forms.IntegerField(
+        required=True,
+    )
+
+    professional_type = forms.MultipleChoiceField(
+        required=True,
+        choices=PROFESSIONAL_CHOICES
+    )
+
+    professional_subtype = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        choices=PROFESSIONAL_SUBTYPE_CHOICES,
+    )
+
+    company_name = forms.CharField(
+        required=True,
+        max_length=128
+    )
+
+    entity_type = forms.ChoiceField(
+        required=True,
+        choices=ENTITY_CHOICES
+    )
+
+    street = forms.CharField(
+        required=True,
+        max_length=128
+    )
+
+    state = forms.CharField(
+        required=True,
+        max_length=32
+    )
+
+    zipcode = forms.CharField(
+        required=True,
+        max_length=16
+    )
+
+    def clean_zipcode(self):
+        zipcode = self.cleaned_data['zipcode']
+        zip_num = int(zipcode.strip(string.ascii_letters))
+        zip_str = str(zip_num)
+        if len(zip_str) != 5:
+            raise forms.ValidationError(_('Invalid zipcode'))
+        return zip_str
