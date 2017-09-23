@@ -1,9 +1,28 @@
 <div>
-{%  for pic in  info_dict.project_photos %}
-    <img src="{{ pic.img.url }}" title="{{ pic.title }}" style="height:50%;width:50%">
-{%  endfor %}
-
-<br>
-<a href="{{ request.path }}upload">upload projects photos</a>
+    <div class="row">
+        {% for pic in  info_dict.project_photos %}
+            <div class="col-3 col-md-3 col-lg-3">
+                <div class="thumbnail">
+                    <img src="{{ pic.img.url }}" title="{{ pic.title }}" class="">
+                </div>
+                {#    style="height:50%;width:50%"#}
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <a href="{{ request.path }}upload">upload projects photos</a>
+{#photots version2#}
+{#    <div class="row">#}
+{#        {% for pic in  info_dict.project_photos %}#}
+{#            <div class="col-3 col-md-3 col-lg-3">#}
+{#                <div class="project-image">#}
+{#                    <img src="{{ pic.img.url }}" title="{{ pic.title }}" class="">#}
+{#                </div>#}
+                {#    style="height:50%;width:50%"#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#    <br>#}
+{#    <a href="{{ request.path }}upload">upload projects photos</a>#}
 </div>
 

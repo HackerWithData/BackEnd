@@ -132,7 +132,7 @@ h1 {
 
 .horizontal-list ul li {
     display: table-cell;
-    padding: 0px 20px;
+    padding: 0px 7.5px;
 }
 
 /*TODO: need to check the more button*/
@@ -210,8 +210,6 @@ h1 {
 /*height: 100%;*/
 /*}*/
 
-
-
 /**/
 
 @media (min-width: 768px) {
@@ -221,12 +219,20 @@ h1 {
     }
 
     .container {
-        margin: 0px;
+        margin: 0 1%;
         padding: 0px;
-        width: auto;
+        width: 100%;
         box-sizing: border-box;
     }
 
+    #masthead .container {
+        /*width:auto;*/
+        margin: 0 10%;
+    }
+
+    /*#masthead .row {*/
+    /*width:100%;*/
+    /*}*/
     /*TODO:don't change or delete below*/
     /*.wrapper {*/
     /*position: static;*/
@@ -252,6 +258,10 @@ h1 {
     /*width: calc(25% - 10px);*/
     /*overflow: hidden;*/
     /*}*/
+    .footer {
+        position: relative;
+        margin-top: 50px;
+    }
 
 }
 
@@ -550,9 +560,40 @@ h1 {
 .nonlink {
     position: relative;
     width: auto;
-    bottom:inherit;
-    left:inherit;
+    bottom: inherit;
+    left: inherit;
     text-align: left;
-    padding:auto;
-    background-image:none;
+    padding: auto;
+    background-image: none;
 }
+/* photos version1*/
+.thumbnail{
+    width:100%;
+    height:150px;
+    overflow:auto;
+}
+.thumbnail img{
+    width:100%;
+    height:auto;
+    max-height:100%;
+    display:block;
+}
+
+/*photos version2*/
+/*.project-image {*/
+  /*width: 200px;*/
+  /*height: 150px;*/
+  /*position: relative;*/
+  /*display: inline-block;*/
+  /*overflow: hidden;*/
+  /*margin: 0;*/
+/*}*/
+/*.project-image > img {*/
+  /*display: block;*/
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*max-height: 100%;*/
+  /*max-width: 100%;*/
+  /*transform: translate(-50%, -50%);*/
+/*}*/

@@ -160,7 +160,6 @@
                 $('#readmore').hide();
                 $('#peek').removeClass('link');
             }
-
             var readmore = $('#readmore');
             if (readmore.text() == 'Read more') {
                 readmore.text("Read less");
@@ -169,10 +168,7 @@
                 readmore.text("Read more");
                 $('#peek').addClass('link');
             }
-
             $('.height').toggleClass("heightAuto");
-
-            {#                $('#peek').addClass("nonlink");#}
         }
 
 
@@ -195,9 +191,9 @@
                 centerMode: true,
                 focusOnSelect: true,
             });
-
-
         }
+
+        photoSlider();
 
         function projectPhotosListener() {
             if (b) {
@@ -214,7 +210,12 @@
                 })
                     .done(function (data) {
                         b = data;
+{#                        TODO:NEED TO CHECK THE FUNCTIONALITY#}
+                        function photoSlider(){return true;}
+                        photoSlider();
                         $('#pro-content').html(b);
+
+
                     });
             }
         }
@@ -239,19 +240,8 @@
             }
         }
 
-        photoSlider();
-
 
         $(document).ready(function () {
-            var curHeight = $('#Summary .text').height();
-            if (curHeight >= 350) {
-
-                $('#readmore').show();
-            }
-            else {
-                $('#readmore').hide();
-                $('#peek').removeClass('link');
-            }
 
             $('#readmore').click(function () {
                 readMore();
@@ -260,7 +250,18 @@
             $('#overview-tab').click(function () {
                 document.getElementById('pro-content').innerHTML = a;
                 {#                $('#pro-content').html(a);#}
-                readMore();
+                var curHeight = $('#Summary .text').height();
+                if (curHeight >= 350) {
+                    $('#readmore').show();
+                }
+                else {
+                    $('#readmore').hide();
+                    $('#peek').removeClass('link');
+                }
+
+                $('#readmore').click(function () {
+                    readMore();
+                });
                 photoSlider();
                 $('#photo a.viewmore').click(function () {
                     projectPhotosListener();
