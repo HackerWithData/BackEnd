@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
 from models import User, ConsumerProfile, ProfessionalProfile
-from professionals.utils import *
+from professionals.utils import ENTITY_CHOICES, FIRM, INDIVIDUAL, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, ARCHITECT, DESIGNER
+from professionals.models import Professional, ProfessionalType
 from utils import *
 
 import string
@@ -70,15 +71,15 @@ class ConsumerInfoFillUpForm(forms.Form):
         return gender[0]
 
     def save(self, request):
-        gender = self.cleaned_data['gender']
-        first_name = self.cleaned_data['first_name']
-        last_name = self.cleaned_data['last_name']
-        zipcode = self.cleaned_data['zipcode']
+        clean_gender = self.cleaned_data['gender']
+        clean_first_name = self.cleaned_data['first_name']
+        clean_last_name = self.cleaned_data['last_name']
+        clean_zipcode = self.cleaned_data['zipcode']
         user = request.user
-        user.first_name = first_name
-        user.last_name = last_name
+        user.first_name = clean_first_name
+        user.last_name = clean_last_name
         user.save()
-        profile = ConsumerProfile(user=user, gender=gender, zipcode=zipcode)
+        profile = ConsumerProfile(user=user, gender=clean_gender, zipcode=clean_zipcode)
         profile.save()
 
 
@@ -91,7 +92,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
     professional_type = forms.MultipleChoiceField(
         required=True,
-        choices=PROFESSIONAL_CHOICES
+        choices=PROFESSIONAL_CHOICES,
+        initial=CONTRACTOR
     )
 
     professional_subtype = forms.MultipleChoiceField(
@@ -107,7 +109,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
     entity_type = forms.ChoiceField(
         required=True,
-        choices=ENTITY_CHOICES
+        choices=ENTITY_CHOICES,
+        initial=FIRM
     )
 
     street = forms.CharField(
@@ -125,6 +128,18 @@ class ProfessionalInfoFillUpForm(forms.Form):
         max_length=16
     )
 
+    def clean_professional_type(self):
+        professional = self.cleaned_data['professional_type']
+        if professional[0] not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
+            raise forms.ValidationError(_('Must select a professional type'))
+        return professional[0]
+
+    def clean_entity_type(self):
+        entity = self.cleaned_data['entity_type']
+        if entity not in [choice[0] for choice in ENTITY_CHOICES]:
+            raise forms.ValidationError(_('Must select a entity type'))
+        return entity
+
     def clean_zipcode(self):
         zipcode = self.cleaned_data['zipcode']
         zip_num = int(zipcode.strip(string.ascii_letters))
@@ -132,3 +147,56 @@ class ProfessionalInfoFillUpForm(forms.Form):
         if len(zip_str) != 5:
             raise forms.ValidationError(_('Invalid zipcode'))
         return zip_str
+
+    # TODO: validate
+    def clean_professional_subtype(self):
+        subtype = self.cleaned_data['professional_subtype']
+        return subtype
+
+    def save(self, request):
+        clean_license_num = self.cleaned_data['license_num']
+        clean_company_name = self.cleaned_data['company_name']
+        clean_street = self.cleaned_data['street']
+        clean_state = self.cleaned_data['state']
+        clean_zipcode = self.cleaned_data['zipcode']
+        clean_entity_type = self.cleaned_data['entity_type']
+        clean_professional_type = self.cleaned_data['professional_type']
+        clean_professional_subtype = self.cleaned_data['professional_subtype']
+
+        professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
+        # find the result
+        if professional_qs.exists() and professional_qs.count() == 1:
+            professional = professional_qs.first()
+            professional.entity_type = clean_entity_type
+            professional.state = clean_state
+            professional.postal_code = clean_zipcode
+            # save professional
+            professional.save()
+        # multiple item for the same professional
+        elif professional_qs.count() > 1:
+            raise MultipleSameProfessionalFound('Found Redundant Professionals')
+        # create new professional
+        else:
+            professional = Professional.objects.create(lic_num=clean_license_num,
+                                                       name=clean_company_name,
+                                                       entity_type=clean_entity_type,
+                                                       type=clean_professional_type,
+                                                       state=clean_state,
+                                                       postal_code=clean_zipcode)
+
+        user = request.user
+
+        # create new profile
+        ProfessionalProfile.objects.create(user=user, professional=professional)
+
+        # create new subtypes for profile
+        for subtype in clean_professional_subtype:
+            ProfessionalType.objects.create(professional=professional,
+                                            type=clean_professional_type,
+                                            subtype=subtype)
+
+
+class MultipleSameProfessionalFound(Exception):
+    pass
+
+
