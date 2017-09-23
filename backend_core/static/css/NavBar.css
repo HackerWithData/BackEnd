@@ -17,6 +17,11 @@
     color: white;
 }
 
+/*.navbar-bright .container{*/
+    /*margin: 0px;*/
+    /*padding: 0px;*/
+/*}*/
+
 .navbar-bright nav {
     float: right;
 }
@@ -181,8 +186,39 @@
 
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
+    .navbar-collapse, .navbar-bright nav, .navbar-bright nav ul, .navbar-bright nav ul li, .navbar-bright nav ul li a {
+        width: 100%;
+    }
 
+    .navbar-bright .navbar-collapse{
+        padding:0px;
+        margin:0px
+    }
+    .navbar-bright .container{
+        margin: 0;
+        padding: 0;
+    }
+    .navbar-brand {
+        margin-left:20px;
+    }
+    .nabar-toggle {
+        margin-right:20px;
+    }
+    .navbar-collapse{
+        background-color: rgba(0,0,0,0.3);
+        color:#000000;
+    }
+
+    .navbar-bright nav ul li {
+        display: block;
+        float: none;
+    }
+
+    .navbar-bright nav ul li a {
+        /*color:#000000;*/
+        text-align: center;
+    }
 
     .main .motto {
         width: 100%;

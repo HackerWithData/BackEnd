@@ -19,6 +19,11 @@ body {
     width: auto;
 }
 
+.footer .row {
+    margin: 0;
+    padding: 0;
+}
+
 /*********************rating star in review to pick ****************/
 
 fieldset, label {
@@ -81,8 +86,8 @@ h1 {
     color: #FFED85;
 }
 
-/*** masthead ***/
-/* master head */
+/*********************** masthead **********************/
+
 #masthead {
     margin: 0;
     padding: 0;
@@ -112,8 +117,8 @@ h1 {
 
 #masthead .row {
     width: auto; /**/
-    padding: 0px;
-    margin: 0px;
+    /*padding: 0px;*/
+    /*margin: 0px;*/
 }
 
 #masthead .head-info {
@@ -130,24 +135,9 @@ h1 {
 .horizontal-list ul li {
     display: table-cell;
     padding: 0px 20px;
-
 }
 
-#BasicInfo table tr {
-    vertical-align: top;
-}
-
-#BasicInfo .tname {
-    font-weight: 200;
-    font-size: 0.5em;
-}
-
-#BasicInfo .td {
-    padding: auto 10px;
-    align: right;
-
-}
-
+/*TODO: need to check the more button*/
 #more {
     overflow: hidden;
     height: 3.6em;
@@ -162,14 +152,35 @@ h1 {
     float: left;
 }
 
-#photo {
-    padding-top: 20px
-
+/*main tables to do*/
+#summary {
+    padding-left: 0px;
+    padding-bottom: 20px;
 }
 
-.picstyle {
-    padding: 2.5px 0px;
-    margin: 0px
+#BasicInfo {
+    padding-right: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#BasicInfo table tr {
+    vertical-align: top;
+}
+
+#BasicInfo table {
+    border-collapse: separate;
+    border-spacing: 10px 0px;
+}
+
+#BasicInfo .panel, #photo .panel, #review .panel {
+    border-radius: 0px;
+}
+
+#BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
+    background-image: none;
+    background-color: white;
 }
 
 /*** set the side of container ***/
@@ -177,32 +188,27 @@ h1 {
     margin: auto 50px;
 }
 
-body {
-    padding: 0;
-    margin: 0;
-    width: auto;
-}
+/*#left-col, #right-col {*/
+/*padding-right: 15px;*/
+/*}*/
 
-#left-col, #right-col {
-    padding-right: 15px;
-}
-
-#mid-col {
-    padding-left: 15px;
-    padding-right: 15px;
-}
+/*#mid-col {*/
+/*padding-left: 15px;*/
+/*padding-right: 15px;*/
+/*}*/
 
 .navbar-bright {
     background-color: black;
 }
 
-/*.contractor-block {*/
-/*padding: 10px;*/
-
-/*}*/
 /*pro menu */
 #pro-menu .nav {
     display: flex;
+}
+
+#pro-content .container {
+    margin: 0px;
+    padding: 0px;
 }
 
 /*.navbar-bright {*/
@@ -210,15 +216,132 @@ body {
 
 /*}*/
 
-.footer .row {
-    margin: 0;
-    padding: 0;
-}
-
-@media (min-width: 1001px) {
-
-
+@media (min-width: 1025px) {
 
 }
 
 /**/
+
+
+@media (min-width: 1025px) {
+
+    #contractor-content {
+        margin: 0 5%;
+    }
+
+    #pro-content .container {
+        margin: 0px;
+        padding: 0px;
+        width: auto;
+        box-sizing: border-box;
+    }
+
+    .wrapper {
+        position: static;
+        zoom: 1;
+    }
+
+    .wrapper li {
+        list-style-type: none;
+    }
+
+    .wrapper img {
+        height: 180px;
+        max-width: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: brightness(90%);
+    }
+
+    .img-item {
+        margin-top: 30px;
+        position: relative;
+        display: inline-block;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+        height: 180px;
+        width: calc(25% - 10px);
+        overflow: hidden;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    #pro-content > .container {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .horizontal-list ul li {
+        font-size: 0.75em;
+        padding: 5px;
+        display: block;
+    }
+
+    .menu .nav li a {
+        padding: auto 5px;
+    }
+
+    .menu .nav .nav-item:first-child a {
+        padding-left: 0px;
+    }
+
+    .menu .nav .nav-item:last-child a {
+        padding-right: 15px;
+    }
+
+    #masthead .container{
+        margin: 0 7.5%;
+    }
+    #BasicInfo {
+        width: 100%;
+    }
+
+    #summary {
+        width: auto;
+    }
+
+    #BasicInfo {
+        padding-left: 0px;
+    }
+
+    #Review {
+        padding-left: 0px;
+        padding-right: 0px;
+        /*padding: auto 0px;*/
+    }
+
+    #photo {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 150px;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem;
+        background-color: #ccc;
+    }
+
+    .wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .wrapper li {
+        list-style-type: none;
+        display: inline;
+    }
+
+    .wrapper img {
+        display: inline;
+        width: 150px;
+        height: 100%;
+    }
+}
+

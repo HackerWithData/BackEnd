@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <style>
         #masthead {
-            width:auto;
+            width: auto;
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
             background-size: cover;
             min-height: 300px;
@@ -16,178 +16,181 @@
             padding: 0px;
             margin-top: 50px;
             box-sizing: border-box;
-            }
+        }
     </style>
 {% endblock %}
 
 
 
 {#header#}
-{% block nav %}
-{#        TODO: change the color of pop out menu#}
-   <header class="navbar navbar-bright navbar-fixed-top" role="banner">
-      <div class="container">
-        <div class="navbar-header">
-            <a href="/" class="navbar-brand">
-                <h1 class="logo cursive">
-                    Hoome
-                </h1>
-            </a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-
-        </div>
-        <nav class="collapse navbar-collapse" role="navigation">
-          <ul class="nav navbar-nav">
-            <li><a href="/">Find your address</a></li>
-            <li><a href="/">Projects</a></li>
-            <li><a href="{% url 'login' %}">User Sign In</a></li>
-            <li> <a href="#">Contractor Sign In</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-{% endblock %}
+{#{% block nav %}#}
+    {#  TODO: change the color of pop out menu #}
+{#    <header class="navbar navbar-bright navbar-fixed-top" role="banner">#}
+{#        <div class="container">#}
+{#            <div class="navbar-header">#}
+{#                <a href="/" class="navbar-brand">#}
+{#                    <h1 class="logo cursive">#}
+{#                        Hoome#}
+{#                    </h1>#}
+{#                </a>#}
+{#                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">#}
+{#                    <span class="sr-only">Toggle navigation</span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                </button>#}
+{##}
+{#            </div>#}
+{#            <nav class="collapse navbar-collapse" role="navigation">#}
+{#                <ul class="nav navbar-nav">#}
+{#                    <li><a href="/">Find your address</a></li>#}
+{#                    <li><a href="/">Projects</a></li>#}
+{#                    <li><a href="{% url 'login' %}">User Sign In</a></li>#}
+{#                    <li><a href="#">Contractor Sign In</a></li>#}
+{#                </ul>#}
+{#            </nav>#}
+{#        </div>#}
+{#    </header>#}
+{#{% endblock %}#}
 
 {% block header %}
-<div id="masthead">
-        <div class="row">
-            <div class="col-md-8 col-lg-8 head-info">
-                <h1>{{ info_dict.contractor.bus_name }}</h1>
-                <div class="horizontal-list">
-                    <ul style="list-style-type:None;">
-                        <li>{{ info_dict.contractor.csp }}</li>
-                        <li>Score: {{ info_dict.score}}</li>
-                        <li>Phone: {{ info_dict.contractor.phone }}</li>
-                        <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
-                            <div class="star-ratings-css">
-                                <div class="star-ratings-css-top" style="width:100%">
-                                    {%  for i in info_dict.ratings.stars %}
-                                        <span>★</span>
-                                    {% endfor %}
+    <div id="masthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 head-info">
+                    <h1>{{ info_dict.contractor.bus_name }}</h1>
+                    <div class="horizontal-list">
+                        <ul style="list-style-type:None;">
+                            <li>{{ info_dict.contractor.csp }}</li>
+                            <li>Score: {{ info_dict.score }}</li>
+                            <li>Phone: {{ info_dict.contractor.phone }}</li>
+                            <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
+                                <div class="star-ratings-css">
+                                    <div class="star-ratings-css-top" style="width:100%">
+                                        {% for i in info_dict.ratings.stars %}
+                                            <span>★</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="star-ratings-css-bottom">
+                                        {% for i in info_dict.ratings.stars %}
+                                            <span>★</span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="star-ratings-css-bottom">
-                                    {%  for i in info_dict.ratings.stars %}
-                                        <span>★</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+
                 </div>
             </div>
-            <div class="col-md-4 col-lg-4">
-
-            </div>
         </div>
-</div>
-<!-- /cont -->
+    </div>
+    <!-- /cont -->
 {% endblock %}
 
 {% block content %}
-<!-- Begin Body -->
-<div id="contractor-content">
-    <div class='menu  justify-content-center' id='pro-menu'>
-    <ul class='nav  nav-pills'>
-           <li class="nav-item">
-            <a class="nav-link" id="overview-tab">Overview</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="projectphotos-tab">Project Photos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="review-tab">Review</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="other-tab">Other</a>
-          </li>
-    </ul>
-    </div>
+    <!-- Begin Body -->
+    <div id="contractor-content">
+        <div class="container">
+            <div class='menu justify-content-center' id='pro-menu'>
+                <ul class='nav  nav-pills'>
+                    <li class="nav-item">
+                        <a class="nav-link" id="overview-tab">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="projectphotos-tab">Project Photos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="review-tab">Review</a>
+                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" id="other-tab">Other</a>#}
+{#                    </li>#}
+                </ul>
+            </div>
 
-    <div class="" id="">
-          <div id="pro-content">
-                {%  include "contractor/contractor_overview.html" %}
-          </div>
+            <div class="" id="">
+                <div id="pro-content">
+                    {% include "contractor/contractor_overview.html" %}
+                </div>
+            </div>
+        </div>
     </div>
-
-</div>
-</div>
+    </div>
 {% endblock %}
 
 
 
-{%  block javascript %}
- <script>
-    var a = document.getElementById('pro-content').innerHTML;
-    var b;
-    var c;
-{#    var d;#}
+{% block javascript %}
+    <script>
+        var a = document.getElementById('pro-content').innerHTML;
+        var b;
+        var c;
+        {#    var d;#}
 
-   function readMore() {
-        $(".expanded").hide();
+        function readMore() {
+            $(".expanded").hide();
 
-        $(".expanded a, .collapsed a").click(function(eve) {
-                var $container = $(this).parents("div");
+            $(".expanded a, .collapsed a").click(function (eve) {
+                var $container = $(this).parents("span");
                 eve.preventDefault();
                 $container.children(".expanded, .collapsed").toggle();
             });
-    }
+        }
 
-    readMore();
+        readMore();
 
-   $(document).ready(function() {
+        $(document).ready(function () {
 
-        $('#overview-tab').click(function() {
-            document.getElementById('pro-content').innerHTML = a;
-{#                $('#pro-content').html(a);#}
-            readMore();
-        });
+            $('#overview-tab').click(function () {
+                document.getElementById('pro-content').innerHTML = a;
+                {#                $('#pro-content').html(a);#}
+                readMore();
+            });
 
-        $('#projectphotos-tab').click(function() {
-            if (b) {
-                 $('#pro-content').html(b);
-            }
-            else{
-              $.ajax({
-                   type:"POST",
-                   beforeSend: function (request){
-                       request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
-                   },
-                   url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
-                   dataType: 'html',
-                    })
-                .done(function (data) {
-                    b = data;
+            $('#projectphotos-tab').click(function () {
+                if (b) {
                     $('#pro-content').html(b);
-                });
-             }
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                        },
+                        url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
+                        dataType: 'html',
+                    })
+                        .done(function (data) {
+                            b = data;
+                            $('#pro-content').html(b);
+                        });
+                }
+            });
+
+            $('#review-tab').click(function () {
+                if (c) {
+                    $('#pro-content').html(c);
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                        },
+                        dataType: 'html',
+                    })
+                        .done(function (data) {
+                            c = data;
+                            $('#pro-content').html(c);
+                        });
+                }
+            });
+
         });
 
-        $('#review-tab').click(function() {
-            if (c) {
-                 $('#pro-content').html(c);
-            }
-            else{
-               $.ajax({
-                   type:"POST",
-                   url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
-                  beforeSend: function (request){
-                       request.setRequestHeader("X-CSRFToken",getCookie("csrftoken"));
-                   },
-                   dataType: 'html',
-               })
-               .done(function (data) {
-                   c = data;
-                   $('#pro-content').html(c);
-               });
-            }
-        });
-
-    });
-
-</script>
-{%  endblock %}
+    </script>
+{% endblock %}
