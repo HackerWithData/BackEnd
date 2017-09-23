@@ -6,17 +6,15 @@ input[type="button"]::-moz-focus-inner,
 input[type="submit"]::-moz-focus-inner,
 select::-moz-focus-inner,
 input[type="file"] > input[type="button"]::-moz-focus-inner {
-    outline : 0;
+    outline: 0;
 }
 
-
-nav{
-    postion:fixed;
+nav {
+    postion: fixed;
     z-index: 999;
 }
 
-
-.main{
+.main {
     background-position: center center;
     background-size: cover;
     height: auto;
@@ -27,48 +25,58 @@ nav{
     top: 0;
     width: auto;
 }
-.cover{
+
+.cover {
     position: fixed;
     opacity: 1;
-    background-color: rgba(0,0,0,.6);
+    background-color: rgba(0, 0, 0, .6);
     left: 0px;
     top: 0px;
     width: 100%;
     height: 100%;
     z-index: 1;
 }
-.cover.black{
-    background-color: rgba(0,0,0,.6);
+
+.cover.black {
+    background-color: rgba(0, 0, 0, .6);
 }
-.cover.blue{
+
+.cover.blue {
     background-color: rgba(5, 31, 60, 0.6);
 }
-.cover.green{
+
+.cover.green {
     background-color: rgba(3, 28, 7, 0.6);
 }
-.cover.orange{
+
+.cover.orange {
     background-color: rgba(37, 28, 5, 0.6);
 }
-.cover.red{
+
+.cover.red {
     background-color: rgba(35, 3, 2, 0.66);
 }
-.blur{
-  opacity:0;
+
+.blur {
+    opacity: 0;
 }
-.logo-container{
+
+.logo-container {
     left: 50px;
     position: absolute;
     top: 20px;
-     z-index: 3;
+    z-index: 3;
 }
-.logo-container .logo{
+
+.logo-container .logo {
     overflow: hidden;
     border-radius: 50%;
     border: 1px solid #333333;
     width: 60px;
     float: left;
 }
-.logo-container .brand{
+
+.logo-container .brand {
     font-size: 18px;
     color: #FFFFFF;
     line-height: 20px;
@@ -77,7 +85,8 @@ nav{
     margin-top: 10px;
     width: 60px
 }
-.main .logo{
+
+.main .logo {
     color: #FFFFFF;
     font-size: 56px;
     font-weight: 300;
@@ -87,15 +96,18 @@ nav{
     margin-top: 150px;
     z-index: 3;
 }
-.main .logo.cursive{
-    font-family: 'Grand Hotel',cursive;
+
+.main .logo.cursive {
+    font-family: 'Grand Hotel', cursive;
     font-size: 82px;
 }
-.main .content{
+
+.main .content {
     position: relative;
     z-index: 4;
 }
-.main .motto{
+
+.main .motto {
     font-family: 'Raleway', Helvetica, Arial, sans-serif;
     min-height: 140px;
     padding: 0 25%;
@@ -127,7 +139,7 @@ nav{
 #video_pattern {
     position: fixed;
     opacity: 0.6;
-    background-color: rgba(0,0,0,.45);
+    background-color: rgba(0, 0, 0, .45);
     left: 0px;
     top: 0px;
     width: 100%;
@@ -135,9 +147,8 @@ nav{
     z-index: 1;
 }
 
-
 #searchForm .form-row {
-    display:flex;
+    display: flex;
 }
 
 #searchForm .search-row {
@@ -145,17 +156,24 @@ nav{
     flex-grow: 1
 }
 
+/*#searchForm .search-row .dropdown input{*/
+/*width:100%;*/
+/*}*/
+#searchForm .search-row .dropdown * {
+    width: 100%;
+}
+
 #searchForm .form-row button {
     border-radius: 0 6px 6px 0;
     white-space: nowrap;
     padding: 0 20px;
-    height:34px;
+    height: 34px;
 }
-
 
 .btn {
     background-color: #FFFFFF;
 }
+
 .blue-btn {
     border-radius: 0px;
     -webkit-border-radius: 4px;
@@ -177,9 +195,39 @@ nav{
 
 /**/
 
+/*search bar autocomplete*/
+.autocomplete-suggestions {
+    position: absolute;
+    display: none;
+    max-height: 300px;
+    z-index: 9999
+}
+
+.autocomplete-suggestion {
+    padding: 5px 2px;
+    font-size: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #b36a60;
+}
+
+.autocomplete-group {
+    padding: 10px 5px;
+    background: #ebcccc;
+    font-size: 1.2em;
+}
+
+.autocomplete-selected {
+    background: #f0f0f0;
+}
+
+.autocomplete-suggestions strong {
+    font-weight: normal;
+    color: #3399ff;
+}
 
 /*  footer */
-.footer{
+.footer {
     position: fixed;
     bottom: 10px;
     right: 0px;
@@ -190,25 +238,33 @@ nav{
 }
 
 .footer a {
-        color: #FFFFFF;
+    color: #FFFFFF;
 }
 
-@media (max-width:1000px) {
+@media (max-width: 1000px) {
 
 }
 
+@media only screen and (min-width: 991px) {
 
-
-@media only screen and (min-width:991px){
-
-    .footer{
+    .footer {
         position: fixed;
         bottom: 20px;
     }
 }
 
+@media (min-width: 769px) {
+    .search-row > *:first-child {
+        width: 45%;
+    }
 
-@media (min-width:768px){
+    #searchForm .search-row .dropdown {
+        width: 45%
+    }
+
+    .search-row > *:last-child {
+        width: 10%;
+    }
 
     .search-row input, .search-row
     button {
@@ -226,31 +282,37 @@ nav{
     }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
     #searchForm {
         padding-left: 0;
         padding-bottom: 200px;
 
     }
+
     .search-row {
         padding: 0 10%;
         flex-direction: column;
     }
+
     .main .motto {
         width: 100%;
         font-size: 1em;
     }
 
-    .search-row > *{
-        border-radius:0;
+    .search-row > * {
+        border-radius: 0;
         margin: 5px 0;
     }
 
-    #searchForm .form-row button  {
-        border-radius:0;
+    .search-row .dropdown input {
+        border-radius: 0;
     }
 
-    .footer{
+    #searchForm .form-row button {
+        border-radius: 0;
+    }
+
+    .footer {
         position: relative;
     }
 

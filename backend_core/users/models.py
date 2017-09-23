@@ -8,7 +8,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-from contractors.models import Contractor
+from professionals.models import Professional
 from utils import *
 
 
@@ -20,12 +20,15 @@ class User(AbstractUser):
         max_length=16
     )
 
-    contractor = models.ForeignKey(Contractor, on_delete=models.PROTECT, null=True)
-
 
 class ConsumerProfile(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='consumer_profiles',
+        related_query_name='consumer_profile'
+    )
     gender = models.CharField(
         choices=GENDER_CHOICES,
         default=MALE,
@@ -38,13 +41,28 @@ class ConsumerProfile(models.Model):
 
 class ProfessionalProfile(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_num = models.CharField(max_length=64)
+    professional = models.ForeignKey(
+        Professional,
+        related_name='professional_profiles',
+        related_query_name='professional_profile'
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='professional_profiles',
+        related_query_name='professional_profile'
+    )
 
 
 class ConsumerInterest(models.Model):
 
-    consumer_profile = models.ForeignKey(ConsumerProfile, on_delete=models.CASCADE)
+    consumer_profile = models.ForeignKey(
+        ConsumerProfile,
+        on_delete=models.CASCADE,
+        related_name='consumer_interests',
+        related_query_name='consumer_interest'
+    )
     interest = models.CharField(
         max_length=32
     )

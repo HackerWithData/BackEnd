@@ -1,28 +1,37 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
+from django.dispatch import receiver
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
+from allauth.account.signals import user_signed_up
 
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm
 from utils import *
 
 
+@receiver(user_signed_up)
+def set_role_before_sign_up_complete(request, **kwargs):
+    user = kwargs.pop('user')
+    role = request.POST.get('role')
+    user.role = role
+    user.save()
+
+
 @login_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
-        return render(request, 'before_complete_consumer/before_complete_consumer.html')
-        redirect()
+        return redirect('account_consumer_profile')
     elif request.user.role == PROFESSIONAL:
-        return render(request, 'before_complete_professional/before_complete_professional.html')
+        return redirect('account_professional_profile')
     else:
         raise UnexpectedMultipleChoice('Unexpected value for user role')
+    return HttpResponseServerError
 
 
-# TODO: test in the morning
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileView(View):
 
@@ -43,14 +52,12 @@ class ConsumerProfileView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save(request)
-            # TODO: redirect to home page or user dashboard
-            # return redirect('/success/')
-            return HttpResponse('success')
+            # TODO: change redirect to consumer dashboard after implemented
+            return redirect('home_index')
 
         return render(request, self.template_name, {'form': form})
 
 
-# TODO: test in the morning
 @method_decorator(login_required, name='dispatch')
 class ProfessionalProfileView(View):
 
@@ -73,7 +80,7 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
-            # TODO: redirect to home page or user dashboard
-            return redirect('/success/')
+            # TODO: change redirect to professional dashboard after implemented
+            return redirect('home_index')
 
         return render(request, self.template_name, {'form': form})

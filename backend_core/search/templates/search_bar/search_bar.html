@@ -2,63 +2,60 @@
 
     <form class="form" id="searchForm" action="/search" method="get">
         <div class="form-row">
-            <div class="search-row ">
-
-                {#                <label class="input-label" for="inlineFormInputSearchTargetType">#}
-{#                <span class="input-group-addon">Find</span>#}
-                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType"
-                       placeholder="For example: Designer">
-                {#                </label>#}
-                <!--TODO: add keywords later-->
-                <!--<div class="col-4">-->
-                <!--<label class="sr-only"-->
-                <!--for="inlineFromInputSearchKeywords">-->
-                <!--Keywords-->
-                <!--</label>-->
-                <!--<input type="text"-->
-                <!--class="form-control"-->
-                <!--name="keywords"-->
-                <!--id="inlineFromInputSearchKeywords"-->
-                <!--placeholder="Description ">-->
-                <!--</div>-->
-                {#                <label class="input-label" for="inlineFormInputSearchLocation">#}
-{#                <span class="input-group-addon" id="currentLocationAddon">Nearby</span>#}
+            <div class="search-row">
+                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
+                <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
                 <!--TODO: add dropdown in input for current location                       -->
-                <input type="text" class="form-control" name="zipcode" id="inlineFormInputSearchLocation"
-                       placeholder="Zipcode or County" autocomplete="postal-code">
-                {#                </label>#}
-                <button class="blue-btn" id="searchButton" type="submit"><i class="fa fa-search"
-                                                                            style="font-size:20px;color:white;"></i>
+                <div class="dropdown">
+                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    <ul class="dropdown-menu pull-left" role="menu">
+                    <li><a href="#" id="currentLocationDropdownItem">Current Location</a></li>
+                    </ul>
+                </div>
+                <button class="blue-btn">
+                    <i class="fa fa-search" id="searchButton" type="submit" style="font-size:20px;color:white;"></i>
                 </button>
             </div>
-
-
         </div>
     </form>
 
+<script>
+//    address input enums
+    const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
+    const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
 
+//    professional enums
+//    TODO: update using static json
+    const PROFESSIONAL_TYPE = [
+        { value: 'General Contractors', data: { category: 'Contractor' }},
+        { value: 'Landscape Contractors', data: { category: 'Contractor' }},
+        { value: 'Swimming Pool Contractors', data: { category: 'Contractor' }},
+        { value: 'Kitchen & Bath Remodelor', data: { category: 'Contractor' }},
+        { value: 'Roofing & Gutters', data: { category: 'Contractor' }},
+        { value: 'Plumbers', data: { category: 'Contractor' }},
+        { value: 'Fence Contractors', data: { category: 'Contractor' }},
+        { value: 'HV & AC', data: { category: 'Contractor' }},
+        { value: 'Designers', data: { category: 'Designer'}},
+    ];
 
-    <script>
-        <!--address input enums-->
-        const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
-        const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
+    var userCoordinate;
+    var userAddress;
+    var searchLocationType;
 
-        var userCoordinate;
-        var userAddress;
-        var searchLocationType;
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
 
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
+    $(function () {
 
-        $(function () {
-            $('#currentLocationAddon').click(function () {
-                getLocation();
-            });
+        $('#currentLocationDropdownItem').click(function () {
+            getLocation();
+        });
 
-            $('#inlineFormInputSearchLocation').keyup(function () {
+        $('#inlineFormInputSearchLocation').keyup(function () {
 //            TODO: add google autocomplete
 //            let input = $('#inlineFormInputSearchLocation').val();
 //            $.ajax({
@@ -68,79 +65,100 @@
 //                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
 //            }
 
-                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
-            });
+            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_ZIPCODE;
+            $('.dropdown.open').removeClass('open');
+        });
 
-            $('#searchForm').submit(function (event) {
-                switch (searchLocationType) {
-                    case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
-                        event.preventDefault();
-                        var formData = {
-                            'target': $('#inlineFormInputSearchTargetType').val(),
-                            'address': userAddress
-                        };
-                        $.ajax({
-                            type: "POST",
-                            beforeSend: function (request) {
-                                request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                            },
-                            url: "{% url 'search_new' %}",
-                            data: JSON.stringify(formData),
-                            dataType: "text",
-                            contentType: "application/json"
+        $('#searchForm').submit(function (event) {
+            switch (searchLocationType) {
+                case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
+                    event.preventDefault();
+                    const type = $('#inlineFormInputSearchType').val() || 'Name';
+                    const target = $('#inlineFormInputSearchTargetType').val();
+                    const formData = {
+                        'type': type ,
+                        'target': target,
+                        'address': userAddress
+                    };
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                        },
+                        url: "{% url 'search_new' %}",
+                        data: JSON.stringify(formData),
+                        dataType: "text",
+                        contentType : "application/json"})
+                        .done(function (redirect_url) {
+                            window.location.href = redirect_url;
                         })
-                            .done(function (redirect_url) {
-                                window.location.href = redirect_url;
-                            })
-                            .fail(function (jqXHR, textStatus, errorThrown) {
-                                console.warn(`ERROR: ${textStatus}`);
-                            });
-                        break;
-                    case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
-                        break;
-                    default:
-                        console.warn('ERROR: Unexpected location input flow');
-                        break;
-                }
-            });
-
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.warn(`ERROR: ${textStatus}`);
+                        });
+                    break;
+                case INPUT_SEARCH_LOCATION_TYPE_ZIPCODE:
+                    console.log('zipcode search here');
+                    break;
+                default:
+                    console.warn('ERROR: Unexpected location input flow');
+                    break;
+            }
+        });
+        
 //        $('#searchButton').click(function () {
 ////            TODO: check all data send back using ajaxStop
 //            $('#searchForm').submit();
 //        })
+
+//        TODO: change load static json file
+//        $.getJSON('static/json/subtype.json', function (data) {
+//            subtypes = data;
+//            console.log(1)
+//            console.log(subtypes);
+//        });
+
+        $('#inlineFormInputSearchTargetType').devbridgeAutocomplete({
+            groupBy: 'category',
+            lookup: PROFESSIONAL_TYPE,
+            onSelect: function (suggestion) {
+                $('#inlineFormInputSearchType').val(suggestion['data']['category']);
+            }
         });
 
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
+    });
 
-        function receivePositionSuccess(position) {
-            userCoordinate = position.coords;
-            console.log(userCoordinate);
-            $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoordinate.latitude},${userCoordinate.longitude}&key={{ GOOGLE_API_KEY }}`, receiveReversePosition)
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                    console.warn(`ERROR: ${textStatus}`);
-                });
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(receivePositionSuccess, receivePositionFail, options);
+        } else {
+            alert("Geolocation is not supported by this browser.");
         }
+    }
 
-        function receivePositionFail(err) {
-            console.warn(`ERROR(${err.code}): ${err.message}`);
+    function receivePositionSuccess(position) {
+        userCoordinate = position.coords;
+        console.log(userCoordinate);
+        $.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoordinate.latitude},${userCoordinate.longitude}&key={{ GOOGLE_API_KEY }}`, receiveReversePosition)
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+                console.warn(`ERROR: ${textStatus}`);
+            });
+    }
+    
+    function receivePositionFail(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    
+    function receiveReversePosition(response) {
+        if (response.results && response.results.length > 0) {
+            userAddress = response.results[0];
+            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
+            $('#inlineFormInputSearchLocation').val('Current Location');
+        } else {
+            console.warn('Error: response length less than 1');
         }
-
-        function receiveReversePosition(response) {
-            if (response.results && response.results.length > 0) {
-                userAddress = response.results[0];
-                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
-                $('#inlineFormInputSearchLocation').val('Current Location');
-            } else {
-                console.warn('Error: response length less than 1');
-            }
-            console.log(userAddress);
-        }
-    </script>
+        console.log(userAddress);
+    }
+</script>
 {% endblock %}

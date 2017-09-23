@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
+{% load i18n %}
+
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
 {% block content %}
-<p>before complete page</p>
+<div class="container-sign-up-professional-profile-form">
+    <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Complete" %}</button>
+    </form>
+</div>
 {% endblock %}

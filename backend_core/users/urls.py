@@ -18,6 +18,6 @@ from views import sign_up_complete_info, ProfessionalProfileView, ConsumerProfil
 
 urlpatterns = [
     url(r'^signup/info/$', sign_up_complete_info, name='account_signup_complete_info'),
-    url(r'^signup/info/consumer/$', ConsumerProfileView.as_view()),
-    url(r'^signup/info/profession/$', ProfessionalProfileView.as_view()),
+    url(r'^signup/info/consumer/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
+    url(r'^signup/info/profession/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
 ]
