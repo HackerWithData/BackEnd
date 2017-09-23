@@ -82,7 +82,7 @@ def display_contractor(request, contractor_id):
                                           object_id=contractor_id)[0:4]
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
                  "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
-                 "ratings": ratings,'project_photos':project_photos}
+                 "ratings": ratings,'project_photos': project_photos}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 

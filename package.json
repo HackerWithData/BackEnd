@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Banana-Mango/Backend#readme",
   "dependencies": {
-    "lesshat": "^4.1.0"
+    "lesshat": "^4.1.0",
+    "slick-carousel": "^1.7.1"
   }
 }
