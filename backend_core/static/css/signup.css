@@ -1,11 +1,120 @@
+/*===============================================================
+*   consumer fill up form
+===============================================================*/
 .container-sign-up-profile-form {
     margin-top: 20%;
     margin-left: 20%;
     margin-right: 20%;
 }
-
+/*===============================================================
+*   professional fill up form
+===============================================================*/
 .container-sign-up-professional-profile-form {
     margin-top: 20%;
     margin-left: 20%;
     margin-right: 20%;
+}
+
+.stages {
+	font-size: 0;
+	text-align: justify;
+}
+
+.stages:after {
+	content: '';
+	display: inline-block;
+	font-size: 0;
+	text-align: justify;
+	width: 100%;
+}
+
+.stages-radio-input {
+	display: none;
+}
+
+.stages label {
+	background: #ffffff;
+	border: solid 5px #c0c0c0;
+	border-radius: 50%;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 0;
+	font-weight: 700;
+	height: 50px;
+	line-height: 50px;
+	position: relative;
+	text-align: center;
+	vertical-align: top;
+	width: 50px;
+	z-index: 1;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.stages label:after {
+	content: '\2713';
+	color: #0cc39f;
+	display: inline-block;
+	font-size: 16px;
+}
+
+#one:checked ~ .stages label[for="one"],
+#two:checked ~ .stages label[for="two"],
+#three:checked ~ .stages label[for="three"],
+#four:checked ~ .stages label[for="four"] {
+	border-color: #0cc39f;
+}
+
+.stages label.active{
+	border-color: purple !important;
+}
+
+#one:checked ~ .stages label,
+#two:checked ~ .stages label[for="one"] ~ label,
+#three:checked ~ .stages label[for="two"] ~ label,
+#four:checked ~ .stages label[for="three"] ~ label {
+	font-size: 1rem;
+}
+
+#one:checked ~ .stages label:after,
+#two:checked ~ .stages label[for="one"] ~ label:after,
+#three:checked ~ .stages label[for="two"] ~ label:after,
+#four:checked ~ .stages label[for="three"] ~ label:after {
+	display: none;
+}
+
+.progress > span {
+	background: #c0c0c0;
+	display: inline-block;
+	height: 5px;
+	transform: translateY(-2.75em);
+	transition: 0.3s;
+	width: 0;
+}
+
+#two:checked ~ .progress span {
+	width: calc(100% / 3 * 1);
+}
+
+#three:checked ~ .progress span {
+	width: calc(100% / 3 * 2);
+}
+
+#four:checked ~ .progress span {
+	width: calc(100% / 3 * 3);
+}
+
+.panels div {
+	display: none;
+}
+
+#one:checked ~ .panels [data-panel="one"],
+#two:checked ~ .panels [data-panel="two"],
+#three:checked ~ .panels [data-panel="three"],
+#four:checked ~ .panels [data-panel="four"] {
+	display: block;
 }

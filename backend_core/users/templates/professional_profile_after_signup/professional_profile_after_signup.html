@@ -12,8 +12,70 @@
 <div class="container-sign-up-professional-profile-form">
     <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile' %}">
       {% csrf_token %}
-      {{ form.as_p }}
+      <!--{{ form.as_p }}-->
+        <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
+	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
+	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
+        <input id="four" type="radio" class="stages-radio-input" name="stage" />
+
+        <div class="stages">
+		    <label for="one">1</label>
+		    <label for="two">2</label>
+		    <label for="three">3</label>
+            <label for="four">4</label>
+	    </div>
+
+        <span class="progress"><span></span></span>
+
+        <div class="panels">
+            <div data-panel="one">
+                <h4>Stage 1</h4>
+                {{ form.professional_type }}
+            </div>
+            <div data-panel="two">
+                <h4>Stage 2</h4>
+                {{ form.license_num }}
+            </div>
+            <div data-panel="three">
+                <h4>Stage 3</h4>
+                {{ form.company_name }}
+                {{ form.entity_type }}
+                {{ form.professional_subtype }}
+            </div>
+            <div data-panel="four">
+                <h4>Stage 4</h4>
+                {{ form.street }}
+                {{ form.state }}
+                {{ form.zipcode }}
+            </div>
+        </div>
+
+
       <button type="submit">{% trans "Complete" %}</button>
     </form>
 </div>
 {% endblock %}
+
+<script>
+
+    $(function () {
+        $('.form .stages label').click(function() {
+	        var radioButtons = $('.stages-radio-input');
+	        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+	        selectedIndex = selectedIndex + 1;
+        });
+
+        $('.form button').click(function() {
+	        var radioButtons = $('.stages-radio-input');
+	        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+
+	        selectedIndex = selectedIndex + 2;
+
+	        $('.stages-radio-input:nth-of-type(' + selectedIndex + ')').prop('checked', true);
+
+	        if (selectedIndex == 4) {
+		        $('button').html('Submit');
+	        }
+        });
+    });
+</script>
