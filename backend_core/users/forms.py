@@ -24,8 +24,8 @@ class UserSignUpForm(SignupForm):
     def clean_role(self):
         # TODO: change role type in form, part 2
         role = self.cleaned_data['role']
-        print role[0]
-        print [m for m in self.cleaned_data]
+        # print role[0]
+        # print [m for m in self.cleaned_data]
         #print ROLE_CHOICES
         #print [choice[0] for choice in ROLE_CHOICES]
         if role[0] not in [choice[0] for choice in ROLE_CHOICES]:

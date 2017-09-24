@@ -63,8 +63,16 @@ def display_contractor(request, contractor_id):
     # Lic Type
     lic_type = contractor.lic_type.split('&')
     #review
+    # if 'contractor' in request.path:
+    #     model_type = 'contractor'
+    # elif 'designer' in request.path:
+    #     model_type = 'designer'
+    # elif 'architect' in request.path:
+    #     model_type = 'architect'
+
     try:
-        review = Review.objects.filter(contractor=contractor, review_status='A')
+        review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id,
+                                       review_status='A')
     except:
         review = None
 
@@ -72,9 +80,19 @@ def display_contractor(request, contractor_id):
     contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
     ratings = {}
     ratings['stars'] = range(RATING_STAR_MAX)
-    ratings['overall'] = ([5, 5 * 1.0 / 10],)  # (mean(contractor_ratings),mean(contractor_ratings)*1.0/RATING_STAR_MAX)
+    def avg_rating(rt):
+        s = 0
+        l = 0
+        for r in review:
+            rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type==rt]
+            s += sum(rate_list)
+            l += len(rate_list)
+        return s*1.0/l
+    #TODO:NEED TO CHANGE HERE
+    ratings['overall'] = (avg_rating('Q')+avg_rating('E')+avg_rating('L'))/3
+    # {'Quality': avg_rating('Q'),'Efficiency': avg_rating('E'),'Length': avg_rating('L')} #mean(contractor_ratings)*1.0/RATING_STAR_MAX
     try:
-        ratings['rate'] = [(item.average,round(item.average*1.0/RATING_STAR_MAX, 2)) for item in contractor_ratings]
+        ratings['rate'] = [(item.average, round(item.average*1.0/RATING_STAR_MAX, 2)) for item in contractor_ratings]
     except:
         pass
 

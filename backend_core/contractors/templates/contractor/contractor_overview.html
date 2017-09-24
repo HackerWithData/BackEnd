@@ -10,7 +10,7 @@
             </div>
         </div>
         <div id="peek" class="link">
-            <a id="readmore">Read more</a>
+            <a id="readmore" class="btn btn-db" style="color:white">Read more</a>
         </div>
     </div>
 
@@ -147,6 +147,7 @@
                                         <img src="{{ img.img.url }}" title="{{ img.title }}"
                                              style="width:50px;height:50px;">
                                     {% endfor %}
+                                    <hr>
                                 </div>
                                 <div class="user-rating">
                                     {% for r in rv.userrating_set.all %}
