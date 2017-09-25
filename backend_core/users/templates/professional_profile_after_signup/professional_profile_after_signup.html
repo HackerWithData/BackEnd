@@ -76,7 +76,7 @@
             globalTimeout = setTimeout(function () {
                 globalTimeout = null;
                 const dataToSend = {
-                    type: $('#id_professional_type').val(),
+                    type: $("input:radio[name='professional_type']:checked").val(),
                     lic: $('#id_license_num').val()
                 };
                 console.log(JSON.stringify(dataToSend));
