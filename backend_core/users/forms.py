@@ -151,9 +151,9 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
     def clean_professional_type(self):
         professional = self.cleaned_data['professional_type']
-        if professional[0] not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
+        if professional not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
             raise forms.ValidationError(_('Must select a professional type'))
-        return professional[0]
+        return professional
 
     def clean_entity_type(self):
         entity = self.cleaned_data['entity_type']
@@ -172,6 +172,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     # TODO: validate
     def clean_professional_subtype(self):
         subtype = self.cleaned_data['professional_subtype']
+        print subtype
         return subtype
 
     def save(self, request):
@@ -186,6 +187,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_professional_subtype = self.cleaned_data['professional_subtype']
 
         professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
+        print professional_qs
         # find the result
         if professional_qs.exists() and professional_qs.count() == 1:
             exists = True
@@ -230,6 +232,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
             # create new corresponding professional
             professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
                                                                            lic=clean_license_num)
+        professional_object.bus_name = clean_company_name
+        professional_object.entity = clean_entity_type
         professional_object.state = clean_state
         professional_object.street_address = clean_street
         professional_object.pos_code = clean_zipcode

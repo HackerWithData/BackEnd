@@ -31,6 +31,8 @@
         <span class="progress"><span></span></span>
 
         <div class="panels">
+            {{ form.errors }}
+            {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
                 <h4>Choose License Type</h4>
                 {{ form.professional_type }}
@@ -58,8 +60,6 @@
         <button type="submit" id="next">{% trans "Complete" %}</button>
     </form>
 </div>
-
-<script src="{ static /js/ }"></script>
 
 <script>
     var globalTimeout = null;
@@ -136,6 +136,9 @@
             } else if (!stageValidator.form()) {
                 event.preventDefault();
                 alert("Please complete form");
+            } else {
+
+                $('#next').submit();
             }
         });
 

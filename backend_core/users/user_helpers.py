@@ -42,6 +42,7 @@ def retrieve_professional_info(request):
         subtypes = [professional_type.subtype for professional_type in professional_types]
         print subtypes
     except ObjectDoesNotExist:
+        print 'hahah'
         return None
 
     # retrieve corresponding professional through different table

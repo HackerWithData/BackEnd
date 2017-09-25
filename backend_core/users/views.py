@@ -73,7 +73,7 @@ class ProfessionalProfileView(View):
             data_to_send = retrieve_professional_info(request)
             print data_to_send
             if not data_to_send:
-                raise Http404
+                raise Http404("Lic number does not exist")
             return HttpResponse(json.dumps(data_to_send), content_type="application/json")
         else:
             form = self.form_class(initial=self.initial)
@@ -81,6 +81,7 @@ class ProfessionalProfileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        print form.is_valid()
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
