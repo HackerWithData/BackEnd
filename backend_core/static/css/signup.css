@@ -9,11 +9,6 @@
 /*===============================================================
 *   professional fill up form
 ===============================================================*/
-.container-sign-up-professional-profile-form {
-    margin-top: 20%;
-    margin-left: 20%;
-    margin-right: 20%;
-}
 
 .stages {
 	font-size: 0;
@@ -117,4 +112,26 @@
 #three:checked ~ .panels [data-panel="three"],
 #four:checked ~ .panels [data-panel="four"] {
 	display: block;
+}
+
+/*===============================================================
+*   professional fill up form customized  TODO
+===============================================================*/
+
+.container-sign-up-professional-profile-form {
+    margin-top: auto;
+    margin-left: 20%;
+    margin-right: 20%;
+	min-width: 50%;
+	height: 50%;
+}
+
+
+#professionalProfileForm {
+	background: #ffffff;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+	margin: 4em;
+	min-width: 50%;
+	padding: 1em;
+	height: 100%;
 }
