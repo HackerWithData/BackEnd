@@ -1,3 +1,7 @@
+*, body, html {
+    background-color: #F8FCFB;
+}
+
 body {
     min-height: 100%;
     padding: 0;
@@ -168,8 +172,14 @@ h1 {
 /*}*/
 
 #BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
+    color: white;
     background-image: none;
-    background-color: white;
+    /*#TODO: COLOR WARNING*/
+    background-color: #6892D5;
+}
+
+#BasicInfo .panel-heading span, #photo .panel-heading span, #review .panel-heading span {
+    background-color: #6892D5;
 }
 
 /*** set the side of container ***/
@@ -186,8 +196,8 @@ h1 {
 /*padding-right: 15px;*/
 /*}*/
 
-.navbar-bright {
-    background-color: black;
+.navbar-bright, .navbar-bright * {
+    background-color: #6892D5;
 }
 
 /*pro menu */
@@ -327,7 +337,7 @@ h1 {
 
 /*photos*/
 #photo {
-    height: 310px;
+    height: auto;
     margin-bottom: 50px;
 }
 
@@ -338,9 +348,13 @@ h1 {
 
 }
 
-#photo .panel-heading {
-    margin-bottom: 75px;
+#photo {
+    padding-left: 0px;
 }
+
+/*#photo .panel-heading {*/
+/*margin-bottom: 75px;*/
+/*}*/
 
 #photo .panel-body {
     padding: 0px;
@@ -359,7 +373,7 @@ h1 {
 .project-strip {
     margin: 0px;
     height: 150px;
-    filter: blur(10px);
+    /*filter: blur(10px);*/
 
 }
 
@@ -377,7 +391,7 @@ h1 {
 
 /*// Project Details*/
 .project-screen {
-    width: 400px;
+    width: 300px;
     height: 250px;
     position: absolute;
     left: 0;
@@ -397,8 +411,7 @@ h1 {
     height: 250px;
     margin: 0;
     z-index: 1;
-
-    background-color: white;
+    background-color: #F8FCFB;
 }
 
 .project-screen .project {
@@ -409,6 +422,7 @@ h1 {
 
 @media (max-width: 480px) {
     #photo {
+        /*TODO:height*/
         height: 250px;
         margin-bottom: 50px;
     }
@@ -454,58 +468,55 @@ h1 {
         height: 120px;
         margin: 0;
         z-index: 1;
-        background-color: white;
+        background-color: #F8FCFB;
     }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
 
     #photo {
+        /*TODO:*/
         height: 290px;
         margin-bottom: 50px;
     }
 
-    .project-strip {
-        margin: 0px;
-        height: 150px;
-        filter: blur(10px);
-    }
-
-    .project-strip img {
-        width: 210px;
-        height: 150px;
-    }
-
-    .project-screen img {
-        max-width: 100%;
-        width: 300px;
-        height: 240px;
-    }
-
-    /*// Project Details*/
-    .project-screen {
-        width: 300px;
-        height: 240px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        /*margin-top: 0px;*/
-    }
-
-    /*// Project Detail Carousel    */
-    .project-screen .project-detail {
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 300px;
-        height: 240px;
-        margin: 0;
-        z-index: 1;
-        background-color: white;
-    }
+    /*.project-strip {*/
+    /*margin: 0px;*/
+    /*height: 150px;*/
+    /*filter: blur(10px);*/
+    /*}*/
+    /*.project-strip img {*/
+    /*width: 210px;*/
+    /*height: 150px;*/
+    /*}*/
+    /*.project-screen img {*/
+    /*max-width: 100%;*/
+    /*width: 300px;*/
+    /*height: 240px;*/
+    /*}*/
+    /*// Project Details*!*/
+    /*.project-screen {*/
+    /*width: 300px;*/
+    /*height: 240px;*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*margin: auto;*/
+    /*!*margin-top: 0px;*!*/
+    /*}*/
+    /*// Project Detail Carousel    *!*/
+    /*.project-screen .project-detail {*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*width: 300px;*/
+    /*height: 240px;*/
+    /*margin: 0;*/
+    /*z-index: 1;*/
+    /*background-color: #F8FCFB;*/
+    /*}*/
 }
 
 .user-review {
@@ -522,11 +533,11 @@ h1 {
     position: absolute;
     top: 50px;
     right: 10%;
-    background-color: deepskyblue;
 }
 
 #photo .panel-heading a.viewmore {
     border: none;
+    background-color: #79D1C3;
 }
 
 #photo .panel-heading a.viewmore:active {
@@ -563,9 +574,9 @@ h1 {
     text-align: center;
     margin: 0;
     padding: 30px 0;
-
+    background-color: rgba(0, 0, 0, 0);
     /* "transparent" only works here because == rgba(0,0,0,0) */
-    background-image: linear-gradient(to bottom, transparent, white);
+    background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
 }
 
 .nonlink {
@@ -592,6 +603,11 @@ h1 {
     display: block;
 }
 
+.popup-gallery img {
+    height: 200px;
+    width: calc(33% - 1px);
+}
+
 /*photos version2*/
 /*.project-image {*/
 /*width: 200px;*/
@@ -616,21 +632,31 @@ h1 {
 }
 
 .btn-db {
-    background-color: deepskyblue;
+    background-color: #79D1D3;
     color: white;
 }
 
+/*border-radius: 5px;*/
+
 /*.review-submission {*/
-    /*box-sizing:border-box;*/
-    /*margin: 50px 20%;*/
-    /*width: auto;*/
+/*box-sizing:border-box;*/
+/*margin: 50px 20%;*/
+/*width: auto;*/
 /*}*/
 
 .white-popup-block {
-  background: #FFF;
-  padding: 20px 30px;
-  text-align: left;
-  max-width: 650px;
-  margin: 40px auto;
-  position: relative;
+    background: #FFF;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 650px;
+    margin: 40px auto;
+    position: relative;
+}
+
+#review-submission {
+    background-color: transparent;
+}
+
+#review-submission * {
+    background-color: transparent;
 }

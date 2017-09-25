@@ -1,8 +1,9 @@
-* {
+*,html{
     margin: 0px;
     padding: 0px;
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
-    background-color: #F8FCFB;
+    font-family: 'Quicksand', Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+    /*background-color: #F8FCFB;*/
 }
 
 .icon-bar {
@@ -26,8 +27,8 @@
     float: right;
 }
 
-.navbar-bright {
-    background-color: rgba(255, 255, 255, 0);
+.navbar-bright, .navbar-bright * {
+    background-color: #6892D5;
     color: rgb(0, 0, 0);
 }
 

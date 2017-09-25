@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
+{#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <style>
         #masthead {
@@ -144,33 +144,34 @@
     </div>
     </div>
 
-{##}
-{#    <div class="review-submission" style="display:none;background-color: white">#}
-        <form id="review-submission" action="" method="post" enctype="multipart/form-data" class="mfp-hide white-popup-block">
+    {##}
+    {#    <div class="review-submission" style="display:none;background-color: white">#}
+    <form id="review-submission" action="" method="post" enctype="multipart/form-data"
+          class="mfp-hide white-popup-block">
 
-            {#{{  info_dict.user_rating_form }}#}
+        {#{{  info_dict.user_rating_form }}#}
 
-            {% for field in info_dict.user_rating_form %}
+        {% for field in info_dict.user_rating_form %}
 
-                <div class="rating-name">{{ field.label }}: </div>
-                <fieldset class="rating">
-                    {% for radio in field %}
-                        {{ radio.tag }}
-                        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
-                    {% endfor %}
-                </fieldset>
-                <br>
-                <br>
-            {% endfor %}
-
-            {{ info_dict.review_form.as_p }}
+            <div class="rating-name">{{ field.label }}:</div>
+            <fieldset class="rating">
+                {% for radio in field %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                {% endfor %}
+            </fieldset>
             <br>
-            <b>Projects Photos: </b><input type="file" name="project photos" title="upload projects photos" multiple>
             <br>
-            {% csrf_token %}
-            <input type="submit" value="submit">
-        </form>
-{#    </div>#}
+        {% endfor %}
+
+        {{ info_dict.review_form.as_p }}
+        <br>
+        <b>Projects Photos: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+        <br>
+        {% csrf_token %}
+        <input type="submit" value="submit">
+    </form>
+    {#    </div>#}
 {% endblock %}
 
 
@@ -196,25 +197,25 @@
             {#                $('#peek').addClass("nonlink");#}
         }
 
-        function photoSlider() {
-            $(".project-detail").slick({
-                slidesToShow: 1,
-                arrows: false,
-                asNavFor: '.project-strip',
-                autoplay: true,
-                autoplaySpeed: 3000
-            });
-            $(".project-strip").slick({
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                arrows: false,
-                asNavFor: '.project-detail',
-                dots: false,
-                infinite: true,
-                centerMode: true,
-                focusOnSelect: true,
-            });
-        }
+        {#        function photoSlider() {#}
+        {#            $(".project-detail").slick({#}
+        {#                slidesToShow: 1,#}
+        {#                arrows: false,#}
+        {#                asNavFor: '.project-strip',#}
+        {#                autoplay: true,#}
+        {#                autoplaySpeed: 3000#}
+        {#            });#}
+        {#            $(".project-strip").slick({#}
+        {#                slidesToShow: 3,#}
+        {#                slidesToScroll: 1,#}
+        {#                arrows: false,#}
+        {#                asNavFor: '.project-detail',#}
+        {#                dots: false,#}
+        {#                infinite: true,#}
+        {#                centerMode: true,#}
+        {#                focusOnSelect: true,#}
+        {#            });#}
+        {#        }#}
 
         function projectPhotosListener() {
             if (b) {
@@ -232,24 +233,6 @@
                     .done(function (data) {
                         b = data;
                         $('#pro-content').html(b);
-                        $('.popup-gallery').magnificPopup({
-                            delegate: 'a',
-                            type: 'image',
-                            tLoading: 'Loading image #%curr%...',
-                            mainClass: 'mfp-img-mobile',
-                            gallery: {
-                                enabled: true,
-                                navigateByImgClick: true,
-                                preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-                            },
-                            image: {
-                                tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-                                titleSrc: function (item) {
-                                    return item.el.attr('title');
-                                    {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
-                                }
-                            }
-                        });
                     });
             }
         }
@@ -275,7 +258,7 @@
             }
         }
 
-        photoSlider();
+        {#        photoSlider();#}
         $(document).ready(function () {
             $('#readmore').click(function () {
                 readMore();
@@ -299,6 +282,48 @@
                 }
             });
 
+
+            $('#photo .popup-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                fixedContentPos: true,
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function (item) {
+                        return item.el.attr('title');
+                        {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                    }
+                }
+            });
+
+            {% for rv in info_dict.review %}
+                $('#review .popup-gallery-{{ forloop.counter }}').magnificPopup({
+                    delegate: 'a',
+                    type: 'image',
+                    tLoading: 'Loading image #%curr%...',
+                    fixedContentPos: true,
+                    mainClass: 'mfp-img-mobile',
+                    gallery: {
+                        enabled: true,
+                        navigateByImgClick: true,
+                        preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                    },
+                    image: {
+                        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                        titleSrc: function (item) {
+                            return item.el.attr('title');
+                            {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                        }
+                    }
+                });
+            {% endfor %}
 
             $('#overview-tab').click(function () {
                 document.getElementById('pro-content').innerHTML = a;
