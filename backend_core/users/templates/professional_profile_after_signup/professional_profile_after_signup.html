@@ -6,6 +6,7 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="{% static 'js/jquery.validate.min.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -53,6 +54,8 @@
     </form>
 </div>
 
+<script src="{ static /js/ }"></script>
+
 <script>
     var globalTimeout = null;
 
@@ -85,11 +88,16 @@
                     url: "{% url 'account_professional_profile' %}",
                     data: dataToSend,
                     dataType: "json"
-                }).done(function (data_json) {
-                    const data = JSON.parse(data_json);
+                }).done(function (data) {
                     $('#id_company_name').val(data['name']);
-                    $('#id_entity_type').val(data['entity_type']);
+//                    set entity type field
+                    const entityType =data['entity_type'];
+                    $(`input[type=radio][value='${entityType}']`).prop('checked', true);
                     $('#id_professional_subtype').val(data['subtype']);
+//                    set subtype field
+                    data['subtype'].forEach(function (subtype) {
+                        $(`input[type=checkbox][value='${subtype}']`).prop('checked', true);
+                    });
                     $('#id_street').val(data['street_address']);
                     $('#id_state').val(data['state']);
                     $('#id_zipcode').val(data['postal_code']);

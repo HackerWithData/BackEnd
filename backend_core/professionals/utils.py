@@ -9,32 +9,49 @@ PROFESSIONAL_CHOICES = (
 )
 
 # entity type
-FIRM = 'FIRM'
-INDIVIDUAL = 'INDIVIDUAL'
+C = 'Corporation'
+S = 'Sole Ownership'
+P = 'Partnership'
 ENTITY_CHOICES = (
-    (FIRM, 'Firm'),
-    (INDIVIDUAL, 'Individual'),
+    (C, 'Corporation'),
+    (P, 'Partnership'),
+    (S, 'Sole Ownership'),
 )
 
 # TODO: load static file into professional subtype
 # professional subtype
-GC = 'GC'
-LC = 'LC'
-SPC = 'SPC'
+GC = 'General Contractor'
+LC = 'Landscaping Contractor'
+SPC = 'Swimming Pool Contractor'
 KBR = 'KBR'
-RG = 'RG'
-PL = 'PL'
-FC = 'FC'
-HA = 'HA'
-DE = 'DE'
+RG = 'Roofing Contractor'
+PL = 'Plumbing Contractor'
+FC = 'Fencing Contractor'
+HVAC = 'HVAC Contractor'
+DE = 'Designer'
+DG = 'Doors, Gates and Activating Devices'
+CC = 'Carpentry Contractor'
+COC = 'Concrete Contractor'
+DC = 'Drywall Contractor'
+EC = 'Electrical Contractor'
+PDC = 'Painting And Decorating Contractor'
+SMC = 'Sheet Metal Contractor'
+
 PROFESSIONAL_SUBTYPE_CHOICES = (
-    (GC, 'General Contractors'),
-    (LC, 'Landscape Contractors'),
-    (SPC, 'Swimming Pool Contractors'),
+    (GC, 'General Contractor'),
+    (LC, 'Landscaping Contractor'),
+    (SPC, 'Swimming Pool Contractor'),
     (KBR, 'Kitchen & Bath Remodelor'),
-    (RG, 'Roofing & Gutters'),
-    (PL, 'Plumbers'),
-    (FC, 'Fence Contractors'),
-    (HA, 'HV & AC'),
-    (DE, 'Designers')
+    (RG, 'Roofing Contractor'),
+    (PL, 'Plumbing Contractor'),
+    (FC, 'Fencing Contractor'),
+    (HVAC, 'HVAC Contractor'),
+    (DE, 'Designer'),
+    (DG, 'Doors, Gates and Activating Devices'),
+    (CC, 'Carpentry Contractor'),
+    (COC, 'Concrete Contractor'),
+    (DC, 'Drywall Contractor'),
+    (EC, 'Electrical Contractor'),
+    (PDC, 'Painting And Decorating Contractor'),
+    (SMC, 'Sheet Metal Contractor')
 )

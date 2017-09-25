@@ -10,7 +10,7 @@ from django.views import View
 from allauth.account.signals import user_signed_up
 
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm
-from user_helpers import *
+from user_helpers import retrieve_professional_info
 from utils import *
 
 import json
@@ -70,7 +70,8 @@ class ProfessionalProfileView(View):
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
-            data_to_send = retrieveProfessionalInfo(request)
+            data_to_send = retrieve_professional_info(request)
+            print data_to_send
             if not data_to_send:
                 raise Http404
             return HttpResponse(json.dumps(data_to_send), content_type="application/json")

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
 from models import User, ConsumerProfile, ProfessionalProfile
-from professionals.utils import ENTITY_CHOICES, FIRM, INDIVIDUAL, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, ARCHITECT, DESIGNER
+from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, ARCHITECT, DESIGNER
 from professionals.models import Professional, ProfessionalType
 from utils import *
 
@@ -117,7 +117,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     entity_type = forms.ChoiceField(
         required=True,
         choices=ENTITY_CHOICES,
-        initial=FIRM,
+        initial=C,
         label='Entity Type',
         widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
