@@ -18,39 +18,44 @@
 	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
 	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
         <input id="four" type="radio" class="stages-radio-input" name="stage" />
+        <input id="five" type="radio" class="stages-radio-input" name="stage" />
 
         <div class="stages">
 		    <label for="one" class="stages-label">1</label>
 		    <label for="two" class="stages-label">2</label>
 		    <label for="three" class="stages-label">3</label>
             <label for="four" class="stages-label">4</label>
+            <label for="five" class="stages-label">5</label>
 	    </div>
 
         <span class="progress"><span></span></span>
 
         <div class="panels">
-            <div data-panel="one">
+            <div data-panel="one" id="stage-one">
                 <h4>Choose License Type</h4>
                 {{ form.professional_type }}
             </div>
-            <div data-panel="two">
+            <div data-panel="two" id="stage-two">
                 <h4>Find Your License In Our Database</h4>
                 {{ form.license_num }}
             </div>
-            <div data-panel="three">
+            <div data-panel="three" id="stage-three">
                 <h4>Enter Or Modify Your Company Information</h4>
                 {{ form.company_name }}
                 {{ form.entity_type }}
+            </div>
+            <div data-panel="four" id="stage-four">
+                <h4>Enter Or Modify Your Company Field</h4>
                 {{ form.professional_subtype }}
             </div>
-            <div data-panel="four">
+            <div data-panel="five" id="stage-five">
                 <h4>Enter Or Modify Your Company Address</h4>
                 {{ form.street }}
                 {{ form.state }}
                 {{ form.zipcode }}
             </div>
         </div>
-      <button type="submit" id="next">{% trans "Complete" %}</button>
+        <button type="submit" id="next">{% trans "Complete" %}</button>
     </form>
 </div>
 
@@ -59,15 +64,78 @@
 <script>
     var globalTimeout = null;
 
+//    TODO: add more robusic logic here
     $(function () {
+        const rules = {
+            professional_type: 'required',
+            license_num: {
+                required: true,
+                number: true
+            },
+            company_name: 'required',
+            entity_type: 'required',
+            professional_subtype: 'required',
+            street: 'required',
+            state: 'required',
+            zipcode: {
+                required: true,
+                number: true
+            }
+        };
+
+        const messages = {
+            professional_type: "Please choose your field",
+            license_num: {
+                required: "We need your license number",
+                number: "Your license number must be a number"
+            },
+            company_name: "Please specify your company name",
+            entity_type: "Please choose your company entity type",
+            professional_subtype: "Please choose your professional field",
+            street: "Please specify your company street",
+            state: "Please specify your company state",
+            zipcode: {
+                required: "Please specify your company postal code",
+                number: "Please enter correct postal code"
+            }
+        };
+
+        const stageValidator = $('#professionalProfileForm').validate({
+            rules: rules,
+            messages: messages
+        });
+
         $('#next').click(function(event) {
 	        var radioButtons = $('.stages-radio-input');
 	        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
 	        selectedIndex = selectedIndex + 1;
-//	        TODO: add partial validator for form using jquery validator
-            if (selectedIndex !== 4) {
+            if (selectedIndex === 1) {
+                console.log(stageValidator.form());
+                if (stageValidator.form()) {
+                    event.preventDefault();
+                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                }
+            } else if (selectedIndex === 2) {
+                console.log(stageValidator.form());
+                if (stageValidator.form()) {
+                    event.preventDefault();
+                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                }
+            } else if (selectedIndex === 3) {
+                console.log(stageValidator.form());
+                if (stageValidator.form()) {
+                    event.preventDefault();
+                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                }
+            } else if (selectedIndex === 4) {
+                console.log(stageValidator.form());
+                if (stageValidator.form()) {
+                    event.preventDefault();
+                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                }
+            } else if (!stageValidator.form()) {
                 event.preventDefault();
-                $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                alert("Please complete form");
             }
         });
 
@@ -107,7 +175,6 @@
                 });
             }, 500)
         });
-
     });
 
 </script>

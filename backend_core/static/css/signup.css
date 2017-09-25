@@ -60,7 +60,8 @@
 #one:checked ~ .stages label[for="one"],
 #two:checked ~ .stages label[for="two"],
 #three:checked ~ .stages label[for="three"],
-#four:checked ~ .stages label[for="four"] {
+#four:checked ~ .stages label[for="four"],
+#five:checked ~ .stages label[for="five"] {
 	border-color: #0cc39f;
 }
 
@@ -71,14 +72,16 @@
 #one:checked ~ .stages label,
 #two:checked ~ .stages label[for="one"] ~ label,
 #three:checked ~ .stages label[for="two"] ~ label,
-#four:checked ~ .stages label[for="three"] ~ label {
+#four:checked ~ .stages label[for="three"] ~ label,
+#five:checked ~ .stages label[for="four"] ~ label {
 	font-size: 1rem;
 }
 
 #one:checked ~ .stages label:after,
 #two:checked ~ .stages label[for="one"] ~ label:after,
 #three:checked ~ .stages label[for="two"] ~ label:after,
-#four:checked ~ .stages label[for="three"] ~ label:after {
+#four:checked ~ .stages label[for="three"] ~ label:after,
+#five:checked ~ .stages label[for="four"] ~ label:after {
 	display: none;
 }
 
@@ -92,15 +95,19 @@
 }
 
 #two:checked ~ .progress span {
-	width: calc(100% / 3 * 1);
+	width: calc(100% / 4 * 1);
 }
 
 #three:checked ~ .progress span {
-	width: calc(100% / 3 * 2);
+	width: calc(100% / 4 * 2);
 }
 
 #four:checked ~ .progress span {
-	width: calc(100% / 3 * 3);
+	width: calc(100% / 4 * 3);
+}
+
+#five:checked ~ .progress span {
+	width: calc(100% / 4 * 4);
 }
 
 .panels div {
@@ -110,7 +117,8 @@
 #one:checked ~ .panels [data-panel="one"],
 #two:checked ~ .panels [data-panel="two"],
 #three:checked ~ .panels [data-panel="three"],
-#four:checked ~ .panels [data-panel="four"] {
+#four:checked ~ .panels [data-panel="four"],
+#five:checked ~ .panels [data-panel="five"] {
 	display: block;
 }
 
@@ -126,7 +134,6 @@
 	height: 50%;
 }
 
-
 #professionalProfileForm {
 	background: #ffffff;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
@@ -135,3 +142,5 @@
 	padding: 1em;
 	height: 100%;
 }
+
+li {list-style-type: none;}
