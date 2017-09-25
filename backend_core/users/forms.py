@@ -6,6 +6,7 @@ from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 from models import User, ConsumerProfile, ProfessionalProfile
 from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, ARCHITECT, DESIGNER
 from professionals.models import Professional, ProfessionalType
+from user_helpers import get_professional_corresponding_object, create_professional_corresponding_object
 from utils import *
 
 import string
@@ -174,6 +175,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         return subtype
 
     def save(self, request):
+        exists = False
         clean_license_num = self.cleaned_data['license_num']
         clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
@@ -186,6 +188,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
         # find the result
         if professional_qs.exists() and professional_qs.count() == 1:
+            exists = True
             professional = professional_qs.first()
             professional.entity_type = clean_entity_type
             professional.state = clean_state
@@ -209,11 +212,28 @@ class ProfessionalInfoFillUpForm(forms.Form):
         # create new profile
         ProfessionalProfile.objects.create(user=user, professional=professional)
 
+        # TODO: test
         # create new subtypes for profile
+        existing_prof_types = [pt['subtype'] for pt in professional.professional_types.all()]
         for subtype in clean_professional_subtype:
-            ProfessionalType.objects.create(professional=professional,
-                                            type=clean_professional_type,
-                                            subtype=subtype)
+            if subtype not in existing_prof_types:
+                ProfessionalType.objects.create(professional=professional,
+                                                type=clean_professional_type,
+                                                subtype=subtype)
+
+        # TODO: test
+        if exists:
+            # get existing corresponding professional
+            professional_object = get_professional_corresponding_object(prof_type=clean_professional_type,
+                                                                        lic=clean_license_num)
+        else:
+            # create new corresponding professional
+            professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
+                                                                           lic=clean_license_num)
+        professional_object.state = clean_state
+        professional_object.street_address = clean_street
+        professional_object.pos_code = clean_zipcode
+        professional_object.save()
 
 
 class MultipleSameProfessionalFound(Exception):
