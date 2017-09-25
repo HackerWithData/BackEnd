@@ -93,96 +93,100 @@ def display_contractor(request, contractor_id):
         review_form = ReviewForm(initial={
             'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
 
-        # contractor info
-        contractor = Contractor.objects.get(lic_num=contractor_id)
-        # #project photo
-        # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
-        # contractor background image
-        try:
-            bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                                  object_id=contractor_id)
-        except:
-            bgimage = None
+    # contractor info
+    contractor = Contractor.objects.get(lic_num=contractor_id)
+    # #project photo
+    # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+    # contractor background image
+    try:
+        bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
+                                              object_id=contractor_id)
+    except:
+        bgimage = None
 
-        bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date')
-        bh = None
-        if len(bh_set) > 0:
-            bh = bh_set[0]
+    bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date')
+    bh = None
+    if len(bh_set) > 0:
+        bh = bh_set[0]
 
-        wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-insur_effective_date')
-        wh = None
-        if len(wh_set) > 0:
-            wh = wh_set[0]
+    wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-insur_effective_date')
+    wh = None
+    if len(wh_set) > 0:
+        wh = wh_set[0]
 
-        data_source = 'California Contractors State License Board'
-        score = 91
-        rank = 5
-        full_state_name = getStateFullName(contractor.state)
-        preferred_project_type = 'house remodel'
-        if preferred_project_type:
-            specialization = 'with many year experiences in ' + preferred_project_type
-        else:
-            specialization = None
+    data_source = 'California Contractors State License Board'
+    score = 91
+    rank = 5
+    full_state_name = getStateFullName(contractor.state)
+    preferred_project_type = 'house remodel'
+    if preferred_project_type:
+        specialization = 'with many year experiences in ' + preferred_project_type
+    else:
+        specialization = None
 
-        overview = None
-        if overview:
-            pass
-        else:
-            overview = """%s is a contractor company located in %s %s . 
-        The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
-        Their License is verified as active when we checked last time. If you consider to hire %s, 
-        we suggest double-checking their license status and contact them through us.
-        """ % (contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name,
-               contractor.bus_name)
-        # Lic Type
-        lic_type = contractor.lic_type.split('&')
-        # review
-        # if 'contractor' in request.path:
-        #     model_type = 'contractor'
-        # elif 'designer' in request.path:
-        #     model_type = 'designer'
-        # elif 'architect' in request.path:
-        #     model_type = 'architect'
+    overview = None
+    if overview:
+        pass
+    else:
+        overview = """%s is a contractor company located in %s %s . 
+    The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
+    Their License is verified as active when we checked last time. If you consider to hire %s, 
+    we suggest double-checking their license status and contact them through us.
+    """ % (contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name,
+           contractor.bus_name)
+    # Lic Type
+    lic_type = contractor.lic_type.split('&')
+    # review
+    # if 'contractor' in request.path:
+    #     model_type = 'contractor'
+    # elif 'designer' in request.path:
+    #     model_type = 'designer'
+    # elif 'architect' in request.path:
+    #     model_type = 'architect'
 
-        try:
-            review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                           object_id=contractor_id,
-                                           review_status='A')
-        except:
-            review = None
+    try:
+        review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                       object_id=contractor_id,
+                                       review_status='A')
+    except:
+        review = None
 
-        RATING_STAR_MAX = 10
-        contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
-        ratings = {}
-        ratings['stars'] = range(RATING_STAR_MAX)
+    RATING_STAR_MAX = 10
+    contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
+    ratings = {}
+    ratings['stars'] = range(RATING_STAR_MAX)
 
-        def avg_rating(rt):
-            s = 0
-            l = 0
+    def avg_rating(rt):
+        s = 0
+        l = 0
+        if review:
             for r in review:
                 rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type == rt]
                 s += sum(rate_list)
                 l += len(rate_list)
             return s * 1.0 / l
+        else:
+            return 0
 
-        # TODO:NEED TO CHANGE HERE
-        ratings['overall'] = (avg_rating('Q') + avg_rating('E') + avg_rating('L')) / 3
-        # {'Quality': avg_rating('Q'),'Efficiency': avg_rating('E'),'Length': avg_rating('L')} #mean(contractor_ratings)*1.0/RATING_STAR_MAX
-        try:
-            ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
-                               contractor_ratings]
-        except:
-            pass
+    # TODO:NEED TO CHANGE HERE
 
-        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=contractor_id)
+    ratings['overall'] = (avg_rating('Q') + avg_rating('E') + avg_rating('L')) / 3
+    # {'Quality': avg_rating('Q'),'Efficiency': avg_rating('E'),'Length': avg_rating('L')} #mean(contractor_ratings)*1.0/RATING_STAR_MAX
+    try:
+        ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
+                           contractor_ratings]
+    except:
+        pass
 
-        info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
-                     "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
-                     "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                     "user_rating_form": user_rating_form, }
+    project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                          object_id=contractor_id)
 
-        return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
+    info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
+                 "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
+                 "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
+                 "user_rating_form": user_rating_form, }
+
+    return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
 
 def update_accept_review(request):
