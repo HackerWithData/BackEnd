@@ -18,7 +18,10 @@ class Professional(models.Model):
     )
     state = models.CharField(max_length=64)
     #TODO:ADD a lic type
-    lic_type = models.CharField(max_length=256)
+    lic_type = models.CharField(
+        max_length=256,
+        default='NO LIC TYPE'
+    )
     postal_code = models.CharField(max_length=64)
 
 

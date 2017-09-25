@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.dispatch import receiver
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -10,8 +10,10 @@ from django.views import View
 from allauth.account.signals import user_signed_up
 
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm
+from user_helpers import *
 from utils import *
 
+import json
 
 @receiver(user_signed_up)
 def set_role_before_sign_up_complete(request, **kwargs):
@@ -64,16 +66,17 @@ class ProfessionalProfileView(View):
     form_class = ProfessionalInfoFillUpForm
     template_name = 'professional_profile_after_signup/professional_profile_after_signup.html'
     # TODO
-    initial = {
-        'first_name': 'First Name',
-        'last_name': 'Last Name',
-        'zipcode': '90024',
-        'gender': MALE
-    }
+    initial = {}
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form': form})
+        if request.is_ajax():
+            data_to_send = retrieveProfessionalInfo(request)
+            if not data_to_send:
+                raise Http404
+            return HttpResponse(json.dumps(data_to_send), content_type="application/json")
+        else:
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)

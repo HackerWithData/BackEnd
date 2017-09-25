@@ -86,47 +86,67 @@ class ConsumerInfoFillUpForm(forms.Form):
 # TODO: implement professional form
 class ProfessionalInfoFillUpForm(forms.Form):
 
-    license_num = forms.IntegerField(
+    license_num = forms.CharField(
         required=True,
+        label='License Number',
+        widget=forms.TextInput(attrs={'class': 'input-license-number'})
     )
 
-    professional_type = forms.MultipleChoiceField(
+    professional_type = forms.ChoiceField(
         required=True,
         choices=PROFESSIONAL_CHOICES,
-        initial=CONTRACTOR
+        initial=CONTRACTOR,
+        label='Professional Type',
+        widget=forms.RadioSelect(attrs={'class': 'input-professional-type'})
     )
 
     professional_subtype = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
         required=True,
         choices=PROFESSIONAL_SUBTYPE_CHOICES,
+        label='Field Selections',
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
 
     company_name = forms.CharField(
         required=True,
-        max_length=128
+        max_length=128,
+        label='Name',
+        widget=forms.TextInput(attrs={'class': 'input-company-name'})
     )
 
     entity_type = forms.ChoiceField(
         required=True,
         choices=ENTITY_CHOICES,
-        initial=FIRM
+        initial=FIRM,
+        label='Entity Type',
+        widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
 
     street = forms.CharField(
         required=True,
-        max_length=128
+        max_length=128,
+        label='Street',
+        widget=forms.TextInput(attrs={'class': 'input-street'})
     )
 
     state = forms.CharField(
         required=True,
-        max_length=32
+        max_length=32,
+        label='State',
+        widget=forms.TextInput(attrs={'class': 'input-state'})
     )
 
     zipcode = forms.CharField(
         required=True,
-        max_length=16
+        max_length=16,
+        label='Postal Code',
+        widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
+
+    def clean_license_num(self):
+        lic = self.cleaned_data['license_num']
+        lic_num = int(lic.strip(string.ascii_letters))
+        return lic_num
 
     def clean_professional_type(self):
         professional = self.cleaned_data['professional_type']

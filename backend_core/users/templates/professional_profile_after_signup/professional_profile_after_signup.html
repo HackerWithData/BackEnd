@@ -12,8 +12,95 @@
 <div class="container-sign-up-professional-profile-form">
     <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile' %}">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% trans "Complete" %}</button>
+      <!--{{ form.as_p }}-->
+        <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
+	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
+	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
+        <input id="four" type="radio" class="stages-radio-input" name="stage" />
+
+        <div class="stages">
+		    <label for="one" class="stages-label">1</label>
+		    <label for="two" class="stages-label">2</label>
+		    <label for="three" class="stages-label">3</label>
+            <label for="four" class="stages-label">4</label>
+	    </div>
+
+        <span class="progress"><span></span></span>
+
+        <div class="panels">
+            <div data-panel="one">
+                <h4>Choose License Type</h4>
+                {{ form.professional_type }}
+            </div>
+            <div data-panel="two">
+                <h4>Find Your License In Our Database</h4>
+                {{ form.license_num }}
+            </div>
+            <div data-panel="three">
+                <h4>Enter Or Modify Your Company Information</h4>
+                {{ form.company_name }}
+                {{ form.entity_type }}
+                {{ form.professional_subtype }}
+            </div>
+            <div data-panel="four">
+                <h4>Enter Or Modify Your Company Address</h4>
+                {{ form.street }}
+                {{ form.state }}
+                {{ form.zipcode }}
+            </div>
+        </div>
+      <button type="submit" id="next">{% trans "Complete" %}</button>
     </form>
 </div>
+
+<script>
+    var globalTimeout = null;
+
+    $(function () {
+        $('#next').click(function(event) {
+	        var radioButtons = $('.stages-radio-input');
+	        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+	        selectedIndex = selectedIndex + 1;
+//	        TODO: add partial validator for form using jquery validator
+            if (selectedIndex !== 4) {
+                event.preventDefault();
+                $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+            }
+        });
+
+//        TODO: async
+        $('#id_license_num').keyup(function () {
+            if (globalTimeout != null) {
+                clearTimeout(globalTimeout);
+            }
+            globalTimeout = setTimeout(function () {
+                globalTimeout = null;
+                const dataToSend = {
+                    type: $("input:radio[name='professional_type']:checked").val(),
+                    lic: $('#id_license_num').val()
+                };
+                console.log(JSON.stringify(dataToSend));
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'account_professional_profile' %}",
+                    data: dataToSend,
+                    dataType: "json"
+                }).done(function (data_json) {
+                    const data = JSON.parse(data_json);
+                    $('#id_company_name').val(data['name']);
+                    $('#id_entity_type').val(data['entity_type']);
+                    $('#id_professional_subtype').val(data['subtype']);
+                    $('#id_street').val(data['street_address']);
+                    $('#id_state').val(data['state']);
+                    $('#id_zipcode').val(data['postal_code']);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR !== 404)
+                        console.warn(`ERROR: ${textStatus}`);
+                });
+            }, 500)
+        });
+
+    });
+
+</script>
 {% endblock %}

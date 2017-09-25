@@ -41,6 +41,6 @@ class Review(models.Model):
 
     #photo
     photo = GenericRelation(Photo)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
+    object_id = models.PositiveIntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
