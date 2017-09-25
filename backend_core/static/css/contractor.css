@@ -158,9 +158,9 @@ h1 {
     vertical-align: top;
 }
 
-#BasicInfo table td {
-    font-size: 1px;
-}
+/*#BasicInfo table td {*/
+    /*font-size: 1px;*/
+/*}*/
 
 #BasicInfo table {
     border-collapse: separate;
