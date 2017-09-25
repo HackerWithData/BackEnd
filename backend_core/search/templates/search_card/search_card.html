@@ -1,8 +1,8 @@
-<a href="{% url 'contractor' contractor.LicNum %}" id="searchListCard{{ contractor.LicNum }}" class="list-group-item list-group-item-action flex-column align-items-start">
+<a href="{% url 'contractor' contractor.lic_num %}" id="searchListCard{{ contractor.lic_num }}" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{ contractor.BusName }}</h5>
-        <small>{{ contractor.LicNum }}</small>
+        <h5 class="mb-1">{{ contractor.bus_name }}</h5>
+        <small>{{ contractor.lic_num }}</small>
     </div>
-    <p class="mb-1">{{ contractor.LicStatus }}</p>
-    <small>{{ contractor.Address }}</small>
+    <p class="mb-1">{{ contractor.lic_status }}</p>
+    <small>{{ contractor.street_address }} {{ contractor.csp }}</small>
 </a>
