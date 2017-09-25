@@ -1,28 +1,20 @@
 <div class="container">
     <!--summary-->
-    <div id="Summary" class="col-12 col-md-8 col-lg-8">
-        <div class="container">
-            <span class="more">
+    <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
+        <div class="">
+            <div class="text height">
                 {{ info_dict.overview }}
-                <br>
-                <span class="collapsed">
-                    <a href="javascript:void(0)"> READ MORE</a>
-                </span>
-            <span class="expanded">
-                <span>
-                    {{ info_dict.overview }}
-                    {{ info_dict.overview }}
-                    {{ info_dict.overview }}
-                </span>
-            <br>
-            <a href="javascript:void(0)">Less</a>
-            </span>
-            </span>
-            <br/>
+                {{ info_dict.overview }}
+                {{ info_dict.overview }}
+                {{ info_dict.overview }}
+            </div>
+        </div>
+        <div id="peek" class="link">
+            <a id="readmore" class="btn btn-db" style="color:white">Read more</a>
         </div>
     </div>
 
-    <div id="BasicInfo" class="col-12 col-md-4 col-lg-4">
+    <div id="BasicInfo" class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">Business Information</div>
             <div class="panel-body">
@@ -80,67 +72,94 @@
             <!--photo-->
             <div id="photo" class="col-12 col-md-8 col-lg-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Photo</div>
-                    <div class="panel-body">
-                        <div class="video-content-wrapper ">
-                                <ul class="wrapper">
-                                    {% for image in info_dict.project_photos %}
-                                        <li class="img-item">
-                                        <img class='cover thumbnail' src="{{ image.img.url }}">
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                    <div class="panel-heading">
+                        <span>Photo</span>
+                        <div class="pull-right">
+                            <a type="button" class="viewmore btn btn-default btn-sm">View More</a>
+                        </div>
                     </div>
+                    <div class="panel-body">
+                        <div class="project-carousel">
+                            <div class="project-strip">
+                                {% for image in info_dict.project_photos %}
+                                    <div class="project">
+                                        <img class='' src="{{ image.img.url }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="project-screen">
+                                <div class="project-detail">
+                                    {% for image in info_dict.project_photos %}
+                                        <div class="project">
+                                            <img class='' src="{{ image.img.url }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="screen-frame">
 
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     {% endif %}
 
-
-    <!--basic information-->
-    <div id="Review" class="col-12 col-md-4 col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <span>Review</span>
-            </div>
-            <div class="panel-body">
-                <div class="review-row">
-                    {% for rv in info_dict.review %}
-                        <div>
-                            {{ rv.comments }}
-                            <br>
-                            {{ rv.project_cost }}
-                            <br>
-                            {{ rv.project_type }}
-                            <br>
-                            {{ rv.project_duration }}
-                            <br>
-                            {% if rv.is_anonymous == 1 %}
-                                Anonymous User
-                            {% else %}
-                                {{ rv.user.first_name }}{{ rv.user.last_name }}
-                            {% endif %}
-                            <br>
-                            {% for r in rv.userrating_set.all %}
-                                {{ r.get_rating_type_display }}:{{ r.rating_score }}
-                                <br>
-                            {% endfor %}
-                            <br>
-                            {% for img in rv.photo.all %}
-                                <img src="{{ img.img.url }}" title="{{ img.title }}"
-                                     style="width:20px;height:20px;">
-                            {% endfor %}
-                            <br>
-                        </div>
-                    {% endfor %}
-                    <div>
+    {% if info_dict.review %}
+        <!--basic information-->
+        <div id="Review" class="col-12 col-md-4 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Review</span>
+                    <div class="pull-right">
+                        <a type="button" class="viewmore btn btn-default btn-sm">View More</a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="review-row">
+                        {% for rv in info_dict.review %}
+                            <div class="user-review">
+                                <div class="main-spec">
+                                    {% if rv.is_anonymous == 1 %}
+                                        Anonymous User
+                                    {% else %}
+                                        {{ rv.user.first_name }}{{ rv.user.last_name }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_cost %}
+                                        Project Cost: {{ rv.project_cost }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_type %}
+                                        Project Type: {{ rv.project_type }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_duration %}
+                                        Project Duration: {{ rv.project_duration }}
+                                    {% endif %}
+                                    <br/>
+                                    <br/>
+                                    {{ rv.comments }}
+                                    <br/>
+                                    {% for img in rv.photo.all %}
+                                        <img src="{{ img.img.url }}" title="{{ img.title }}"
+                                             style="width:50px;height:50px;">
+                                    {% endfor %}
+                                    <hr>
+                                </div>
+                                <div class="user-rating">
+                                    {% for r in rv.userrating_set.all %}
+                                        {{ r.get_rating_type_display }}: {{ r.rating_score }}
+                                        <br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            {#            </div>#}
-
         </div>
-    </div>
+    {% endif %}
 </div>

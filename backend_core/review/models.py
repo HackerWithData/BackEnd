@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.fields import GenericRelation,GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 from photos.models import Photo
 from contractors.models import Contractor
@@ -26,7 +27,7 @@ class Review(models.Model):
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
+    #TODO：contenttypes
     project_type = models.CharField(max_length=255)
     project_date = models.DateField()
     project_address = models.CharField(max_length=100)
@@ -40,3 +41,6 @@ class Review(models.Model):
 
     #photo
     photo = GenericRelation(Photo)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')

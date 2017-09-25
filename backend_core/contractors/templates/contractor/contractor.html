@@ -4,8 +4,14 @@
 {#style#}
 
 {% block metainfo %}
-
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <style>
         #masthead {
             width: auto;
@@ -18,13 +24,26 @@
             box-sizing: border-box;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            var curHeight = $('#Summary .text').height();
+            if (curHeight >= 350) {
+
+                $('#readmore').show();
+            }
+            else {
+                $('#readmore').hide();
+                $('#peek').removeClass('link');
+            }
+        });
+    </script>
 {% endblock %}
 
 
 
 {#header#}
 {#{% block nav %}#}
-    {#  TODO: change the color of pop out menu #}
+{#  TODO: change the color of pop out menu #}
 {#    <header class="navbar navbar-bright navbar-fixed-top" role="banner">#}
 {#        <div class="container">#}
 {#            <div class="navbar-header">#}
@@ -64,7 +83,8 @@
                             <li>{{ info_dict.contractor.csp }}</li>
                             <li>Score: {{ info_dict.score }}</li>
                             <li>Phone: {{ info_dict.contractor.phone }}</li>
-                            <li>Overall Rating:{% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}
+                            <li>Overall Rating: {{ info_dict.ratings.overall }}
+                                {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
                                 <div class="star-ratings-css">
                                     <div class="star-ratings-css-top" style="width:100%">
                                         {% for i in info_dict.ratings.stars %}
@@ -80,11 +100,15 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-md-4 col-lg-4">
 
                 </div>
+                <div class="col-md-4 col-lg-4">
+                    <div id="review-us">
+                        <a href="#review-submission" class="popup-with-form btn btn-db">Review us</a>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
     <!-- /cont -->
@@ -95,7 +119,7 @@
     <div id="contractor-content">
         <div class="container">
             <div class='menu justify-content-center' id='pro-menu'>
-                <ul class='nav  nav-pills'>
+                <ul class='nav nav-pills'>
                     <li class="nav-item">
                         <a class="nav-link" id="overview-tab">Overview</a>
                     </li>
@@ -105,9 +129,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="review-tab">Review</a>
                     </li>
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" id="other-tab">Other</a>#}
-{#                    </li>#}
+                    {#                    <li class="nav-item">#}
+                    {#                        <a class="nav-link" id="other-tab">Other</a>#}
+                    {#                    </li>#}
                 </ul>
             </div>
 
@@ -119,78 +143,203 @@
         </div>
     </div>
     </div>
+
+{##}
+{#    <div class="review-submission" style="display:none;background-color: white">#}
+        <form id="review-submission" action="" method="post" enctype="multipart/form-data" class="mfp-hide white-popup-block">
+
+            {#{{  info_dict.user_rating_form }}#}
+
+            {% for field in info_dict.user_rating_form %}
+
+                <div class="rating-name">{{ field.label }}: </div>
+                <fieldset class="rating">
+                    {% for radio in field %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                    {% endfor %}
+                </fieldset>
+                <br>
+                <br>
+            {% endfor %}
+
+            {{ info_dict.review_form.as_p }}
+            <br>
+            <b>Projects Photos: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+            <br>
+            {% csrf_token %}
+            <input type="submit" value="submit">
+        </form>
+{#    </div>#}
 {% endblock %}
 
 
 
 {% block javascript %}
+
     <script>
         var a = document.getElementById('pro-content').innerHTML;
         var b;
         var c;
-        {#    var d;#}
+        {#        var d;#}
 
         function readMore() {
-            $(".expanded").hide();
+            var readmore = $('#readmore');
+            if (readmore.text() == 'Read more') {
+                readmore.text("Read less");
+                $('#peek').removeClass('link');
+            } else {
+                readmore.text("Read more");
+                $('#peek').addClass('link');
+            }
+            $('.height').toggleClass("heightAuto");
+            {#                $('#peek').addClass("nonlink");#}
+        }
 
-            $(".expanded a, .collapsed a").click(function (eve) {
-                var $container = $(this).parents("span");
-                eve.preventDefault();
-                $container.children(".expanded, .collapsed").toggle();
+        function photoSlider() {
+            $(".project-detail").slick({
+                slidesToShow: 1,
+                arrows: false,
+                asNavFor: '.project-strip',
+                autoplay: true,
+                autoplaySpeed: 3000
+            });
+            $(".project-strip").slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                asNavFor: '.project-detail',
+                dots: false,
+                infinite: true,
+                centerMode: true,
+                focusOnSelect: true,
             });
         }
 
-        readMore();
+        function projectPhotosListener() {
+            if (b) {
+                $('#pro-content').html(b);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
+                    dataType: 'html',
+                })
+                    .done(function (data) {
+                        b = data;
+                        $('#pro-content').html(b);
+                        $('.popup-gallery').magnificPopup({
+                            delegate: 'a',
+                            type: 'image',
+                            tLoading: 'Loading image #%curr%...',
+                            mainClass: 'mfp-img-mobile',
+                            gallery: {
+                                enabled: true,
+                                navigateByImgClick: true,
+                                preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                            },
+                            image: {
+                                tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                                titleSrc: function (item) {
+                                    return item.el.attr('title');
+                                    {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                                }
+                            }
+                        });
+                    });
+            }
+        }
 
+        function reviewListener() {
+            if (c) {
+                $('#pro-content').html(c);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    dataType: 'html',
+                })
+                    .done(function (data) {
+                        c = data;
+                        $('#pro-content').html(c);
+
+                    });
+            }
+        }
+
+        photoSlider();
         $(document).ready(function () {
-
-            $('#overview-tab').click(function () {
-                document.getElementById('pro-content').innerHTML = a;
-                {#                $('#pro-content').html(a);#}
+            $('#readmore').click(function () {
                 readMore();
             });
 
-            $('#projectphotos-tab').click(function () {
-                if (b) {
-                    $('#pro-content').html(b);
+            $('.popup-with-form').magnificPopup({
+                type: 'inline',
+                preloader: true,
+                focus: '#Efficiency',
+
+                // When elemened is focused, some mobile browsers in some cases zoom in
+                // It looks not nice, so we disable it:
+                callbacks: {
+                    beforeOpen: function () {
+                        if ($(window).width() < 700) {
+                            this.st.focus = false;
+                        } else {
+                            this.st.focus = '#Efficiency';
+                        }
+                    }
+                }
+            });
+
+
+            $('#overview-tab').click(function () {
+                document.getElementById('pro-content').innerHTML = a;
+                var curHeight = $('#Summary .text').height();
+                {#            TODO:DYNAMICLy CHANGE THE HEIGHT#}
+                if (curHeight >= 350) {
+                    $('#readmore').show();
                 }
                 else {
-                    $.ajax({
-                        type: "POST",
-                        beforeSend: function (request) {
-                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                        },
-                        url: '{% url 'contractor_project_photos' info_dict.contractor.lic_num %}',
-                        dataType: 'html',
-                    })
-                        .done(function (data) {
-                            b = data;
-                            $('#pro-content').html(b);
-                        });
+                    $('#readmore').hide();
+                    $('#peek').removeClass('link');
                 }
+                $('#readmore').click(function () {
+                    readMore();
+                });
+
+                photoSlider();
+                {#                TODO:need to solve asyn#}
+                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
+                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
+                $('#photo a.viewmore').click(function () {
+                    projectPhotosListener();
+                });
+            });
+
+            $('#projectphotos-tab').click(function () {
+                projectPhotosListener();
+            });
+
+            $('#photo a.viewmore').click(function () {
+                projectPhotosListener();
             });
 
             $('#review-tab').click(function () {
-                if (c) {
-                    $('#pro-content').html(c);
-                }
-                else {
-                    $.ajax({
-                        type: "POST",
-                        url: '{% url 'contractor_review' info_dict.contractor.lic_num %}',
-                        beforeSend: function (request) {
-                            request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                        },
-                        dataType: 'html',
-                    })
-                        .done(function (data) {
-                            c = data;
-                            $('#pro-content').html(c);
-                        });
-                }
+                reviewListener();
             });
 
-        });
-
+            $('#review a.viewmore').click(function () {
+                reviewListener();
+            });
+        })
+        ;
     </script>
 {% endblock %}
