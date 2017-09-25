@@ -194,9 +194,11 @@ h1 {
 #pro-menu .nav {
     display: flex;
 }
+
 #pro-menu {
     margin-bottom: 20px;
 }
+
 #pro-content .container {
     margin: 0px;
     padding: 0px;
@@ -616,4 +618,19 @@ h1 {
 .btn-db {
     background-color: deepskyblue;
     color: white;
+}
+
+/*.review-submission {*/
+    /*box-sizing:border-box;*/
+    /*margin: 50px 20%;*/
+    /*width: auto;*/
+/*}*/
+
+.white-popup-block {
+  background: #FFF;
+  padding: 20px 30px;
+  text-align: left;
+  max-width: 650px;
+  margin: 40px auto;
+  position: relative;
 }

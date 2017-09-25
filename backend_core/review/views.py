@@ -7,18 +7,20 @@ from django.shortcuts import render, redirect
 from users.models import User
 from forms import ReviewForm
 from ratings.forms import UserRatingForm
-from contractors.models import Contractor
-from disk.models import UserFile, ProjectImage
-from photos.models import Photo
 from ratings.models import UserRating
 from models import Review
-import datetime
+from django.contrib.auth.hashers import make_password
+from contractors.models import Contractor
 from django.contrib.contenttypes.models import ContentType
+from disk.models import UserFile, ProjectImage
+from photos.models import Photo
+import datetime
+
 from django.http import HttpResponseNotFound
 # Create your views here.
 from users.utils import CONSUMER
 from django.conf import settings
-from django.contrib.auth.hashers import make_password
+
 
 
 def submit_review(request, o_id):

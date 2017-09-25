@@ -3,87 +3,43 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <style>
-       #masthead {
-            background:url('{{ info_dict.bgimage.url }}') no-repeat center;
-            min-height:270px;
-            background-size:contain;
-            display: flex;
-            color:#aaaacc;
-        }
-    </style>
 {% endblock %}
 
 {#header#}
 {% block header %}
-<div id="masthead">
-{#{{ info_dict.uf }}#}
-    <div class="container">
-        <div class="row ">
-            <div class="col-md-7 ">
-                <h1>{{ info_dict.contractor.BusName }}
-                </h1>
-            </div>
-            <div class="col-md-5">
-            </div>
-        </div>
 
-        <div class="row horizontal-list">
-            <ul style="list-style-type:None;">
-                <li>{{ info_dict.contractor.County}}, {{ info_dict.contractor.State}}</li>
-                <li>Score: {{ info_dict.Score}}</li>
-                <li>Phone: {{ info_dict.contractor.Phone }}</li>
-                <li>Overall Rating: </li>
-{#              <li>Ratings: {{ info_dict.rate.title }}</li>#}
-
-{#              {% for item in info_dict.rate %}#}
-{##}
-{#                {{ item.name }} and {{ item.ratings }}#}
-{##}
-{#                {% endfor %}#}
-          </ul>
-      </div>
-      </div>
-  </div><!-- /cont -->
-
-<div class='professional-menu'>
-    <ul>
-        <li><a href="{{ request.path }}../overview/">overview</a></li>
-        <li><a href="#">Project Photos</a></li>
-        <li><a href="{{ request.path }}../review/">Review</a></li>
-        <li><a href="#">Other</a></li>
-    </ul>
-</div>
 {% endblock %}
 
 {% block content %}
-<!-- Begin Body -->
-<br>
-<br>
-<form action="" method="post" enctype="multipart/form-data">
-
-{#{{  info_dict.user_rating_form }}#}
-
-    {% for field in info_dict.user_rating_form %}
-
-        <div class="rating-name">{{ field.label }}:</div>
-        <fieldset class="rating">
-        {% for radio in field %}
-        {{ radio.tag }}
-        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
-        {% endfor %}
-        </fieldset>
-        <br>
-        <br>
-    {% endfor %}
-
-    {{ info_dict.review_form.as_p}}
+    <!-- Begin Body -->
     <br>
-    <b>Projects Photos:</b><input type="file" name="project photos" title="upload projects photos" multiple>
-     <br>
-    {% csrf_token %}
-<input type="submit" value="submit">
-</form>
+    <br>
+    <div class="review-submission container">
+        <form action="" method="post" enctype="multipart/form-data">
+
+            {#{{  info_dict.user_rating_form }}#}
+
+            {% for field in info_dict.user_rating_form %}
+
+                <div class="rating-name">{{ field.label }}:</div>
+                <fieldset class="rating">
+                    {% for radio in field %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                    {% endfor %}
+                </fieldset>
+                <br>
+                <br>
+            {% endfor %}
+
+            {{ info_dict.review_form.as_p }}
+            <br>
+            <b>Projects Photos:</b><input type="file" name="project photos" title="upload projects photos" multiple>
+            <br>
+            {% csrf_token %}
+            <input type="submit" value="submit">
+        </form>
+    </div>
 {% endblock %}
 
 

@@ -2,107 +2,187 @@
 from __future__ import unicode_literals
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  #, EfficiencyRating #,ContractorRate
-
-from review.models import Review
+from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  # , EfficiencyRating #,ContractorRate
+from users.models import User
+from review.forms import ReviewForm
+from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
+from django.contrib.auth.hashers import make_password
+from contractors.models import Contractor
+from review.models import Review
+
 from photos.models import Photo
 from django.contrib.contenttypes.models import ContentType
 from photos.models import BackgroundPhoto
 from photos.forms import PhotoForm
 import datetime
+
+
 # Create your views here.
 
 
 
 def getStateFullName(state):
-    FullName= "California"
+    FullName = "California"
     return FullName
+
+
+
+
 
 # TODO: add a overview database
 def display_contractor(request, contractor_id):
-    #contractor info
-    contractor = Contractor.objects.get(lic_num=contractor_id)
-    # #project photo
-    # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
-    #contractor background image
-    try:
-        bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
-    except:
-        bgimage = None
+    o_id = contractor_id
+    if request.method == "POST":
 
-    bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date')
-    bh = None
-    if len(bh_set) > 0:
-        bh = bh_set[0]
+        user_rating_form = UserRatingForm(request.POST)
+        # sign_up_form = SignUpForm2(request.POST)
+        review_form = ReviewForm(request.POST)
+        # TODO: assign a random password
+        if review_form.is_valid() and user_rating_form.is_valid():
+            # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
 
-    wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-insur_effective_date')
-    wh = None
-    if len(wh_set) > 0:
-        wh = wh_set[0]
+            user = User(email=review_form.cleaned_data['email'],
+                        username=review_form.cleaned_data['email'],
+                        last_name=review_form.cleaned_data['last_name'],
+                        first_name=review_form.cleaned_data['first_name'],
+                        password=make_password("aaaaaaa"))
+            user.save()
+            if 'contractor' in request.path:
+                model_type = 'contractor'
+            elif 'designer' in request.path:
+                model_type = 'designer'
+            elif 'architect' in request.path:
+                model_type = 'architect'
+            review = Review(content_type=ContentType.objects.get(model=model_type),
+                            object_id=o_id,
+                            user=user,
+                            comments=review_form.cleaned_data['comments'],
+                            project_date=review_form.cleaned_data['project_date'],
+                            project_zipcode=review_form.cleaned_data['project_zipcode'],
+                            project_cost=review_form.cleaned_data['project_cost'],
+                            project_duration=review_form.cleaned_data['project_duration'],
+                            project_address=review_form.cleaned_data['project_address'],
+                            is_anonymous=review_form.cleaned_data['is_anonymous'],
+                            project_type=review_form.cleaned_data['project_type'])
+            review.save()
+            for field in user_rating_form.cleaned_data:
+                user_rating = UserRating(review=review,
+                                         rating_type=field[0].upper(),
+                                         rating_score=int(user_rating_form.cleaned_data[field]))
+                user_rating.save()
+            # direct to the page to upload photos
+            content_type = ContentType.objects.get(model='review')
+            object_id = int(review.id)
+            files = request.FILES.getlist('project photos')
+            if len(files) > 0:
+                for f in files:
+                    instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
+                    instance.save()
+            else:
+                pass
+            return render(request, 'disk/uploadsuccess.html')
 
-    data_source = 'California Contractors State License Board'
-    score = 91
-    rank = 5
-    full_state_name = getStateFullName(contractor.state)
-    preferred_project_type = 'house remodel'
-    if preferred_project_type:
-        specialization = 'with many year experiences in ' + preferred_project_type
+    # other situation
+    user_rating_form = UserRatingForm()
+    if request.user.is_authenticated:
+        review_form = ReviewForm(initial={'first_name': request.user.first_name,
+                                          'last_name': request.user.last_name,
+                                          'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
     else:
-        specialization = None
+        review_form = ReviewForm(initial={
+            'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
 
-    overview = None
-    if overview:
-        pass
-    else:
-        overview = """%s is a contractor company located in %s %s . 
+        # contractor info
+        contractor = Contractor.objects.get(lic_num=contractor_id)
+        # #project photo
+        # project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+        # contractor background image
+        try:
+            bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
+                                                  object_id=contractor_id)
+        except:
+            bgimage = None
+
+        bh_set = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date')
+        bh = None
+        if len(bh_set) > 0:
+            bh = bh_set[0]
+
+        wh_set = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by('-insur_effective_date')
+        wh = None
+        if len(wh_set) > 0:
+            wh = wh_set[0]
+
+        data_source = 'California Contractors State License Board'
+        score = 91
+        rank = 5
+        full_state_name = getStateFullName(contractor.state)
+        preferred_project_type = 'house remodel'
+        if preferred_project_type:
+            specialization = 'with many year experiences in ' + preferred_project_type
+        else:
+            specialization = None
+
+        overview = None
+        if overview:
+            pass
+        else:
+            overview = """%s is a contractor company located in %s %s . 
         The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
         Their License is verified as active when we checked last time. If you consider to hire %s, 
         we suggest double-checking their license status and contact them through us.
-        """%(contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name, contractor.bus_name)
-    # Lic Type
-    lic_type = contractor.lic_type.split('&')
-    #review
-    # if 'contractor' in request.path:
-    #     model_type = 'contractor'
-    # elif 'designer' in request.path:
-    #     model_type = 'designer'
-    # elif 'architect' in request.path:
-    #     model_type = 'architect'
+        """ % (contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name,
+               contractor.bus_name)
+        # Lic Type
+        lic_type = contractor.lic_type.split('&')
+        # review
+        # if 'contractor' in request.path:
+        #     model_type = 'contractor'
+        # elif 'designer' in request.path:
+        #     model_type = 'designer'
+        # elif 'architect' in request.path:
+        #     model_type = 'architect'
 
-    try:
-        review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id,
-                                       review_status='A')
-    except:
-        review = None
+        try:
+            review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                           object_id=contractor_id,
+                                           review_status='A')
+        except:
+            review = None
 
-    RATING_STAR_MAX = 10
-    contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
-    ratings = {}
-    ratings['stars'] = range(RATING_STAR_MAX)
-    def avg_rating(rt):
-        s = 0
-        l = 0
-        for r in review:
-            rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type==rt]
-            s += sum(rate_list)
-            l += len(rate_list)
-        return s*1.0/l
-    #TODO:NEED TO CHANGE HERE
-    ratings['overall'] = (avg_rating('Q')+avg_rating('E')+avg_rating('L'))/3
-    # {'Quality': avg_rating('Q'),'Efficiency': avg_rating('E'),'Length': avg_rating('L')} #mean(contractor_ratings)*1.0/RATING_STAR_MAX
-    try:
-        ratings['rate'] = [(item.average, round(item.average*1.0/RATING_STAR_MAX, 2)) for item in contractor_ratings]
-    except:
-        pass
+        RATING_STAR_MAX = 10
+        contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
+        ratings = {}
+        ratings['stars'] = range(RATING_STAR_MAX)
 
-    project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                          object_id=contractor_id)[0:4]
-    info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
-                 "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
-                 "ratings": ratings,'project_photos': project_photos}
+        def avg_rating(rt):
+            s = 0
+            l = 0
+            for r in review:
+                rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type == rt]
+                s += sum(rate_list)
+                l += len(rate_list)
+            return s * 1.0 / l
 
-    return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
+        # TODO:NEED TO CHANGE HERE
+        ratings['overall'] = (avg_rating('Q') + avg_rating('E') + avg_rating('L')) / 3
+        # {'Quality': avg_rating('Q'),'Efficiency': avg_rating('E'),'Length': avg_rating('L')} #mean(contractor_ratings)*1.0/RATING_STAR_MAX
+        try:
+            ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
+                               contractor_ratings]
+        except:
+            pass
+
+        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                              object_id=contractor_id)[0:4]
+
+        info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
+                     "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
+                     "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
+                     "user_rating_form": user_rating_form, }
+
+        return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
 
 def update_accept_review(request):
@@ -114,7 +194,7 @@ def update_accept_review(request):
         rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
         rating.total = rating.total + r.rating_score
         rating.count = rating.count + 1
-        rating.average = round(rating.total*1.0/rating.count, 2)
+        rating.average = round(rating.total * 1.0 / rating.count, 2)
     return render(request, '/')
 
 
@@ -122,7 +202,8 @@ def display_project_photos(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         template_name = 'contractor/contractor_project_photo.html'
         contractor = Contractor.objects.get(lic_num=contractor_id)
-        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id)
+        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                              object_id=contractor_id)
         info_dict = {'project_photos': project_photos, 'contractor': contractor}
         # if request.is_ajax():
         #     html = render_to_string(template_name, {'info_dict': info_dict})
@@ -154,21 +235,21 @@ def upload_project_photos(request, contracotr_id):
     info_dict = {'form': form}
     return render(request, template_name, info_dict)
 
-# class ProjectPhotosUpload(View):
-#     def get(self, request, contractor_id):
-#         #photos_list = Photo.objects.all()
-#         return render(self.request, 'photos/upload_photo.html')
-#
-#     def post(self, request, contractor_id):
-#         form = PhotoForm(self.request.POST, self.request.FILES)
-#
-#         if form.is_valid():
-#             f = form.save(commit=False)
-#             contractor = Contractor.objects.get(pk='1025362')
-#             f.content_type = ContentType.objects.get(model='contractor')
-#             f.object_id = contractor.LicNum
-#             f.save()
-#             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
-#         else:
-#             data = {'is_valid': False}
-#         return JsonResponse(data)
+    # class ProjectPhotosUpload(View):
+    #     def get(self, request, contractor_id):
+    #         #photos_list = Photo.objects.all()
+    #         return render(self.request, 'photos/upload_photo.html')
+    #
+    #     def post(self, request, contractor_id):
+    #         form = PhotoForm(self.request.POST, self.request.FILES)
+    #
+    #         if form.is_valid():
+    #             f = form.save(commit=False)
+    #             contractor = Contractor.objects.get(pk='1025362')
+    #             f.content_type = ContentType.objects.get(model='contractor')
+    #             f.object_id = contractor.LicNum
+    #             f.save()
+    #             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
+    #         else:
+    #             data = {'is_valid': False}
+    #         return JsonResponse(data)

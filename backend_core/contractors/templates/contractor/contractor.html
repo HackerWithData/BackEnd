@@ -103,8 +103,8 @@
 
                 </div>
                 <div class="col-md-4 col-lg-4">
-                    <div id="review-us" class="btn btn-db">
-                        <a href="{{ request.path }}review/submit">Review us</a>
+                    <div id="review-us">
+                        <a href="#review-submission" class="popup-with-form btn btn-db">Review us</a>
                     </div>
                 </div>
             </div>
@@ -143,6 +143,34 @@
         </div>
     </div>
     </div>
+
+{##}
+{#    <div class="review-submission" style="display:none;background-color: white">#}
+        <form id="review-submission" action="" method="post" enctype="multipart/form-data" class="mfp-hide white-popup-block">
+
+            {#{{  info_dict.user_rating_form }}#}
+
+            {% for field in info_dict.user_rating_form %}
+
+                <div class="rating-name">{{ field.label }}: </div>
+                <fieldset class="rating">
+                    {% for radio in field %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                    {% endfor %}
+                </fieldset>
+                <br>
+                <br>
+            {% endfor %}
+
+            {{ info_dict.review_form.as_p }}
+            <br>
+            <b>Projects Photos: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+            <br>
+            {% csrf_token %}
+            <input type="submit" value="submit">
+        </form>
+{#    </div>#}
 {% endblock %}
 
 
@@ -252,6 +280,25 @@
             $('#readmore').click(function () {
                 readMore();
             });
+
+            $('.popup-with-form').magnificPopup({
+                type: 'inline',
+                preloader: true,
+                focus: '#Efficiency',
+
+                // When elemened is focused, some mobile browsers in some cases zoom in
+                // It looks not nice, so we disable it:
+                callbacks: {
+                    beforeOpen: function () {
+                        if ($(window).width() < 700) {
+                            this.st.focus = false;
+                        } else {
+                            this.st.focus = '#Efficiency';
+                        }
+                    }
+                }
+            });
+
 
             $('#overview-tab').click(function () {
                 document.getElementById('pro-content').innerHTML = a;
