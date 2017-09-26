@@ -67,7 +67,7 @@
 
 {% block content %}
     <section id='home-slider' class="cd-hero">
-        <ul class="cd-hero-slider autoplay">
+        <ul class="cd-hero-slider ">
             <!--
                 <ul class="cd-hero-slider autoplay"> for slider auto play
                 <ul class="cd-hero-slider"> for disabled auto play
@@ -76,40 +76,40 @@
                 <div class="cd-full-width">
                     <div class="tm-slide-content-div slide-caption">
                         <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>
-                        <p>Your Trusted Contractor Information Sharing Platform.</p>
+                        <h4 id="target-position">Find the excellent professionals.</h4>
                     </div>
                 </div> <!-- .cd-full-width -->
             </li>
 
-            <li class="second-slide">
-                <div class="cd-full-width">
-                    <div class="tm-slide-content-div slide-caption">
-                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>
-                        <p>Your Trusted Contractor Information Sharing Platform.</p>
-                    </div>
-                </div> <!-- .cd-full-width -->
-            </li>
-
-            <li class="third-slide">
-                <div class="cd-full-width">
-                    <div class="tm-slide-content-div slide-caption">
-                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>
-                        <p id="target-position">Your Trusted Contractor Information Sharing Platform.</p>
-                    </div>
-                </div> <!-- .cd-full-width -->
-            </li>
+{#            <li class="second-slide">#}
+{#                <div class="cd-full-width">#}
+{#                    <div class="tm-slide-content-div slide-caption">#}
+{#                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>#}
+{#                        <p>Your Trusted Contractor Information Sharing Platform.</p>#}
+{#                    </div>#}
+{#                </div> <!-- .cd-full-width -->#}
+{#            </li>#}
+{##}
+{#            <li class="third-slide">#}
+{#                <div class="cd-full-width">#}
+{#                    <div class="tm-slide-content-div slide-caption">#}
+{#                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>#}
+{#                        <p >Your Trusted Contractor Information Sharing Platform.</p>#}
+{#                    </div>#}
+{#                </div> <!-- .cd-full-width -->#}
+{#            </li>#}
         </ul> <!-- .cd-hero-slider -->
 
-        <div class="cd-slider-nav">
-            <nav>
-                <span class="cd-marker item-1"></span>
-                <ul>
-                    <li class="selected"><a href="#0"></a></li>
-                    <li><a href="#0"></a></li>
-                    <li><a href="#0"></a></li>
-                </ul>
-            </nav>
-        </div> <!-- .cd-slider-nav -->
+{#        <div class="cd-slider-nav">#}
+{#            <nav>#}
+{#                <span class="cd-marker item-1"></span>#}
+{#                <ul>#}
+{#                    <li class="selected"><a href="#0"></a></li>#}
+{#                    <li><a href="#0"></a></li>#}
+{#                    <li><a href="#0"></a></li>#}
+{#                </ul>#}
+{#            </nav>#}
+{#        </div> <!-- .cd-slider-nav -->#}
     </section> <!-- .cd-hero -->
 
     <div id='search-bar' class="search-bar">
@@ -134,7 +134,7 @@
         var target = document.getElementById('target-position');
         {#    console.log(target.height());#}
         {#    console.log((cumulativeOffset(target).top+$('#target-position').height()).toString()+'px');#}
-        elem.style.top = (cumulativeOffset(target).top + $('#target-position').height()).toString() + 'px';
+        elem.style.top = (cumulativeOffset(target).top + $('#target-position').height()+10).toString() + 'px';
     </script>
     <div id="about" class="page-section">
         <div class="container">
