@@ -35,7 +35,7 @@ def search_by_address_object_redirect_url(request):
 # GET request
 # search through zipcode
 def search_by_zipcode(request):
-    search_type = request.GET['type']
+    search_type = request.GET['type'].upper()
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
 

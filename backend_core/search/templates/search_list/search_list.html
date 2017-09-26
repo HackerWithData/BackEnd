@@ -114,6 +114,7 @@
         }
 
         //add markers
+        console.log(JSON.parse('{{ contractors_json | escapejs }}'));
         addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
     }
 
