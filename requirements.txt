@@ -26,7 +26,6 @@ Moar==3.0.0
 oauthlib==2.0.2
 olefile==0.44
 pefile==2017.9.3
-Pillow==4.2.1
 portend==2.1.2
 Pygments==2.2.0
 PyJWT==1.5.2
