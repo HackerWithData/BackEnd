@@ -537,7 +537,6 @@ h1 {
 
 #photo .panel-heading a.viewmore {
     border: none;
-    background-color: #79D1C3;
 }
 
 #photo .panel-heading a.viewmore:active {
@@ -632,7 +631,7 @@ h1 {
 }
 
 .btn-db {
-    background-color: #79D1D3;
+    background-color: #a2cf8d;
     color: white;
 }
 
