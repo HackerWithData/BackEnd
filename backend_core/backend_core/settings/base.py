@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     'hoome-dev.us-west-2.elasticbeanstalk.com',
     'localhost',
     '0.0.0.0',
+    '127.0.0.1',
 ]
 
 # Application definition
