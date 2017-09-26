@@ -13,6 +13,6 @@ import sys
 from django.core.wsgi import get_wsgi_application
 sys.path.insert(0, '/opt/python/current/app/backend_core')
 
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend_core.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend_core.settings.prod")
 
 application = get_wsgi_application()
