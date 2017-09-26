@@ -24,12 +24,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = ')m##(8z_3^sv@-s-4=0&dkcf(2d1^_afw_5$61e@e%oz*4a1!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'hoome-dev.us-west-2.elasticbeanstalk.com'
+    'hoome-dev.us-west-2.elasticbeanstalk.com',
+    'localhost',
+    '0.0.0.0',
 ]
-
 
 # Application definition
 

@@ -10,6 +10,20 @@ DEBUG = False
 # EMAIL_USE_TLS = True
 # DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
-ALLOWED_HOSTS = [
-    'hoome-dev.us-west-2.elasticbeanstalk.com'
-]
+ADMINS = [('maolei', 'tangmaoleismile@gmail.com')]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending e-mail.
+EMAIL_HOST = 'smtp.gmail.com'
+
+# Port for sending e-mail.
+EMAIL_PORT = 587
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tangmaoleismile@gmail.com'
+EMAIL_HOST_PASSWORD = 'tml62285042'
+
+
+GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
