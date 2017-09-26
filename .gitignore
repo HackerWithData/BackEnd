@@ -10,3 +10,10 @@ db.sqlite3
 /backend_core/*/migrations/
 *.log
 /venv/
+/.ebextensions/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/.elasticbeanstalk/
