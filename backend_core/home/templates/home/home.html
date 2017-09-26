@@ -17,10 +17,14 @@
     <style>
         {% for path in background %}
             .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {
-                background-image: url('../../media/background-pic/{{ path }}');
+        /*TODO: change not use static url*/
+                background-image: url('/media/background-pic/{{ path }}');
             }
         {% endfor %}
     </style>
+    <link href="{% static 'css/home.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js'%}"></script>
+
 {% endblock %}
 
 {% block nav %}
@@ -47,7 +51,6 @@
 
                         <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>
                         {% if user.is_authenticated %}
-
                             <li><a href="{% url 'account_logout' %}" class="scroll-link" data-id="blog">Log Out</a></li>
                         {% else %}
                             <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>
@@ -118,22 +121,22 @@
     <script>
         var cumulativeOffset = function (element) {
             var top = 0;
-            {#        var left = 0;#}
+//                    var left = 0;
             do {
                 top += element.offsetTop || 0;
-                {#            left += element.offsetLeft || 0;#}
+//                left += element.offsetLeft || 0;
                 element = element.offsetParent;
             } while (element);
 
             return {
                 top: top,
-                {#            left: left#}
+//                left: left
             };
         };
         var elem = document.getElementById('search-bar');
         var target = document.getElementById('target-position');
-        {#    console.log(target.height());#}
-        {#    console.log((cumulativeOffset(target).top+$('#target-position').height()).toString()+'px');#}
+//        console.log(target.height());
+//        console.log((cumulativeOffset(target).top+$('#target-position').height()).toString()+'px');
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height()).toString() + 'px';
     </script>
     <div id="about" class="page-section">

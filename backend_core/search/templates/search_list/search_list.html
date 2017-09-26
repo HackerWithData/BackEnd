@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/search-list.css' %}">
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js'%}"></script>
 {% endblock %}
 
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div class="row search-list">
     {% if contractors.count > 0 %}
         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
             {% include 'search_sidebar/search_sidebar.html' %}
