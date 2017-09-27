@@ -9,7 +9,7 @@
     {#    <link rel="stylesheet" href="{% static 'css/home.css' %}">#}
     {#    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/hero-slider.css' %}">
-    <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
     {#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">#}
 
@@ -17,57 +17,16 @@
     <style>
         {% for path in background %}
             .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {
-        /*TODO: change not use static url*/
+                /*TODO: change not use static url*/
                 background-image: url('/media/background-pic/{{ path }}');
             }
         {% endfor %}
     </style>
-    <link href="{% static 'css/home.css' %}" rel="stylesheet" />
-    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js'%}"></script>
+    <link href="{% static 'css/home.css' %}" rel="stylesheet"/>
+    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 
 {% endblock %}
 
-{% block nav %}
-    <div class="header">
-        <div class="container">
-            <nav class="navbar navbar-inverse" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse"
-                            data-target="#main-nav">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="#" class="navbar-brand scroll-top">
-                        <span class="logo cursive">Hoome</span>
-                    </a>
-                </div>
-                <!--/.navbar-header-->
-                <div id="main-nav" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/" class="scroll-top">Home</a></li>
-                        {#                        TODO: need to change data-id from blog to other #}
-
-                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>
-                        {% if user.is_authenticated %}
-
-                            <li><a href="{% url 'account_logout' %}" class="scroll-link" data-id="blog">Log Out</a></li>
-                        {% else %}
-                            <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>
-                        {% endif %}
-                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>
-                        <li><a href="#" class="scroll-link" data-id="contact">Contact Us</a></li>
-                    </ul>
-                </div>
-                <!--/.navbar-collapse-->
-            </nav>
-            <!--/.navbar-->
-        </div>
-        <!--/.container-->
-    </div>
-    <!--/.header-->
-{% endblock %}
 
 {% block content %}
     <section id='home-slider' class="cd-hero">
@@ -84,36 +43,7 @@
                     </div>
                 </div> <!-- .cd-full-width -->
             </li>
-
-{#            <li class="second-slide">#}
-{#                <div class="cd-full-width">#}
-{#                    <div class="tm-slide-content-div slide-caption">#}
-{#                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>#}
-{#                        <p>Your Trusted Contractor Information Sharing Platform.</p>#}
-{#                    </div>#}
-{#                </div> <!-- .cd-full-width -->#}
-{#            </li>#}
-{##}
-{#            <li class="third-slide">#}
-{#                <div class="cd-full-width">#}
-{#                    <div class="tm-slide-content-div slide-caption">#}
-{#                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>#}
-{#                        <p >Your Trusted Contractor Information Sharing Platform.</p>#}
-{#                    </div>#}
-{#                </div> <!-- .cd-full-width -->#}
-{#            </li>#}
         </ul> <!-- .cd-hero-slider -->
-
-{#        <div class="cd-slider-nav">#}
-{#            <nav>#}
-{#                <span class="cd-marker item-1"></span>#}
-{#                <ul>#}
-{#                    <li class="selected"><a href="#0"></a></li>#}
-{#                    <li><a href="#0"></a></li>#}
-{#                    <li><a href="#0"></a></li>#}
-{#                </ul>#}
-{#            </nav>#}
-{#        </div> <!-- .cd-slider-nav -->#}
     </section> <!-- .cd-hero -->
 
     <div id='search-bar' class="search-bar">
@@ -136,9 +66,7 @@
         };
         var elem = document.getElementById('search-bar');
         var target = document.getElementById('target-position');
-        {#    console.log(target.height());#}
-        {#    console.log((cumulativeOffset(target).top+$('#target-position').height()).toString()+'px');#}
-        elem.style.top = (cumulativeOffset(target).top + $('#target-position').height()+10).toString() + 'px';
+        elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
     </script>
     <div id="about" class="page-section">
         <div class="container">
@@ -171,7 +99,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-{#                    TODO: Change the height dynamiclly #}
+                    {#                    TODO: Change the height dynamiclly #}
                     <div class="service-item third-service">
                         <div class="icon">
                             <i class="fa fa-money fa-3x"></i>
@@ -195,14 +123,10 @@
                         <p>We have released the information of California State Contractors, Designers and Architects.
                             Other States' information are comming soon.
                             <br><br>
-                            We thrive to build more functionality and improve data analyzing power to enhance user experience in Hoome platform.
+                            We thrive to build more functionality and improve data analyzing power to enhance user
+                            experience in Hoome platform.
                         </p>
                         <ul>
-{#                            <li>#}
-{#                                <div class="white-button">#}
-{#                                    <a href="#" class="scroll-link" data-id="portfolio">Discover More</a>#}
-{#                                </div>#}
-{#                            </li>#}
                             <li>
                                 <div class="primary-button">
                                     <a href="#" class="scroll-top">Start Search</a>
@@ -220,130 +144,8 @@
         </div>
     </div>
 
-{##}
-{#    <div id="portfolio" class="page-section">#}
-{#        <div class="content-wrapper">#}
-{#            <div class="inner-container container">#}
-{#                <div class="row">#}
-{#                    <div class="col-md-12">#}
-{#                        <div class="section-heading">#}
-{#                            <h4>Our Portfolio</h4>#}
-{#                            <div class="line-dec"></div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="projects-holder-3">#}
-{#                    <div class="filter-categories">#}
-{#                        <ul class="project-filter">#}
-{#                            <li class="filter" data-filter="all"><span>All</span></li>#}
-{#                            <li class="filter" data-filter="nature"><span>Nature</span></li>#}
-{#                            <li class="filter" data-filter="workspace"><span>Workspace</span></li>#}
-{#                            <li class="filter" data-filter="city"><span>City</span></li>#}
-{#                            <li class="filter" data-filter="technology"><span>Technology</span></li>#}
-{#                        </ul>#}
-{#                    </div>#}
-{#                    <div class="projects-holder">#}
-{#                        <div class="row">#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix workspace">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-                                        {#                                        #TODO:fa-search#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix workspace">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix technology">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix city">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix nature">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix technology">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix workspace">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-3 col-sm-6 project-item mix city">#}
-{#                                <div class="thumb">#}
-{#                                    <div class="image">#}
-{#                                        <img src="../../media/background-pic/slide_1.jpg">#}
-{#                                    </div>#}
-{#                                    <div class="hover-effect">#}
-{#                                        <a href="../../media/background-pic/slide_1.jpg" data-lightbox="image-1"><i#}
-{#                                                class="fa fa-search"></i></a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
-
 
     <div id="fun-facts">
-
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -385,20 +187,28 @@
             </div>
         </div>
     </div>
+
+    <div id="contact-us" class="page-section">
+        <div class="container">
+            <div class="row">
+
+                <div class="section-heading">
+                    <h4>Contact us</h4>
+                    <div class="line-dec"></div>
+                </div>
+                <
+                <p style="text-align: center">
+                    If you have any questions or want to invest us, don't hesitate to contact us:
+                    <a href="mailto:service@hoome.io" target="_top"><email>service@hoome.io</email></a>
+                </p>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
 {% block javascript %}
-
-    {#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>#}
-    <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>-->
-
-    {#<script src="js/vendor/bootstrap.min.js"></script>#}
-
     <script src="{% static 'js/plugins.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-
-    {#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>#}
     <script type="text/javascript">
         $(document).ready(function () {
             // navigation click actions
@@ -439,146 +249,3 @@
         }
     </script>
 {% endblock %}
-
-{#    <div id="blog" class="page-section">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col-md-12">#}
-{#                    <div class="section-heading">#}
-{#                        <h4>Our Blog Posts</h4>#}
-{#                        <div class="line-dec"></div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="row">#}
-{#                <div class="col-md-6">#}
-{#                    <div class="blog-item b1">#}
-{#                        <div class="thumb">#}
-{#                            <img src="../../../media/homepage/blog_01.jpg" alt="">#}
-{#                            <div class="text-content">#}
-{#                                <h4>Delecioius Food Served</h4>#}
-{#                                <span>Posted: <em>George</em>  /  Date: <em>11 Aug 2017</em>  /  Category: <em>Design</em></span>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-6">#}
-{#                    <div class="blog-item second-blog b2">#}
-{#                        <div class="thumb">#}
-{#                            <img src="../../../media/homepage/blog_02.jpg" alt="">#}
-{#                            <div class="text-content">#}
-{#                                <h4>Creative &amp; Clean Workspace</h4>#}
-{#                                <span>Posted: <em>Kerley</em>  /  Date: <em>24 Jul 2017</em>  /  Category: <em>Artwork</em></span>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-6">#}
-{#                    <div class="blog-item b3">#}
-{#                        <div class="thumb">#}
-{#                            <img src="../../../media/homepage/blog_03.jpg" alt="">#}
-{#                            <div class="text-content">#}
-{#                                <h4>Crashed Plane Captured</h4>#}
-{#                                <span>Posted: <em>Johnny</em>  /  Date: <em>16 Jul 2017</em>  /  Category: <em>Branding</em></span>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="row">#}
-{#                <div class="col-md-12">#}
-{#                    <div class="pop">#}
-{#                        <span>✖</span>#}
-{#                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis neque lacinia, porta#}
-{#                            nulla#}
-{#                            in, pellentesque ante. Vivamus in luctus mauris, non pharetra nibh. Morbi porttitor nisl sit#}
-{#                            amet velit pellentesque consequat. Etiam blandit libero turpis, id vehicula leo posuere a.#}
-{#                            In#}
-{#                            vel massa sollicitudin, tincidunt massa et, tincidunt ex.<br><br>Duis volutpat condimentum#}
-{#                            mollis. Sed eleifend libero ut viverra mattis. Suspendisse consectetur diam dolor, ut#}
-{#                            efficitur#}
-{#                            sem finibus vel. Vivamus tristique lacus sed dapibus varius. Fusce pharetra, quam quis#}
-{#                            congue#}
-{#                            pretium, ante dui imperdiet ipsum, eget lobortis leo leo sed diam.</p>#}
-{#                    </div>#}
-{#                    <div class="pop2">#}
-{#                        <span>✖</span>#}
-{#                        <p>Praesent purus leo, aliquet et efficitur id, pulvinar scelerisque enim. Maecenas a arcu#}
-{#                            sagittis,#}
-{#                            ornare ante ut, suscipit lectus. Donec dolor ipsum, laoreet nec metus non, tempus elementum#}
-{#                            massa. Donec non elit rhoncus, vestibulum enim sed, rutrum arcu. Vestibulum et purus ac diam#}
-{#                            condimentum volutpat sed ac est. Phasellus interdum tortor sem. Quisque sit amet condimentum#}
-{#                            sem. Phasellus luctus, felis sit amet pulvinar luctus, lectus dui mattis tellus, et placerat#}
-{#                            nunc ante at lacus.<br><br>Vivamus vestibulum, nisi sed placerat accumsan, felis felis#}
-{#                            venenatis#}
-{#                            tortor, vel condimentum arcu neque vel mauris. Donec a magna gravida, egestas libero non,#}
-{#                            molestie massa. Integer ut dolor eget magna congue gravida ut at arcu. Vivamus maximus neque#}
-{#                            quis luctus tempus. Vestibulum consequat a justo id feugiat. </p>#}
-{#                    </div>#}
-{#                    <div class="pop3">#}
-{#                        <span>✖</span>#}
-{#                        <p>Nullam rhoncus, orci et iaculis sodales, quam lectus suscipit augue, ut auctor massa dolor id#}
-{#                            metus. Nulla porta ut diam sodales dignissim. Ut sit amet augue vel justo laoreet dignissim.#}
-{#                            Maecenas vitae sollicitudin eros. In commodo placerat cursus. Quisque malesuada, nisl ac#}
-{#                            lacinia#}
-{#                            commodo, justo eros maximus ex, quis cursus odio erat at neque. Sed tincidunt eu dolor eget#}
-{#                            posuere.<br><br>Curabitur sit amet elit sit amet ligula eleifend aliquam quis eget quam.#}
-{#                            Mauris#}
-{#                            id mi nec justo venenatis tincidunt at ac massa. Sed et volutpat nunc. Quisque at urna quam.#}
-{#                            Duis sit amet neque eget quam iaculis iaculis. Quisque maximus porta elementum. Nam ac#}
-{#                            mattis#}
-{#                            erat, quis accumsan odio.</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
-{#<div id="contact" class="page-section">#}
-{#    <div class="container">#}
-{#        <div class="row">#}
-{#            <div class="col-md-12">#}
-{#                <div class="section-heading">#}
-{#                    <h4>Contact Us</h4>#}
-{#                    <div class="line-dec"></div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="row">#}
-{#            <div class="col-md-6">#}
-{#                <div class="map">#}
-{#                    <img src="../../../media/homepage/map.jpg" alt="">#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-md-6">#}
-{#                <div class="row">#}
-{#                    <form id="contact" action="" method="post">#}
-{#                        <div class="col-md-6">#}
-{#                            <fieldset>#}
-{#                                <input name="name" type="text" class="form-control" id="name" placeholder="Your name..."#}
-{#                                       required="">#}
-{#                            </fieldset>#}
-{#                        </div>#}
-{#                        <div class="col-md-6">#}
-{#                            <fieldset>#}
-{#                                <input name="email" type="email" class="form-control" id="email"#}
-{#                                       placeholder="Your email..." required="">#}
-{#                            </fieldset>#}
-{#                        </div>#}
-{#                        <div class="col-md-12">#}
-{#                            <fieldset>#}
-{#                                <textarea name="message" rows="6" class="form-control" id="message"#}
-{#                                          placeholder="Your message..." required=""></textarea>#}
-{#                            </fieldset>#}
-{#                        </div>#}
-{#                        <div class="col-md-12">#}
-{#                            <fieldset>#}
-{#                                <button type="submit" id="form-submit" class="btn">Send Message</button>#}
-{#                            </fieldset>#}
-{#                        </div>#}
-{#                    </form>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}

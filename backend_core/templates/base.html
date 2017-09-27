@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     {#    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">#}
     {#    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">#}
-        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     {#    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">#}
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
@@ -26,8 +26,8 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/utils.js' %}"></script>
-    <script src="{% static 'js/nav.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/NavBar.css' %}">
     <style>
     </style>
@@ -44,59 +44,43 @@
 <!--nav bar start-->
 {% block nav %}
     {#        TODO: change the color of pop out menu#}
-    <header class="navbar navbar-bright navbar-fixed-top" role="banner">
+    <div class="header">
         <div class="container">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand">
-                    <h1 class="logo cursive">
-                        Hoome
-                    </h1>
-                </a>
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-            </div>
-            <nav class="collapse navbar-collapse" role="navigation">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Find your address</a></li>
-                    <li><a href="/">Projects</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'account_logout' %}">Log Out</a></li>
-                    {% else %}
-                        <li><a href="{% url 'account_login' %}">User Sign In</a></li>
-                    {% endif %}
-                    <li><a href="#">Contractor Sign In</a></li>
-                </ul>
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#main-nav">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand scroll-top">
+                        <span class="logo cursive">Hoome</span>
+                    </a>
+                </div>
+                <!--/.navbar-header-->
+                <div id="main-nav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/" class="scroll-top">Home</a></li>
+                        {#                        TODO: need to change data-id from blog to other #}
+{#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
+{#                        {% if user.is_authenticated %}#}
+{##}
+{#                            <li><a href="{% url 'account_logout' %}" class="scroll-link" data-id="blog">Log Out</a></li>#}
+{#                        {% else %}#}
+{#                            <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>#}
+{#                        {% endif %}#}
+{#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
+                        <li><a href="/#contact-us" class="scroll-link" data-id="contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!--/.navbar-collapse-->
             </nav>
+            <!--/.navbar-->
         </div>
-    </header>
-    {#    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">#}
-    {#        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"#}
-    {#                data-target="#navbarTogglerTarget" aria-controls="navbarTogglerTarget"#}
-    {#                aria-expanded="false" aria-label="Toggle navigation">#}
-    {#            <span class="navbar-toggler-icon"></span>#}
-    {#        </button>#}
-    {##}
-    {##}
-    {#        <a class="navbar-brand" href="/">#}
-    {#            <span class="logo cursive">#}
-    {#                Hoome#}
-    {#            </span>#}
-    {#        </a>#}
-    {#        <div class="collapse navbar-collapse" id='navbarTogglerTarget'>#}
-    {##}
-    {#            <ul class="navbar-nav">#}
-    {#                <li class="nav-item"><a class="nav-link" href="/">Find your address</a></li>#}
-    {#                <li class="nav-item"><a class="nav-link" href="/">Projects</a></li>#}
-    {#                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">User Sign In</a></li>#}
-    {#                <li class="nav-item"><a class="nav-link" href="#">Contractor Sign In</a></li>#}
-    {#            </ul>#}
-    {#        </div>#}
-    {#    </nav>#}
+        <!--/.container-->
+    </div>
 {% endblock %}
 
 {% block header %}
@@ -114,11 +98,11 @@
     <div class="footer">
         <div class="footer-wrapper">
             <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Policy</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/#contact-us">Contact</a></li>
+                {#                <li><a href="#">About</a></li>#}
+                <li><a href="/career">Career</a></li>
+                {#                <li><a href="#">Terms</a></li>#}
+                <li><a href="/rule/privacy">Privacy</a></li>
             </ul>
         </div>
         <div class="copyright-wrapper">

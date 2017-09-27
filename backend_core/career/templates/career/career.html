@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block metainfo %}
+    <style>
+        .header {
+            background-color: #6892D5;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+        }
+
+        .page {
+            margin-top: 60px;
+            width: auto;
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .page ul li {
+            list-style-type: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="page container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Career </h1>
+                <p>Welcome to Hoome! Hoome platform screens nearby, excellent designers, reliable contractors and
+                    awesome
+                    renovation meisters for users who need renovation through big data analysis. We are keenly seeking
+                    interns
+                    and partners to become an integral part of our team, who thrive in a fast paced start-up like
+                    environment
+                    and want to invent the future. </p>
+                <br>
+                <p>
+                    If you are interested about any following jobs , please click links
+                    below, which will redirect to our company page in AngelList:
+                </p>
+                <br>
+                <ul>
+                    <li><a href="https://angel.co/hoome-1/jobs/265600-ios-and-android-app-developer">iOS and Android App
+                        Developer</a>
+                    </li>
+                    <li><a href="https://angel.co/hoome-1/jobs/265601-web-developer">Web Developer</a></li>
+                    <li><a href="https://angel.co/hoome-1/jobs/282342-full-stack-data-scientist-intern">Full Stack Data
+                        Scientist Intern</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
