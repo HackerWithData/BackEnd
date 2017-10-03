@@ -218,14 +218,14 @@ def display_project_photos(request, contractor_id):
         return HttpResponseNotFound('No Pages Found.')
 
 
-def upload_project_photos(request, contracotr_id):
+def upload_project_photos(request, contractor_id):
     template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
 
     if request.method == "POST":
         form = PhotoForm(request.POST, request.FILES)
         content_type = ContentType.objects.get(model='contractor')
-        object_id = int(contracotr_id)
+        object_id = int(contractor_id)
         files = request.FILES.getlist('img')
         if form.is_valid():
             if len(files) > 0:
