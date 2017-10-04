@@ -4,7 +4,8 @@
     # Install VirtualBox from: www.virtualbox.org/wiki/Downloads
     # Install Vagrant from: www.vagrantup.com/downloads.html
 
-    git clone https://github.com/Banana-Mango/Backend.git
+    # clone from bitbucket, for example
+    git clone https://hahtml@bitbucket.org/hoomeinc/django-platform.git
     cd Backend/
     vagrant box add ubuntu/xenial64
 
@@ -16,6 +17,19 @@
 ```
 Vagrant will synchronize Backend/ to the /vagrant directory
 in vm, and it forwards the port 8888 of vm to host's 8888.
+
+## git cheatsheet, skip if dont need add extra repo
+```
+    # add an extra remote repository
+    git remote set-url --add --push origin https://github.com/Banana-Mango/Backend.git
+    
+    # push local branch to remote
+    git push -u origin <branch>
+    
+    # find a story in jira
+    # create a branch from jira story card
+    # commit with "HOOME-<story num>" as prefix
+```
 
 ## Install
 Install dependencies for project in virtual environment
@@ -34,7 +48,6 @@ Install dependencies for project in virtual environment
     export DJANGO_SETTINGS_MODULE="backend_core.settings.dev"
     
     make bootstrap  	# install dependencies
-
 ```
 
 ## Activate Virtual Environment
@@ -57,7 +70,7 @@ dependencies are installed in environment
     # default password: development
 ```
 
-## Connect to Solr
+## Connect to Solr, skip for now
 ```
     #check Solr connection status
     service solr status
