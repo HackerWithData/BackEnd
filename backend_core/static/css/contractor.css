@@ -483,6 +483,15 @@ h1 {
 /*width: auto;*/
 /*}*/
 
+
+
+/*#review-submission {*/
+    /*background-color: transparent;*/
+/*}*/
+
+/*#review-submission * {*/
+    /*background-color: transparent;*/
+/*}*/
 .white-popup-block {
     background: #FFF;
     padding: 20px 30px;
@@ -491,15 +500,6 @@ h1 {
     margin: 40px auto;
     position: relative;
 }
-
-#review-submission {
-    background-color: transparent;
-}
-
-#review-submission * {
-    background-color: transparent;
-}
-
 
 .header .navbar  {
     color: #000000 ;

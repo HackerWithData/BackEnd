@@ -227,7 +227,7 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },
-                    url: '{% url 'contractor_project_photos' info_dict.architect.lic_num %}',
+                    url: '{% url 'architect_project_photos' info_dict.architect.lic_num %}',
                     dataType: 'html',
                 })
                     .done(function (data) {
@@ -244,7 +244,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: '{% url 'contractor_review' info_dict.architect.lic_num %}',
+                    url: '{% url 'architect_review' info_dict.architect.lic_num %}',
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },

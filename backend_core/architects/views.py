@@ -28,7 +28,7 @@ def getStateFullName(state):
 
 
 # TODO: add a overview database
-def display_architects(request, o_id):
+def display_architect(request, o_id):
     if request.method == "POST":
 
         user_rating_form = UserRatingForm(request.POST)
@@ -184,13 +184,13 @@ def display_architects(request, o_id):
     return render(request, 'architect/architect.html', {"info_dict": info_dict})
 
 
-def display_project_photos(request, contractor_id):
+def display_project_photos(request, o_id):
     if request.is_ajax() and request.method == "POST":
         template_name = 'contractor/contractor_project_photo.html'
-        contractor = Contractor.objects.get(lic_num=contractor_id)
-        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=contractor_id)
-        info_dict = {'project_photos': project_photos, 'contractor': contractor}
+        architect = Architect.objects.get(lic_num=o_id)
+        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='architect'),
+                                              object_id=o_id)
+        info_dict = {'project_photos': project_photos, 'architect': architect}
         # if request.is_ajax():
         #     html = render_to_string(template_name, {'info_dict': info_dict})
         #     return HttpResponse(html)
@@ -201,14 +201,14 @@ def display_project_photos(request, contractor_id):
 
 
 # %% TODO: change function to accept all instance like architects or designers
-def upload_project_photos(request, contractor_id):
+def upload_project_photos(request, o_id):
     template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
 
     if request.method == "POST":
         form = PhotoForm(request.POST, request.FILES)
-        content_type = ContentType.objects.get(model='architects')
-        object_id = int(contractor_id)
+        content_type = ContentType.objects.get(model='architect')
+        object_id = int(o_id)
         files = request.FILES.getlist('img')
         if form.is_valid():
             if len(files) > 0:
@@ -222,21 +222,4 @@ def upload_project_photos(request, contractor_id):
     info_dict = {'form': form}
     return render(request, template_name, info_dict)
 
-    # class ProjectPhotosUpload(View):
-    #     def get(self, request, contractor_id):
-    #         #photos_list = Photo.objects.all()
-    #         return render(self.request, 'photos/upload_photo.html')
-    #
-    #     def post(self, request, contractor_id):
-    #         form = PhotoForm(self.request.POST, self.request.FILES)
-    #
-    #         if form.is_valid():
-    #             f = form.save(commit=False)
-    #             contractor = Contractor.objects.get(pk='1025362')
-    #             f.content_type = ContentType.objects.get(model='contractor')
-    #             f.object_id = contractor.LicNum
-    #             f.save()
-    #             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
-    #         else:
-    #             data = {'is_valid': False}
-    #         return JsonResponse(data)
+
