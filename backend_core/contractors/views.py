@@ -217,7 +217,7 @@ def display_project_photos(request, contractor_id):
     else:
         return HttpResponseNotFound('No Pages Found.')
 
-
+#test
 def upload_project_photos(request, contracotr_id):
     template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
