@@ -11,9 +11,11 @@ db.sqlite3
 !__init__.py
 *.log
 /venv/
+/backend_core/www/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 /.elasticbeanstalk/
+
