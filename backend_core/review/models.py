@@ -3,11 +3,10 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.contrib.contenttypes.fields import GenericRelation,GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 from photos.models import Photo
-from contractors.models import Contractor
 from django.conf import settings
 
 # Create your models here.
@@ -36,7 +35,7 @@ class Review(models.Model):
     project_duration = models.IntegerField()
     comments = models.TextField()
     is_anonymous = models.BooleanField(max_length=3, choices=STATE_CHOICES, default=False)
-    review_status = models.CharField(max_length=1, choices=REVIEW_STATUS, default=PENDING)
+    review_status = models.CharField(max_length=1, choices=REVIEW_STATUS, default=ACCEPTED)
     review_date = models.DateTimeField(default=timezone.now)
 
     #photo

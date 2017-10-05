@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
-from contractors.models import Contractor
 from review.models import Review
+from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+
 # Create your models here.
 
 
@@ -19,7 +22,7 @@ class UserRating(models.Model):
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     rating_type = models.CharField(max_length=1, choices=RATING_TYPES)
-    rating_score = models. IntegerField()
+    rating_score = models.IntegerField()
 
 
 class Rating(models.Model):
@@ -31,9 +34,10 @@ class Rating(models.Model):
         (QUALITY, 'Quality'),
         (LENGTH, 'Length'),
     )
-    contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
     rating_type = models.CharField(max_length=1, choices=RATING_TYPES)
     count = models.IntegerField()
     total = models.IntegerField()
     average = models.FloatField()
-
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
+    object_id = models.PositiveIntegerField(default=1)
+    content_object = GenericForeignKey('content_type', 'object_id')
