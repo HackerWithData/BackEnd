@@ -31,8 +31,13 @@ urlpatterns = [
     # home page
     url(r'^$', include('home.urls')),
 
-    url(r'^accounts/', include('allauth.urls')),
+    # users.urls must place before allauth urls to override
     url(r'^accounts/', include('users.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+
+
+    # dashboard
+    url(r'^dashboard/', include('dashboard.urls')),
 
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
 

@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="container-sign-up-professional-profile-form">
-    <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile' %}">
+    <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile_after_signup' %}">
       {% csrf_token %}
       <!--{{ form.as_p }}-->
         <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
@@ -156,7 +156,7 @@
                 console.log(JSON.stringify(dataToSend));
                 $.ajax({
                     type: "GET",
-                    url: "{% url 'account_professional_profile' %}",
+                    url: "{% url 'account_professional_profile_after_signup' %}",
                     data: dataToSend,
                     dataType: "json"
                 }).done(function (data) {

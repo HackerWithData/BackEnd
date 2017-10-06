@@ -71,7 +71,8 @@ WEB_APPS = [
     'architects',
     'designers',
     'rule',
-    'career'
+    'career',
+    'dashboard'
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS

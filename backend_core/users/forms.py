@@ -15,7 +15,9 @@ professional_type = setup_professional_type()
 
 
 class UserSignUpForm(SignupForm):
-
+    """
+        User sign up form
+    """
     # TODO: change role type in form, part 1
     role = forms.MultipleChoiceField(
         required=True,
@@ -25,17 +27,15 @@ class UserSignUpForm(SignupForm):
     def clean_role(self):
         # TODO: change role type in form, part 2
         role = self.cleaned_data['role']
-        # print role[0]
-        # print [m for m in self.cleaned_data]
-        #print ROLE_CHOICES
-        #print [choice[0] for choice in ROLE_CHOICES]
         if role[0] not in [choice[0] for choice in ROLE_CHOICES]:
             raise forms.ValidationError(_('Must select a role'))
         return role[0]
 
 
 class ConsumerInfoFillUpForm(forms.Form):
-
+    """
+        Consumer information form after sign up
+    """
     first_name = forms.CharField(
         required=True,
         max_length=128,
@@ -86,7 +86,9 @@ class ConsumerInfoFillUpForm(forms.Form):
 
 # TODO: implement professional form
 class ProfessionalInfoFillUpForm(forms.Form):
-
+    """
+        Professional information form after sign up
+    """
     license_num = forms.CharField(
         required=True,
         label='License Number',
@@ -214,7 +216,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
         # create new profile
         ProfessionalProfile.objects.create(user=user, professional=professional)
 
-        # TODO: test
         # create new subtypes for profile
         existing_prof_types = [pt['subtype'] for pt in professional.professional_types.all()]
         for subtype in clean_professional_subtype:
@@ -223,7 +224,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                 type=clean_professional_type,
                                                 subtype=subtype)
 
-        # TODO: test
         if exists:
             # get existing corresponding professional
             professional_object = get_professional_corresponding_object(prof_type=clean_professional_type,
@@ -238,6 +238,83 @@ class ProfessionalInfoFillUpForm(forms.Form):
         professional_object.street_address = clean_street
         professional_object.pos_code = clean_zipcode
         professional_object.save()
+
+
+class ConsumerProfileEditForm(ConsumerInfoFillUpForm):
+    """
+        Consumer information form edit in dashboard
+    """
+    def save(self, request):
+        clean_gender = self.cleaned_data['gender']
+        clean_first_name = self.cleaned_data['first_name']
+        clean_last_name = self.cleaned_data['last_name']
+        clean_zipcode = self.cleaned_data['zipcode']
+        user = request.user
+        user.first_name = clean_first_name
+        user.last_name = clean_last_name
+        user.save()
+        profile = ConsumerProfile.consumer_profiles.first()
+        profile.gender = clean_gender
+        profile.zipcode = clean_zipcode
+        profile.save()
+
+
+class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
+    """
+        Professional information form after sign up
+    """
+
+    license_num = forms.CharField(
+        required=True,
+        label='License Number',
+        widget=forms.TextInput(attrs={'class': 'input-license-number', 'readonly': 'true'})
+    )
+
+    company_name = forms.CharField(
+        required=True,
+        max_length=128,
+        label='Name',
+        widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
+    )
+
+    professional_type = forms.ChoiceField(
+        required=True,
+        choices=PROFESSIONAL_CHOICES,
+        initial=CONTRACTOR,
+        label='Professional Type',
+        widget=forms.RadioSelect(attrs={'class': 'input-professional-type', 'readonly': 'true'})
+    )
+
+    def save(self, request):
+        # Cannot be changed
+        clean_license_num = self.cleaned_data['license_num']
+        clean_company_name = self.cleaned_data['company_name']
+        clean_street = self.cleaned_data['street']
+        clean_state = self.cleaned_data['state']
+        clean_zipcode = self.cleaned_data['zipcode']
+        clean_entity_type = self.cleaned_data['entity_type']
+        # Cannot be changed
+        clean_professional_type = self.cleaned_data['professional_type']
+
+        clean_professional_subtype = self.cleaned_data['professional_subtype']
+        profile = request.user.professional_profiles.first()
+        professional = profile.professional
+        professional.state = clean_state
+        professional.postal_code = clean_zipcode
+        professional.entity_type = clean_entity_type
+        professional.save()
+
+        professional_object = get_professional_corresponding_object(prof_type=clean_professional_type, lic=clean_license_num)
+        professional_object.street_address = clean_street
+        professional_object.save()
+
+        # create new subtypes for profile
+        existing_prof_types = [pt.subtype for pt in professional.professional_types.all()]
+        for subtype in clean_professional_subtype:
+            if subtype not in existing_prof_types:
+                ProfessionalType.objects.create(professional=professional,
+                                                type=clean_professional_type,
+                                                subtype=subtype)
 
 
 class MultipleSameProfessionalFound(Exception):

@@ -1,0 +1,67 @@
+{% extends "dashboard_base.html" %}
+
+{% load staticfiles %}
+
+{% load i18n %}
+
+{% block nav-sidebar %}
+<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                User head image
+            </li>
+            <li>
+                <a href="#">
+                    Account Setting
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="#" id="profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" id="email">Email</a>
+                    </li>
+                    <li>
+                        <a href="#" id="password">Password</a>
+                    </li>
+                    <!--TODO: more attributes go here-->
+                </ul>
+            </li>
+            <li>
+
+            </li>
+            <li>
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    $(function () {
+        $('#profile').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_professional_profile' %}");
+        });
+
+        $('#email').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_email' %}");
+        });
+
+        $('#password').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_change_password' %}");
+        });
+    })
+</script>
+{% endblock %}
+
+{% block nav-topbar %}
+
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <iframe name="content" src="" id="content-iframe"  scrolling="no" noresize frameborder="0" marginwidth="0" marginheight="0" width="60%" height="60%"></iframe>
+</div>
+
+{% endblock %}
