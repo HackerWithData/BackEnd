@@ -15,7 +15,9 @@ professional_type = setup_professional_type()
 
 
 class UserSignUpForm(SignupForm):
-
+    """
+        User sign up form
+    """
     # TODO: change role type in form, part 1
     role = forms.MultipleChoiceField(
         required=True,
@@ -35,7 +37,9 @@ class UserSignUpForm(SignupForm):
 
 
 class ConsumerInfoFillUpForm(forms.Form):
-
+    """
+        Consumer information form after sign up
+    """
     first_name = forms.CharField(
         required=True,
         max_length=128,
@@ -86,7 +90,9 @@ class ConsumerInfoFillUpForm(forms.Form):
 
 # TODO: implement professional form
 class ProfessionalInfoFillUpForm(forms.Form):
-
+    """
+        Professional information form after sign up
+    """
     license_num = forms.CharField(
         required=True,
         label='License Number',
@@ -214,7 +220,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
         # create new profile
         ProfessionalProfile.objects.create(user=user, professional=professional)
 
-        # TODO: test
         # create new subtypes for profile
         existing_prof_types = [pt['subtype'] for pt in professional.professional_types.all()]
         for subtype in clean_professional_subtype:
@@ -223,7 +228,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                 type=clean_professional_type,
                                                 subtype=subtype)
 
-        # TODO: test
         if exists:
             # get existing corresponding professional
             professional_object = get_professional_corresponding_object(prof_type=clean_professional_type,
@@ -238,6 +242,33 @@ class ProfessionalInfoFillUpForm(forms.Form):
         professional_object.street_address = clean_street
         professional_object.pos_code = clean_zipcode
         professional_object.save()
+
+
+class ConsumerProfileEditForm(ConsumerInfoFillUpForm):
+    """
+        Consumer information form edit in dashboard
+    """
+    # TODO: override
+    def save(self, request):
+        clean_gender = self.cleaned_data['gender']
+        clean_first_name = self.cleaned_data['first_name']
+        clean_last_name = self.cleaned_data['last_name']
+        clean_zipcode = self.cleaned_data['zipcode']
+        user = request.user
+        user.first_name = clean_first_name
+        user.last_name = clean_last_name
+        user.save()
+        profile = ConsumerProfile(user=user, gender=clean_gender, zipcode=clean_zipcode)
+        profile.save()
+
+
+class ProfessionalProfileEditForm(forms.Form):
+    """
+        Professional information form after sign up
+    """
+    # TODO: override
+    def save(self, request):
+        pass
 
 
 class MultipleSameProfessionalFound(Exception):

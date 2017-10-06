@@ -13,11 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from views import sign_up_complete_info, ProfessionalProfileView, ConsumerProfileView
+from django.conf.urls import url
+from views import (
+    sign_up_complete_info,
+    DashboardAfterPasswordChangeView,
+    ProfessionalProfileAfterSignupView,
+    ConsumerProfileAfterSignupView,
+    ConsumerProfileView,
+    ProfessionalProfileView,
+)
 
 urlpatterns = [
     url(r'^signup/info/$', sign_up_complete_info, name='account_signup_complete_info'),
-    url(r'^signup/info/consumer/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
-    url(r'^signup/info/profession/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
+    url(r'^signup/info/consumer/$', ConsumerProfileAfterSignupView.as_view(), name='account_consumer_profile_after_signup'),
+    url(r'^signup/info/profession/$', ProfessionalProfileAfterSignupView.as_view(), name='account_professional_profile_after_signup'),
+    url(r'^password/change/$', DashboardAfterPasswordChangeView.as_view(), name='account_change_password'),
+    url(r'^consumer_profile/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
+    url(r'^professional_profile/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
 ]

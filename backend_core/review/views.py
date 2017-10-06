@@ -99,10 +99,16 @@ def submit_review(request, o_id):
     return render(request, template_name, {"info_dict": info_dict})
 
 
-def display_review(request, contractor_id):
+def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
         template_name = r'contractor/contractor_review.html'
-        review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'), object_id=contractor_id,
+        if 'contractor' in request.path:
+            model_type = 'contractor'
+        elif 'designer' in request.path:
+            model_type = 'designer'
+        elif 'architect' in request.path:
+            model_type = 'architect'
+        review = Review.objects.filter(content_type=ContentType.objects.get(model=model_type), object_id=o_id,
                                        review_status='A')
 
         # other situation

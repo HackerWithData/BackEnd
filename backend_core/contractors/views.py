@@ -27,9 +27,6 @@ def getStateFullName(state):
     return FullName
 
 
-
-
-
 # TODO: add a overview database
 def display_contractor(request, contractor_id):
     o_id = contractor_id
@@ -152,7 +149,8 @@ def display_contractor(request, contractor_id):
         review = None
 
     RATING_STAR_MAX = 10
-    contractor_ratings = Rating.objects.filter(contractor=contractor).order_by('ratings_average')
+    contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                               object_id=contractor_id).order_by('ratings_average')
     ratings = {}
     ratings['stars'] = range(RATING_STAR_MAX)
 
@@ -205,27 +203,24 @@ def update_accept_review(request):
 def display_project_photos(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         template_name = 'contractor/contractor_project_photo.html'
-        contractor = Contractor.objects.get(lic_num=contractor_id)
+
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                               object_id=contractor_id)
-        info_dict = {'project_photos': project_photos, 'contractor': contractor}
-        # if request.is_ajax():
-        #     html = render_to_string(template_name, {'info_dict': info_dict})
-        #     return HttpResponse(html)
-        # else:
+        info_dict = {'project_photos': project_photos}#, 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
         return HttpResponseNotFound('No Pages Found.')
 
-#test
-def upload_project_photos(request, contracotr_id):
+
+def upload_project_photos(request, contractor_id):
     template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
 
     if request.method == "POST":
+        #contractor = Contractor.objects.get(lic_num=contractor_id)
         form = PhotoForm(request.POST, request.FILES)
         content_type = ContentType.objects.get(model='contractor')
-        object_id = int(contracotr_id)
+        object_id = int(contractor_id)
         files = request.FILES.getlist('img')
         if form.is_valid():
             if len(files) > 0:
