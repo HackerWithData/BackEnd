@@ -3,187 +3,193 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/search-list.css' %}">
-    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js'%}"></script>
+    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
 
 {% block banner %}
-    {% include 'search_bar/search_bar.html' %}
+    <div class="banner container">
+    <div id='search-bar' class="search-bar">
+        {% include 'search_bar/search_bar.html' %}
+    </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <div class="row search-list">
-    {% if contractors.count > 0 %}
-        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-            {% include 'search_sidebar/search_sidebar.html' %}
-        </div>
-        <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
-            <div class="list-group">
-            {% for contractor in contractors %}
-                {% include 'search_card/search_card.html' %}
-            {% endfor %}
-            </div>
-            <!--TODO: show all pagination numbers-->
-            <div class="list-pagination">
-                <ul class="pagination">
-                    {% if contractors.has_previous %}
-                        <li class="page-item">
+    <div id="search-list" class="container">
+        <div class="row">
+            {% if contractors.count > 0 %}
+{#                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">#}
+{#                    {% include 'search_sidebar/search_sidebar.html' %}#}
+{#                </div>#}
+                <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div class="list-group">
+                        {% for contractor in contractors %}
+                            {% include 'search_card/search_card.html' %}
+                        {% endfor %}
+                    </div>
+                    <!--TODO: show all pagination numbers-->
+                    <div class="list-pagination">
+                        <ul class="pagination">
+                            {% if contractors.has_previous %}
+                                <li class="page-item">
                             <span class="page-link">
                                 <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">previous</a>
                             </span>
-                        </li>
-                    {% endif %}
-                    <li class="page-item active">
+                                </li>
+                            {% endif %}
+                            <li class="page-item active">
                         <span class="page-link">
                             <!--Page {{ contractors.number }} of {{ contractors.paginator.num_pages }}.-->
                             {{ contractors.number }}
                         </span>
-                    </li>
-                    {% if contractors.has_next %}
-                        <li class="page-item">
+                            </li>
+                            {% if contractors.has_next %}
+                                <li class="page-item">
                             <span class="page-link">
                                 <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">next</a>
                             </span>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <div style="width:25%; top: 200px; right: 0px; position: fixed;">
-                <div class="map" id="googleMap" style="width:100%;height:400px;"></div>
-            </div>
-        </div>
-    {% else %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <div class='map-container'>
+                        <div class="map" id="googleMap" style="width:100%;height:100%;"></div>
+                    </div>
+                </div>
+            {% else %}
+                </div>
+                <!--TODO: change to nearby zipcode in render-->
+                <p>No Contractor match your condition</p>
+            {% endif %}
+
     </div>
-<!--TODO: change to nearby zipcode in render-->
-       <p>No Contractor match your condition</p>
-    {% endif %}
+    <script>
+        var map;
+        var geocoder;
+        var bounds;
+        var userZipcode = "{{ zipcode }}";
+        var contractors = [];
+        const smallMapMarker = "/media/photos/searchListAsset/mapMarker.png"
+        const largeMapMarker = "/media/photos/searchListAsset/mapMarkerSmall.png"
 
-
-<script>
-    var map;
-    var geocoder;
-    var bounds;
-    var userZipcode = "{{ zipcode }}";
-    var contractors = [];
-    const smallMapMarker = "/media/photos/searchListAsset/mapMarker.png"
-    const largeMapMarker = "/media/photos/searchListAsset/mapMarkerSmall.png"
-
-    $(function () {
-        $('.list-group-item').each(function (index) {
-            $(this).hover(
-                function (event) {
-                    if (contractors[index]) {
-                        contractors[index]['marker'].setIcon(smallMapMarker);
+        $(function () {
+            $('.list-group-item').each(function (index) {
+                $(this).hover(
+                    function (event) {
+                        if (contractors[index]) {
+                            contractors[index]['marker'].setIcon(smallMapMarker);
+                        }
+                    },
+                    function (event) {
+                        if (contractors[index]) {
+                            contractors[index]['marker'].setIcon(largeMapMarker);
+                        }
                     }
-                },
-                function (event) {
-                    if (contractors[index]) {
-                        contractors[index]['marker'].setIcon(largeMapMarker);
-                    }
-                }
-            )
-        })
-    });
+                )
+            })
+        });
 
-    function initMap() {
-        //initial a geocoder
-        geocoder = new google.maps.Geocoder();
+        function initMap() {
+            //initial a geocoder
+            geocoder = new google.maps.Geocoder();
 
-        //initial a map
-        var mapProp = {
-            //TODO: set to the location of user at first
-            center: new google.maps.LatLng(34.069112,-118.442895),
-            zoom: 15
-        };
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            //initial a map
+            var mapProp = {
+                //TODO: set to the location of user at first
+                center: new google.maps.LatLng(34.069112, -118.442895),
+                zoom: 15
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-        bounds = new google.maps.LatLngBounds();
+            bounds = new google.maps.LatLngBounds();
 
-        //set map center
-        if (userZipcode) {
-            geocoder.geocode(
-                {
-                    'address': userZipcode,
-                    'componentRestrictions': {
-                        //TODO: add other countries in the future
-                        'country': 'US'
-                    }
-                },
-                userGeocoderCallBack
-            );
+            //set map center
+            if (userZipcode) {
+                geocoder.geocode(
+                    {
+                        'address': userZipcode,
+                        'componentRestrictions': {
+                            //TODO: add other countries in the future
+                            'country': 'US'
+                        }
+                    },
+                    userGeocoderCallBack
+                );
+            }
+
+            //add markers
+            console.log(JSON.parse('{{ contractors_json | escapejs }}'));
+            addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
         }
 
-        //add markers
-        console.log(JSON.parse('{{ contractors_json | escapejs }}'));
-        addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
-    }
-
-    function userGeocoderCallBack(results, status) {
-        if (status === 'OK') {
-            map.setCenter(results[0].geometry.location);
-            addUserMarker(results);
-        } else {
-            console.warn(`Error: ${status}`);
-            alert('Fail to access your current location');
+        function userGeocoderCallBack(results, status) {
+            if (status === 'OK') {
+                map.setCenter(results[0].geometry.location);
+                addUserMarker(results);
+            } else {
+                console.warn(`Error: ${status}`);
+                alert('Fail to access your current location');
+            }
         }
-    }
 
-    function contractorGeocoderCallBack(results, status, contractor, index) {
-        if (status === 'OK') {
-            //TODO: change when implement customized pagination function
-            const zIndex = 20 - index;
+        function contractorGeocoderCallBack(results, status, contractor, index) {
+            if (status === 'OK') {
+                //TODO: change when implement customized pagination function
+                const zIndex = 20 - index;
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    icon: largeMapMarker,
+                    zIndex: zIndex
+                });
+
+//            fit map with markers
+                bounds.extend(results[0].geometry.location);
+                map.fitBounds(bounds);
+
+                marker.addListener('mouseover', function () {
+                    $('#searchListCard' + contractor['pk']).css('background-color', '#d9534f');
+                    this.setZIndex(50);
+                    this.setIcon(smallMapMarker);
+                });
+                marker.addListener('mouseout', function () {
+                    $('#searchListCard' + contractor['pk']).css('background-color', '');
+                    this.setZIndex(zIndex);
+                    this.setIcon(largeMapMarker);
+                });
+
+                contractors[index] = {'item': contractor, 'marker': marker, 'index': index};
+            } else {
+                //TODO: add specific ID for contractor fail to get marker
+                console.warn(`Error(${status}): Cannot find location for contractor ID: `);
+            }
+        }
+
+        function addUserMarker(results) {
             var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location,
-                icon: largeMapMarker,
-                zIndex: zIndex
+                zIndex: 100
             });
-
-//            fit map with markers
-            bounds.extend(results[0].geometry.location);
-            map.fitBounds(bounds);
-
-            marker.addListener('mouseover', function() {
-                $('#searchListCard' + contractor['pk']).css('background-color', '#d9534f');
-                this.setZIndex(50);
-                this.setIcon(smallMapMarker);
-            });
-            marker.addListener('mouseout', function() {
-                $('#searchListCard' + contractor['pk']).css('background-color', '');
-                this.setZIndex(zIndex);
-                this.setIcon(largeMapMarker);
-            });
-
-            contractors[index] = { 'item': contractor, 'marker': marker, 'index': index };
-        } else {
-            //TODO: add specific ID for contractor fail to get marker
-            console.warn(`Error(${status}): Cannot find location for contractor ID: `);
-        }
-    }
-
-    function addUserMarker(results) {
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location,
-            zIndex: 100
-        });
 
 //        fit map with marker
-        bounds.extend(results[0].geometry.location);
-        map.fitBounds(bounds);
-    }
-
-    function addContractorMarkers(contractorList) {
-        for (let i = 0; i < contractorList.length; i++) {
-            var address = `${contractorList[i]['fields']['street_address']} ${contractorList[i]['fields']['csp']}`;
-            geocoder.geocode({ 'address': address}, function (result, status) {
-                contractorGeocoderCallBack(result, status, contractorList[i], i);
-            });
+            bounds.extend(results[0].geometry.location);
+            map.fitBounds(bounds);
         }
-    }
-</script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap"></script>
+        function addContractorMarkers(contractorList) {
+            for (let i = 0; i < contractorList.length; i++) {
+                var address = `${contractorList[i]['fields']['street_address']} ${contractorList[i]['fields']['csp']}`;
+                geocoder.geocode({'address': address}, function (result, status) {
+                    contractorGeocoderCallBack(result, status, contractorList[i], i);
+                });
+            }
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap"></script>
 
 {% endblock %}

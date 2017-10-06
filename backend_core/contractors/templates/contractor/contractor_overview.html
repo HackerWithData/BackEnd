@@ -1,3 +1,30 @@
+{% load i18n %}
+
+{% trans "Score" as Score %}
+{% trans "Phone" as Phone %}
+{% trans "Overall Rating" as Overall_Rating %}
+{% trans "Overview" as Overview %}
+{% trans "Project Photos" as Project_Photos %}
+{% trans "Review us" as Review_us %}
+{% trans "Review" as Review %}
+{% trans "Read more" as Read_more %}
+{% trans "Business Information" as Business_Information %}
+{% trans "License #" as License_num %}
+{% trans "License Status" as License_Status %}
+{% trans "License Type" as License_Type %}
+{% trans "Entity" as Entity %}
+{% trans "Issued Date" as Issued_Date %}
+{% trans "Expiration Date" as Expiration_Date %}
+{% trans "Bonded" as Bonded %}
+{% trans "Issued" as Issued %}
+{% trans "Address" as Address %}
+{% trans "Photo" as Photo %}
+{% trans "View More" as View_More %}
+{% trans "Anonymous User" as Anonymous_User %}
+{% trans "Project Cost" as Project_Cost %}
+{% trans "Project Type" as Project_Type %}
+{% trans "Project Duration" as Project_Duration %}
+{% trans "Read less" as Read_less %}
 <div class="container">
     <!--summary-->
     <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
@@ -10,52 +37,52 @@
             </div>
         </div>
         <div id="peek" class="link">
-            <a id="readmore" class="btn btn-db" style="color:white">Read more</a>
+            <a id="readmore" class="btn btn-db" style="color:white"> <i class="fa fa-chevron-down "> </i></a>
         </div>
     </div>
 
     <div id="BasicInfo" class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Business Information</div>
+            <div class="panel-heading">{{ Business_Information }}</div>
             <div class="panel-body">
                 <table>
                     <tr>
-                        <td class="rname">License #:</td>
+                        <td class="rname">{{ License_num }}:</td>
                         <td>{{ info_dict.contractor.lic_num }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">License Status:</td>
+                        <td class="rname"> {{ License_Status }}:</td>
                         <td>{{ info_dict.contractor.lic_status }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">License Type:</td>
+                        <td class="rname">{{ License_Type }}:</td>
                         <td>{% for item in info_dict.lic_type %}{{ item }}<br> {% endfor %}</td>
                     </tr>
 
                     <tr>
-                        <td class="rname">Entity:</td>
+                        <td class="rname">{{ Entity }}:</td>
                         <td>{{ info_dict.contractor.entity }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">Issued Date:</td>
+                        <td class="rname">{{ Issued_Date }}:</td>
                         <td>{{ info_dict.contractor.lic_issue_date }}</td>
                     </tr>
                     {% if info_dict.contractor.lic_expire_date %}
                         <tr>
-                            <td class="rname">Expiration Date:</td>
+                            <td class="rname">{{ Expiration_Date }}:</td>
                             <td>{{ info_dict.contractor.lic_expire_date }}</td>
                         </tr>
                     {% endif %}
                     <tr>
-                        <td class="rname">Bonded:</td>
+                        <td class="rname">{{ Bonded }}:</td>
                         <td>{{ info_dict.bond_history.surety_company }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">Issued:</td>
+                        <td class="rname">{{ Issued }}:</td>
                         <td>{{ info_dict.wc_history.insur_company }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">Address:</td>
+                        <td class="rname">{{ Address }}:</td>
                         <td>{{ info_dict.contractor.street_address }} <br/>
                             {{ info_dict.contractor.csp }}</td>
                     </tr>
@@ -74,9 +101,9 @@
             <div id="photo" class="col-12 col-md-8 col-lg-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span>Photo</span>
+                        <span>{{ Photo }}</span>
                         {#                        <div class="pull-right">#}
-                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">View More</a>
+                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
                         {#                        </div>#}
                     </div>
                     <div class="panel-body">
@@ -126,9 +153,9 @@
         <div id="Review" class="col-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span>Review</span>
+                    <span>{{ Review }}</span>
                     {#                    <div class="">#}
-                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">View More</a>
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
                     {#                    </div>#}
                 </div>
                 <div class="panel-body">
@@ -137,21 +164,21 @@
                             <div class="user-review">
                                 <div class="main-spec">
                                     {% if rv.is_anonymous == 1 %}
-                                        Anonymous User
+                                        {{ Anonymous_User }}
                                     {% else %}
                                         {{ rv.user.first_name }}{{ rv.user.last_name }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_cost %}
-                                        Project Cost: {{ rv.project_cost }}
+                                        {{ Project_Cost }}: {{ rv.project_cost }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_type %}
-                                        Project Type: {{ rv.project_type }}
+                                        {{ Project_Type }}: {{ rv.project_type }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_duration %}
-                                        Project Duration: {{ rv.project_duration }}
+                                        {{ Project_Duration }}: {{ rv.project_duration }}
                                     {% endif %}
                                     <br/>
                                     <br/>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load staticfiles %}
 
 {#style#}
@@ -7,11 +8,12 @@
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <!-- Add the slick-theme.css if you want default styling -->
-{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
     <!-- Add the slick-theme.css if you want default styling -->
-{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-{#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
+    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <style>
         #masthead {
             width: auto;
@@ -72,7 +74,35 @@
 {#    </header>#}
 {#{% endblock %}#}
 
+
+
 {% block header %}
+
+{% trans "Score" as Score %}
+{% trans "Phone" as Phone %}
+{% trans "Overall Rating" as Overall_Rating %}
+{% trans "Overview" as Overview %}
+{% trans "Project Photos" as Project_Photos %}
+{% trans "Review us" as Review_us %}
+{% trans "Review" as Review %}
+{% trans "Read more" as Read_more %}
+{% trans "Business Information" as Business_Information %}
+{% trans "License #" as License_num %}
+{% trans "License Status" as License_Status %}
+{% trans "License Type" as License_Type %}
+{% trans "Entity" as Entity %}
+{% trans "Issued Date" as Issued_Date %}
+{% trans "Expiration Date" as Expiration_Date %}
+{% trans "Bonded" as Bonded %}
+{% trans "Issued" as Issued %}
+{% trans "Address" as Address %}
+{% trans "Photo" as Photo %}
+{% trans "View More" as View_More %}
+{% trans "Anonymous User" as Anonymous_User %}
+{% trans "Project Cost" as Project_Cost %}
+{% trans "Project Type" as Project_Type %}
+{% trans "Project Duration" as Project_Duration %}
+{% trans "Read less" as Read_less %}
     <div id="masthead">
         <div class="container">
             <div class="row">
@@ -81,9 +111,9 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.contractor.csp }}</li>
-                            <li>Score: {{ info_dict.score }}</li>
-                            <li>Phone: {{ info_dict.contractor.phone }}</li>
-                            <li>Overall Rating: {{ info_dict.ratings.overall }}
+                            <li>{{ Score }}: {{ info_dict.score }}</li>
+                            <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
+                            <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
                                 {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
                                 <div class="star-ratings-css">
                                     <div class="star-ratings-css-top" style="width:100%">
@@ -104,7 +134,7 @@
                 </div>
                 <div class="col-md-4 col-lg-4">
                     <div id="review-us">
-                        <a href="#review-submission" class="popup-with-form btn btn-db">Review us</a>
+                        <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
                     </div>
                 </div>
             </div>
@@ -121,13 +151,13 @@
             <div class='menu justify-content-center' id='pro-menu'>
                 <ul class='nav nav-pills'>
                     <li class="nav-item">
-                        <a class="nav-link" id="overview-tab">Overview</a>
+                        <a class="nav-link" id="overview-tab">{{ Overview }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="projectphotos-tab">Project Photos</a>
+                        <a class="nav-link" id="projectphotos-tab">{{ Project_Photos }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="review-tab">Review</a>
+                        <a class="nav-link" id="review-tab">{{ Review }}</a>
                     </li>
                     {#                    <li class="nav-item">#}
                     {#                        <a class="nav-link" id="other-tab">Other</a>#}
@@ -186,11 +216,11 @@
 
         function readMore() {
             var readmore = $('#readmore');
-            if (readmore.text() == 'Read more') {
-                readmore.text("Read less");
+            if (readmore.find('i.fa-chevron-down').length !== 0) {
+                readmore.html('<i class="fa fa-chevron-up"> </i>') ;
                 $('#peek').removeClass('link');
             } else {
-                readmore.text("Read more");
+                readmore.html('<i class="fa fa-chevron-down"> </i>');
                 $('#peek').addClass('link');
             }
             $('.height').toggleClass("heightAuto");

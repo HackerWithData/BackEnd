@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 """
 Django settings for backend_core project.
 
@@ -9,13 +12,10 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -26,8 +26,12 @@ SECRET_KEY = ')m##(8z_3^sv@-s-4=0&dkcf(2d1^_afw_5$61e@e%oz*4a1!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'hoom-dev.us-west-2.elasticbeanstalk.com',
+    'localhost',
+    '0.0.0.0',
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -42,14 +46,14 @@ PREREQ_APPS = [
 ]
 
 AUTH_APPS = [
-# The following apps are required:
+    # The following apps are required:
     'django.contrib.sites',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
-# include the providers you want to enable:
+    # include the providers you want to enable:
     'allauth.socialaccount.providers.facebook',
 ]
 
@@ -73,8 +77,10 @@ WEB_APPS = [
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,16 +101,17 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                "django.template.context_processors.i18n",
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'search.context_processors.global_settings',
+
             ],
         },
     },
 ]
-
 
 AUTHENTICATION_BACKENDS = (
 
@@ -116,7 +123,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 WSGI_APPLICATION = 'backend_core.wsgi.application'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -145,7 +151,6 @@ HAYSTACK_CONNECTIONS = {
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -159,19 +164,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, 'static'),
-)
-#media file
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-#customized user model
+# customized user model
 AUTH_USER_MODEL = 'users.User'
 
 # auth and all allauth settings
@@ -224,14 +217,31 @@ SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '374045419044-2beku5e7dmp46hgrg8ogdanq375th0rh.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '1Q4Jm9Ve_mbbro6quQT3QV7N'
-#SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
-#SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+# SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 #   'https://www.googleapis.com/auth/userinfo.email',
 #    'https://www.googleapis.com/auth/userinfo.profile'
-#]
+# ]
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
-#home_index
+# home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
+LANGUAGE_CODE = 'en'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('zh-hans', u'简体中文'),
+    ('zh-hant', u'繁体中文'),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'locale'),
+)

@@ -21,7 +21,11 @@ from django.contrib.auth import views as auth_views
 import debug_toolbar
 from users import views as userviews
 from photos import views as photoview
+from django.views.i18n import javascript_catalog
 
+js_info_dict = {
+    'packages': ('contractors.package',),
+}
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # home page
@@ -29,6 +33,8 @@ urlpatterns = [
 
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/', include('users.urls')),
+
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
 
     # search
     url(r'^search/', include('search.urls')),
