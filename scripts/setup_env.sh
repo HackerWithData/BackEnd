@@ -7,6 +7,7 @@ apt-get update
 
 echo "Installing libmagickwand-dev"
 apt-get install libmagickwand-dev -y > /dev/null
+apt-get install gettext libgettextpo-dev -y > /dev/null
 
 echo "Installing virtualenv"
 #including pip, setuptools

@@ -1,0 +1,371 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-06 09:01+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: home/templates/home/home.html:42
+msgid "Find the excellent professionals."
+msgstr "找到您心仪的专业的装修人士"
+
+#: home/templates/home/home.html:76
+msgid "What We Do"
+msgstr "我们做什么"
+
+#: home/templates/home/home.html:86
+msgid "Rating Professionals"
+msgstr "对装修人士或承包商进行评分"
+
+#: home/templates/home/home.html:87
+msgid ""
+"Combined with contractors' background like past work history, we will rate "
+"them by Big Data\n"
+"                            Analysis Tool and match nearby high rated "
+"professionals for you."
+msgstr ""
+"根据承包商的背景例如工作记录，我们通过大数据分析会对他们进行评分并向您推送优"
+"秀的承包商。"
+
+#: home/templates/home/home.html:96
+msgid "Transparent Monitoring and Project Management"
+msgstr "透明的项目管理体系"
+
+#: home/templates/home/home.html:97
+msgid ""
+"collaborate between contractors and customers in a more clear and "
+"transparent platform to\n"
+"                            push the projects move on seamlessly and "
+"flawlessly."
+msgstr ""
+"在我们更加透明的平台上联动承包商和顾客进行协作来推动项目的无缝无痕发展。"
+
+#: home/templates/home/home.html:107
+msgid "Premium Experience"
+msgstr "完美的体验"
+
+#: home/templates/home/home.html:108
+#, python-format
+msgid ""
+"We commit to offering premium experience for our clients. Among Hoome’s high "
+"quality clients,\n"
+"                            we offer the price as lower as possible at the "
+"same level of quality. About 10%% of owners\n"
+"                            will enjoy the benefit –”Work first and pay "
+"later”, after background check."
+msgstr ""
+"我们致力于为客户提供完美的体验。 在Hoome高质量客户中，我们想尽可能地向他们提"
+"供实惠的价格。 大约10%%的业主在通过背景调查之后享受了先施工后付款的服务。"
+
+#: home/templates/home/home.html:122
+msgid "Hoome beta version has come,"
+msgstr "Hoome 测试版已上线，"
+
+#: home/templates/home/home.html:122
+msgid "Try it now and enjoy."
+msgstr "来试一试吧！"
+
+#: home/templates/home/home.html:123
+msgid ""
+"We have released the information of California State Contractors, Designers "
+"and Architects.\n"
+"                            Other States' information are comming soon."
+msgstr ""
+"我们已经公布了加州的承包商，设计师，和建筑师的信息。其他州的信息将会相继上"
+"线。"
+
+#: home/templates/home/home.html:126
+msgid ""
+"We thrive to build more functionality and improve data analyzing power to "
+"enhance user\n"
+"                            experience in Hoome platform. "
+msgstr ""
+"我们奋力建设更完全更多的功能并增强数据分析的力度来改善用户使用我们平台的体"
+"验。"
+
+#: home/templates/home/home.html:153
+msgid "Data in California State"
+msgstr "加州数据"
+
+#: home/templates/home/home.html:201
+msgid ""
+"If you have any questions or want to invest us, don't hesitate to contact us:"
+msgstr "如果您有什么问题或有意愿投资我们，请不要犹豫跟联系我们"
+
+#: templates/base.html:45
+msgid "Score"
+msgstr "Hoome 评分"
+
+#: templates/base.html:46
+msgid "Phone"
+msgstr "电话"
+
+#: templates/base.html:47
+msgid "Overall Rating"
+msgstr "总体用户评分"
+
+#: templates/base.html:48
+msgid "Overview"
+msgstr "总览"
+
+#: templates/base.html:49
+msgid "Project Photos"
+msgstr "项目照片"
+
+#: templates/base.html:50
+msgid "Review us"
+msgstr "评价我们"
+
+#: templates/base.html:51
+msgid "Review"
+msgstr "评价"
+
+#: templates/base.html:52
+msgid "Read more"
+msgstr "阅读更多"
+
+#: templates/base.html:53
+msgid "Business Information"
+msgstr "商家资讯"
+
+#: templates/base.html:54
+msgid "License #"
+msgstr "证件号码"
+
+#: templates/base.html:55
+msgid "License Status"
+msgstr "证件状态"
+
+#: templates/base.html:56
+msgid "License Type"
+msgstr "证件类型"
+
+#: templates/base.html:57
+msgid "Entity"
+msgstr "实体"
+
+#: templates/base.html:58
+msgid "Issued Date"
+msgstr "发布日期"
+
+#: templates/base.html:59
+msgid "Expiration Date"
+msgstr "过期日期"
+
+#: templates/base.html:60
+msgid "Bonded"
+msgstr "担保公司"
+
+#: templates/base.html:61
+msgid "Issued"
+msgstr "保险公司"
+
+#: templates/base.html:62
+msgid "Address"
+msgstr "地址"
+
+#: templates/base.html:63
+msgid "Photo"
+msgstr "照片"
+
+#: templates/base.html:64
+msgid "View More"
+msgstr "浏览更多"
+
+#: templates/base.html:65
+msgid "Anonymous User"
+msgstr "匿名用户"
+
+#: templates/base.html:66
+msgid "Project Cost"
+msgstr "项目开销"
+
+#: templates/base.html:67
+msgid "Project Type"
+msgstr "项目类型"
+
+#: templates/base.html:68
+msgid "Project Duration"
+msgstr "项目工期"
+
+#: templates/base.html:69
+#, fuzzy
+#| msgid "Read more"
+msgid "Read less"
+msgstr "阅读更少"
+
+#: templates/base.html:70
+msgid "Company Name"
+msgstr "公司名字"
+
+#: templates/base.html:71
+msgid "State Designer Num"
+msgstr "本州设计师证件号"
+
+#: templates/base.html:72
+msgid "Contractor Licence Num"
+msgstr "本州承包商证件号"
+
+#: templates/base.html:74
+#, fuzzy
+#| msgid "Mobil"
+msgid "Mobile"
+msgstr "移动"
+
+#: templates/base.html:75
+msgid "Fax"
+msgstr "传真"
+
+#: templates/base.html:76
+msgid "Submit"
+msgstr "提交"
+
+#: templates/base.html:77
+msgid "Contact"
+msgstr "联系"
+
+#: templates/base.html:78
+msgid "Career"
+msgstr "工作"
+
+#: templates/base.html:79
+msgid "Privacy"
+msgstr "隐私"
+
+#: templates/base.html:80
+msgid "Contact Us"
+msgstr "联系我们"
+
+#: templates/base.html:81
+msgid "Home"
+msgstr "首页"
+
+#: templates/base.html:82
+msgid "Excellent Architects"
+msgstr "优秀的建筑师"
+
+#: templates/base.html:83
+msgid "NCIQ certificated Designers"
+msgstr "NCIQ 认证设计师"
+
+#: templates/base.html:84
+msgid "Active Contractors"
+msgstr "活跃的承包商"
+
+#: templates/base.html:85
+msgid "Start Search"
+msgstr "开始搜索"
+
+#: templates/base.html:151
+msgid "  Copyright © 2017 "
+msgstr " 版权 © 2017 "
+
+#: templates/base.html:151
+#, fuzzy
+#| msgid ""
+#| "  Copyright © 2017 %(link)s. All\n"
+#| "            Rights Reserved."
+msgid ". All Rights Reserved."
+msgstr "。 保留所有权利。"
+
+#: users/forms.py:33
+msgid "Must select a role"
+msgstr "必须选定一个角色"
+
+#: users/forms.py:65 users/forms.py:169
+msgid "Invalid zipcode"
+msgstr "无效的邮政编码"
+
+#: users/forms.py:71
+msgid "Must select a gender"
+msgstr "必须选定您的性别"
+
+#: users/forms.py:155
+msgid "Must select a professional type"
+msgstr "必须选择您的专业类别"
+
+#: users/forms.py:161
+msgid "Must select a entity type"
+msgstr "必须选择您的注册主体类型，比如：个体户还是公司"
+
+#: users/templates/account/login.html:6 users/templates/account/login.html:10
+#: users/templates/account/login.html:40
+msgid "Sign In"
+msgstr "登入"
+
+#: users/templates/account/login.html:15
+#, fuzzy
+#| msgid ""
+#| "Please sign in with one\n"
+#| "of your existing third party accounts. Or, <a href=\"%(signup_url)s"
+#| "\">sign up</a>\n"
+#| "for a %(site_name)s account and sign in below:"
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or,"
+msgstr ""
+"请登入您其中一个第三方账户\n"
+" 或者"
+
+#: users/templates/account/login.html:16 users/templates/account/login.html:30
+msgid "sign up"
+msgstr "注册"
+
+#: users/templates/account/login.html:17
+msgid " for a third-party account and sign in below:"
+msgstr "第三方用户，请通过以下方式登入"
+
+#: users/templates/account/login.html:23
+msgid "or"
+msgstr "或者"
+
+#: users/templates/account/login.html:29
+msgid "If you have not created an account yet, then please"
+msgstr "如果你还没有创建用户，请"
+
+#: users/templates/account/login.html:30
+msgid "first."
+msgstr "先"
+
+#: users/templates/account/login.html:39
+msgid "Forgot Password?"
+msgstr "忘记密码"
+
+#: users/templates/account/signup.html:6 users/templates/account/signup.html:14
+msgid "Sign Up"
+msgstr "注册"
+
+#: users/templates/account/signup.html:8
+#, fuzzy
+#| msgid ""
+#| "Already have an account? Then please <a href=\"%(login_url)s\">sign in</"
+#| "a>."
+msgid "Already have an account? Then please "
+msgstr "已经创建账户？ "
+
+#: users/templates/account/signup.html:8
+#, fuzzy
+#| msgid "sign up"
+msgid "sign in"
+msgstr "注册"
+
+#: users/templates/consumer_profile_after_signup/consumer_profile_after_signup.html:16
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:60
+msgid "Complete"
+msgstr "完成"
+
+#~ msgid "Save"
+#~ msgstr "保存"
