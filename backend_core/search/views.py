@@ -26,7 +26,7 @@ def search_new(request):
 
     elif request.method == 'GET':
         # TODO: set default value
-        query_set = search_by_zipcode(request)
+        query_set, lic_type = search_by_zipcode(request)
 
         # TODO: set customized item number per page, default = 10
         # pagination logic
@@ -53,12 +53,14 @@ def search_new(request):
         'contractors': page_query_set,
         'contractors_json': contractors_json,
         'zipcode': request.GET.get('zipcode'),
-        'parameters': parameters
+        'parameters': parameters,
+        "lic_type": lic_type
     })
 
 
 def search_dispatch_test(request):
     return HttpResponse('<h1>search dispatch successfully!!!</h1>')
+
 
 # def search_target_type(request):
 #     if request.method == 'POST':

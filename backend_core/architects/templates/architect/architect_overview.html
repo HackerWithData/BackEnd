@@ -4,60 +4,45 @@
         <div class="">
             <div class="text height" style="font-size:20px;">
                 {{ info_dict.overview }}
-                {{ info_dict.overview }}
-                {{ info_dict.overview }}
-                {{ info_dict.overview }}
             </div>
         </div>
         <div id="peek" class="link">
-            <a id="readmore" class="btn btn-db" style="color:white">Read more</a>
+            <a id="readmore" class="btn btn-db" style="color:white"><i class="fa fa-chevron-down "> </i></a>
         </div>
     </div>
 
     <div id="BasicInfo" class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Business Information</div>
+            <div class="panel-heading">{{ Business_Information }}</div>
             <div class="panel-body">
                 <table>
                     <tr>
-                        <td class="rname">License #:</td>
-                        <td>{{ info_dict.contractor.lic_num }}</td>
+                        <td class="rname">{{ License_num }}:</td>
+                        <td>{{ info_dict.architect.lic_num }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">License Status:</td>
-                        <td>{{ info_dict.contractor.lic_status }}</td>
+                        <td class="rname">{{ License_Status }}:</td>
+                        <td>{{ info_dict.architect.lic_status }}</td>
                     </tr>
                     <tr>
-                        <td class="rname">License Type:</td>
+                        <td class="rname">{{ License_Type }}:</td>
                         <td>{% for item in info_dict.lic_type %}{{ item }}<br> {% endfor %}</td>
                     </tr>
 
                     <tr>
-                        <td class="rname">Entity:</td>
-                        <td>{{ info_dict.contractor.entity }}</td>
+                        <td class="rname">{{ Issued_Date }}:</td>
+                        <td>{{ info_dict.architect.issue_date }}</td>
                     </tr>
-                    <tr>
-                        <td class="rname">Issued Date:</td>
-                        <td>{{ info_dict.contractor.lic_issue_date }}</td>
-                    </tr>
-                    {% if info_dict.contractor.lic_expire_date %}
+                    {% if info_dict.architect.expire_date %}
                         <tr>
-                            <td class="rname">Expiration Date:</td>
-                            <td>{{ info_dict.contractor.lic_expire_date }}</td>
+                            <td class="rname">{{ Expiration_Date }}:</td>
+                            <td>{{ info_dict.architect.expire_date }}</td>
                         </tr>
                     {% endif %}
                     <tr>
-                        <td class="rname">Bonded:</td>
-                        <td>{{ info_dict.bond_history.surety_company }}</td>
-                    </tr>
-                    <tr>
-                        <td class="rname">Issued:</td>
-                        <td>{{ info_dict.wc_history.insur_company }}</td>
-                    </tr>
-                    <tr>
-                        <td class="rname">Address:</td>
-                        <td>{{ info_dict.contractor.street_address }} <br/>
-                            {{ info_dict.contractor.csp }}</td>
+                        <td class="rname">{{ Address }}:</td>
+                        <td>{{ info_dict.architect.address }} <br/>
+                            {{ info_dict.architect.city}},{{ info_dict.architect.state}},{{ info_dict.architect.zip}}</td>
                     </tr>
                 </table>
             </div>
@@ -74,34 +59,13 @@
             <div id="photo" class="col-12 col-md-8 col-lg-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span>Photo</span>
+                        <span>{{ Photo }}</span>
                         {#                        <div class="pull-right">#}
-                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">View More</a>
+                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
                         {#                        </div>#}
                     </div>
                     <div class="panel-body">
-                        {#                        <div class="project-carousel">#}
-                        {#                            <div class="project-strip">#}
-                        {#                                {% for image in info_dict.project_photos %}#}
-                        {#                                    <div class="project">#}
-                        {#                                        <img class='' src="{{ image.img.url }}">#}
-                        {#                                    </div>#}
-                        {#                                {% endfor %}#}
-                        {#                            </div>#}
-                        {#                            <div class="project-screen">#}
-                        {#                                <div class="project-detail">#}
-                        {#                                    {% for image in info_dict.project_photos %}#}
-                        {#                                        <div class="project">#}
-                        {#                                            <img class='' src="{{ image.img.url }}">#}
-                        {#                                        </div>#}
-                        {#                                    {% endfor %}#}
-                        {#                                </div>#}
-                        {#                                <div class="screen-frame">#}
-                        {##}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {##}
-                        {#                        </div>#}
+
                         <div>
                             <div class="popup-gallery">
                                 {% for pic in  info_dict.project_photos %}
@@ -126,9 +90,9 @@
         <div id="Review" class="col-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span>Review</span>
+                    <span>{{ Review }}</span>
                     {#                    <div class="">#}
-                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">View More</a>
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
                     {#                    </div>#}
                 </div>
                 <div class="panel-body">
@@ -137,21 +101,21 @@
                             <div class="user-review">
                                 <div class="main-spec">
                                     {% if rv.is_anonymous == 1 %}
-                                        Anonymous User
+                                        {{ Anonymous_User }}
                                     {% else %}
                                         {{ rv.user.first_name }}{{ rv.user.last_name }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_cost %}
-                                        Project Cost: {{ rv.project_cost }}
+                                        {{ Project_Cost }}: {{ rv.project_cost }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_type %}
-                                        Project Type: {{ rv.project_type }}
+                                        {{ Project_Type }}: {{ rv.project_type }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_duration %}
-                                        Project Duration: {{ rv.project_duration }}
+                                        {{ Project_Duration }}: {{ rv.project_duration }}
                                     {% endif %}
                                     <br/>
                                     <br/>
@@ -172,8 +136,14 @@
                                     <hr>
                                 </div>
                                 <div class="user-rating">
-                                    {% for r in rv.userrating_set.all %}
-                                        {{ r.get_rating_type_display }}: {{ r.rating_score }}
+                                   {% for r in rv.userrating_set.all %}
+                                        {% if r.get_rating_type_display == 'Efficiency' %}
+                                            {{ Efficiency }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Quality' %}
+                                            {{ Quality }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Length' %}
+                                            {{ Length }} : {{ r.rating_score }}
+                                        {% endif %}
                                         <br>
                                     {% endfor %}
                                 </div>

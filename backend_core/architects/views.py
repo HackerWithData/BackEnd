@@ -16,6 +16,7 @@ from photos.models import BackgroundPhoto
 from photos.forms import PhotoForm
 from models import Architect
 import datetime
+from django.utils.translation import ugettext as _
 
 
 # Create your views here.
@@ -110,7 +111,7 @@ def display_architect(request, o_id):
     # if len(wh_set) > 0:
     #     wh = wh_set[0]
 
-    data_source = 'California Contractors State License Board'
+    data_source = 'California Architects Board'
     score = 91
     rank = 5
     full_state_name = getStateFullName(architect.state)
@@ -124,12 +125,14 @@ def display_architect(request, o_id):
     if overview:
         pass
     else:
-        overview = """%s is a contractor company located in %s %s . 
-    The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
-    Their License is verified as active when we checked last time. If you consider to hire %s, 
-    we suggest double-checking their license status and contact them through us.
-    """ % (architect.lic_name, architect.city, architect.state, data_source, score, rank, full_state_name,
-           architect.lic_name)
+        # The score of {score} ranks in the top {rank} %% of {full_state_name} licensed contractors.
+        overview = _("""{bus_name} is an architect based on {city} {state} . The company holds a license number according to {data_source}. 
+            The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
+            we suggest double-checking the license status and contact through us.
+            """).format(bus_name=architect.lic_name, city=architect.city, state=architect.state,
+                        data_source=data_source, score=score,
+                        rank=rank,
+                        full_state_name=full_state_name)
     # Lic Type
     lic_type = architect.lic_type.split('&')
     # review
@@ -221,5 +224,3 @@ def upload_project_photos(request, o_id):
     form = PhotoForm()
     info_dict = {'form': form}
     return render(request, template_name, info_dict)
-
-
