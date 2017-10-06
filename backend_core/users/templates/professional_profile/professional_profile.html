@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="container-professional-profile">
     <form class="professional-profile-form" id="professionalProfileEditForm" method="post" action="{% url 'account_professional_profile' %}">
       {% csrf_token %}

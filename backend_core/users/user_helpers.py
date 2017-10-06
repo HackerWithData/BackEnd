@@ -33,8 +33,6 @@ def create_professional_corresponding_object(prof_type, lic):
 def retrieve_professional_info(request):
     prof_type = request.GET['type'].upper()
     lic = request.GET['lic']
-    print lic
-    print prof_type
     try:
         professional = Professional.objects.get(lic_num=lic, type=prof_type)
         professional_types = professional.professional_types.all()
