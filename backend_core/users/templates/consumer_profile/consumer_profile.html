@@ -1,0 +1,7 @@
+<div class="container-consumer-profile">
+    <form class="consumer-profile-form" id="consumerProfileEditForm" method="post" action="{% url 'account_consumer_profile' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Complete" %}</button>
+    </form>
+</div>

@@ -27,8 +27,13 @@ urlpatterns = [
     # home page
     url(r'^$', include('home.urls')),
 
-    url(r'^accounts/', include('allauth.urls')),
+    # users.urls must place before allauth urls to override
     url(r'^accounts/', include('users.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+
+
+    # dashboard
+    url(r'^dashboard/', include('dashboard.urls')),
 
     # search
     url(r'^search/', include('search.urls')),

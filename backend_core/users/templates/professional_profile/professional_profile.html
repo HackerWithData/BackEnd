@@ -1,0 +1,7 @@
+<div class="container-professional-profile">
+    <form class="professional-profile-form" id="professionalProfileEditForm" method="post" action="{% url 'account_professional_profile' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Complete" %}</button>
+    </form>
+</div>

@@ -1,9 +1,11 @@
 {% extends "dashboard_base.html" %}
 
+{% load staticfiles %}
+
 {% load i18n %}
 
 {% block nav-sidebar %}
-<nav class="navbar-default navbar-static-side">
+<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
@@ -16,6 +18,9 @@
                 <ul class="nav nav-second-level collapse">
                     <li>
                         <a href="#" id="profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" id="email">Email</a>
                     </li>
                     <li>
                         <a href="#" id="password">Password</a>
@@ -33,23 +38,21 @@
     </div>
 </nav>
 
-<!--<script>-->
-    <!--$(function () {-->
-        <!--$('#password').click(function () {-->
-            <!--$.ajax(-->
-                <!--{-->
-                    <!--type: 'GET',-->
-                    <!--url: "{% url 'account_change_password' %}",-->
+<script>
+    $(function () {
+        $('#profile').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_change_password' %}");
+        });
 
-                <!--}-->
-            <!--).done(function (ur) {-->
-                <!--$("#middle").attr('src',+good);-->
-            <!--}).fail(function (jqXHR, textStatus, errorThrown) {-->
-                <!--console.warn(`ERROR: ${textStatus}`);-->
-            <!--})-->
-        <!--})-->
-    <!--})-->
-<!--</script>-->
+        $('#email').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_email' %}");
+        });
+
+        $('#password').click(function () {
+            $('#content-iframe').attr('src', "{% url 'account_change_password' %}");
+        });
+    })
+</script>
 {% endblock %}
 
 {% block nav-topbar %}
@@ -57,5 +60,7 @@
 {% endblock %}
 
 {% block content %}
-    <iframe name="password" src="{% url 'account_change_password' %}" id="password-iframe"  scrolling="no" noresize frameborder="0" marginwidth="0" marginheight="0" width="60%" height="60%"></iframe>
+<div class="content-wrapper">
+    <iframe name="content" src="" id="content-iframe"  scrolling="no" noresize frameborder="0" marginwidth="0" marginheight="0" width="60%" height="60%"></iframe>
+</div>
 {% endblock %}
