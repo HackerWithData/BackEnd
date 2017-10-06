@@ -483,14 +483,6 @@ h1 {
 /*width: auto;*/
 /*}*/
 
-.white-popup-block {
-    background: #FFF;
-    padding: 20px 30px;
-    text-align: left;
-    max-width: 650px;
-    margin: 40px auto;
-    position: relative;
-}
 
 #review-submission {
     background-color: transparent;
@@ -527,3 +519,11 @@ h1 {
     color: #ffffff;
 }
 
+.white-popup-block {
+    background: #FFF !important;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 650px;
+    margin: 40px auto;
+    position: relative;
+}
