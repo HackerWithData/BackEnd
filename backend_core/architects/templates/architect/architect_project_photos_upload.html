@@ -1,4 +1,4 @@
-{%  extends 'contractor/contractor.html' %}
+{%  extends 'architect/architect.html' %}
 {% load staticfiles %}
 
 {% block content %}
@@ -6,7 +6,7 @@
             {% csrf_token %}
             {{ form.as_p }}
 {#            <input type="file" name="myfiles" multiple>#}
-            <button type="submit"> Save</button>
+            <button type="submit">{{ Save }}</button>
         </form>
 {%  endblock %}
 

@@ -41,7 +41,10 @@
     </script>
 {% endblock %}
 
+{% block Trans %}
 
+
+{% endblock %}
 
 {#header#}
 {#{% block nav %}#}
@@ -77,32 +80,6 @@
 
 
 {% block header %}
-
-{% trans "Score" as Score %}
-{% trans "Phone" as Phone %}
-{% trans "Overall Rating" as Overall_Rating %}
-{% trans "Overview" as Overview %}
-{% trans "Project Photos" as Project_Photos %}
-{% trans "Review us" as Review_us %}
-{% trans "Review" as Review %}
-{% trans "Read more" as Read_more %}
-{% trans "Business Information" as Business_Information %}
-{% trans "License #" as License_num %}
-{% trans "License Status" as License_Status %}
-{% trans "License Type" as License_Type %}
-{% trans "Entity" as Entity %}
-{% trans "Issued Date" as Issued_Date %}
-{% trans "Expiration Date" as Expiration_Date %}
-{% trans "Bonded" as Bonded %}
-{% trans "Issued" as Issued %}
-{% trans "Address" as Address %}
-{% trans "Photo" as Photo %}
-{% trans "View More" as View_More %}
-{% trans "Anonymous User" as Anonymous_User %}
-{% trans "Project Cost" as Project_Cost %}
-{% trans "Project Type" as Project_Type %}
-{% trans "Project Duration" as Project_Duration %}
-{% trans "Read less" as Read_less %}
     <div id="masthead">
         <div class="container">
             <div class="row">
@@ -115,18 +92,18 @@
                             <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
                             <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
                                 {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
-                                <div class="star-ratings-css">
-                                    <div class="star-ratings-css-top" style="width:100%">
-                                        {% for i in info_dict.ratings.stars %}
-                                            <span>★</span>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="star-ratings-css-bottom">
-                                        {% for i in info_dict.ratings.stars %}
-                                            <span>★</span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                                {#                                <div class="star-ratings-css">#}
+                                {#                                    <div class="star-ratings-css-top" style="width:100%">#}
+                                {#                                        {% for i in info_dict.ratings.stars %}#}
+                                {#                                            <span>★</span>#}
+                                {#                                        {% endfor %}#}
+                                {#                                    </div>#}
+                                {#                                    <div class="star-ratings-css-bottom">#}
+                                {#                                        {% for i in info_dict.ratings.stars %}#}
+                                {#                                            <span>★</span>#}
+                                {#                                        {% endfor %}#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
                             </li>
                         </ul>
                     </div>
@@ -153,12 +130,16 @@
                     <li class="nav-item">
                         <a class="nav-link" id="overview-tab">{{ Overview }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="projectphotos-tab">{{ Project_Photos }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="review-tab">{{ Review }}</a>
-                    </li>
+                    {% if info_dict.project_photos %}
+                        <li class="nav-item">
+                            <a class="nav-link" id="projectphotos-tab">{{ Project_Photos }}</a>
+                        </li>
+                    {% endif %}
+                    {% if info_dict.review %}
+                        <li class="nav-item">
+                            <a class="nav-link" id="review-tab">{{ Review }}</a>
+                        </li>
+                    {% endif %}
                     {#                    <li class="nav-item">#}
                     {#                        <a class="nav-link" id="other-tab">Other</a>#}
                     {#                    </li>#}
@@ -217,7 +198,7 @@
         function readMore() {
             var readmore = $('#readmore');
             if (readmore.find('i.fa-chevron-down').length !== 0) {
-                readmore.html('<i class="fa fa-chevron-up"> </i>') ;
+                readmore.html('<i class="fa fa-chevron-up"> </i>');
                 $('#peek').removeClass('link');
             } else {
                 readmore.html('<i class="fa fa-chevron-down"> </i>');
@@ -370,12 +351,11 @@
                     readMore();
                 });
 
-                photoSlider();
-                {#                TODO:need to solve asyn#}
-                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
-                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
                 $('#photo a.viewmore').click(function () {
                     projectPhotosListener();
+                });
+                $('#review a.viewmore').click(function () {
+                    reviewListener();
                 });
             });
 
