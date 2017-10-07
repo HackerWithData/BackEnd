@@ -56,3 +56,29 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'www', 'media')
+
+"""
+AWS S3 settings
+This will tell boto that when it uploads files to S3, it should set properties on them so
+that when S3 serves them, it'll include some HTTP headers in the response. Those HTTP headers,
+in turn, will tell browsers that they can cache these files for a very long time.
+"""
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+AWS_STORAGE_BUCKET_NAME = 'hoomeincstatic'
+AWS_S3_REGION_NAME = 'us-west-2'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = 'AKIAJPC6XIUMQZIR2CQQ'
+AWS_SECRET_ACCESS_KEY = 'mqHtIuhnkiXRq1upZ59vugQmktPWsLtn/1vHJ0Kv'
+
+# Tell django-storages the domain to use to refer to static files.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
+# you run `collectstatic`).
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'backend_core.settings.custom_storages.StaticStorage'
