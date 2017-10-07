@@ -174,7 +174,7 @@ class ProfessionalProfileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print form.is_valid()
+        #print form.is_valid()
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)

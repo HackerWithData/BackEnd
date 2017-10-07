@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 class ReviewForm(forms.Form):
     comments = forms.CharField(label=_('Comments'), widget=forms.Textarea)
 
-    first_name = forms.CharField(label=_('Frist Name'), max_length=25)
+    first_name = forms.CharField(label=_('First Name'), max_length=25)
     last_name = forms.CharField(label=_('Last Name'), max_length=25)
     project_date = forms.DateField(label=_('Project Date'), help_text="YYYY-MM-DD")
     project_type = forms.CharField(label=_('Project Type'), max_length=255)

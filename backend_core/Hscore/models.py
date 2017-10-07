@@ -9,6 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 class Hscore(models.Model):
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
-    object_id = models.PositiveIntegerField(default=1)
+    object_id = models.IntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
-    score = models.PositiveSmallIntegerField()
+    score = models.IntegerField()
