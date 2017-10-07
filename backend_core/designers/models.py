@@ -25,3 +25,4 @@ class Designer(models.Model):
     state = models.CharField(max_length=100)
     pos_code = models.CharField(max_length=100)
     country = models.CharField(max_length=100, blank=True)
+
