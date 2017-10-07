@@ -114,11 +114,11 @@ def display_designer(request, o_id):
     score = 91
     rank = 5
     full_state_name = getStateFullName(designer.state)
-    preferred_project_type = 'house remodel'
-    if preferred_project_type:
-        specialization = 'with many year experiences in ' + preferred_project_type
-    else:
-        specialization = None
+    # preferred_project_type = 'house remodel'
+    # if preferred_project_type:
+    #     specialization = 'with many year experiences in ' + preferred_project_type
+    # else:
+    #     specialization = None
 
     overview = None
     if overview:

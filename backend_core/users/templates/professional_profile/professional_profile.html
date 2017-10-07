@@ -1,9 +1,30 @@
 {% load i18n %}
+<html>
+<style>
+    #id_professional_subtype {
+        list-style-type: None;
+    }
 
+    #id_professional_type {
+        list-style-type: None;
+    }
+
+    #id_entity_type {
+        list-style-type: None;
+    }
+    #id_license_num {
+        border: 0px;
+    }
+</style>
+<body>
 <div class="container-professional-profile">
-    <form class="professional-profile-form" id="professionalProfileEditForm" method="post" action="{% url 'account_professional_profile' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% trans "Complete" %}</button>
+    <form class="professional-profile-form" id="professionalProfileEditForm" method="post"
+          action="{% url 'account_professional_profile' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% trans "Submit" %}</button>
     </form>
 </div>
+</body>
+</html>
+

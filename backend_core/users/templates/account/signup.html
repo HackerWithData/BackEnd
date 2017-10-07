@@ -2,16 +2,45 @@
 {% load i18n %}
 
 
+{% block metainfo %}
+    <style>
+
+        .header {
+            background-color: #6892D5;
+        }
+
+        .header .navbar .logo.cursive {
+            color: #ffffff;
+        }
+
+        .footer {
+            position: relative;
+        }
+
+        .signup-wrapper {
+            min-height: 80%;
+            margin-top: 80px;
+        }
+
+        .socialaccount_providers {
+            list-style-type: None;
+        }
+    </style>
+{% endblock %}
+
+
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
+    <div class="container signup-wrapper">
+        <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please {% endblocktrans %}<a href="{{ login_url }}">{% trans 'sign in' %}</a>.</p>
+        <p>{% blocktrans %}Already have an account? Then please {% endblocktrans %}<a
+                href="{{ login_url }}">{% trans 'sign in' %}</a>.</p>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_signup_complete_info' %}" />
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
-
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_signup_complete_info' %}"/>
+            <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </form>
+    </div>
 {% endblock %}

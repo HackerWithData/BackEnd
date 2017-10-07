@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
     <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
+{#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <style>
         #masthead {
@@ -81,24 +81,30 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.architect.csp }}</li>
+<<<<<<< HEAD
+                            <li>Score: {{ info_dict.score }}</li>
+                            <li>Phone: {{ info_dict.architect.phone }}</li>
+                            <li>Overall Rating: {{ info_dict.ratings.overall }}
+=======
                             <li>{{ Score }}: {{ info_dict.score }}</li>
                             {% if info_dict.architect.phone %}
                                 <li>{{ Phone }}: {{ info_dict.architect.phone }}</li>
                             {% endif %}
                             <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
+>>>>>>> e8cafe5f76c9b10c4c1a843e25576ab9dc88df9a
                                 {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
-                                {#                                <div class="star-ratings-css">#}
-                                {#                                    <div class="star-ratings-css-top" style="width:100%">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                    <div class="star-ratings-css-bottom">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+                                <div class="star-ratings-css">
+                                    <div class="star-ratings-css-top" style="width:100%">
+                                        {% for i in info_dict.ratings.stars %}
+                                            <span>★</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="star-ratings-css-bottom">
+                                        {% for i in info_dict.ratings.stars %}
+                                            <span>★</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +112,7 @@
                 </div>
                 <div class="col-md-4 col-lg-4">
                     <div id="review-us">
-                        <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
+                        <a href="#review-submission" class="popup-with-form btn btn-db">Review us</a>
                     </div>
                 </div>
             </div>
@@ -123,8 +129,16 @@
             <div class='menu justify-content-center' id='pro-menu'>
                 <ul class='nav nav-pills'>
                     <li class="nav-item">
-                        <a class="nav-link" id="overview-tab">{{ Overview }}</a>
+                        <a class="nav-link" id="overview-tab">Overview</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="projectphotos-tab">Project Photos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="review-tab">Review</a>
+                    </li>
+<<<<<<< HEAD
+=======
                     {% if info_dict.project_photos %}
                         <li class="nav-item">
                             <a class="nav-link" id="projectphotos-tab">{{ Project_Photos }}</a>
@@ -135,6 +149,7 @@
                             <a class="nav-link" id="review-tab">{{ Review }}</a>
                         </li>
                     {% endif %}
+>>>>>>> e8cafe5f76c9b10c4c1a843e25576ab9dc88df9a
                     {#                    <li class="nav-item">#}
                     {#                        <a class="nav-link" id="other-tab">Other</a>#}
                     {#                    </li>#}
@@ -179,7 +194,11 @@
 
         {{ info_dict.review_form.as_p }}
         <br>
+<<<<<<< HEAD
+        <b>Projects Photos: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+=======
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+>>>>>>> e8cafe5f76c9b10c4c1a843e25576ab9dc88df9a
         <br>
         {% csrf_token %}
         <input type="submit" value="{{ Submit }}">
@@ -199,18 +218,40 @@
 
         function readMore() {
             var readmore = $('#readmore');
-            if (readmore.find('i.fa-chevron-down').length !== 0) {
-                readmore.html('<i class="fa fa-chevron-up"> </i>');
+            if (readmore.text() == 'Read more') {
+                readmore.text("Read less");
                 $('#peek').removeClass('link');
             } else {
-                readmore.html('<i class="fa fa-chevron-down"> </i>');
+                readmore.text("Read more");
                 $('#peek').addClass('link');
             }
             $('.height').toggleClass("heightAuto");
-
+            {#                $('#peek').addClass("nonlink");#}
         }
 
+<<<<<<< HEAD
+        {#        function photoSlider() {#}
+        {#            $(".project-detail").slick({#}
+        {#                slidesToShow: 1,#}
+        {#                arrows: false,#}
+        {#                asNavFor: '.project-strip',#}
+        {#                autoplay: true,#}
+        {#                autoplaySpeed: 3000#}
+        {#            });#}
+        {#            $(".project-strip").slick({#}
+        {#                slidesToShow: 3,#}
+        {#                slidesToScroll: 1,#}
+        {#                arrows: false,#}
+        {#                asNavFor: '.project-detail',#}
+        {#                dots: false,#}
+        {#                infinite: true,#}
+        {#                centerMode: true,#}
+        {#                focusOnSelect: true,#}
+        {#            });#}
+        {#        }#}
+=======
         {#        TODO: simplify the function by changing naming convention#}
+>>>>>>> e8cafe5f76c9b10c4c1a843e25576ab9dc88df9a
 
         function projectPhotosListener() {
             if (b) {
@@ -335,11 +376,12 @@
                     readMore();
                 });
 
+                photoSlider();
+                {#                TODO:need to solve asyn#}
+                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
+                {#                $(".project-strip").slick('slickSetOption', 'refresh',true);#}
                 $('#photo a.viewmore').click(function () {
                     projectPhotosListener();
-                });
-                $('#review a.viewmore').click(function () {
-                    reviewListener();
                 });
             });
 
