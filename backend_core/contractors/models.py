@@ -20,10 +20,10 @@ class Contractor(models.Model):
     csp = models.CharField(max_length=62, blank=True)
     state = models.CharField(max_length=62)
     pos_code = models.CharField(max_length=62)
-    phone = models.CharField(max_length=62, blank=True)
-    lic_status_add = models.TextField(blank=True)
-    bus_info_add = models.TextField(blank=True)
-    dba = models.CharField(max_length=128, blank=True)
+    phone = models.CharField(max_length=62, blank=True,null=True)
+    lic_status_add = models.TextField(blank=True,null=True)
+    bus_info_add = models.TextField(blank=True,null=True)
+    dba = models.CharField(max_length=128, blank=True,null=True)
     #ratings = GenericRelation(Rating, related_query_name='contractors')
 
     # def __unicode__(self):

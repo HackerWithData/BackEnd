@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
     '52.27.223.231',
+    '54.148.14.191',
+    'ec2-54-148-14-191.us-west-2.compute.amazonaws.com',
 ]
 
 # Application definition
