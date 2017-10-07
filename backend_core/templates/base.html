@@ -1,6 +1,7 @@
+{% load i18n %}
 {% load staticfiles %}
 
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <title>Hoome</title>
     <meta charset="utf-8">
@@ -33,8 +34,6 @@
 
 </head>
 <body>
-<<<<<<< HEAD
-=======
 {% trans "Hoome Score" as Score %}
 {% trans "Phone" as Phone %}
 {% trans "Overall Rating" as Overall_Rating %}
@@ -81,7 +80,6 @@
 {% trans 'Efficiency' as Efficiency %}
 {% trans 'Quality' as Quality %}
 {% trans 'Length' as Length %}
->>>>>>> e8cafe5f76c9b10c4c1a843e25576ab9dc88df9a
 <!--nav bar start-->
 {% block nav %}
     {#        TODO: change the color of pop out menu#}
@@ -103,17 +101,17 @@
                 <!--/.navbar-header-->
                 <div id="main-nav" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/" class="scroll-top">Home</a></li>
+                        <li><a href="/" class="scroll-top">{{ Home }}</a></li>
                         {#                        TODO: need to change data-id from blog to other #}
-{#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
-{#                        {% if user.is_authenticated %}#}
-{##}
-{#                            <li><a href="{% url 'account_logout' %}" class="scroll-link" data-id="blog">Log Out</a></li>#}
-{#                        {% else %}#}
-{#                            <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>#}
-{#                        {% endif %}#}
-{#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
-                        <li><a href="/#contact-us" class="scroll-link" data-id="contact">Contact Us</a></li>
+                        {#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
+                        {#                        {% if user.is_authenticated %}#}
+                        {##}
+                        {#                            <li><a href="{% url 'account_logout' %}" class="scroll-link" data-id="blog">Log Out</a></li>#}
+                        {#                        {% else %}#}
+                        {#                            <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>#}
+                        {#                        {% endif %}#}
+                        {#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
+                        <li><a href="/#contact-us" class="scroll-link" data-id="contact-us">{{ Contact_Us }}</a></li>
                     </ul>
                 </div>
                 <!--/.navbar-collapse-->
@@ -139,16 +137,15 @@
     <div class="footer">
         <div class="footer-wrapper">
             <ul>
-                <li><a href="/#contact-us">Contact</a></li>
+                <li><a href="/#contact-us">{{ Contact }}</a></li>
                 {#                <li><a href="#">About</a></li>#}
-                <li><a href="/career">Career</a></li>
+                <li><a href="/career">{{ Career }}</a></li>
                 {#                <li><a href="#">Terms</a></li>#}
-                <li><a href="/rule/privacy">Privacy</a></li>
+                <li><a href="/rule/privacy">{{ Privacy }}</a></li>
             </ul>
         </div>
         <div class="copyright-wrapper">
-            Copyright © 2017 <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>. All
-            Rights Reserved.
+           {%  blocktrans %}  Copyright © 2017 {% endblocktrans %}<a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>{%  blocktrans %}. All Rights Reserved.{% endblocktrans %}
         </div>
     </div>
 {% endblock %}
