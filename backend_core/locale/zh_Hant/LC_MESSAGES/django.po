@@ -29,9 +29,9 @@ msgid ""
 "through us.\n"
 "            "
 msgstr ""
-"{bus_name} 是一位基於{city} {state}建築師。根據{data_source}，該建築師持有相"
-"關有效證件，並被我司認證有效。 如果您考慮對{bus_name}進行雇傭，我們建議您再次"
-"在{data_source}確認他們的證件並通過我們向他們聯系。"
+"{bus_name} 是壹位基於{city} {state}建築師。根據{data_source}，該建築師持有相"
+"關有效證件，並被Hoome認證有效。 如果您有意郭勇{bus_name}，我們建議您再次"
+"在{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信息。"
 
 #: contractors/templates/contractor/contractor.html:115
 msgid ""
@@ -59,10 +59,10 @@ msgid ""
 "    we suggest double-checking the license status and contact through us.\n"
 "    "
 msgstr ""
-"{bus_name} 是一家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
-"相關有效證件，並被我司認證有效。 該承包商的Hoome 評分： {score} 處於"
-"{full_state_name}承包商前{rank}。如果您考慮對{bus_name}進行雇傭，我們建議您再"
-"次在{data_source}確認他們的證件並通過我們向他們聯系。"
+"{bus_name} 是壹家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
+"相關有效證件，並被Hoome認證有效。 該承包商的Hoome 評分為{score}， 位於"
+"{full_state_name}承包商前{rank}。如果您有意雇傭{bus_name}，我們建議您再"
+"次在{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信息。"
 
 #: dashboard/templates/dashboard/consumer_dashboard.html:43
 #: dashboard/templates/dashboard/professional_dashboard.html:40
@@ -96,9 +96,9 @@ msgid ""
 "through us.\n"
 "            "
 msgstr ""
-"{bus_name} 是一位基於{city} {state}設計師。根據{data_source}，該建築師持有相"
-"關有效證件，並被我司認證有效。 如果您考慮對{bus_name}進行雇傭，我們建議您再次"
-"在{data_source}確認他們的證件並通過我們向他們聯系。"
+"{bus_name} 是壹位基於{city} {state}設計師。根據{data_source}，該建築師持有相"
+"關有效證件，並被Hoome認證有效。 如果您有意雇傭{bus_name}，我們建議您再次"
+"在{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信息。"
 
 #: home/templates/home/home.html:42
 msgid "Find the excellent professionals."
@@ -158,7 +158,7 @@ msgstr "Hoome 測試版已上線，"
 
 #: home/templates/home/home.html:122
 msgid "Try it now and enjoy."
-msgstr "來試一試吧！"
+msgstr "來試壹試吧！"
 
 #: home/templates/home/home.html:123
 msgid ""
@@ -396,11 +396,11 @@ msgstr "開始搜索"
 
 #: templates/base.html:78
 msgid "previous"
-msgstr "上一頁"
+msgstr "上壹頁"
 
 #: templates/base.html:79
 msgid "next"
-msgstr "下一頁"
+msgstr "下壹頁"
 
 #: templates/base.html:80
 msgid "Efficiency"
@@ -424,7 +424,7 @@ msgstr "。 保留所有權利。"
 
 #: users/forms.py:33
 msgid "Must select a role"
-msgstr "必須選定一個角色"
+msgstr "必須選定壹個角色"
 
 #: users/forms.py:71 users/forms.py:177
 msgid "Invalid zipcode"
@@ -482,7 +482,7 @@ msgstr "警告"
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "您還沒有設置您的郵箱。您應該先加一個郵箱地址來進行其他操作。"
+msgstr "您還沒有設置您的郵箱。您應該先加壹個郵箱地址來進行其他操作。"
 
 #: users/templates/account/email.html:44
 msgid "Add E-mail Address"
@@ -503,7 +503,7 @@ msgstr "登入"
 
 #: users/templates/account/login.html:43
 msgid "Please sign in with one of your existing third party accounts. Or,"
-msgstr "請登入您其中一個第三方賬戶，或者"
+msgstr "請登入您其中壹個第三方賬戶，或者"
 
 #: users/templates/account/login.html:44 users/templates/account/login.html:60
 msgid "sign up"
@@ -519,7 +519,7 @@ msgstr "或者"
 
 #: users/templates/account/login.html:59
 msgid "If you have not created an account yet, then please"
-msgstr "如果你還沒有創建用戶，請"
+msgstr "如果妳還沒有創建用戶，請"
 
 #: users/templates/account/login.html:60
 msgid "first."
@@ -589,7 +589,7 @@ msgstr "郵政編碼"
 
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:62
 msgid "Next"
-msgstr "下一步"
+msgstr "下壹步"
 
 msgid "License Number"
 msgstr "證件號碼"

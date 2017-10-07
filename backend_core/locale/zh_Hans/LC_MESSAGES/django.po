@@ -30,8 +30,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}建筑师。根据{data_source}，该建筑师持有相"
-"关有效证件，并被我司认证有效。 如果您考虑对{bus_name}进行雇佣，我们建议您再次"
-"在{data_source}确认他们的证件并通过我们向他们联系。"
+"关有效证件，并被Hoome认证有效。 如果您有意郭勇{bus_name}，我们建议您再次"
+"在{data_source}确认他们的证件并通过我们向他们联系，我们会提供更多关于该商家的信息。"
 
 #: contractors/templates/contractor/contractor.html:115
 msgid ""
@@ -60,9 +60,9 @@ msgid ""
 "    "
 msgstr ""
 "{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
-"相关有效证件，并被我司认证有效。 该承包商的Hoome 评分： {score} 处于"
-"{full_state_name}承包商前{rank}。如果您考虑对{bus_name}进行雇佣，我们建议您再"
-"次在{data_source}确认他们的证件并通过我们向他们联系。"
+"相关有效证件，并被Hoome认证有效。 该承包商的Hoome 评分为{score}， 位于"
+"{full_state_name}承包商前{rank}。如果您有意雇佣{bus_name}，我们建议您再"
+"次在{data_source}确认他们的证件并通过我们向他们联系，我们会提供更多关于该商家的信息。"
 
 #: dashboard/templates/dashboard/consumer_dashboard.html:43
 #: dashboard/templates/dashboard/professional_dashboard.html:40
@@ -97,8 +97,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
-"关有效证件，并被我司认证有效。 如果您考虑对{bus_name}进行雇佣，我们建议您再次"
-"在{data_source}确认他们的证件并通过我们向他们联系。"
+"关有效证件，并被Hoome认证有效。 如果您有意雇佣{bus_name}，我们建议您再次"
+"在{data_source}确认他们的证件并通过我们向他们联系，我们会提供更多关于该商家的信息。"
 
 #: home/templates/home/home.html:42
 msgid "Find the excellent professionals."

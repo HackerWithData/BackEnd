@@ -12,3 +12,5 @@ class Hscore(models.Model):
     object_id = models.IntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
     score = models.IntegerField()
+    rank = models.IntegerField()
+    max = models.IntegerField()
