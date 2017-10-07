@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 09:01+0000\n"
+"POT-Creation-Date: 2017-10-06 17:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: architects/views.py:129
+#, python-brace-format
+msgid ""
+"{bus_name} is an architect based on {city} {state} . The company holds a "
+"license number according to {data_source}. \n"
+"            The License is verified as active when we checked last time. If "
+"you consider to hire {bus_name}, \n"
+"            we suggest double-checking the license status and contact "
+"through us.\n"
+"            "
+msgstr ""
+"{bus_name} 是一位基于{city} {state}建筑师。根据{data_source}，该建筑师持有相"
+"关有效证件，并被我司认证有效。 如果您考虑对{bus_name}进行雇佣，我们建议您再次"
+"在{data_source}确认他们的证件并通过我们向他们联系。"
+
+#: contractors/views.py:129
+#, python-format, python-brace-format
+msgid ""
+"{bus_name} is a contractor company located in {csp} . \n"
+"    The company holds a license number according to {data_source}. The score "
+"of {score} ranks in the top {rank} %% of {full_state_name} licensed "
+"contractors.\n"
+"    The License is verified as active when we checked last time. If you "
+"consider to hire {bus_name}, \n"
+"    we suggest double-checking the license status and contact through us.\n"
+"    "
+msgstr ""
+"{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
+"相关有效证件，并被我司认证有效。 该承包商的Hoome 评分： {score} 处于"
+"{full_state_name}承包商前{rank}。如果您考虑对{bus_name}进行雇佣，我们建议您再"
+"次在{data_source}确认他们的证件并通过我们向他们联系。"
+
+#: designers/views.py:127
+#, python-brace-format
+msgid ""
+"{bus_name} is a designer based on {city} {state} . The company holds a "
+"license number according to {data_source}. \n"
+"            The License is verified as active when we checked last time. If "
+"you consider to hire {bus_name}, \n"
+"            we suggest double-checking the license status and contact "
+"through us.\n"
+"            "
+msgstr ""
+"{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
+"关有效证件，并被我司认证有效。 如果您考虑对{bus_name}进行雇佣，我们建议您再次"
+"在{data_source}确认他们的证件并通过我们向他们联系。"
 
 #: home/templates/home/home.html:42
 msgid "Find the excellent professionals."
@@ -103,10 +150,70 @@ msgstr "加州数据"
 #: home/templates/home/home.html:201
 msgid ""
 "If you have any questions or want to invest us, don't hesitate to contact us:"
-msgstr "如果您有什么问题或有意愿投资我们，请不要犹豫跟联系我们"
+msgstr "如果您有什么问题或有意愿投资我们，不要犹豫，请跟联系我们"
+
+#: review/forms.py:5
+msgid "Comments"
+msgstr "评论"
+
+#: review/forms.py:7
+msgid "Frist Name"
+msgstr "名"
+
+#: review/forms.py:8
+msgid "Last Name"
+msgstr "姓"
+
+#: review/forms.py:9
+msgid "Project Date"
+msgstr "施工起始时间"
+
+#: review/forms.py:10 templates/base.html:67
+msgid "Project Type"
+msgstr "项目类型"
+
+#: review/forms.py:11
+msgid "Project Zipcode"
+msgstr "项目所在邮政编码"
+
+#: review/forms.py:12 templates/base.html:66
+msgid "Project Cost"
+msgstr "项目开销"
+
+#: review/forms.py:13 templates/base.html:68
+msgid "Project Duration"
+msgstr "项目工期"
+
+#: review/forms.py:15
+msgid "Email"
+msgstr "Email地址"
+
+#: review/forms.py:16
+msgid "Project Address"
+msgstr "项目地址"
+
+#: review/forms.py:18
+msgid "Is Anonymous?"
+msgstr "匿名用户"
+
+#: search/templates/search_bar/search_bar.html:6
+msgid "Find Professionals"
+msgstr "对装修人士或承包商进行评分"
+
+#: search/templates/search_bar/search_bar.html:11
+msgid "Zipcode or City"
+msgstr "请输入邮政编码或者城市名称"
+
+#: search/templates/search_bar/search_bar.html:13
+msgid "Current Location"
+msgstr "当前位置"
+
+#: search/templates/search_list/search_list.html:65
+msgid "No Contractor match your condition"
+msgstr "没有商家符合您的要求"
 
 #: templates/base.html:45
-msgid "Score"
+msgid "Hoome Score"
 msgstr "Hoome 评分"
 
 #: templates/base.html:46
@@ -189,21 +296,7 @@ msgstr "浏览更多"
 msgid "Anonymous User"
 msgstr "匿名用户"
 
-#: templates/base.html:66
-msgid "Project Cost"
-msgstr "项目开销"
-
-#: templates/base.html:67
-msgid "Project Type"
-msgstr "项目类型"
-
-#: templates/base.html:68
-msgid "Project Duration"
-msgstr "项目工期"
-
 #: templates/base.html:69
-#, fuzzy
-#| msgid "Read more"
 msgid "Read less"
 msgstr "阅读更少"
 
@@ -220,10 +313,8 @@ msgid "Contractor Licence Num"
 msgstr "本州承包商证件号"
 
 #: templates/base.html:74
-#, fuzzy
-#| msgid "Mobil"
 msgid "Mobile"
-msgstr "移动"
+msgstr "手机"
 
 #: templates/base.html:75
 msgid "Fax"
@@ -269,15 +360,31 @@ msgstr "活跃的承包商"
 msgid "Start Search"
 msgstr "开始搜索"
 
-#: templates/base.html:151
+#: templates/base.html:86
+msgid "previous"
+msgstr "上一页"
+
+#: templates/base.html:87
+msgid "next"
+msgstr "下一页"
+
+#: templates/base.html:88
+msgid "Efficiency"
+msgstr "项目效率"
+
+#: templates/base.html:89
+msgid "Quality"
+msgstr "项目质量"
+
+#: templates/base.html:90
+msgid "Length"
+msgstr "工期"
+
+#: templates/base.html:156
 msgid "  Copyright © 2017 "
 msgstr " 版权 © 2017 "
 
-#: templates/base.html:151
-#, fuzzy
-#| msgid ""
-#| "  Copyright © 2017 %(link)s. All\n"
-#| "            Rights Reserved."
+#: templates/base.html:156
 msgid ". All Rights Reserved."
 msgstr "。 保留所有权利。"
 
@@ -307,20 +414,11 @@ msgid "Sign In"
 msgstr "登入"
 
 #: users/templates/account/login.html:15
-#, fuzzy
-#| msgid ""
-#| "Please sign in with one\n"
-#| "of your existing third party accounts. Or, <a href=\"%(signup_url)s"
-#| "\">sign up</a>\n"
-#| "for a %(site_name)s account and sign in below:"
-msgid ""
-"Please sign in with one\n"
-"of your existing third party accounts. Or,"
+msgid "Please sign in with one of your existing third party accounts. Or,"
 msgstr ""
-"请登入您其中一个第三方账户\n"
-" 或者"
+"请登入您其中一个第三方账户，或者"
 
-#: users/templates/account/login.html:16 users/templates/account/login.html:30
+#: users/templates/account/login.html:15 users/templates/account/login.html:30
 msgid "sign up"
 msgstr "注册"
 
@@ -349,16 +447,10 @@ msgid "Sign Up"
 msgstr "注册"
 
 #: users/templates/account/signup.html:8
-#, fuzzy
-#| msgid ""
-#| "Already have an account? Then please <a href=\"%(login_url)s\">sign in</"
-#| "a>."
 msgid "Already have an account? Then please "
 msgstr "已经创建账户？ "
 
 #: users/templates/account/signup.html:8
-#, fuzzy
-#| msgid "sign up"
 msgid "sign in"
 msgstr "注册"
 

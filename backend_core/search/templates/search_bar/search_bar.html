@@ -1,16 +1,16 @@
 {% block seach_bar %}
-
+{% load i18n %}
     <form class="form" id="searchForm" action="/search" method="get">
         <div class="form-row">
             <div class="search-row">
-                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="For example: Designer">
+                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="{%  trans "Find Professionals" %}">
                 <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
                 <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
                 <!--TODO: add dropdown in input for current location                       -->
                 <div class="dropdown">
-                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="Zipcode or County" autocomplete="postal-code">
+                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="{% trans "Zipcode or City"%}" autocomplete="postal-code">
                     <ul class="dropdown-menu pull-left" role="menu">
-                    <li><a href="#" id="currentLocationDropdownItem">Current Location</a></li>
+                    <li><a href="#" id="currentLocationDropdownItem">{% trans "Current Location"  %}</a></li>
                     </ul>
                 </div>
                 <button class="blue-btn">

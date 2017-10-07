@@ -10,12 +10,12 @@ from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
 from django.contrib.auth.hashers import make_password
 
-
-from photos.models import Photo,BackgroundPhoto
+from photos.models import Photo, BackgroundPhoto
 from django.contrib.contenttypes.models import ContentType
 from photos.forms import PhotoForm
 from models import Designer
 import datetime
+from django.utils.translation import ugettext as _
 
 
 # Create your views here.
@@ -110,7 +110,7 @@ def display_designer(request, o_id):
     # if len(wh_set) > 0:
     #     wh = wh_set[0]
 
-    data_source = 'California Contractors State License Board'
+    data_source = 'NCIQ'
     score = 91
     rank = 5
     full_state_name = getStateFullName(designer.state)
@@ -124,12 +124,11 @@ def display_designer(request, o_id):
     if overview:
         pass
     else:
-        overview = """%s is a contractor company located in %s %s . 
-    The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
-    Their License is verified as active when we checked last time. If you consider to hire %s, 
-    we suggest double-checking their license status and contact them through us.
-    """ % (designer.lic_name, designer.city, designer.state, data_source, score, rank, full_state_name,
-           designer.lic_name)
+        overview = _("""{bus_name} is a designer based on {city} {state} . The company holds a license number according to {data_source}. 
+            The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
+            we suggest double-checking the license status and contact through us.
+            """).format(bus_name=designer.lic_name, city=designer.city, state=designer.state, data_source=data_source,
+                        rank=rank, full_state_name=full_state_name)
     # Lic Type
     lic_type = designer.lic_type.split('&')
     # review

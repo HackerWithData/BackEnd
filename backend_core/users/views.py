@@ -14,7 +14,7 @@ from allauth.account.views import PasswordChangeView
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
 from models import ConsumerProfile, ProfessionalProfile
-from user_helpers import retrieve_professional_info
+from user_helpers import retrieve_professional_info, get_professional_corresponding_object
 from utils import *
 
 import json

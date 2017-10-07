@@ -16,6 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from photos.models import BackgroundPhoto
 from photos.forms import PhotoForm
 import datetime
+from django.utils.translation import ugettext as _
 
 
 # Create your views here.
@@ -125,12 +126,14 @@ def display_contractor(request, contractor_id):
     if overview:
         pass
     else:
-        overview = """%s is a contractor company located in %s %s . 
-    The company holds a license number according to %s. The score of %d ranks in the top %d %% of %s licensed contractors.
-    Their License is verified as active when we checked last time. If you consider to hire %s, 
-    we suggest double-checking their license status and contact them through us.
-    """ % (contractor.bus_name, contractor.csp, specialization, data_source, score, rank, full_state_name,
-           contractor.bus_name)
+        overview = _("""{bus_name} is a contractor company located in {csp} . 
+    The company holds a license number according to {data_source}. The score of {score} ranks in the top {rank} %% of {full_state_name} licensed contractors.
+    The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
+    we suggest double-checking the license status and contact through us.
+    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=score, rank=rank,
+                full_state_name=full_state_name)
+
+    #,contractor.bus_name
     # Lic Type
     lic_type = contractor.lic_type.split('&')
     # review
@@ -206,7 +209,7 @@ def display_project_photos(request, contractor_id):
 
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                               object_id=contractor_id)
-        info_dict = {'project_photos': project_photos}#, 'contractor': contractor
+        info_dict = {'project_photos': project_photos}  # , 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
         return HttpResponseNotFound('No Pages Found.')
@@ -217,7 +220,7 @@ def upload_project_photos(request, contractor_id):
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
 
     if request.method == "POST":
-        #contractor = Contractor.objects.get(lic_num=contractor_id)
+        # contractor = Contractor.objects.get(lic_num=contractor_id)
         form = PhotoForm(request.POST, request.FILES)
         content_type = ContentType.objects.get(model='contractor')
         object_id = int(contractor_id)

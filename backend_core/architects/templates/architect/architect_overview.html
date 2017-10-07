@@ -4,9 +4,6 @@
         <div class="">
             <div class="text height" style="font-size:20px;">
                 {{ info_dict.overview }}
-                {{ info_dict.overview }}
-                {{ info_dict.overview }}
-                {{ info_dict.overview }}
             </div>
         </div>
         <div id="peek" class="link">
@@ -139,8 +136,14 @@
                                     <hr>
                                 </div>
                                 <div class="user-rating">
-                                    {% for r in rv.userrating_set.all %}
-                                        {{ r.get_rating_type_display }}: {{ r.rating_score }}
+                                   {% for r in rv.userrating_set.all %}
+                                        {% if r.get_rating_type_display == 'Efficiency' %}
+                                            {{ Efficiency }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Quality' %}
+                                            {{ Quality }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Length' %}
+                                            {{ Length }} : {{ r.rating_score }}
+                                        {% endif %}
                                         <br>
                                     {% endfor %}
                                 </div>

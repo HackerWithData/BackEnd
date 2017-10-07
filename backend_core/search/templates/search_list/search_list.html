@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load staticfiles %}
 
 {% block metainfo %}
@@ -33,7 +34,7 @@
                             {% if contractors.has_previous %}
                                 <li class="page-item">
                             <span class="page-link">
-                                <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">previous</a>
+                                <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">{{ previous }}</a>
                             </span>
                                 </li>
                             {% endif %}
@@ -46,7 +47,7 @@
                             {% if contractors.has_next %}
                                 <li class="page-item">
                             <span class="page-link">
-                                <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">next</a>
+                                <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">{{ next }}</a>
                             </span>
                                 </li>
                             {% endif %}
@@ -61,7 +62,7 @@
             {% else %}
                 </div>
                 <!--TODO: change to nearby zipcode in render-->
-                <p>No Contractor match your condition</p>
+                <p>{%  trans 'No Contractor match your condition' %}</p>
             {% endif %}
 
     </div>
