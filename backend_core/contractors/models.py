@@ -14,7 +14,7 @@ class Contractor(models.Model):
     lic_status = models.CharField(max_length=100, blank=True)
     lic_issue_date = models.DateField(blank=True, null=True)
     lic_expire_date = models.DateField(blank=True, null=True)
-    lic_type = models.CharField(max_length=100, blank=True)
+    lic_type = models.TextField()
     entity = models.CharField(max_length=100)
     street_address = models.CharField(max_length=255)
     csp = models.CharField(max_length=62, blank=True)
