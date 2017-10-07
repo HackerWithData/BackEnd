@@ -7,7 +7,7 @@
 env/
 venv/
 db.sqlite3
-/backend_core/*/migrations/*
+#/backend_core/*/migrations/*
 !__init__.py
 *.log
 /venv/
