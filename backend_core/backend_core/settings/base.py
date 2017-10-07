@@ -44,6 +44,7 @@ PREREQ_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
+    'storages',
 ]
 
 AUTH_APPS = [
