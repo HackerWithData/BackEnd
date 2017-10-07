@@ -72,8 +72,9 @@
         var bounds;
         var userZipcode = "{{ zipcode }}";
         var contractors = [];
-        const smallMapMarker = "/media/photos/searchListAsset/mapMarker.png"
-        const largeMapMarker = "/media/photos/searchListAsset/mapMarkerSmall.png"
+
+        const smallMapMarker = "{% static 'image/searchListAsset/mapMarker.png' %}"
+        const largeMapMarker = "{% static 'image/searchListAsset/mapMarkerSmall.png' %}"
 
         $(function () {
             $('.list-group-item').each(function (index) {
