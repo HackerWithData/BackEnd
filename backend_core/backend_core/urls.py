@@ -22,6 +22,8 @@ import debug_toolbar
 from users import views as userviews
 from photos import views as photoview
 from django.views.i18n import javascript_catalog
+from django.contrib.auth.views import logout
+from django.conf import settings
 
 js_info_dict = {
     'packages': ('contractors.package',),
@@ -40,6 +42,7 @@ urlpatterns = [
     url(r'^dashboard/', include('dashboard.urls')),
 
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
+    url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 
     # search
     url(r'^search/', include('search.urls')),

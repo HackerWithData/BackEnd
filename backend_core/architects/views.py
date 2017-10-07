@@ -126,7 +126,7 @@ def display_architect(request, o_id):
         pass
     else:
         # The score of {score} ranks in the top {rank} %% of {full_state_name} licensed contractors.
-        overview = _("""{bus_name} is an architect based on {city} {state} . The company holds a license number according to {data_source}. 
+        overview = _("""{bus_name} is an architect from {city}. The company holds a license number according to {data_source}. 
             The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
             we suggest double-checking the license status and contact through us.
             """).format(bus_name=architect.lic_name, city=architect.city, state=architect.state,

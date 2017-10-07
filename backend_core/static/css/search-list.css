@@ -108,12 +108,12 @@
     font-size: 1em;
     white-space: nowrap;
     overflow: hidden;
-    background: #b36a60;
+    background: white;
 }
 
 .autocomplete-group {
     padding: 10px 5px;
-    background: #ebcccc;
+    background: lightgrey;
     font-size: 1.2em;
 }
 
@@ -121,10 +121,10 @@
     background: #f0f0f0;
 }
 
-.autocomplete-suggestions strong {
-    font-weight: normal;
-    color: #3399ff;
-}
+/*.autocomplete-suggestions strong {*/
+    /*font-weight: normal;*/
+    /*color: #3399ff;*/
+/*}*/
 
 @media (min-width: 769px) {
     .search-row > *:first-child {

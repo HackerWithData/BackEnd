@@ -8,6 +8,8 @@ from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, P
 from professionals.models import Professional, ProfessionalType
 from user_helpers import get_professional_corresponding_object, create_professional_corresponding_object
 from utils import *
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
 
 import string
 
@@ -39,22 +41,26 @@ class ConsumerInfoFillUpForm(forms.Form):
     first_name = forms.CharField(
         required=True,
         max_length=128,
+        label=__('First Name'),
     )
 
     last_name = forms.CharField(
         required=True,
-        max_length=128
+        max_length=128,
+        label=__('Last Name'),
     )
 
     zipcode = forms.CharField(
         required=True,
         max_length=5,
-        min_length=5
+        min_length=5,
+        label=__('Zipcode'),
     )
 
     gender = forms.MultipleChoiceField(
         required=True,
-        choices=GENDER_CHOICES
+        choices=GENDER_CHOICES,
+        label=__("Gender")
     )
 
     def clean_zipcode(self):
@@ -91,7 +97,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     """
     license_num = forms.CharField(
         required=True,
-        label='License Number',
+        label=__('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number'})
     )
 
@@ -99,21 +105,21 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label='Professional Type',
+        label=__('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type'})
     )
 
     professional_subtype = forms.MultipleChoiceField(
         required=True,
         choices=PROFESSIONAL_SUBTYPE_CHOICES,
-        label='Field Selections',
+        label=__('Field Selections'),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
 
     company_name = forms.CharField(
         required=True,
         max_length=128,
-        label='Name',
+        label=__('Name'),
         widget=forms.TextInput(attrs={'class': 'input-company-name'})
     )
 
@@ -121,28 +127,28 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=ENTITY_CHOICES,
         initial=C,
-        label='Entity Type',
+        label=__('Entity Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
 
     street = forms.CharField(
         required=True,
         max_length=128,
-        label='Street',
+        label=__('Street'),
         widget=forms.TextInput(attrs={'class': 'input-street'})
     )
 
     state = forms.CharField(
         required=True,
         max_length=32,
-        label='State',
+        label=__('State'),
         widget=forms.TextInput(attrs={'class': 'input-state'})
     )
 
     zipcode = forms.CharField(
         required=True,
         max_length=16,
-        label='Postal Code',
+        label=__('Postal Code'),
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
 
@@ -212,12 +218,12 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                        postal_code=clean_zipcode)
 
         user = request.user
-
+        # TODO: Need to change code here. there is a bug here.
         # create new profile
         ProfessionalProfile.objects.create(user=user, professional=professional)
-
+        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
         # create new subtypes for profile
-        existing_prof_types = [pt['subtype'] for pt in professional.professional_types.all()]
+        existing_prof_types = [pt.subtype for pt in professionaltypes]
         for subtype in clean_professional_subtype:
             if subtype not in existing_prof_types:
                 ProfessionalType.objects.create(professional=professional,
@@ -266,14 +272,14 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
 
     license_num = forms.CharField(
         required=True,
-        label='License Number',
+        label=__('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number', 'readonly': 'true'})
     )
 
     company_name = forms.CharField(
         required=True,
         max_length=128,
-        label='Name',
+        label=__('Name'),
         widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
     )
 
@@ -281,7 +287,7 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label='Professional Type',
+        label=__('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type', 'readonly': 'true'})
     )
 
@@ -308,8 +314,9 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         professional_object.street_address = clean_street
         professional_object.save()
 
+        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
         # create new subtypes for profile
-        existing_prof_types = [pt.subtype for pt in professional.professional_types.all()]
+        existing_prof_types = [pt.subtype for pt in professionaltypes]
         for subtype in clean_professional_subtype:
             if subtype not in existing_prof_types:
                 ProfessionalType.objects.create(professional=professional,

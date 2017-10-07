@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-sign-up-professional-profile-form">
+<div class="container container-sign-up-professional-profile-form">
     <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile_after_signup' %}">
       {% csrf_token %}
       <!--{{ form.as_p }}-->
@@ -34,30 +34,32 @@
             {{ form.errors }}
             {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
-                <h4>Choose License Type</h4>
+                <h4>{% trans "Choose License Type" %}</h4>
                 {{ form.professional_type }}
             </div>
             <div data-panel="two" id="stage-two">
-                <h4>Find Your License In Our Database</h4>
+                <h4>{%  trans "Find Your License In Our Database" %}</h4>
                 {{ form.license_num }}
             </div>
             <div data-panel="three" id="stage-three">
-                <h4>Enter Or Modify Your Company Information</h4>
-                {{ form.company_name }}
-                {{ form.entity_type }}
+                <h4>{%  trans "Enter Or Modify Your Company Entity Type" %}</h4>
+                </br>
+                {% trans "Company Name" %} : {{ form.company_name }} </br></br>
+                {% trans "Entity Type" %} : {{ form.entity_type }}
             </div>
             <div data-panel="four" id="stage-four">
-                <h4>Enter Or Modify Your Company Field</h4>
+                <h4>{%  trans "Enter Or Modify Your Company Field" %}</h4>
                 {{ form.professional_subtype }}
             </div>
             <div data-panel="five" id="stage-five">
-                <h4>Enter Or Modify Your Company Address</h4>
-                {{ form.street }}
-                {{ form.state }}
-                {{ form.zipcode }}
+                <h4>{%  trans "Enter Or Modify Your Company Address" %}</h4>
+                {% trans "Street" %}:{{ form.street }} </br></br>
+                {% trans "State" %}:{{ form.state }} </br></br>
+                {% trans "Zipcode" %}:{{ form.zipcode }} </br>
             </div>
         </div>
-        <button type="submit" id="next">{% trans "Complete" %}</button>
+        </br>
+        <button type="submit" id="next">{% trans "Next" %}</button>
     </form>
 </div>
 

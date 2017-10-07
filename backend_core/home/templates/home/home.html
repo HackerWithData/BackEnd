@@ -18,7 +18,8 @@
         {% for path in background %}
             .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {
                 /*TODO: change not use static url*/
-                background-image: url('/media/background-pic/{{ path }}');
+                background-image: url("{% static 'image/background-pic/{{ path }}' %}");
+                /*background-image: url('/media/background-pic/{{ path }}');*/
             }
         {% endfor %}
     </style>
@@ -137,7 +138,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="right-image">
-                        <img src="../../../media/homepage/what-we-do.png" alt="">
+                        <img src="{% static 'image/homepage/what-we-do.png' %}" alt="">
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ from ratings.models import UserRating, Rating
 from django.contrib.auth.hashers import make_password
 from contractors.models import Contractor
 from review.models import Review
-
+from Hscore.models import Hscore
 from photos.models import Photo
 from django.contrib.contenttypes.models import ContentType
 from photos.models import BackgroundPhoto
@@ -113,14 +113,20 @@ def display_contractor(request, contractor_id):
         wh = wh_set[0]
 
     data_source = 'California Contractors State License Board'
-    score = 91
-    rank = 5
+    hscore = Hscore.objects.get(content_type=ContentType.objects.get(model='contractor'),
+                                  object_id=contractor_id)
+    score = hscore.score
+
+
+    rank = str(round(hscore.rank*100.0 / hscore.max,2))+"%"
+    #print(hscore.rank*1.0 / hscore.max)
+
     full_state_name = getStateFullName(contractor.state)
-    preferred_project_type = 'house remodel'
-    if preferred_project_type:
-        specialization = 'with many year experiences in ' + preferred_project_type
-    else:
-        specialization = None
+    # preferred_project_type = 'house remodel'
+    # if preferred_project_type:
+    #     specialization = 'with many year experiences in ' + preferred_project_type
+    # else:
+    #     specialization = None
 
     overview = None
     if overview:
@@ -133,7 +139,7 @@ def display_contractor(request, contractor_id):
     """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=score, rank=rank,
                 full_state_name=full_state_name)
 
-    #,contractor.bus_name
+    # ,contractor.bus_name
     # Lic Type
     lic_type = contractor.lic_type.split('&')
     # review

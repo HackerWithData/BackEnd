@@ -1084,3 +1084,33 @@ body.lb-disable-scrolling {
     }
 
 }
+
+.autocomplete-suggestions {
+    position: absolute;
+    display: none;
+    max-height: 300px;
+    z-index: 9999
+}
+
+.autocomplete-suggestion {
+    padding: 5px 2px;
+    font-size: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    background: white;
+}
+
+.autocomplete-group {
+    padding: 10px 5px;
+    background: lightgrey;
+    font-size: 1.2em;
+}
+
+.autocomplete-selected {
+    background: #f0f0f0;
+}
+
+/*.autocomplete-suggestions strong {*/
+    /*font-weight: normal;*/
+    /*color: #3399ff;*/
+/*}*/

@@ -44,6 +44,7 @@ PREREQ_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
+    'storages',
 ]
 
 AUTH_APPS = [
@@ -73,7 +74,8 @@ WEB_APPS = [
     'designers',
     'rule',
     'career',
-    'dashboard'
+    'dashboard',
+    "Hscore"
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
@@ -247,3 +249,4 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
     os.path.join(BASE_DIR, 'locale'),
 )
+LOGOUT_REDIRECT_URL = 'home_index'

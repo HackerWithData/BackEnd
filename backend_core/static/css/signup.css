@@ -6,55 +6,56 @@
     margin-left: 20%;
     margin-right: 20%;
 }
+
 /*===============================================================
 *   professional fill up form
 ===============================================================*/
 
 .stages {
-	font-size: 0;
-	text-align: justify;
+    font-size: 0;
+    text-align: justify;
 }
 
 .stages:after {
-	content: '';
-	display: inline-block;
-	font-size: 0;
-	text-align: justify;
-	width: 100%;
+    content: '';
+    display: inline-block;
+    font-size: 0;
+    text-align: justify;
+    width: 100%;
 }
 
 .stages-radio-input {
-	display: none;
+    display: none;
 }
 
 .stages label {
-	background: #ffffff;
-	border: solid 5px #c0c0c0;
-	border-radius: 50%;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 0;
-	font-weight: 700;
-	height: 50px;
-	line-height: 50px;
-	position: relative;
-	text-align: center;
-	vertical-align: top;
-	width: 50px;
-	z-index: 1;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+    background: #ffffff;
+    border: solid 5px #c0c0c0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0;
+    font-weight: 700;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    width: 50px;
+    z-index: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .stages label:after {
-	content: '\2713';
-	color: #0cc39f;
-	display: inline-block;
-	font-size: 16px;
+    content: '\2713';
+    color: #0cc39f;
+    display: inline-block;
+    font-size: 16px;
 }
 
 #one:checked ~ .stages label[for="one"],
@@ -62,11 +63,11 @@
 #three:checked ~ .stages label[for="three"],
 #four:checked ~ .stages label[for="four"],
 #five:checked ~ .stages label[for="five"] {
-	border-color: #0cc39f;
+    border-color: #0cc39f;
 }
 
-.stages label.active{
-	border-color: purple !important;
+.stages label.active {
+    border-color: purple !important;
 }
 
 #one:checked ~ .stages label,
@@ -74,7 +75,7 @@
 #three:checked ~ .stages label[for="two"] ~ label,
 #four:checked ~ .stages label[for="three"] ~ label,
 #five:checked ~ .stages label[for="four"] ~ label {
-	font-size: 1rem;
+    font-size: 1rem;
 }
 
 #one:checked ~ .stages label:after,
@@ -82,36 +83,36 @@
 #three:checked ~ .stages label[for="two"] ~ label:after,
 #four:checked ~ .stages label[for="three"] ~ label:after,
 #five:checked ~ .stages label[for="four"] ~ label:after {
-	display: none;
+    display: none;
 }
 
 .progress > span {
-	background: #c0c0c0;
-	display: inline-block;
-	height: 5px;
-	transform: translateY(-2.75em);
-	transition: 0.3s;
-	width: 0;
+    background: #c0c0c0;
+    display: inline-block;
+    height: 5px;
+    transform: translateY(-2.75em);
+    transition: 0.3s;
+    width: 0;
 }
 
 #two:checked ~ .progress span {
-	width: calc(100% / 4 * 1);
+    width: calc(100% / 4 * 1);
 }
 
 #three:checked ~ .progress span {
-	width: calc(100% / 4 * 2);
+    width: calc(100% / 4 * 2);
 }
 
 #four:checked ~ .progress span {
-	width: calc(100% / 4 * 3);
+    width: calc(100% / 4 * 3);
 }
 
 #five:checked ~ .progress span {
-	width: calc(100% / 4 * 4);
+    width: calc(100% / 4 * 4);
 }
 
 .panels div {
-	display: none;
+    display: none;
 }
 
 #one:checked ~ .panels [data-panel="one"],
@@ -119,28 +120,71 @@
 #three:checked ~ .panels [data-panel="three"],
 #four:checked ~ .panels [data-panel="four"],
 #five:checked ~ .panels [data-panel="five"] {
-	display: block;
+    display: block;
 }
 
 /*===============================================================
 *   professional fill up form customized  TODO
 ===============================================================*/
 
-.container-sign-up-professional-profile-form {
-    margin-top: auto;
-    margin-left: 20%;
-    margin-right: 20%;
-	min-width: 50%;
-	height: 50%;
-}
+/*.container-sign-up-professional-profile-form {*/
+/*margin-top: auto;*/
+/*margin-left: 20%;*/
+/*margin-right: 20%;*/
+/*min-width: 50%;*/
+/*height: 50%;*/
+/*}*/
 
 #professionalProfileForm {
-	background: #ffffff;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
-	margin: 4em;
-	min-width: 50%;
-	padding: 1em;
-	height: 100%;
+    background: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+    margin: 4em;
+    min-width: 50%;
+    padding: 1em;
+    height: 100%;
 }
 
-li {list-style-type: none;}
+li {
+    list-style-type: none;
+}
+
+.panels {
+    margin-top: 20px;
+}
+
+.container-sign-up-professional-profile-form {
+    margin-top: 80px;
+}
+
+.header {
+    background-color: #6892D5;
+}
+
+.header .navbar .logo.cursive {
+    color: #ffffff;
+}
+
+.footer {
+    position: relative;
+}
+
+.login-wrapper {
+    min-height: 80%;
+    margin-top: 80px;
+}
+
+.socialaccount_providers {
+    list-style-type: None;
+}
+
+@media (max-width: 768px) {
+    #professionalProfileForm {
+        background: #ffffff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+        margin: 0;
+        padding: 0;
+        min-width: 50%;
+        padding: 1em;
+        height: 100%;
+    }
+}
