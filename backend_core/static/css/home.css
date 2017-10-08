@@ -27,7 +27,6 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     height: auto;
     z-index: 1;
     overflow: hidden;
-    background-image: url('../../media/homepage/video_bg.jpg');
     background-position: center center;
     background-size: cover;
 
@@ -436,7 +435,6 @@ ul.cd-hero-slider {
 
 
 #what-we-do {
-    background-image: url('../../media/homepage/what-we-do-bg3.png');
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -669,7 +667,6 @@ footer, footer * {
 
 /*LIGHT BOX*/
 body:after {
-    content: url('../../media/homepage/close.png') url('../../media/homepage/loading.gif') url('../../media/homepage/prev.png') url('../../media/homepage/next.png');
     display: none;
 }
 
@@ -748,7 +745,6 @@ body.lb-disable-scrolling {
     width: 32px;
     height: 32px;
     margin: 0 auto;
-    background: url('../../media/homepage/loading.gif') no-repeat;
 }
 
 .lb-nav {
@@ -779,7 +775,6 @@ body.lb-disable-scrolling {
     width: 34%;
     left: 0;
     float: left;
-    background: url('../../media/homepage/prev.png') left 48% no-repeat;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
     -webkit-transition: opacity 0.6s;
@@ -797,7 +792,6 @@ body.lb-disable-scrolling {
     width: 64%;
     right: 0;
     float: right;
-    background: url('../../media/homepage/next.png') right 48% no-repeat;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
     -webkit-transition: opacity 0.6s;
@@ -866,7 +860,6 @@ body.lb-disable-scrolling {
     float: right;
     width: 30px;
     height: 30px;
-    background: url('../../media/homepage/close.png') top right no-repeat;
     text-align: right;
     outline: none;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
