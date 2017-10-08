@@ -1,15 +1,13 @@
+from django.core.exceptions import ImproperlyConfigured
+from requests.exceptions import ConnectionError
+
 from base import *
+import requests
+
 
 DEBUG = False
 
 # Configuring a SMTP Email Service
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'testsite_app'
-# EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
-
 ADMINS = [('maolei', 'tangmaoleismile@gmail.com')]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -88,3 +86,15 @@ STATICFILES_STORAGE = 'backend_core.settings.custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'backend_core.settings.custom_storages.MediaStorage'
+
+
+# ALLOWED_HOSTS
+url = "http://169.254.169.254/latest/meta-data/public-ipv4"
+try:
+    r = requests.get(url)
+    instance_ip = r.text
+    ALLOWED_HOSTS += [instance_ip]
+except ConnectionError:
+    error_msg = "You can only run production settings on an AWS EC2 instance"
+    raise ImproperlyConfigured(error_msg)
+# END ALLOWED_HOSTS

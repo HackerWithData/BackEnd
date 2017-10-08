@@ -4,15 +4,10 @@
 {% block metainfo %}
     <meta name="description" content="">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-
-    {#    <link rel="stylesheet" href="{% static 'css/home.css' %}">#}
-    {#    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/hero-slider.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-
+    {#    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">#}
     {#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">#}
-
     {#    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>#}
     <style>
         {% for path in background %}
@@ -21,12 +16,37 @@
                     background-image: url("{% static image_static %}");
                 }
             {% endwith %}
-
         {% endfor %}
-    </style>
-    <link href="{% static 'css/home.css' %}" rel="stylesheet"/>
-    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 
+        #video_background {
+            background-image: url("{% static 'image/homepage/video_bg.jpg' %}");
+        }
+
+        #what-we-do {
+            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");
+        }
+
+        body:after {
+            content: url("{% static 'image/homepage/close.png' %}") url("{% static 'image/homepage/loading.gif' %}") url("{% static 'image/homepage/prev.png' %}") url("{% static 'image/homepage/next.png' %}");
+        }
+
+        .lb-cancel {
+            background: url("{% static 'image/homepage/loading.gif' %}") no-repeat;
+        }
+
+        .lb-nav a.lb-prev {
+            background: url("{% static 'image/homepage/prev.png' %}") left 48% no-repeat;
+        }
+
+        .lb-nav a.lb-next {
+            background: url("{% static 'image/homepage/next.png' %}") right 48% no-repeat;
+        }
+
+        .lb-data .lb-close {
+            background: url("{% static 'image/homepage/close.png' %}") top right no-repeat;
+        }
+    </style>
+    <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
 
 
