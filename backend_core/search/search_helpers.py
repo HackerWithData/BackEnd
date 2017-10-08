@@ -63,7 +63,7 @@ def search_by_zipcode(request):
     else:
         raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
 
-    return ret_qs,professional
+    return ret_qs, professional
 
 
 class UndefinedProfessionalType(Exception):
