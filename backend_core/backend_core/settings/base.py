@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     '52.27.223.231',
     '54.148.14.191',
     'ec2-54-148-14-191.us-west-2.compute.amazonaws.com',
+    'hoome.io',
 ]
 
 # Application definition
