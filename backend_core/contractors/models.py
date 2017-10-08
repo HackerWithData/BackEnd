@@ -33,15 +33,15 @@ class Contractor(models.Model):
 class BondCompany(models.Model):
     surety_code = models.CharField(primary_key=True, max_length=10)
     surety_name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    county = models.CharField(max_length=50)
-    state = models.CharField(max_length=15)
+    address = models.CharField(max_length=100,blank=True,null=True)
+    county = models.CharField(max_length=50,blank=True,null=True)
+    state = models.CharField(max_length=15,blank=True,null=True)
     pos_code = models.IntegerField()
 
 
 class BondHistory(models.Model):
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE)
-    surety_code = models.ForeignKey(BondCompany, on_delete=models.CASCADE)
+    surety_code = models.ForeignKey(BondCompany, on_delete=models.CASCADE, blank=True, null=True)
     surety_company = models.CharField(max_length=255)
     bond_num = models.CharField(max_length=20)
     bond_amount = models.CharField(max_length=20)
