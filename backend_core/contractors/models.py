@@ -45,8 +45,8 @@ class BondHistory(models.Model):
     surety_company = models.CharField(max_length=255)
     bond_num = models.CharField(max_length=20)
     bond_amount = models.CharField(max_length=20)
-    bond_effective_date = models.DateField()
-    bond_cancellation_date = models.DateField()
+    bond_effective_date = models.DateField(blank=True,null=True)
+    bond_cancellation_date = models.DateField(blank=True,null=True)
 
 
 class InssuranceCompany(models.Model):
@@ -63,8 +63,8 @@ class WorkerCompensationHistory(models.Model):
     insur_code = models.ForeignKey(InssuranceCompany, on_delete=models.CASCADE, blank=True, null=True)
     insur_company = models.CharField(max_length=255)
     policy_num = models.CharField(max_length=20)
-    insur_effective_date = models.DateField()
-    insur_cancellation_date = models.DateField()
+    insur_effective_date = models.DateField(blank=True,null=True)
+    insur_cancellation_date = models.DateField(blank=True,null=True)
 
 #TODO: name last name?
 class Personnel(models.Model):
