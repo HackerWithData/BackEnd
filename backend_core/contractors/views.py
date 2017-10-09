@@ -10,7 +10,7 @@ from ratings.models import UserRating, Rating
 from django.contrib.auth.hashers import make_password
 from contractors.models import Contractor
 from review.models import Review
-from Hscore.models import Hscore
+from hscore.models import Hscore
 from photos.models import Photo
 from django.contrib.contenttypes.models import ContentType
 from photos.models import BackgroundPhoto
@@ -114,8 +114,7 @@ def display_contractor(request, contractor_id):
 
     data_source = 'California Contractors State License Board'
     hscore = Hscore.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                  object_id=contractor_id)
-    score = hscore.score
+                              object_id=contractor_id)
 
 
     rank = str(round(hscore.rank*100.0 / hscore.max,2))+"%"

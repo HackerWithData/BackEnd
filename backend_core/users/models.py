@@ -25,7 +25,7 @@ class ConsumerProfile(models.Model):
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name='consumer_profiles',
         related_query_name='consumer_profile'
     )
@@ -49,7 +49,7 @@ class ProfessionalProfile(models.Model):
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name='professional_profiles',
         related_query_name='professional_profile'
     )
@@ -59,7 +59,7 @@ class ConsumerInterest(models.Model):
 
     consumer_profile = models.ForeignKey(
         ConsumerProfile,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name='consumer_interests',
         related_query_name='consumer_interest'
     )

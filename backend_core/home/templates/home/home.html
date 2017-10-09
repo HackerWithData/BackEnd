@@ -1,50 +1,31 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{%  load i18n %}
+{% load i18n %}
 {% block metainfo %}
     <meta name="description" content="">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="{% static 'css/hero-slider.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    {#    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">#}
-    {#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">#}
-    {#    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>#}
     <style>
-        {% for path in background %}
-            {% with 'image/background-pic/'|add:path as image_static %}
-                .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {
-                    background-image: url("{% static image_static %}");
-                }
-            {% endwith %}
-        {% endfor %}
+        {#        {% for path in background %}#}
+        {#            {% with 'image/background-pic/'|add:path as image_static %}#}
+        {#                .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {#}
+        {#                    background-image: url("{% static image_static %}");#}
+        {#                }#}
+        {#            {% endwith %}#}
+        {#        {% endfor %}#}
 
-        #video_background {
-            background-image: url("{% static 'image/homepage/video_bg.jpg' %}");
+        .cd-hero-slider li:nth-of-type(1) {
+            background-image: url("{% static 'image/background-pic/home-gradient.png' %}"), url("{% static 'image/background-pic/slide_4.jpg' %}");
         }
 
-        #what-we-do {
-            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");
-        }
 
-        body:after {
-            content: url("{% static 'image/homepage/close.png' %}") url("{% static 'image/homepage/loading.gif' %}") url("{% static 'image/homepage/prev.png' %}") url("{% static 'image/homepage/next.png' %}");
-        }
 
-        .lb-cancel {
-            background: url("{% static 'image/homepage/loading.gif' %}") no-repeat;
-        }
+{#        #what-we-do {#}
+{#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
+{#        }#}
 
-        .lb-nav a.lb-prev {
-            background: url("{% static 'image/homepage/prev.png' %}") left 48% no-repeat;
-        }
 
-        .lb-nav a.lb-next {
-            background: url("{% static 'image/homepage/next.png' %}") right 48% no-repeat;
-        }
-
-        .lb-data .lb-close {
-            background: url("{% static 'image/homepage/close.png' %}") top right no-repeat;
-        }
     </style>
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
@@ -60,8 +41,8 @@
             <li class="selected first-slide">
                 <div class="cd-full-width">
                     <div class="tm-slide-content-div slide-caption">
-                        <h1 class="logo cursive" style="font-size:100px;">Hoome</h1>
-                        <h4 id="target-position">{%  trans 'Find the excellent professionals.' %}</h4>
+                        <h1 class="logo cursive">Hoome</h1>
+                        <h4 id="target-position">{% trans 'Find the excellent professionals.' %}</h4>
                     </div>
                 </div> <!-- .cd-full-width -->
             </li>
@@ -90,71 +71,78 @@
         var target = document.getElementById('target-position');
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
     </script>
-    <div id="about" class="page-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-heading">
-                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>
-                        <div class="line-dec"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="service-item first-service">
-                        <div class="icon"><i class="fa fa-dashboard fa-3x"></i></div>
-
-                        <h4>{% blocktrans %}Rating Professionals{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}Combined with contractors' background like past work history, we will rate them by Big Data
-                            Analysis Tool and match nearby high rated professionals for you.{% endblocktrans %}</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="service-item second-service">
-                        <div class="icon">
-                            <i class="fa fa-tasks fa-3x"></i>
-                        </div>
-                        <h4>{% blocktrans %}Transparent Monitoring and Project Management{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}collaborate between contractors and customers in a more clear and transparent platform to
-                            push the projects move on seamlessly and flawlessly.{% endblocktrans %}</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
+{#    <div id="about" class="page-section">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-md-12">#}
+{#                    <div class="section-heading">#}
+{#                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>#}
+{#                        <div class="line-dec"></div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
+{#                    <div class="service-item first-service">#}
+{#                        <div class="icon"><i class="fa fa-dashboard fa-3x"></i></div>#}
+{##}
+{#                        <h4>{% blocktrans %}Rating Professionals{% endblocktrans %}</h4>#}
+{#                        <p>{% blocktrans %}Combined with contractors' background like past work history, we will rate#}
+{#                            them by Big Data#}
+{#                            Analysis Tool and match nearby high rated professionals for you.{% endblocktrans %}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
+{#                    <div class="service-item second-service">#}
+{#                        <div class="icon">#}
+{#                            <i class="fa fa-tasks fa-3x"></i>#}
+{#                        </div>#}
+{#                        <h4>{% blocktrans %}Transparent Monitoring and Project Management{% endblocktrans %}</h4>#}
+{#                        <p>{% blocktrans %}collaborate between contractors and customers in a more clear and transparent#}
+{#                            platform to#}
+{#                            push the projects move on seamlessly and flawlessly.{% endblocktrans %}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
                     {#                    TODO: Change the height dynamiclly #}
-                    <div class="service-item third-service">
-                        <div class="icon">
-                            <i class="fa fa-money fa-3x"></i>
-                        </div>
-                        <h4>{% blocktrans %}Premium Experience{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}We commit to offering premium experience for our clients. Among Hoome’s high quality clients,
-                            we offer the price as lower as possible at the same level of quality. About 10% of owners
-                            will enjoy the benefit –”Work first and pay later”, after background check.{% endblocktrans %}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{#                    <div class="service-item third-service">#}
+{#                        <div class="icon">#}
+{#                            <i class="fa fa-money fa-3x"></i>#}
+{#                        </div>#}
+{#                        <h4>{% blocktrans %}Premium Experience{% endblocktrans %}</h4>#}
+{#                        <p>{% blocktrans %}We commit to offering premium experience for our clients. Among Hoome’s high#}
+{#                            quality clients,#}
+{#                            we offer the price as lower as possible at the same level of quality. About 10% of owners#}
+{#                            will enjoy the benefit –”Work first and pay later”, after background#}
+{#                            check.{% endblocktrans %}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
     <div id="what-we-do">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="left-text">
-                        <h4>{% blocktrans %}Hoome beta version has come,{% endblocktrans %}<br>{% blocktrans %}Try it now and enjoy.{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}We have released the information of California State Contractors, Designers and Architects.
+                        <h4>{% blocktrans %}Hoome beta version has come,{% endblocktrans %}<br>{% blocktrans %}Try it
+                            now and enjoy.{% endblocktrans %}</h4>
+                        <p>{% blocktrans %}We have released the information of California State Contractors, Designers
+                            and Architects.
                             Other States' information are comming soon.{% endblocktrans %}
                             <br><br>
-                            {% blocktrans %}We thrive to build more functionality and improve data analyzing power to enhance user
-                            experience in Hoome platform. {% endblocktrans %}
+                            {% blocktrans %}We thrive to build more functionality and improve data analyzing power to
+                                enhance user
+                                experience in Hoome platform. {% endblocktrans %}
                         </p>
-                        <ul>
-                            <li>
-                                <div class="primary-button">
-                                    <a href="#" class="scroll-top">{{ Start_Search }}</a>
-                                </div>
-                            </li>
-                        </ul>
+{#                        <ul>#}
+{#                            <li>#}
+{#                                <div class="primary-button">#}
+{#                                    <a href="#" class="scroll-top">{{ Start_Search }}</a>#}
+{#                                </div>#}
+{#                            </li>#}
+{#                        </ul>#}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -172,7 +160,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-heading">
-                        <h4>{% trans 'Data in California State'%}  </h4>
+                        <h4>{% trans 'Data in California State' %}  </h4>
                         {#                <p>Right now, we make California state as our first stop. You can find any contractors, designers,#}
                         {#                    and architects in this state.</p>#}
                         {#                <br>#}
@@ -184,28 +172,29 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="fact-item">
-                        <div class="counter" data-count="223435">220000</div>
+                        <div class="counter" data-count="215606">212500</div>
                         <span>{{ Active_Contractors }}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="fact-item">
-                        <div class="counter" data-count="316">0</div>
-                        <span>{{ NCIQ_certificated_Designers }}</span>
+                        <div class="counter" data-count="35935">32500</div>
+                        <span>{{ Excellent_Architects }}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="fact-item">
-                        <div class="counter" data-count="243">0</div>
-                        <span>{{ Excellent_Architects }}</span>
+                        <div class="counter" data-count="12526">10000</div>
+                        <span>{{ NCIQ_certificated_Designers }}</span>
                     </div>
                 </div>
-{#                <div class="col-md-3 col-sm-6 col-xs-12">#}
-{#                    <div class="fact-item">#}
-{#                        <div class="counter" data-count="16">0</div>#}
-{#                        <span>Happy Clients</span>#}
-{#                    </div>#}
-{#                </div>#}
+
+                {#                <div class="col-md-3 col-sm-6 col-xs-12">#}
+                {#                    <div class="fact-item">#}
+                {#                        <div class="counter" data-count="16">0</div>#}
+                {#                        <span>Happy Clients</span>#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
         </div>
     </div>
@@ -220,8 +209,11 @@
                 </div>
 
                 <p style="text-align: center">
-                    {%  blocktrans %}If you have any questions or want to invest us, don't hesitate to contact us:{% endblocktrans %}
-                    <a href="mailto:service@hoome.io" target="_top"><email>service@hoome.io</email></a>
+                    {% blocktrans %}If you have any questions or want to invest us, don't hesitate to contact
+                        us:{% endblocktrans %}
+                    <a href="mailto:service@hoome.io" target="_top">
+                        <email>service@hoome.io</email>
+                    </a>
                 </p>
             </div>
         </div>
