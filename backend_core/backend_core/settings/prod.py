@@ -34,7 +34,7 @@ if 'RDS_DB_NAME' in os.environ:
             'HOST': os.environ['RDS_HOSTNAME'],
             'PORT': os.environ['RDS_PORT'],
             'OPTIONS': {
-                'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+                'init_command': 'SET storage_engine=ebdb,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
             }
         }
     }
