@@ -19,11 +19,9 @@
             background-image: url("{% static 'image/background-pic/home-gradient.png' %}"), url("{% static 'image/background-pic/slide_4.jpg' %}");
         }
 
-
-
-{#        #what-we-do {#}
-{#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
-{#        }#}
+        {#        #what-we-do {#}
+        {#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
+        {#        }#}
 
 
     </style>
@@ -71,88 +69,80 @@
         var target = document.getElementById('target-position');
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
     </script>
-{#    <div id="about" class="page-section">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col-md-12">#}
-{#                    <div class="section-heading">#}
-{#                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>#}
-{#                        <div class="line-dec"></div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="row">#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-{#                    <div class="service-item first-service">#}
-{#                        <div class="icon"><i class="fa fa-dashboard fa-3x"></i></div>#}
-{##}
-{#                        <h4>{% blocktrans %}Rating Professionals{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %}Combined with contractors' background like past work history, we will rate#}
-{#                            them by Big Data#}
-{#                            Analysis Tool and match nearby high rated professionals for you.{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-{#                    <div class="service-item second-service">#}
-{#                        <div class="icon">#}
-{#                            <i class="fa fa-tasks fa-3x"></i>#}
-{#                        </div>#}
-{#                        <h4>{% blocktrans %}Transparent Monitoring and Project Management{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %}collaborate between contractors and customers in a more clear and transparent#}
-{#                            platform to#}
-{#                            push the projects move on seamlessly and flawlessly.{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-                    {#                    TODO: Change the height dynamiclly #}
-{#                    <div class="service-item third-service">#}
-{#                        <div class="icon">#}
-{#                            <i class="fa fa-money fa-3x"></i>#}
-{#                        </div>#}
-{#                        <h4>{% blocktrans %}Premium Experience{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %}We commit to offering premium experience for our clients. Among Hoome’s high#}
-{#                            quality clients,#}
-{#                            we offer the price as lower as possible at the same level of quality. About 10% of owners#}
-{#                            will enjoy the benefit –”Work first and pay later”, after background#}
-{#                            check.{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
-    <div id="what-we-do">
+    <div id="about" class="page-section">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="left-text">
-                        <h4>{% blocktrans %}Hoome beta version has come,{% endblocktrans %}<br>{% blocktrans %}Try it
-                            now and enjoy.{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}We have released the information of California State Contractors, Designers
-                            and Architects.
-                            Other States' information are comming soon.{% endblocktrans %}
-                            <br><br>
-                            {% blocktrans %}We thrive to build more functionality and improve data analyzing power to
-                                enhance user
-                                experience in Hoome platform. {% endblocktrans %}
-                        </p>
-{#                        <ul>#}
-{#                            <li>#}
-{#                                <div class="primary-button">#}
-{#                                    <a href="#" class="scroll-top">{{ Start_Search }}</a>#}
-{#                                </div>#}
-{#                            </li>#}
-{#                        </ul>#}
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>
+                        <div class="line-dec"></div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="right-image">
-                        <img src="{% static 'image/homepage/what-we-do.png' %}" alt="">
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="service-item first-service">
+                        <div class="icon"><i class="fa fa-dashboard fa-3x"></i></div>
+
+                        <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>
+                        <p>{% blocktrans %}Using multi-dimensional data to rate 223435 California licensed contractors.{% endblocktrans %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="service-item second-service">
+                        <div class="icon">
+                            <i class="fa fa-tasks fa-3x"></i>
+                        </div>
+                        <h4>{% blocktrans %}Project Management{% endblocktrans %}</h4>
+                        <p>{% blocktrans %}Real-time monitor and control the project. Create new industry standard{% endblocktrans %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    {#                                        TODO: Change the height dynamiclly#}
+                    <div class="service-item third-service">
+                        <div class="icon">
+                            <i class="fa fa-money fa-3x"></i>
+                        </div>
+                        <h4>{% blocktrans %}Payment Guarantee{% endblocktrans %}</h4>
+                        <p>{% blocktrans %} Pay and host the porject in our platform to ensure the rights and safety on both sides{% endblocktrans %}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {##}
+    {#    <div id="what-we-do">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-6">#}
+    {#                    <div class="left-text">#}
+    {#                        <h4>{% blocktrans %}Hoome beta version has come,{% endblocktrans %}<br>{% blocktrans %}Try it#}
+    {#                            now and enjoy.{% endblocktrans %}</h4>#}
+    {#                        <p>{% blocktrans %}We have released the information of California State Contractors, Designers#}
+    {#                            and Architects.#}
+    {#                            Other States' information are comming soon.{% endblocktrans %}#}
+    {#                            <br><br>#}
+    {#                            {% blocktrans %}We thrive to build more functionality and improve data analyzing power to#}
+    {#                                enhance user#}
+    {#                                experience in Hoome platform. {% endblocktrans %}#}
+    {#                        </p>#}
+    {#                        <ul>#}
+    {#                            <li>#}
+    {#                                <div class="primary-button">#}
+    {#                                    <a href="#" class="scroll-top">{{ Start_Search }}</a>#}
+    {#                                </div>#}
+    {#                            </li>#}
+    {#                        </ul>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="col-md-6">#}
+    {#                    <div class="right-image">#}
+    {#                        <img src="{% static 'image/homepage/what-we-do.png' %}" alt="">#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 
 
     <div id="fun-facts">
@@ -188,36 +178,29 @@
                         <span>{{ NCIQ_certificated_Designers }}</span>
                     </div>
                 </div>
-
-                {#                <div class="col-md-3 col-sm-6 col-xs-12">#}
-                {#                    <div class="fact-item">#}
-                {#                        <div class="counter" data-count="16">0</div>#}
-                {#                        <span>Happy Clients</span>#}
-                {#                    </div>#}
-                {#                </div>#}
             </div>
         </div>
     </div>
 
-    <div id="contact-us" class="page-section">
-        <div class="container">
-            <div class="row">
-
-                <div class="section-heading">
-                    <h4>{{ Contact_Us }}</h4>
-                    <div class="line-dec"></div>
-                </div>
-
-                <p style="text-align: center">
-                    {% blocktrans %}If you have any questions or want to invest us, don't hesitate to contact
-                        us:{% endblocktrans %}
-                    <a href="mailto:service@hoome.io" target="_top">
-                        <email>service@hoome.io</email>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
+    {#    <div id="contact-us" class="page-section">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {##}
+    {#                <div class="section-heading">#}
+    {#                    <h4>{{ Contact_Us }}</h4>#}
+    {#                    <div class="line-dec"></div>#}
+    {#                </div>#}
+    {##}
+    {#                <p style="text-align: center">#}
+    {#                    {% blocktrans %}If you have any questions or want to invest us, don't hesitate to contact#}
+    {#                        us:{% endblocktrans %}#}
+    {#                    <a href="mailto:service@hoome.io" target="_top">#}
+    {#                        <email>service@hoome.io</email>#}
+    {#                    </a>#}
+    {#                </p>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 {% endblock %}
 
 

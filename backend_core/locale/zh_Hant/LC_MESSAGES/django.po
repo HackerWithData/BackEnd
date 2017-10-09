@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-07 07:58+0000\n"
+"POT-Creation-Date: 2017-10-09 23:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: architects/views.py:129
 # python-brace-format
+#: architects/views.py:129
+#, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
@@ -29,8 +30,8 @@ msgid ""
 "through us.\n"
 "            "
 msgstr ""
-"{bus_name} 是一位來自{city} 建築師。根據{data_source}，該建築師持有相"
-"關有效證件，並被Hoome認證有效。 如果您有意雇傭{bus_name}，我們建議您再次在"
+"{bus_name} 是一位來自{city} 建築師。根據{data_source}，該建築師持有相關有效證"
+"件，並被Hoome認證有效。 如果您有意雇傭{bus_name}，我們建議您再次在"
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
@@ -50,7 +51,7 @@ msgstr ""
 msgid "Dismiss"
 msgstr "關閉"
 
-#: contractors/views.py:135
+#: contractors/views.py:134
 #, python-format, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
@@ -68,23 +69,23 @@ msgstr ""
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
-#: dashboard/templates/dashboard/consumer_dashboard.html:43
+#: dashboard/templates/dashboard/consumer_dashboard.html:50
 #: dashboard/templates/dashboard/professional_dashboard.html:40
 msgid "Profile"
 msgstr "檔案"
 
-#: dashboard/templates/dashboard/consumer_dashboard.html:47
+#: dashboard/templates/dashboard/consumer_dashboard.html:54
 #: dashboard/templates/dashboard/professional_dashboard.html:44
 #: review/forms.py:15
 msgid "Email"
 msgstr "Email地址"
 
-#: dashboard/templates/dashboard/consumer_dashboard.html:51
+#: dashboard/templates/dashboard/consumer_dashboard.html:58
 #: dashboard/templates/dashboard/professional_dashboard.html:48
 msgid "Password"
 msgstr "密碼"
 
-#: dashboard/templates/dashboard/consumer_dashboard.html:55
+#: dashboard/templates/dashboard/consumer_dashboard.html:62
 #: dashboard/templates/dashboard/professional_dashboard.html:52
 msgid "Sign Out"
 msgstr "登出"
@@ -105,92 +106,44 @@ msgstr ""
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
-#: home/templates/home/home.html:42
+#: home/templates/home/home.html:43
 msgid "Find the excellent professionals."
 msgstr "找到您心儀的專業的裝修人士"
 
-#: home/templates/home/home.html:76
+#: home/templates/home/home.html:77
 msgid "What We Do"
 msgstr "我們做什麽"
 
-#: home/templates/home/home.html:86
-msgid "Rating Professionals"
-msgstr "對裝修人士或承包商進行評分"
-
 #: home/templates/home/home.html:87
+msgid "Data Analysis"
+msgstr "數據分析"
+
+#: home/templates/home/home.html:88
 msgid ""
-"Combined with contractors' background like past work history, we will rate "
-"them by Big Data\n"
-"                            Analysis Tool and match nearby high rated "
-"professionals for you."
-msgstr ""
-"根據承包商的背景例如工作記錄，我們通過大數據分析會對他們進行評分並向您推送優"
-"秀的承包商。"
+"Using multi-dimensional data to rate 223435 California licensed contractors."
+msgstr "通過數據對加州223435承包商進行分值評定"
 
 #: home/templates/home/home.html:96
-msgid "Transparent Monitoring and Project Management"
-msgstr "透明的項目管理體系"
+msgid "Project Management"
+msgstr "項目管理"
 
 #: home/templates/home/home.html:97
-msgid ""
-"collaborate between contractors and customers in a more clear and "
-"transparent platform to\n"
-"                            push the projects move on seamlessly and "
-"flawlessly."
-msgstr ""
-"在我們更加透明的平臺上聯動承包商和顧客進行協作來推動項目的無縫無痕發展。"
+msgid "Real-time monitor and control the project. Create new industry standard"
+msgstr "對項目進行實時把控，建立裝修行業標準。"
+
+#: home/templates/home/home.html:106
+msgid "Payment Guarantee"
+msgstr "付款保障"
 
 #: home/templates/home/home.html:107
-msgid "Premium Experience"
-msgstr "完美的體驗"
-
-#: home/templates/home/home.html:108
-#, python-format
 msgid ""
-"We commit to offering premium experience for our clients. Among Hoome’s high "
-"quality clients,\n"
-"                            we offer the price as lower as possible at the "
-"same level of quality. About 10%% of owners\n"
-"                            will enjoy the benefit –”Work first and pay "
-"later”, after background check."
-msgstr ""
-"我們致力於為客戶提供完美的體驗。 在Hoome高質量客戶中，我們想盡可能地向他們提"
-"供實惠的價格。 大約10%%的業主在通過背景調查之後享受了先施工後付款的服務。"
-
-#: home/templates/home/home.html:122
-msgid "Hoome beta version has come,"
-msgstr "Hoome 測試版已上線，"
-
-#: home/templates/home/home.html:122
-msgid "Try it now and enjoy."
-msgstr "來試一試吧！"
-
-#: home/templates/home/home.html:123
-msgid ""
-"We have released the information of California State Contractors, Designers "
-"and Architects.\n"
-"                            Other States' information are comming soon."
-msgstr ""
-"我們已經公布了加州的承包商，設計師，和建築師的信息。其他州的信息將會相繼上"
-"線。"
-
-#: home/templates/home/home.html:126
-msgid ""
-"We thrive to build more functionality and improve data analyzing power to "
-"enhance user\n"
-"                            experience in Hoome platform. "
-msgstr ""
-"我們奮力建設更完全更多的功能並增強數據分析的力度來改善用戶使用我們平臺的體"
-"驗。"
+" Pay and host the porject in our platform to ensure the rights and safety on "
+"both sides"
+msgstr "平臺進行支付托管，保障雙方權益。"
 
 #: home/templates/home/home.html:153
 msgid "Data in California State"
 msgstr "加州數據"
-
-#: home/templates/home/home.html:201
-msgid ""
-"If you have any questions or want to invest us, don't hesitate to contact us:"
-msgstr "如果您有什麽問題或有意願投資我們，不要猶豫，請跟聯系我們!"
 
 #: review/forms.py:5
 msgid "Comments"
@@ -595,6 +548,71 @@ msgstr "郵政編碼"
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:62
 msgid "Next"
 msgstr "下一步"
+
+#~ msgid "Rating Professionals"
+#~ msgstr "對裝修人士或承包商進行評分"
+
+#~ msgid ""
+#~ "Combined with contractors' background like past work history, we will "
+#~ "rate them by Big Data\n"
+#~ "                            Analysis Tool and match nearby high rated "
+#~ "professionals for you."
+#~ msgstr ""
+#~ "根據承包商的背景例如工作記錄，我們通過大數據分析會對他們進行評分並向您推送"
+#~ "優秀的承包商。"
+
+#~ msgid "Transparent Monitoring and Project Management"
+#~ msgstr "透明的項目管理體系"
+
+#~ msgid ""
+#~ "collaborate between contractors and customers in a more clear and "
+#~ "transparent platform to\n"
+#~ "                            push the projects move on seamlessly and "
+#~ "flawlessly."
+#~ msgstr ""
+#~ "在我們更加透明的平臺上聯動承包商和顧客進行協作來推動項目的無縫無痕發展。"
+
+#~ msgid "Premium Experience"
+#~ msgstr "完美的體驗"
+
+#~ msgid ""
+#~ "We commit to offering premium experience for our clients. Among Hoome’s "
+#~ "high quality clients,\n"
+#~ "                            we offer the price as lower as possible at "
+#~ "the same level of quality. About 10%% of owners\n"
+#~ "                            will enjoy the benefit –”Work first and pay "
+#~ "later”, after background check."
+#~ msgstr ""
+#~ "我們致力於為客戶提供完美的體驗。 在Hoome高質量客戶中，我們想盡可能地向他們"
+#~ "提供實惠的價格。 大約10%%的業主在通過背景調查之後享受了先施工後付款的服"
+#~ "務。"
+
+#~ msgid "Hoome beta version has come,"
+#~ msgstr "Hoome 測試版已上線，"
+
+#~ msgid "Try it now and enjoy."
+#~ msgstr "來試一試吧！"
+
+#~ msgid ""
+#~ "We have released the information of California State Contractors, "
+#~ "Designers and Architects.\n"
+#~ "                            Other States' information are comming soon."
+#~ msgstr ""
+#~ "我們已經公布了加州的承包商，設計師，和建築師的信息。其他州的信息將會相繼上"
+#~ "線。"
+
+#~ msgid ""
+#~ "We thrive to build more functionality and improve data analyzing power to "
+#~ "enhance user\n"
+#~ "                            experience in Hoome platform. "
+#~ msgstr ""
+#~ "我們奮力建設更完全更多的功能並增強數據分析的力度來改善用戶使用我們平臺的體"
+#~ "驗。"
+
+#~ msgid ""
+#~ "If you have any questions or want to invest us, don't hesitate to contact "
+#~ "us:"
+#~ msgstr "如果您有什麽問題或有意願投資我們，不要猶豫，請跟聯系我們!"
 
 msgid "License Number"
 msgstr "證件號碼"
