@@ -198,7 +198,7 @@
     }
 
     .footer {
-        position: fixed;
+        position: relative;
     }
 }
 
