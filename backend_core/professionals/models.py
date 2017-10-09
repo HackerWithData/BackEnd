@@ -17,12 +17,8 @@ class Professional(models.Model):
         choices=PROFESSIONAL_CHOICES
     )
     state = models.CharField(max_length=63)
-    #TODO:ADD a lic type
-    lic_type = models.CharField(
-        max_length=255,
-        default='NO LIC TYPE'
-    )
-    postal_code = models.CharField(max_length=64, blank=True, null=True)
+    lic_type = models.TextField(default='NO LIC TYPE')
+    postal_code = models.CharField(max_length=63, blank=True, null=True)
 
 
 class ProfessionalType(models.Model):
