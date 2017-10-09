@@ -4,7 +4,6 @@ from requests.exceptions import ConnectionError
 from base import *
 import requests
 
-
 DEBUG = False
 
 # Configuring a SMTP Email Service
@@ -23,7 +22,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tangmaoleismile@gmail.com'
 EMAIL_HOST_PASSWORD = 'tml62285042'
 
-
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
 if 'RDS_DB_NAME' in os.environ:
@@ -35,6 +33,9 @@ if 'RDS_DB_NAME' in os.environ:
             'PASSWORD': os.environ['RDS_PASSWORD'],
             'HOST': os.environ['RDS_HOSTNAME'],
             'PORT': os.environ['RDS_PORT'],
+            'OPTIONS': {
+                'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+            }
         }
     }
 else:
@@ -46,12 +47,15 @@ else:
             'PASSWORD': 'password',
             'HOST': 'localhost',
             'PORT': '3306',
+            'OPTIONS': {
+                'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+            }
         }
     }
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
@@ -86,7 +90,6 @@ STATICFILES_STORAGE = 'backend_core.settings.custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'backend_core.settings.custom_storages.MediaStorage'
-
 
 # ALLOWED_HOSTS
 url = "http://169.254.169.254/latest/meta-data/public-ipv4"
