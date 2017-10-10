@@ -114,11 +114,23 @@ def display_contractor(request, contractor_id):
 
     data_source = 'California Contractors State License Board'
     hscore = Hscore.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                              object_id=contractor_id)
+                                object_id=contractor_id)
 
     score = hscore.score
-    rank = str(round(hscore.rank*100.0 / hscore.max,2))+"%"
-    #print(hscore.rank*1.0 / hscore.max)
+    per = round(hscore.rank * 100.0 / hscore.max, 2)
+    if per > 75:
+        rank = "A+++"
+    elif per > 70:
+        rank = "A++"
+    elif per > 65:
+        rank = "A+"
+    elif per > 60:
+        rank = "A"
+    elif per == 0:
+        rank = "Warning"
+    else:
+        rank = 'A-'
+    # print(hscore.rank*1.0 / hscore.max)
 
     full_state_name = getStateFullName(contractor.state)
     # preferred_project_type = 'house remodel'
@@ -132,10 +144,10 @@ def display_contractor(request, contractor_id):
         pass
     else:
         overview = _("""{bus_name} is a contractor company located in {csp} . 
-    The company holds a license number according to {data_source}. The score of {score} ranks in the top {rank} %% of {full_state_name} licensed contractors.
+    The company holds a license number according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score is {score} and is rated as {rank}.
     The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
     we suggest double-checking the license status and contact through us.
-    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=score, rank=rank,
+    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore, rank=rank,
                 full_state_name=full_state_name)
 
     # ,contractor.bus_name

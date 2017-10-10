@@ -111,7 +111,7 @@
                         {#                            <li><a href="{% url 'account_login' %}" class="scroll-link" data-id="blog">Sign In</a></li>#}
                         {#                        {% endif %}#}
                         {#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
-{#                        <li><a href="/#contact-us" class="scroll-link" data-id="contact-us">{{ Contact_Us }}</a></li>#}
+                        {#                        <li><a href="/#contact-us" class="scroll-link" data-id="contact-us">{{ Contact_Us }}</a></li>#}
                     </ul>
                 </div>
                 <!--/.navbar-collapse-->
@@ -136,17 +136,22 @@
 {% block footer %}
     <div class="footer">
         <div class="footer-wrapper">
-            <ul>
-                <li><a href="/#contact-us">{{ Contact }}</a></li>
-                {#                <li><a href="#">About</a></li>#}
-                <li><a href="/career">{{ Career }}</a></li>
-                {#                <li><a href="#">Terms</a></li>#}
-                <li><a href="/rule/privacy">{{ Privacy }}</a></li>
-            </ul>
+            {#            <ul>#}
+            {#                <li></li>#}
+            <a href="/career">{{ Contact }} & {{ Career }}</a>
+            <span class="sep">|</span>
+            {#                <li><a href="#">About</a></li>#}
+            {#                <li><a href="/career"></a></li>#}
+            {#                <li><a href="#">Terms</a></li>#}
+            <a href="/rule/privacy">{{ Privacy }}</a>
+            <span class="sep">|</span>
+            {#                <li></li>#}
+            {#            </ul>#}
+
+            <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome Inc.</a> © 2017
         </div>
-        <div class="copyright-wrapper">
-           {%  blocktrans %}  Copyright © 2017 {% endblocktrans %}<a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome</a>{%  blocktrans %}. All Rights Reserved.{% endblocktrans %}
-        </div>
+
+
     </div>
 {% endblock %}
 

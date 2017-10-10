@@ -105,11 +105,13 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 }
 
+
+
 * {
     margin: 0;
     padding: 0;
     /*Quicksand*/
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: 'Quicksand', Helvetica, Arial, sans-serif;
     background-color: transparent;
 }
 
@@ -302,7 +304,8 @@ p {
 #home-slider h1.logo.cursive {
     font-weight: 900;
     font-size: 100px;
-    color: #FFFFFF;
+    color: #ffffff;
+    /*text-shadow:0px 0px 0px #FFFFFF;*/
 }
 
 #target-position {
@@ -712,15 +715,15 @@ footer, footer * {
     -moz-border-radius: 4px;
     border: none;
     color: white;
-    background-color: #24a9ff
+    background-color: #6892D5
 }
 
 .blue-btn:hover {
-    background-color: #49b8ff
+    background-color: #6892D5
 }
 
 .blue-btn:active {
-    background-color: #1d96e4
+    background-color: #6892D5
 }
 
 /*TODO:CHANGE　SEARCH ROW*/
@@ -834,3 +837,13 @@ footer, footer * {
 /*font-weight: normal;*/
 /*color: #3399ff;*/
 /*}*/
+
+.header .navbar-brand {
+    display: none;
+}
+
+.header.active .navbar-brand {
+    display: inline-block;
+    color: black;
+    font-weight: 900;
+}
