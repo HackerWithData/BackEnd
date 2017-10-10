@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
+from hscore.models import Hscore
 from utils import *
 
 
@@ -19,6 +21,7 @@ class Professional(models.Model):
     state = models.CharField(max_length=63)
     lic_type = models.TextField(default='NO LIC TYPE')
     postal_code = models.CharField(max_length=63, blank=True, null=True)
+    score = GenericRelation(Hscore, related_query_name='hscore')
 
 
 class ProfessionalType(models.Model):
