@@ -4,24 +4,51 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/search-list.css' %}">
+    {#    <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">#}
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
+    <style>
+        #contractor-icon {
+            background-image: url("{% static 'image/search-category-icon/contractor-black.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+        }
+
+        #architect-icon {
+            background-image: url("{% static 'image/search-category-icon/architect-black.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight: 900;
+        }
+
+        #designer-icon {
+            background-image: url("{% static 'image/search-category-icon/designer-black.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight: 900;
+
+        }
+    </style>
 {% endblock %}
 
-{% block banner %}
-    <div class="banner container">
+
+{% block content %}
+
     <div id='search-bar' class="search-bar">
         {% include 'search_bar/search_bar.html' %}
     </div>
-    </div>
-{% endblock %}
 
-{% block content %}
     <div id="search-list" class="container">
         <div class="row">
             {% if contractors.count > 0 %}
-{#                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">#}
-{#                    {% include 'search_sidebar/search_sidebar.html' %}#}
-{#                </div>#}
+                {#                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">#}
+                {#                    {% include 'search_sidebar/search_sidebar.html' %}#}
+                {#                </div>#}
                 <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <div class="list-group">
                         {% for contractor in contractors %}
@@ -62,7 +89,7 @@
             {% else %}
                 </div>
                 <!--TODO: change to nearby zipcode in render-->
-                <p>{%  trans 'No Contractor match your condition' %}</p>
+                <p>{% trans 'No Contractor match your condition' %}</p>
             {% endif %}
 
     </div>

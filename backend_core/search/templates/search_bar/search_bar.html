@@ -1,120 +1,128 @@
 {% load i18n %}
-    <form class="form" id="searchForm" action="/search" method="get">
-        <div class="form-row">
-            <div class="search-row">
-                <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType" placeholder="{%  trans "Find Professionals" %}">
-                <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
-                <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
-                <!--TODO: add dropdown in input for current location                       -->
-                <div class="dropdown">
-                    <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode" id="inlineFormInputSearchLocation" placeholder="{% trans "Zipcode or City"%}" autocomplete="postal-code">
-                    <ul class="dropdown-menu pull-left" role="menu">
-                    <li><a href="#" id="currentLocationDropdownItem">{% trans "Current Location"  %}</a></li>
-                    </ul>
-                </div>
-                <button class="blue-btn">
-                    <i class="fa fa-search" id="searchButton" type="submit" style="font-size:20px;color:white;"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-    <ul class="search-categories">
-        <li class="search-category">
+<form class="form" id="searchForm" action="/search" method="get">
+    <div class="form-row">
+        <div class="search-row">
+            <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType"
+                   placeholder="{% trans "Find Professionals" %}">
+            <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
+            <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
+            <!--TODO: add dropdown in input for current location                       -->
             <div class="dropdown">
-                <div class="dropdown-toggle" data-toggle="dropdown">
-                    <span></span>
-                    <a href="#" class="search-category-title">Contractor</a>
-                    <span class="caret"></span>
-                </div>
-                <ul class="dropdown-menu contractor-dropdown">
-                    <li class="contractor-categories" ><a href="#" type="Contractor">General Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Carpentry Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Concrete Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Doors, Gates and Activating Devices</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Drywall Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Electrical Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Fencing Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">HVAC</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Kitchen & Bath Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Landscaping Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Painting And Decorating Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Plumbing Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Roofing</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Sheet Metal Contractor</a></li>
-                    <li class="contractor-categories" ><a href="#" type="Contractor">Swimming Pool Contractor</a></li>
+                <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode"
+                       id="inlineFormInputSearchLocation" placeholder="{% trans "Zipcode or City" %}"
+                       autocomplete="postal-code">
+                <ul class="dropdown-menu pull-left" role="menu">
+                    <li><a href="#" id="currentLocationDropdownItem">{% trans "Current Location" %}</a></li>
                 </ul>
             </div>
-        </li>
-        <li class="search-category">
-            <!--TODO: add list of designer HOOME-47-->
-            <!--<div class="dropdown">-->
-                <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
-                    <!--<span></span>-->
-                    <!--<a href="{% url 'search_new' %}?">Designer</a>-->
-                    <!--<span class="caret"></span>-->
-                <!--</div>-->
-                <!--<ul class="dropdown-menu">-->
-                    <!--<li class="contractor-categories"><a href="#">Designer 1</a></li>-->
-                    <!--<li class="contractor-categories"><a href="#">Designer 2</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <div class="single-category-link">
-                <a href="#" class="search-category-title" type="DESIGNER">Designer</a>
+            <button class="blue-btn">
+                <i class="fa fa-search" id="searchButton" type="submit" style="font-size:20px;color:white;"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<ul class="search-categories" >
+    <li class="search-category">
+        <div class="dropdown">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <span></span>
+                <a href="#" class="search-category-title" >
+                    <div id="contractor-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Contractor' %}</span> <span class="caret"></span></a>
+
             </div>
-        </li>
-        <li class="search-category">
-            <!--TODO: add list of designer HOOME-48-->
-            <!--<div class="dropdown">-->
-                <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
-                    <!--<span></span>-->
-                    <!--<a href="{% url 'search_new' %}?">Architect</a>-->
-                    <!--<span class="caret"></span>-->
-                <!--</div>-->
-                <!--<ul class="dropdown-menu">-->
-                    <!--<li class="contractor-categories"><a href="#">Architect 1</a></li>-->
-                    <!--<li class="contractor-categories"><a href="#">Architect 2</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <div class="single-category-link">
-                <a href="#" class="search-category-title" type="ARCHITECT">Architect</a>
-            </div>
-        </li>
-    </ul>
+            <ul class="dropdown-menu contractor-dropdown">
+                <li class="contractor-categories"><a href="#" type="Contractor">General Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Carpentry Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Concrete Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Doors, Gates and Activating Devices</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Drywall Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Electrical Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Fencing Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">HVAC</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Kitchen & Bath Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Landscaping Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Painting And Decorating Contractor</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Plumbing Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Roofing</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Sheet Metal Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor">Swimming Pool Contractor</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="search-category">
+        <!--TODO: add list of designer HOOME-47-->
+        <!--<div class="dropdown">-->
+        <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
+        <!--<span></span>-->
+        <!--<a href="{% url 'search_new' %}?">Designer</a>-->
+        <!--<span class="caret"></span>-->
+        <!--</div>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li class="contractor-categories"><a href="#">Designer 1</a></li>-->
+        <!--<li class="contractor-categories"><a href="#">Designer 2</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <div class="single-category-link">
+
+            <a href="#" class="search-category-title" type="DESIGNER"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">{%  trans 'Designer' %}</span></a>
+        </div>
+    </li>
+    <li class="search-category">
+        <!--TODO: add list of designer HOOME-48-->
+        <!--<div class="dropdown">-->
+        <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
+        <!--<span></span>-->
+        <!--<a href="{% url 'search_new' %}?">Architect</a>-->
+        <!--<span class="caret"></span>-->
+        <!--</div>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li class="contractor-categories"><a href="#">Architect 1</a></li>-->
+        <!--<li class="contractor-categories"><a href="#">Architect 2</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <div class="single-category-link">
+            <a href="#" class="search-category-title" type="ARCHITECT"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Architect' %}</span></a>
+        </div>
+    </li>
+</ul>
 
 <script>
-//    address input enums
+    //    address input enums
     const INPUT_SEARCH_LOCATION_TYPE_ZIPCODE = 'INPUT_SEARCH_LOCATION_TYPE_ZIPCODE';
     const INPUT_SEARCH_LOCATION_TYPE_GEOINFO = 'INPUT_SEARCH_LOCATION_TYPE_GEOINFO';
 
-//    professional enums
-//    TODO: update using static json
+    //    professional enums
+    //    TODO: update using static json
     const PROFESSIONAL_TYPE = [
-        { value: 'General Contractor', data: { category: 'Contractor' }},
-        { value: 'Landscaping Contractor', data: { category: 'Contractor' }},
-        { value: 'Swimming Pool Contractor', data: { category: 'Contractor' }},
-        { value: 'Kitchen & Bath Contractor', data: { category: 'Contractor' }},
-        { value: 'Painting And Decorating Contractor', data: { category: 'Contractor' }},
-        { value: 'Roofing', data: { category: 'Contractor' }},
-        { value: 'Plumbing Contractor', data: { category: 'Contractor' }},
-        { value: 'Fencing Contractor', data: { category: 'Contractor' }},
-        { value: 'HVAC', data: { category: 'Contractor' }},
-        { value: 'Electrical Contractor', data: { category: 'Contractor' }},
-        { value: 'Drywall Contractor', data: { category: 'Contractor' }},
-        { value: 'Sheet Metal Contractor', data: { category: 'Contractor' }},
-        { value: 'Carpentry Contractor', data: { category: 'Contractor' }},
-        { value: 'Concrete Contractor', data: { category: 'Contractor' }},
-        { value: 'Doors, Gates and Activating Devices', data: { category: 'Contractor' }},
-        { value: 'Designer', data: { category: 'Designer'}},
-        { value: 'Architect', data: { category: 'Architect'}},
+        {value: 'General Contractor', data: {category: 'Contractor'}},
+        {value: 'Landscaping Contractor', data: {category: 'Contractor'}},
+        {value: 'Swimming Pool Contractor', data: {category: 'Contractor'}},
+        {value: 'Kitchen & Bath Contractor', data: {category: 'Contractor'}},
+        {value: 'Painting And Decorating Contractor', data: {category: 'Contractor'}},
+        {value: 'Roofing', data: {category: 'Contractor'}},
+        {value: 'Plumbing Contractor', data: {category: 'Contractor'}},
+        {value: 'Fencing Contractor', data: {category: 'Contractor'}},
+        {value: 'HVAC', data: {category: 'Contractor'}},
+        {value: 'Electrical Contractor', data: {category: 'Contractor'}},
+        {value: 'Drywall Contractor', data: {category: 'Contractor'}},
+        {value: 'Sheet Metal Contractor', data: {category: 'Contractor'}},
+        {value: 'Carpentry Contractor', data: {category: 'Contractor'}},
+        {value: 'Concrete Contractor', data: {category: 'Contractor'}},
+        {value: 'Doors, Gates and Activating Devices', data: {category: 'Contractor'}},
+        {value: 'Designer', data: {category: 'Designer'}},
+        {value: 'Architect', data: {category: 'Architect'}},
     ];
 
     let userCoordinate;
     let userAddress;
     let searchLocationType;
     let categoryNearbySearch = false;
-//    Professional Type
+    //    Professional Type
     let categorySearchType;
-//    Professional Subtype
+    //    Professional Subtype
     let categorySearchTarget;
 
 
@@ -174,7 +182,7 @@
                     const type = $('#inlineFormInputSearchType').val() || 'Name';
                     const target = $('#inlineFormInputSearchTargetType').val();
                     const formData = {
-                        'type': type ,
+                        'type': type,
                         'target': target,
                         'address': userAddress
                     };
@@ -187,7 +195,8 @@
                         url: "{% url 'search_new' %}",
                         data: JSON.stringify(formData),
                         dataType: "text",
-                        contentType : "application/json"})
+                        contentType: "application/json"
+                    })
                         .done(function (redirect_url) {
                             window.location.href = redirect_url;
                         })
@@ -203,7 +212,7 @@
                     break;
             }
         });
-        
+
 //        $('#searchButton').click(function () {
 ////            TODO: check all data send back using ajaxStop
 //            $('#searchForm').submit();
@@ -243,11 +252,11 @@
                 console.warn(`ERROR: ${textStatus}`);
             });
     }
-    
+
     function receivePositionFail(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }
-    
+
     function receiveReversePosition(response) {
         if (response.results && response.results.length > 0) {
             userAddress = response.results[0];
@@ -265,7 +274,7 @@
 
     function categorySearch() {
         let data = {
-            'type': categorySearchType ,
+            'type': categorySearchType,
             'target': categorySearchTarget,
             'address': userAddress
         };
@@ -277,7 +286,8 @@
             url: "{% url 'search_new' %}",
             data: JSON.stringify(data),
             dataType: "text",
-            contentType : "application/json"})
+            contentType: "application/json"
+        })
             .done(function (redirect_url) {
                 window.location.href = redirect_url;
             })

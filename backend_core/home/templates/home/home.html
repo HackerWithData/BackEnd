@@ -25,7 +25,7 @@
         {#        }#}
 
         .first-service .icon {
-            background-image: url("{% static 'image/background-pic/mag-black.png' %}");
+            background-image: url("{% static 'image/background-pic/mag-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -33,11 +33,11 @@
         }
 
         .first-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/mag-white.png' %}");
+            background-image: url("{% static 'image/background-pic/mag-white.svg' %}");
         }
 
         .second-service .icon {
-            background-image: url("{% static 'image/background-pic/manage-black.png' %}");
+            background-image: url("{% static 'image/background-pic/manage-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -45,11 +45,11 @@
         }
 
         .second-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/manage-white.png' %}");
+            background-image: url("{% static 'image/background-pic/manage-white.svg' %}");
         }
 
         .third-service .icon {
-            background-image: url("{% static 'image/background-pic/host-black.png' %}");
+            background-image: url("{% static 'image/background-pic/host-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -57,10 +57,35 @@
         }
 
         .third-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/host-white.png' %}");
+            background-image: url("{% static 'image/background-pic/host-white.svg' %}");
         }
 
+        #contractor-icon {
+            background-image: url("{% static 'image/search-category-icon/contractor-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+        }
 
+        #architect-icon {
+            background-image: url("{% static 'image/search-category-icon/architect-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight:900;
+        }
+
+        #designer-icon {
+            background-image: url("{% static 'image/search-category-icon/designer-white.svg' %}");
+            height:1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight:900;
+
+        }
     </style>
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
