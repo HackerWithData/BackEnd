@@ -21,7 +21,7 @@ class Professional(models.Model):
     state = models.CharField(max_length=63)
     lic_type = models.TextField(default='NO LIC TYPE')
     postal_code = models.CharField(max_length=63, blank=True, null=True)
-    score = GenericRelation(Hscore, related_query_name='hscore')
+    score = GenericRelation(Hscore, related_query_name='hscore', related_name='hscores')
 
 
 class ProfessionalType(models.Model):

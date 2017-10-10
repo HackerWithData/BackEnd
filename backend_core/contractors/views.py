@@ -116,7 +116,7 @@ def display_contractor(request, contractor_id):
     hscore = Hscore.objects.get(content_type=ContentType.objects.get(model='contractor'),
                               object_id=contractor_id)
 
-
+    score = hscore.score
     rank = str(round(hscore.rank*100.0 / hscore.max,2))+"%"
     #print(hscore.rank*1.0 / hscore.max)
 
