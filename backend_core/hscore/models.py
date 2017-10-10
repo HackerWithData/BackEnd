@@ -14,6 +14,8 @@ class Hscore(models.Model):
     contractor = models.ForeignKey(
         Contractor,
         on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
         related_name='hscores',
         related_query_name='hscore'
     )
