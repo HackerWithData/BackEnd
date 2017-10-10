@@ -1,0 +1,19 @@
+.search-categories {
+    list-style-type: none;
+    margin: 0;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.search-categories li {
+    display: inline;
+}
+
+.search-category-title {
+    display: block;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    padding: 14px 16px;
+    text-decoration: none;
+}
