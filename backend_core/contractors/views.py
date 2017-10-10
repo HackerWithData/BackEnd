@@ -2,26 +2,25 @@
 from __future__ import unicode_literals
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
+from django.utils.translation import ugettext as _
+from django.contrib.auth.hashers import make_password
+from django.contrib.contenttypes.models import ContentType
+
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  # , EfficiencyRating #,ContractorRate
 from users.models import User
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
-from django.contrib.auth.hashers import make_password
 from contractors.models import Contractor
 from review.models import Review
 from hscore.models import Hscore
-from photos.models import Photo
-from django.contrib.contenttypes.models import ContentType
-from photos.models import BackgroundPhoto
+from photos.models import Photo, BackgroundPhoto
 from photos.forms import PhotoForm
-import datetime
-from django.utils.translation import ugettext as _
+from .utils import convert_hscore_to_rank
 
+import datetime
 
 # Create your views here.
-
-
 
 def getStateFullName(state):
     FullName = "California"
@@ -113,24 +112,9 @@ def display_contractor(request, contractor_id):
         wh = wh_set[0]
 
     data_source = 'California Contractors State License Board'
-    hscore = Hscore.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                object_id=contractor_id)
+    hscore = Hscore.objects.get(contractor_id=contractor_id)
 
-    score = hscore.score
-    per = round(hscore.rank * 100.0 / hscore.max, 2)
-    if per > 75:
-        rank = "A+++"
-    elif per > 70:
-        rank = "A++"
-    elif per > 65:
-        rank = "A+"
-    elif per > 60:
-        rank = "A"
-    elif per == 0:
-        rank = "Warning"
-    else:
-        rank = 'A-'
-    # print(hscore.rank*1.0 / hscore.max)
+    letter_grade = convert_hscore_to_rank(hscore)
 
     full_state_name = getStateFullName(contractor.state)
     # preferred_project_type = 'house remodel'
@@ -147,7 +131,7 @@ def display_contractor(request, contractor_id):
     The company holds a license number according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score is {score} and is rated as {rank}.
     The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
     we suggest double-checking the license status and contact through us.
-    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore, rank=rank,
+    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore, rank=letter_grade,
                 full_state_name=full_state_name)
 
     # ,contractor.bus_name
@@ -200,7 +184,7 @@ def display_contractor(request, contractor_id):
                                           object_id=contractor_id)
 
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
-                 "score": score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
+                 "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
                  "user_rating_form": user_rating_form, }
 
