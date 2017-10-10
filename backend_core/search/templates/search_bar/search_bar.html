@@ -1,4 +1,3 @@
-{% block seach_bar %}
 {% load i18n %}
     <form class="form" id="searchForm" action="/search" method="get">
         <div class="form-row">
@@ -19,6 +18,68 @@
             </div>
         </div>
     </form>
+    <ul class="search-categories">
+        <li class="search-category">
+            <div class="dropdown">
+                <div class="dropdown-toggle" data-toggle="dropdown">
+                    <span></span>
+                    <a href="#" class="search-category-title">Contractor</a>
+                    <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu contractor-dropdown">
+                    <li class="contractor-categories" ><a href="#" type="Contractor">General Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Carpentry Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Concrete Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Doors, Gates and Activating Devices</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Drywall Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Electrical Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Fencing Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">HVAC</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Kitchen & Bath Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Landscaping Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Painting And Decorating Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Plumbing Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Roofing</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Sheet Metal Contractor</a></li>
+                    <li class="contractor-categories" ><a href="#" type="Contractor">Swimming Pool Contractor</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="search-category">
+            <!--TODO: add list of designer HOOME-47-->
+            <!--<div class="dropdown">-->
+                <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--<span></span>-->
+                    <!--<a href="{% url 'search_new' %}?">Designer</a>-->
+                    <!--<span class="caret"></span>-->
+                <!--</div>-->
+                <!--<ul class="dropdown-menu">-->
+                    <!--<li class="contractor-categories"><a href="#">Designer 1</a></li>-->
+                    <!--<li class="contractor-categories"><a href="#">Designer 2</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <div class="single-category-link">
+                <a href="#" class="search-category-title" type="DESIGNER">Designer</a>
+            </div>
+        </li>
+        <li class="search-category">
+            <!--TODO: add list of designer HOOME-48-->
+            <!--<div class="dropdown">-->
+                <!--<div class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--<span></span>-->
+                    <!--<a href="{% url 'search_new' %}?">Architect</a>-->
+                    <!--<span class="caret"></span>-->
+                <!--</div>-->
+                <!--<ul class="dropdown-menu">-->
+                    <!--<li class="contractor-categories"><a href="#">Architect 1</a></li>-->
+                    <!--<li class="contractor-categories"><a href="#">Architect 2</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <div class="single-category-link">
+                <a href="#" class="search-category-title" type="ARCHITECT">Architect</a>
+            </div>
+        </li>
+    </ul>
 
 <script>
 //    address input enums
@@ -43,20 +104,50 @@
         { value: 'Carpentry Contractor', data: { category: 'Contractor' }},
         { value: 'Concrete Contractor', data: { category: 'Contractor' }},
         { value: 'Doors, Gates and Activating Devices', data: { category: 'Contractor' }},
-        { value: 'Designers', data: { category: 'Designer'}},
+        { value: 'Designer', data: { category: 'Designer'}},
+        { value: 'Architect', data: { category: 'Architect'}},
     ];
 
-    var userCoordinate;
-    var userAddress;
-    var searchLocationType;
+    let userCoordinate;
+    let userAddress;
+    let searchLocationType;
+    let categoryNearbySearch = false;
+//    Professional Type
+    let categorySearchType;
+//    Professional Subtype
+    let categorySearchTarget;
 
-    var options = {
+
+    let options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0
     };
 
     $(function () {
+        $('li.search-category .dropdown').hover(
+            function () {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+            },
+            function () {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+            }
+        );
+
+        $('.contractor-dropdown').on('click', 'a', function () {
+            categorySearchTarget = this.text;
+            categorySearchType = this.type;
+            categoryNearbySearch = true;
+            getLocation();
+        });
+
+        $('.single-category-link a').click(function (event) {
+            event.preventDefault();
+            categorySearchTarget = this.text;
+            categorySearchType = this.type;
+            categoryNearbySearch = true;
+            getLocation();
+        });
 
         $('#currentLocationDropdownItem').click(function () {
             getLocation();
@@ -160,12 +251,38 @@
     function receiveReversePosition(response) {
         if (response.results && response.results.length > 0) {
             userAddress = response.results[0];
-            searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
-            $('#inlineFormInputSearchLocation').val('Current Location');
+            if (!categoryNearbySearch) {
+                searchLocationType = INPUT_SEARCH_LOCATION_TYPE_GEOINFO;
+                $('#inlineFormInputSearchLocation').val('Current Location');
+            } else {
+                categorySearch();
+            }
         } else {
             console.warn('Error: response length less than 1');
         }
         console.log(userAddress);
     }
+
+    function categorySearch() {
+        let data = {
+            'type': categorySearchType ,
+            'target': categorySearchTarget,
+            'address': userAddress
+        };
+        $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+            },
+            url: "{% url 'search_new' %}",
+            data: JSON.stringify(data),
+            dataType: "text",
+            contentType : "application/json"})
+            .done(function (redirect_url) {
+                window.location.href = redirect_url;
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.warn(`ERROR: ${textStatus}`);
+            });
+    }
 </script>
-{% endblock %}
