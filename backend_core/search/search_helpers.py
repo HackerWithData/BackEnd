@@ -55,7 +55,7 @@ def search_by_zipcode(request):
 
     # retrieve corresponding professional through different table
     if professional == CONTRACTOR:
-        ret_qs = Contractor.objects.filter(lic_num__in=prof_qs.values('lic_num')).order_by('lic_num')
+        ret_qs = Contractor.objects.filter(lic_num__in=prof_qs.values('lic_num')).order_by('-hscore__score')
     elif professional == ARCHITECT:
         ret_qs = Architect.objects.filter(lic_num__in=prof_qs.values('lic_num'))
     elif professional == DESIGNER:
