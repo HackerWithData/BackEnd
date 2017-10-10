@@ -54,13 +54,16 @@ def search_by_zipcode(request):
         prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
         professional = search_type.upper()
 
+    ret_score_list = []
+    ret_rank_list = []
+
     # retrieve corresponding professional through different table
     if professional == CONTRACTOR:
         ret_qs = Contractor.objects.filter(lic_num__in=prof_qs.values('lic_num')).order_by('-hscore__score')
         for prof in ret_qs:
             hscore = prof.hscores.first()
-            prof['score'] = hscore.score
-            prof['rank'] = convert_hscore_to_rank(hscore)
+            ret_score_list.append(hscore.score)
+            ret_rank_list.append(convert_hscore_to_rank(hscore))
     elif professional == ARCHITECT:
         ret_qs = Architect.objects.filter(lic_num__in=prof_qs.values('lic_num'))
     elif professional == DESIGNER:
@@ -68,7 +71,7 @@ def search_by_zipcode(request):
     else:
         raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
 
-    return ret_qs, professional
+    return ret_qs, ret_score_list, ret_rank_list, professional
 
 
 class UndefinedProfessionalType(Exception):

@@ -1,3 +1,4 @@
+{% load search_extras %}
 <div id="searchListCard{{ contractor.lic_num }}"
      class="list-group-item list-group-item-action flex-column align-items-start">
 
@@ -5,23 +6,23 @@
         {#        TODO: make sure the counter is correct#}
         <h5 class="mb-1">{{ forloop.counter }} <a
                 href="{% url 'contractor' contractor.lic_num %}">{{ contractor.bus_name }}</a></h5>
-
     </div>
-    <p>{{ License_num }}: {{ contractor.lic_num }} </br>
+    <p>{{ License_num }}: {{ contractor.lic_num }} </p>
         <span class="mb-1">{{ License_Status }}: {{ contractor.lic_status }}</span> </br>
-        {% if hscore %}
-            {{ Score }}:  {{ contracotr.hscore }}
-        {% endif %}
         {% if lic_type == 'CONTRACTOR' %}
-            {{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </p>
+            {% with score_list|index:forloop.counter0 as score %}
+                {% if score %}
+                    <p>{{ Score }}:  {{ score }}</p>
+                {% endif %}
+            {% endwith %}
+            <p>{{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </p>
         {% endif %}
     {% if lic_type == 'DESIGNER' %}
-        {{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
-        {{ contractro.pos_code }} </p>
+    <p>{{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
+        {{ contractor.pos_code }} </p>
     {% endif %}
     {% if lic_type == 'Architect' %}
         {{ Address }}: {{ contractor.street_address }} </br> {{ contractor.city }},{{ contractor.state }}
-        {{ contractro.zip }} </p>
+        {{ contractor.pos_code }} </p>
     {% endif %}
-{#    TODO: add content if there is no result find#}
 </div>
