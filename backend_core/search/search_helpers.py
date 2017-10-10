@@ -5,6 +5,7 @@ from designers.models import Designer
 from architects.models import Architect
 from professionals.models import Professional, ProfessionalType
 from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
+from contractors.utils import convert_hscore_to_rank
 
 
 # Ajax POST request
@@ -56,8 +57,10 @@ def search_by_zipcode(request):
     # retrieve corresponding professional through different table
     if professional == CONTRACTOR:
         ret_qs = Contractor.objects.filter(lic_num__in=prof_qs.values('lic_num')).order_by('-hscore__score')
-        # for prof in ret_qs:
-        #     prof['score'] = prof.hscores.first()
+        for prof in ret_qs:
+            hscore = prof.hscores.first()
+            prof['score'] = hscore.score
+            prof['rank'] = convert_hscore_to_rank(hscore)
     elif professional == ARCHITECT:
         ret_qs = Architect.objects.filter(lic_num__in=prof_qs.values('lic_num'))
     elif professional == DESIGNER:
