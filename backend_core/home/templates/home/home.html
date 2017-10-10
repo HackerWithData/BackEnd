@@ -16,12 +16,48 @@
         {#        {% endfor %}#}
 
         .cd-hero-slider li:nth-of-type(1) {
-            background-image: url("{% static 'image/background-pic/home-gradient.png' %}"), url("{% static 'image/background-pic/slide_4.jpg' %}");
+            background-image: url("{% static 'image/background-pic/home-gradient.png' %}"), url("{% static 'image/background-pic/slide-6.jpg' %}");
         }
 
         {#        #what-we-do {#}
         {#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
         {#        }#}
+
+        .first-service .icon {
+            background-image: url("{% static 'image/background-pic/mag-black.png' %}");
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+            background-size: contain;
+        }
+
+        .first-service:hover .icon {
+            background-image: url("{% static 'image/background-pic/mag-white.png' %}");
+        }
+
+        .second-service .icon {
+            background-image: url("{% static 'image/background-pic/manage-black.png' %}");
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+            background-size: contain;
+        }
+
+        .second-service:hover .icon {
+            background-image: url("{% static 'image/background-pic/manage-white.png' %}");
+        }
+
+        .third-service .icon {
+            background-image: url("{% static 'image/background-pic/host-black.png' %}");
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+            background-size: contain;
+        }
+
+        .third-service:hover .icon {
+            background-image: url("{% static 'image/background-pic/host-white.png' %}");
+        }
 
 
     </style>
@@ -40,7 +76,7 @@
                 <div class="cd-full-width">
                     <div class="tm-slide-content-div slide-caption">
                         <h1 class="logo cursive">Hoome</h1>
-                        <h4 id="target-position">{% trans 'Find the excellent professionals.' %}</h4>
+                        <h1 id="target-position">{% trans 'Find excellent professionals' %}</h1>
                     </div>
                 </div> <!-- .cd-full-width -->
             </li>
@@ -82,29 +118,30 @@
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="service-item first-service">
-                        <div class="icon"><i class="fa fa-dashboard fa-3x"></i></div>
+                        <div class="icon"></div>
 
                         <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}Using multi-dimensional data to rate 223435 California licensed contractors.{% endblocktrans %}</p>
+                        <p>{% blocktrans %}Using big data analysis to rate 223435 California licensed
+                            contractors.{% endblocktrans %}</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="service-item second-service">
                         <div class="icon">
-                            <i class="fa fa-tasks fa-3x"></i>
                         </div>
                         <h4>{% blocktrans %}Project Management{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}Real-time monitor and control the project. Create new industry standard{% endblocktrans %}</p>
+                        <p>{% blocktrans %}Real-time monitor and manage the project Create new industry
+                            standard{% endblocktrans %}</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     {#                                        TODO: Change the height dynamiclly#}
                     <div class="service-item third-service">
                         <div class="icon">
-                            <i class="fa fa-money fa-3x"></i>
                         </div>
                         <h4>{% blocktrans %}Payment Guarantee{% endblocktrans %}</h4>
-                        <p>{% blocktrans %} Pay and host the porject in our platform to ensure the rights and safety on both sides{% endblocktrans %}</p>
+                        <p>{% blocktrans %} Save payment in our platform to ensure safety on
+                            both sides{% endblocktrans %}</p>
                     </div>
                 </div>
             </div>
@@ -150,7 +187,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-heading">
-                        <h4>{% trans 'Data in California State' %}  </h4>
+                        <h4>{% trans 'Database in California State' %}  </h4>
                         {#                <p>Right now, we make California state as our first stop. You can find any contractors, designers,#}
                         {#                    and architects in this state.</p>#}
                         {#                <br>#}
@@ -181,26 +218,38 @@
             </div>
         </div>
     </div>
-
-    {#    <div id="contact-us" class="page-section">#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {##}
-    {#                <div class="section-heading">#}
-    {#                    <h4>{{ Contact_Us }}</h4>#}
-    {#                    <div class="line-dec"></div>#}
-    {#                </div>#}
-    {##}
-    {#                <p style="text-align: center">#}
-    {#                    {% blocktrans %}If you have any questions or want to invest us, don't hesitate to contact#}
-    {#                        us:{% endblocktrans %}#}
-    {#                    <a href="mailto:service@hoome.io" target="_top">#}
-    {#                        <email>service@hoome.io</email>#}
-    {#                    </a>#}
-    {#                </p>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
+    <div id="us-data" class="page-section">
+        <div class='tableauPlaceholder' id='viz1507635143106' style='position: relative'>
+            <noscript><a href='#'><img alt='Sheet 2 '
+                                       src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1_rss.png'
+                                       style='border: none'/></a></noscript>
+            <object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
+                <param name='embed_code_version' value='2'/>
+                <param name='site_root' value=''/>
+                <param name='name' value='Book2_13623&#47;Sheet2'/>
+                <param name='tabs' value='no'/>
+                <param name='toolbar' value='yes'/>
+                <param name='static_image'
+                       value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1.png'/>
+                <param name='animate_transition' value='yes'/>
+                <param name='display_static_image' value='yes'/>
+                <param name='display_spinner' value='yes'/>
+                <param name='display_overlay' value='yes'/>
+                <param name='display_count' value='yes'/>
+                <param name='toolbar' value='no'/>
+                <param name='showShareOptions' value='false'/>
+                <param name='tabs' value='no'/>
+            </object>
+        </div>
+        <script type='text/javascript'>                    var divElement = document.getElementById('viz1507635143106');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width = '100%';
+        vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    </div>
 {% endblock %}
 
 

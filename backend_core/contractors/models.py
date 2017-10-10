@@ -77,7 +77,7 @@ class Personnel(models.Model):
     deassociation_date = models.DateField()
     lic_type = models.CharField(max_length=63)
 
-#TODO: match with person with Personnel table
+#TODO: match with person with Personnel table Need to reset db . had a problem in FK
 class LicenseRelation(models.Model):
     name = models.CharField(max_length=63)
     #Do not use the reference below because it will requite name_id which is necessary in this case

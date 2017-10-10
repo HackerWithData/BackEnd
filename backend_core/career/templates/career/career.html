@@ -1,22 +1,56 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load staticfiles %}
 {% block metainfo %}
     <style>
+        body {
+            heigth: 100%;
+            min-height:: 100%;
+        }
+
         .header {
             background-color: #6892D5;
         }
 
         .footer {
+            padding-top: 80px;
             position: fixed;
-            left: 0px;
-            bottom: 0px;
+            left: 0;
+            bottom: 0;
+
+        }
+
+        @media (max-width: 767px) {
+            .footer {
+                position: relative;
+            }
+
+            .section-1 {
+
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+
+            .page {
+
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+
+        }
+
+        .section-1 {
+            margin-top: 100px;
+            width: auto;
+            margin-left: 20%;
+            margin-right: 20%;
         }
 
         .page {
-            margin-top: 60px;
+            margin-top: 40px;
             width: auto;
-            margin-left: 25%;
-            margin-right: 25%;
+            margin-left: 20%;
+            margin-right: 20%;
         }
 
         .page ul li {
@@ -26,30 +60,40 @@
 {% endblock %}
 
 {% block content %}
+
+    <div class="section-1 container">
+        <div class="row">
+            <div class="col-12">
+                <h1>{{ Contact }} </h1>
+                <p> {% blocktrans %}If you have any
+                    question, please contact us: {% endblocktrans %} <a href="mailto:service@hoome.io">service@hoome.io</a></p>
+                <br>
+            </div>
+        </div>
+    </div>
+
     <div class="page container">
         <div class="row">
             <div class="col-12">
-                <h1>Career </h1>
-                <p>Welcome to Hoome! Hoome platform screens nearby, excellent designers, reliable contractors and
-                    awesome
-                    renovation meisters for users who need renovation through big data analysis. We are keenly seeking
-                    interns
-                    and partners to become an integral part of our team, who thrive in a fast paced start-up like
-                    environment
-                    and want to invent the future. </p>
+                <h1>{{ Career }} </h1>
+                <p>{% blocktrans %}Welcome to Hoome! Hoome platform screens nearby, excellent designers, reliable
+                    contractors and awesome renovation meisters for users who need renovation through big data analysis.
+                    We are keenly seeking interns and partners to become an integral part of our team, who thrive in a
+                    fast paced start-up like environment and want to invent the future. {% endblocktrans %}</p>
                 <br>
                 <p>
-                    If you are interested about any following jobs , please click links
-                    below, which will redirect to our company page in AngelList:
+                    {% blocktrans %}If you are interested about any following jobs , please click links
+                        below, which will redirect to our company page in AngelList: {% endblocktrans %}
                 </p>
                 <br>
                 <ul>
-                    <li><a href="https://angel.co/hoome-1/jobs/265600-ios-and-android-app-developer">iOS and Android App
-                        Developer</a>
+                    <li>
+                        <a href="https://angel.co/hoome-1/jobs/265600-ios-and-android-app-developer">{% trans 'iOS and Android App Developer' %} </a>
                     </li>
-                    <li><a href="https://angel.co/hoome-1/jobs/265601-web-developer">Web Developer</a></li>
-                    <li><a href="https://angel.co/hoome-1/jobs/282342-full-stack-data-scientist-intern">Full Stack Data
-                        Scientist Intern</a>
+                    <li><a href="https://angel.co/hoome-1/jobs/265601-web-developer">{% trans 'Web Developer' %}</a>
+                    </li>
+                    <li>
+                        <a href="https://angel.co/hoome-1/jobs/282342-full-stack-data-scientist-intern">{% trans 'Full Stack Data Scientist Intern' %}</a>
                     </li>
                 </ul>
             </div>
