@@ -168,3 +168,31 @@
 .search-category-word {
     font-size: 1.2em;
 }
+
+.contractor-dropdown li {
+    display: table-row;
+    text-align: left;
+    color: #000000;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #000000 !important;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    color: #000000 !important;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #000000 !important;
+}
+
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #000000 !important;
+}
+
+.contractor-dropdown li {
+    display: table-row;
+    text-align: left;
+    color: #000000;
+}

@@ -148,7 +148,7 @@ msgstr ""
 
 #: home/templates/home/home.html:105
 msgid "Find excellent professionals"
-msgstr "找到您心儀的專業的裝修人士"
+msgstr "篩選優秀的裝修團隊"
 
 #: home/templates/home/home.html:139
 msgid "What We Do"
@@ -162,7 +162,7 @@ msgstr "數據分析"
 msgid ""
 "Using big data analysis to rate 223435 California licensed\n"
 "                            contractors."
-msgstr "通過數據對加州223435承包商進行分值評定"
+msgstr "通過數據分析對加州223435承包商進行分值評定"
 
 #: home/templates/home/home.html:158
 msgid "Project Management"
@@ -172,7 +172,7 @@ msgstr "項目管理"
 msgid ""
 "Real-time monitor and manage the project Create new industry\n"
 "                            standard"
-msgstr "對項目進行實時把控 建立裝修行業標準 "
+msgstr "對項目進行實時監管 建立裝修行業標準 "
 
 #: home/templates/home/home.html:168
 msgid "Payment Guarantee"
@@ -182,7 +182,7 @@ msgstr "付款保障"
 msgid ""
 " Save payment in our platform to ensure safety on\n"
 "                            both sides"
-msgstr "平臺進行支付托管 保障雙方權益 "
+msgstr "平臺進行工程款托管 保障雙方權益 "
 
 #: home/templates/home/home.html:216
 msgid "Database in California State"
