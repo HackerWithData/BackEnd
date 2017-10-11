@@ -29,7 +29,23 @@
         {% if lic_type == 'CONTRACTOR' %}
             {% with score_list|index:forloop.counter0 as score %}
                 {% if score %}
-                    <p>{{ Score }}:  {{ score }}</p>
+                    {% if contractor.lic_status == "Expired" %}
+
+                    {% elif contractor.lic_status == "Cancelled" %}
+
+                    {% elif contractor.lic_status == "Canceled" %}
+
+                    {% elif contractor.lic_status == "Revoked" %}
+
+                    {% elif contractor.lic_status == "Under Suspension" %}
+
+                    {% elif contractor.lic_status == "Inactive" %}
+
+                    {% elif contractor.lic_status == "Inactive and Under Suspension" %}
+
+                    {% else %}
+                        <p>{{ Score }}:  {{ score }}</p>
+                    {% endif %}
                 {% endif %}
             {% endwith %}
             <p>{{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </p>

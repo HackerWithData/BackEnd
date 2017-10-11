@@ -2,14 +2,22 @@
 <form class="form" id="searchForm" action="/search" method="get">
     <div class="form-row">
         <div class="search-row">
-            <input type="text" class="form-control" name="target" id="inlineFormInputSearchTargetType"
-                   placeholder="{% trans "Find Professionals" %}">
+            <div class="dropdown target-container">
+                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" name="target" id="inlineFormInputSearchTargetType"
+                       placeholder="{% trans 'Find Professionals' %}">
+                <ul class="dropdown-suggestion dropdown-menu">
+                    <li class="suggestion-categories"><a href="#" type="Contractor">General Contractor</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Contractor">Architect</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Designer">Designer</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Meister">Meister</a></li>
+                </ul>
+            </div>
             <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
             <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
             <!--TODO: add dropdown in input for current location                       -->
             <div class="dropdown">
                 <input type="text" class="dropdown-toggle form-control" data-toggle="dropdown" name="zipcode"
-                       id="inlineFormInputSearchLocation" placeholder="{% trans "Zipcode or City" %}"
+                       id="inlineFormInputSearchLocation" placeholder="{% trans 'Zipcode or City' %}"
                        autocomplete="postal-code">
                 <ul class="dropdown-menu pull-left" role="menu">
                     <li><a href="#" id="currentLocationDropdownItem">{% trans "Current Location" %}</a></li>
@@ -160,6 +168,13 @@
             getLocation();
         });
 
+        $('.suggestion-categories a').click(function (event) {
+            event.preventDefault();
+            $('#inlineFormInputSearchType').val(this.type);
+            $('#inlineFormInputSearchTargetType').val(this.text)
+            $('.dropdown-suggestion').hide();
+        });
+
         $('#currentLocationDropdownItem').click(function () {
             getLocation();
         });
@@ -234,6 +249,14 @@
             onSelect: function (suggestion) {
                 $('#inlineFormInputSearchType').val(suggestion['data']['category']);
             }
+        });
+
+        $('#inlineFormInputSearchTargetType').keydown(function (event) {
+            $('.dropdown-suggestion').hide();
+        });
+        
+        $('#inlineFormInputSearchTargetType').click(function (event) {
+            $('.target-container .dropdown-menu').slideToggle();
         });
 
     });
