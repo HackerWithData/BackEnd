@@ -112,8 +112,8 @@ def display_architect(request, o_id):
     #     wh = wh_set[0]
 
     data_source = 'California Architects Board'
-    score = 91
-    rank = 5
+    score = None
+    rank = None
     full_state_name = getStateFullName(architect.state)
     preferred_project_type = 'house remodel'
     if preferred_project_type:

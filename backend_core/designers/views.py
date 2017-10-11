@@ -111,8 +111,10 @@ def display_designer(request, o_id):
     #     wh = wh_set[0]
 
     data_source = 'NCIQ'
-    score = 91
-    rank = 5
+    score = None
+    rank = None
+    # score = 91
+    # rank = 5
     full_state_name = getStateFullName(designer.state)
     # preferred_project_type = 'house remodel'
     # if preferred_project_type:
