@@ -65,7 +65,7 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="DESIGNER"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">{%  trans 'Designer' %}</span></a>
+            <a href="#" class="search-category-title" type="DESIGNER" target="DESIGNER"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">{%  trans 'Designer' %}</span></a>
         </div>
     </li>
     <li class="search-category">
@@ -82,12 +82,12 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="ARCHITECT"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Architect' %}</span></a>
+            <a href="#" class="search-category-title" type="ARCHITECT" target="ARCHITECT"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Architect' %}</span></a>
         </div>
     </li>
     <li class="search-category">
             <div class="single-category-link">
-            <a href="#" class="search-category-title" type="Meister"><div id="meister-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Meister' %}</span></a>
+            <a href="#" class="search-category-title" type="Meister" target="MEISTER"><div id="meister-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Meister' %}</span></a>
         </div>
     </li>
 </ul>
@@ -154,7 +154,7 @@
 
         $('.single-category-link a').click(function (event) {
             event.preventDefault();
-            categorySearchTarget = this.text;
+            categorySearchTarget = this.target;
             categorySearchType = this.type;
             categoryNearbySearch = true;
             getLocation();
@@ -276,6 +276,8 @@
     }
 
     function categorySearch() {
+        console.log(categorySearchType);
+        console.log(categorySearchTarget);
         let data = {
             'type': categorySearchType,
             'target': categorySearchTarget,
