@@ -48,7 +48,9 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.designer.csp }}</li>
-                            <li>{{ Score }}: {{ info_dict.score }}</li>
+                            {% if  info_dict.score %}
+                                <li>{{ Score }}: {{ info_dict.score }}</li>
+                            {% endif %}
                             <li>{{ Phone }}: {{ info_dict.designer.phone }}</li>
                             <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
                                 {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}

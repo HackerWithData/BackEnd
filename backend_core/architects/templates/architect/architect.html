@@ -81,7 +81,9 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.architect.csp }}</li>
+                        {% if  info_dict.score %}
                             <li>{{ Score }}: {{ info_dict.score }}</li>
+                        {%  endif %}
                             {% if info_dict.architect.phone %}
                                 <li>{{ Phone }}: {{ info_dict.architect.phone }}</li>
                             {% endif %}
