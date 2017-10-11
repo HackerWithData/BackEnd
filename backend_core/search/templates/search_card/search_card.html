@@ -8,22 +8,22 @@
                 href="{% url 'contractor' contractor.lic_num %}">{{ contractor.bus_name }}</a></h5>
 
     </div>
-    <p>{{ License_num }}: {{ contractor.lic_num }} </br>
+    {{ License_num }}: {{ contractor.lic_num }} </br>
         <span class="mb-1">{{ License_Status }}: </span>
         {% if contractor.lic_status == "Expired" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% elif contractor.lic_status == "Cancelled" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% elif contractor.lic_status == "Revoked" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% elif contractor.lic_status == "Under Suspension" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% elif contractor.lic_status == "Inactive" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% elif contractor.lic_status == "Inactive and Under Suspension" %}
-        <span class="red"> {{contractor.lic_status }}</span> </br>
+        <span class="red"> {{contractor.lic_status }}</span>
         {% else %}
-        <span> {{contractor.lic_status }}</span> </br>
+        <span> {{contractor.lic_status }}</span>
         {% endif %}
         </br>
         {% if lic_type == 'CONTRACTOR' %}
@@ -44,18 +44,18 @@
                     {% elif contractor.lic_status == "Inactive and Under Suspension" %}
 
                     {% else %}
-                        <p>{{ Score }}:  {{ score }}</p>
+                        {{ Score }}:  {{ score }} </br>
                     {% endif %}
                 {% endif %}
             {% endwith %}
-            <p>{{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </p>
+            {{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </br>
         {% endif %}
         {% if lic_type == 'DESIGNER' %}
-            <p>{{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
-                    {{ contractor.pos_code }} </p>
+            {{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
+                    {{ contractor.pos_code }} </br>
         {% endif %}
         {% if lic_type == 'Architect' %}
             {{ Address }}: {{ contractor.street_address }} </br> {{ contractor.city }},{{ contractor.state }}
-            {{ contractor.pos_code }} </p>
+            {{ contractor.pos_code }} </br>
         {% endif %}
 </div>
