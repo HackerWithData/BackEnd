@@ -265,3 +265,8 @@
     text-align: left;
     color: #000000;
 }
+
+.red{
+    color: red;
+    font-weight: 700;
+}
