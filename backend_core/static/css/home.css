@@ -640,3 +640,7 @@ footer, footer * {
     color: black;
     font-weight: 900;
 }
+
+.header.active  ul  li a {
+    color:black !important;
+}
