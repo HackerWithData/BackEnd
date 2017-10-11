@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-10 22:26+0000\n"
+"POT-Creation-Date: 2017-10-11 01:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,9 +160,9 @@ msgstr "数据分析"
 
 #: home/templates/home/home.html:150
 msgid ""
-"Using big data analysis to rate 223435 California licensed\n"
+"Using big data analysis to rate 215606 California licensed\n"
 "                            contractors."
-msgstr "通过数据分析对加州223435承包商进行分值评定"
+msgstr "通过数据分析对加州215606承包商进行分值评定"
 
 #: home/templates/home/home.html:158
 msgid "Project Management"
@@ -184,7 +184,7 @@ msgid ""
 "                            both sides"
 msgstr "平台进行工程款托管 保障双方权益 "
 
-#: home/templates/home/home.html:216
+#: home/templates/home/home.html:182
 msgid "Database in California State"
 msgstr "加州数据库"
 
