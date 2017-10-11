@@ -168,11 +168,15 @@
             getLocation();
         });
 
+//        TODO: Add meister
         $('.suggestion-categories a').click(function (event) {
             event.preventDefault();
-            $('#inlineFormInputSearchType').val(this.type);
-            $('#inlineFormInputSearchTargetType').val(this.text)
-            $('.dropdown-suggestion').hide();
+            if (this.type !== 'Meister'){
+                $('#inlineFormInputSearchType').val(this.type);
+                $('#inlineFormInputSearchTargetType').val(this.text)
+                $('.dropdown-suggestion').hide();
+            }
+
         });
 
         $('#currentLocationDropdownItem').click(function () {
@@ -299,8 +303,8 @@
     }
 
     function categorySearch() {
-        console.log(categorySearchType);
-        console.log(categorySearchTarget);
+        if (categorySearchType === 'Meister')
+            return;
         let data = {
             'type': categorySearchType,
             'target': categorySearchTarget,
