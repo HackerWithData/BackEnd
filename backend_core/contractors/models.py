@@ -24,6 +24,7 @@ class Contractor(models.Model):
     lic_status_add = models.TextField(blank=True, null=True)
     bus_info_add = models.TextField(blank=True, null=True)
     dba = models.CharField(max_length=255, blank=True, null=True)
+
     #ratings = GenericRelation(Rating, related_query_name='contractors')
 
     # def __unicode__(self):

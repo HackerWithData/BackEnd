@@ -6,11 +6,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.urls import reverse
 from django.core import serializers
-from copy import deepcopy
-import json
 
 from contractors.models import Contractor
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
 from search_helpers import search_by_zipcode, search_by_address_object_redirect_url
+
+import json
 
 
 def search_new(request):
@@ -26,7 +27,7 @@ def search_new(request):
 
     elif request.method == 'GET':
         # TODO: set default value
-        query_set, lic_type = search_by_zipcode(request)
+        query_set, score_list, rank_list, lic_type = search_by_zipcode(request)
 
         # TODO: set customized item number per page, default = 10
         # pagination logic
@@ -45,17 +46,27 @@ def search_new(request):
         parameters = get_copy.pop('page', True) and get_copy.urlencode()
 
         contractors_json = serializers.serialize("json", page_query_set.object_list)
-
     else:
         return redirect('home_index')
 
-    return render(request, 'search_list/search_list.html', {
-        'contractors': page_query_set,
-        'contractors_json': contractors_json,
-        'zipcode': request.GET.get('zipcode'),
-        'parameters': parameters,
-        "lic_type": lic_type
-    })
+    if lic_type == CONTRACTOR:
+        return render(request, 'search_list/search_list.html', {
+            'contractors': page_query_set,
+            'contractors_json': contractors_json,
+            'zipcode': request.GET.get('zipcode'),
+            'parameters': parameters,
+            'lic_type': lic_type,
+            'score_list': score_list,
+            'rank_list': rank_list
+        })
+    else:
+        return render(request, 'search_list/search_list.html', {
+            'contractors': page_query_set,
+            'contractors_json': contractors_json,
+            'zipcode': request.GET.get('zipcode'),
+            'parameters': parameters,
+            'lic_type': lic_type
+        })
 
 
 def search_dispatch_test(request):
