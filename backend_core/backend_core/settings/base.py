@@ -251,6 +251,5 @@ LANGUAGES = (
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
-    os.path.join(BASE_DIR, 'locale'),
 )
 LOGOUT_REDIRECT_URL = 'home_index'

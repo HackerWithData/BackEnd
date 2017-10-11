@@ -40,12 +40,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     }
 }
 
-
-    .footer {
-        position: relative;
-    }
-
-
+.footer {
+    position: relative;
+}
 
 * {
     margin: 0;
@@ -616,15 +613,30 @@ footer, footer * {
     /*}*/
 }
 
-/*TODO:CHANGE　SEARCH ROW*/
-
-/**/
-@media only screen and (max-width: 768px) {
-        .footer {
-        position: relative;
-    }
+.blocker {
+    background-color: #f4f4f4;
+    position: relative;
+    margin-top: -145px;
+    height: 80px;
+    width: 100%;
+    z-index: 9999999999;
 }
 
+@media only screen and (max-width: 768px) {
+    .footer {
+        position: relative;
+    }
+
+.blocker {
+    background-color: #f4f4f4;
+    position: relative;
+    margin-top: -145px;
+    height: 80px;
+    width: 100%;
+    z-index: 9999999999;
+}
+
+}
 
 /*.autocomplete-suggestions strong {*/
 /*font-weight: normal;*/
@@ -641,6 +653,7 @@ footer, footer * {
     font-weight: 900;
 }
 
-.header.active  ul  li a {
-    color:black !important;
+.header.active ul li a {
+    color: black !important;
 }
+
