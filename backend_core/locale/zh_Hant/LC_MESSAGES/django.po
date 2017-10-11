@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-11 01:43+0000\n"
+"POT-Creation-Date: 2017-10-11 08:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid ""
 "through us.\n"
 "            "
 msgstr ""
-"{bus_name} 是壹位來自{city} 建築師。根據{data_source}，該建築師持有相關有效證"
+"{bus_name} 是一位來自{city} 建築師。根據{data_source}，該建築師持有相關有效證"
 "件，並被Hoome認證有效。 如果您有意雇傭{bus_name}，我們建議您再次在"
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
@@ -91,7 +91,7 @@ msgstr ""
 msgid "Dismiss"
 msgstr "關閉"
 
-#: contractors/views.py:146
+#: contractors/views.py:130
 #, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
@@ -103,7 +103,7 @@ msgid ""
 "    we suggest double-checking the license status and contact through us.\n"
 "    "
 msgstr ""
-"{bus_name} 是壹家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
+"{bus_name} 是一家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
 "相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
 "{score}， 評定區間為{rank}。如果您有意雇傭{bus_name}，我們建議您再次在"
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
@@ -130,7 +130,7 @@ msgstr "密碼"
 msgid "Sign Out"
 msgstr "登出"
 
-#: designers/views.py:127
+#: designers/views.py:129
 #, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
@@ -141,50 +141,50 @@ msgid ""
 "through us.\n"
 "            "
 msgstr ""
-"{bus_name} 是壹位基於{city} {state}設計師。根據{data_source}，該建築師持有相"
+"{bus_name} 是一位基於{city} {state}設計師。根據{data_source}，該建築師持有相"
 "關有效證件，並被Hoome認證有效。 如果您有意雇傭{bus_name}，我們建議您再次在"
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
-#: home/templates/home/home.html:105
+#: home/templates/home/home.html:115
 msgid "Find excellent professionals"
 msgstr "篩選優秀的裝修團隊"
 
-#: home/templates/home/home.html:139
+#: home/templates/home/home.html:149
 msgid "What We Do"
 msgstr "我們的服務"
 
-#: home/templates/home/home.html:149
+#: home/templates/home/home.html:159
 msgid "Data Analysis"
 msgstr "數據分析"
 
-#: home/templates/home/home.html:150
+#: home/templates/home/home.html:160
 msgid ""
 "Using big data analysis to rate 215606 California licensed\n"
 "                            contractors."
 msgstr "通過數據分析對加州215606承包商進行分值評定"
 
-#: home/templates/home/home.html:158
+#: home/templates/home/home.html:168
 msgid "Project Management"
 msgstr "項目管理"
 
-#: home/templates/home/home.html:159
+#: home/templates/home/home.html:169
 msgid ""
 "Real-time monitor and manage the project Create new industry\n"
 "                            standard"
 msgstr "對項目進行實時監管 建立裝修行業標準 "
 
-#: home/templates/home/home.html:168
+#: home/templates/home/home.html:178
 msgid "Payment Guarantee"
 msgstr "付款保障"
 
-#: home/templates/home/home.html:169
+#: home/templates/home/home.html:179
 msgid ""
 " Save payment in our platform to ensure safety on\n"
 "                            both sides"
 msgstr "平臺進行工程款托管 保障雙方權益 "
 
-#: home/templates/home/home.html:182
+#: home/templates/home/home.html:192
 msgid "Database in California State"
 msgstr "加州數據庫"
 
@@ -228,31 +228,35 @@ msgstr "項目地址"
 msgid "Is Anonymous?"
 msgstr "匿名用戶"
 
-#: search/templates/search_bar/search_bar.html:6
+#: search/templates/search_bar/search_bar.html:7
 msgid "Find Professionals"
 msgstr "尋找裝修專業人士或承包商"
 
-#: search/templates/search_bar/search_bar.html:12
+#: search/templates/search_bar/search_bar.html:20
 msgid "Zipcode or City"
 msgstr "請輸入郵政編碼或者城市名稱"
 
-#: search/templates/search_bar/search_bar.html:15
+#: search/templates/search_bar/search_bar.html:23
 msgid "Current Location"
 msgstr "當前位置"
 
-#: search/templates/search_bar/search_bar.html:31
+#: search/templates/search_bar/search_bar.html:39
 msgid "Contractor"
 msgstr "承包商"
 
-#: search/templates/search_bar/search_bar.html:70
+#: search/templates/search_bar/search_bar.html:76
 msgid "Designer"
 msgstr "設計師"
 
-#: search/templates/search_bar/search_bar.html:87
+#: search/templates/search_bar/search_bar.html:93
 msgid "Architect"
 msgstr "建築師"
 
-#: search/templates/search_list/search_list.html:92
+#: search/templates/search_bar/search_bar.html:98
+msgid "Meister"
+msgstr "守藝人"
+
+#: search/templates/search_list/search_list.html:101
 msgid "No Contractor match your condition"
 msgstr "沒有商家符合您的要求"
 
@@ -409,11 +413,11 @@ msgstr "開始搜索"
 
 #: templates/base.html:78
 msgid "previous"
-msgstr "上壹頁"
+msgstr "上一頁"
 
 #: templates/base.html:79
 msgid "next"
-msgstr "下壹頁"
+msgstr "下一頁"
 
 #: templates/base.html:80
 msgid "Efficiency"
@@ -429,7 +433,7 @@ msgstr "工期"
 
 #: users/forms.py:33
 msgid "Must select a role"
-msgstr "必須選定壹個角色"
+msgstr "必須選定一個角色"
 
 #: users/forms.py:71 users/forms.py:177
 msgid "Invalid zipcode"
@@ -481,13 +485,13 @@ msgstr "移除"
 
 #: users/templates/account/email.html:39
 msgid "Warning:"
-msgstr "警告"
+msgstr "警告："
 
 #: users/templates/account/email.html:39
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
-msgstr "您還沒有設置您的郵箱。您應該先加壹個郵箱地址來進行其他操作。"
+msgstr "您還沒有設置您的郵箱。您應該先加一個郵箱地址來進行其他操作。"
 
 #: users/templates/account/email.html:44
 msgid "Add E-mail Address"
@@ -508,7 +512,7 @@ msgstr "登入"
 
 #: users/templates/account/login.html:43
 msgid "Please sign in with one of your existing third party accounts. Or,"
-msgstr "請登入您其中壹個第三方賬戶，或者"
+msgstr "請登入您其中一個第三方賬戶，或者"
 
 #: users/templates/account/login.html:44 users/templates/account/login.html:60
 msgid "sign up"
@@ -524,7 +528,7 @@ msgstr "或者"
 
 #: users/templates/account/login.html:59
 msgid "If you have not created an account yet, then please"
-msgstr "如果妳還沒有創建用戶，請"
+msgstr "如果你還沒有創建用戶，請"
 
 #: users/templates/account/login.html:60
 msgid "first."
@@ -594,7 +598,7 @@ msgstr "郵政編碼"
 
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:62
 msgid "Next"
-msgstr "下壹步"
+msgstr "下一步"
 
 #~ msgid "  Copyright © 2017 "
 #~ msgstr " 版權 © 2017 "
@@ -644,7 +648,7 @@ msgstr "下壹步"
 #~ msgstr "Hoome 測試版已上線，"
 
 #~ msgid "Try it now and enjoy."
-#~ msgstr "來試壹試吧！"
+#~ msgstr "來試一試吧！"
 
 #~ msgid ""
 #~ "We have released the information of California State Contractors, "

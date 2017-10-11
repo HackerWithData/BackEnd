@@ -34,11 +34,13 @@
 
 #searchForm .form-row {
     display: flex;
+
 }
 
 #searchForm .search-row {
     display: flex;
     flex-grow: 1;
+    justify-content: center;
 }
 
 #searchForm .search-row .dropdown * {
@@ -78,14 +80,14 @@
         margin: 0 25%;
     }
 
-    .search-row > *:first-child {
-        width: 50%;
-    }
+
 
     #searchForm .search-row .dropdown {
-        width: 40%
+        width: 45%;
     }
-
+    #searchForm  .search-row > *:first-child {
+        width: 52.5%;
+    }
     .search-row input, .search-row
     button {
         border-radius: 0
@@ -100,15 +102,11 @@
         width: 64px;
     }
 
-    .search-row > *:first-child {
+    .search-row > *:first-child,.search-row > *:last-child  {
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
     }
 
-    .search-row > *:last-child {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-    }
 }
 
 @media only screen and (max-width: 768px) {
