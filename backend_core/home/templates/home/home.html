@@ -17,7 +17,7 @@
         {#        {% endfor %}#}
 
         .cd-hero-slider li:nth-of-type(1) {
-            background-image: url("{% static 'image/background-pic/home-gradient.png' %}"), url("{% static 'image/background-pic/slide-6.jpg' %}");
+            background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static 'image/background-pic/slide-14.jpeg' %}");
         }
 
         {#        #what-we-do {#}
@@ -25,7 +25,7 @@
         {#        }#}
 
         .first-service .icon {
-            background-image: url("{% static 'image/background-pic/mag-black.png' %}");
+            background-image: url("{% static 'image/background-pic/mag-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -33,11 +33,11 @@
         }
 
         .first-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/mag-white.png' %}");
+            background-image: url("{% static 'image/background-pic/mag-white.svg' %}");
         }
 
         .second-service .icon {
-            background-image: url("{% static 'image/background-pic/manage-black.png' %}");
+            background-image: url("{% static 'image/background-pic/manage-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -45,11 +45,11 @@
         }
 
         .second-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/manage-white.png' %}");
+            background-image: url("{% static 'image/background-pic/manage-white.svg' %}");
         }
 
         .third-service .icon {
-            background-image: url("{% static 'image/background-pic/host-black.png' %}");
+            background-image: url("{% static 'image/background-pic/host-black.svg' %}");
             height: 50px;
             width: 50px;
             display: inline-block;
@@ -57,10 +57,45 @@
         }
 
         .third-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/host-white.png' %}");
+            background-image: url("{% static 'image/background-pic/host-white.svg' %}");
         }
 
+        #contractor-icon {
+            background-image: url("{% static 'image/search-category-icon/contractor-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+        }
 
+        #architect-icon {
+            background-image: url("{% static 'image/search-category-icon/architect-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight: 900;
+        }
+
+        #designer-icon {
+            background-image: url("{% static 'image/search-category-icon/designer-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight: 900;
+
+        }
+
+        #meister-icon {
+            background-image: url("{% static 'image/search-category-icon/meister-white.svg' %}");
+            height: 1.2em;
+            width: 1.2em;
+            display: inline-block;
+            background-size: contain;
+            font-weight: 900;
+
+        }
     </style>
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
@@ -122,7 +157,7 @@
                         <div class="icon"></div>
 
                         <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>
-                        <p>{% blocktrans %}Using big data analysis to rate 223435 California licensed
+                        <p>{% blocktrans %}Using big data analysis to rate 215606 California licensed
                             contractors.{% endblocktrans %}</p>
                     </div>
                 </div>
@@ -148,40 +183,6 @@
             </div>
         </div>
     </div>
-    {##}
-    {#    <div id="what-we-do">#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {#                <div class="col-md-6">#}
-    {#                    <div class="left-text">#}
-    {#                        <h4>{% blocktrans %}Hoome beta version has come,{% endblocktrans %}<br>{% blocktrans %}Try it#}
-    {#                            now and enjoy.{% endblocktrans %}</h4>#}
-    {#                        <p>{% blocktrans %}We have released the information of California State Contractors, Designers#}
-    {#                            and Architects.#}
-    {#                            Other States' information are comming soon.{% endblocktrans %}#}
-    {#                            <br><br>#}
-    {#                            {% blocktrans %}We thrive to build more functionality and improve data analyzing power to#}
-    {#                                enhance user#}
-    {#                                experience in Hoome platform. {% endblocktrans %}#}
-    {#                        </p>#}
-    {#                        <ul>#}
-    {#                            <li>#}
-    {#                                <div class="primary-button">#}
-    {#                                    <a href="#" class="scroll-top">{{ Start_Search }}</a>#}
-    {#                                </div>#}
-    {#                            </li>#}
-    {#                        </ul>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <div class="col-md-6">#}
-    {#                    <div class="right-image">#}
-    {#                        <img src="{% static 'image/homepage/what-we-do.png' %}" alt="">#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
-
 
     <div id="fun-facts">
         <div class="container">
@@ -220,28 +221,30 @@
         </div>
     </div>
     <div id="us-data" class="page-section">
-        <div class='tableauPlaceholder' id='viz1507635143106' style='position: relative'>
-            <noscript><a href='#'><img alt='Sheet 2 '
-                                       src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1_rss.png'
-                                       style='border: none'/></a></noscript>
-            <object class='tableauViz' style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
-                <param name='embed_code_version' value='2'/>
-                <param name='site_root' value=''/>
-                <param name='name' value='Book2_13623&#47;Sheet2'/>
-                <param name='tabs' value='no'/>
-                <param name='toolbar' value='yes'/>
-                <param name='static_image'
-                       value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1.png'/>
-                <param name='animate_transition' value='yes'/>
-                <param name='display_static_image' value='yes'/>
-                <param name='display_spinner' value='yes'/>
-                <param name='display_overlay' value='yes'/>
-                <param name='display_count' value='yes'/>
-                <param name='toolbar' value='no'/>
-                <param name='showShareOptions' value='false'/>
-                <param name='tabs' value='no'/>
-            </object>
+        <div class="container">
+            <div class='tableauPlaceholder' id='viz1507635143106' style='position: relative'>
+                <noscript><a href='#'><img alt='Sheet 2 '
+                                           src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1_rss.png'
+                                           style='border: none'/></a></noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
+                    <param name='embed_code_version' value='2'/>
+                    <param name='site_root' value=''/>
+                    <param name='name' value='Book2_13623&#47;Sheet2'/>
+                    <param name='tabs' value='no'/>
+                    <param name='toolbar' value='yes'/>
+                    <param name='static_image'
+                           value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2_13623&#47;Sheet2&#47;1.png'/>
+                    <param name='animate_transition' value='yes'/>
+                    <param name='display_static_image' value='yes'/>
+                    <param name='display_spinner' value='yes'/>
+                    <param name='display_overlay' value='yes'/>
+                    <param name='display_count' value='yes'/>
+                    <param name='toolbar' value='no'/>
+                    <param name='showShareOptions' value='false'/>
+                    <param name='tabs' value='no'/>
+                </object>
+            </div>
         </div>
         <script type='text/javascript'>                    var divElement = document.getElementById('viz1507635143106');
         var vizElement = divElement.getElementsByTagName('object')[0];

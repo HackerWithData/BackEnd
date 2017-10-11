@@ -3,12 +3,29 @@
      class="list-group-item list-group-item-action flex-column align-items-start">
 
     <div class="d-flex w-100 justify-content-between">
-        {#        TODO: make sure the counter is correct#}
+        {# TODO: make sure the counter is correct#}
         <h5 class="mb-1">{{ forloop.counter }} <a
                 href="{% url 'contractor' contractor.lic_num %}">{{ contractor.bus_name }}</a></h5>
+
     </div>
-    <p>{{ License_num }}: {{ contractor.lic_num }} </p>
-        <span class="mb-1">{{ License_Status }}: {{ contractor.lic_status }}</span> </br>
+    <p>{{ License_num }}: {{ contractor.lic_num }} </br>
+        <span class="mb-1">{{ License_Status }}: </span>
+        {% if contractor.lic_status == "Expired" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% elif contractor.lic_status == "Cancelled" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% elif contractor.lic_status == "Revoked" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% elif contractor.lic_status == "Under Suspension" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% elif contractor.lic_status == "Inactive" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% elif contractor.lic_status == "Inactive and Under Suspension" %}
+        <span class="red"> {{contractor.lic_status }}</span> </br>
+        {% else %}
+        <span> {{contractor.lic_status }}</span> </br>
+        {% endif %}
+        </br>
         {% if lic_type == 'CONTRACTOR' %}
             {% with score_list|index:forloop.counter0 as score %}
                 {% if score %}
@@ -17,12 +34,12 @@
             {% endwith %}
             <p>{{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </p>
         {% endif %}
-    {% if lic_type == 'DESIGNER' %}
-    <p>{{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
-        {{ contractor.pos_code }} </p>
-    {% endif %}
-    {% if lic_type == 'Architect' %}
-        {{ Address }}: {{ contractor.street_address }} </br> {{ contractor.city }},{{ contractor.state }}
-        {{ contractor.pos_code }} </p>
-    {% endif %}
+        {% if lic_type == 'DESIGNER' %}
+            <p>{{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
+                    {{ contractor.pos_code }} </p>
+        {% endif %}
+        {% if lic_type == 'Architect' %}
+            {{ Address }}: {{ contractor.street_address }} </br> {{ contractor.city }},{{ contractor.state }}
+            {{ contractor.pos_code }} </p>
+        {% endif %}
 </div>

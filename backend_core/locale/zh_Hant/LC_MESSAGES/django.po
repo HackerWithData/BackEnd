@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-10 15:29+0000\n"
+"POT-Creation-Date: 2017-10-11 01:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,6 +92,7 @@ msgid "Dismiss"
 msgstr "關閉"
 
 #: contractors/views.py:146
+#, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
 "    The company holds a license number according to {data_source}. According "
@@ -103,7 +104,8 @@ msgid ""
 "    "
 msgstr ""
 "{bus_name} 是壹家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
-"相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為{score}， 評定區間為{rank}。如果您有意雇傭{bus_name}，我們建議您再次在"
+"相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
+"{score}， 評定區間為{rank}。如果您有意雇傭{bus_name}，我們建議您再次在"
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
@@ -144,47 +146,45 @@ msgstr ""
 "{data_source}確認他們的證件並通過我們向他們聯系，我們會提供更多關於該商家的信"
 "息。"
 
-#: home/templates/home/home.html:79
-#, fuzzy
-#| msgid "Find the excellent professionals."
+#: home/templates/home/home.html:105
 msgid "Find excellent professionals"
-msgstr "找到您心儀的專業的裝修人士"
+msgstr "篩選優秀的裝修團隊"
 
-#: home/templates/home/home.html:113
+#: home/templates/home/home.html:139
 msgid "What We Do"
-msgstr "我們做什麽"
+msgstr "我們的服務"
 
-#: home/templates/home/home.html:123
+#: home/templates/home/home.html:149
 msgid "Data Analysis"
 msgstr "數據分析"
 
-#: home/templates/home/home.html:124
+#: home/templates/home/home.html:150
 msgid ""
-"Using big data analysis to rate 223435 California licensed\n"
+"Using big data analysis to rate 215606 California licensed\n"
 "                            contractors."
-msgstr "通過數據對加州223435承包商進行分值評定"
+msgstr "通過數據分析對加州215606承包商進行分值評定"
 
-#: home/templates/home/home.html:132
+#: home/templates/home/home.html:158
 msgid "Project Management"
 msgstr "項目管理"
 
-#: home/templates/home/home.html:133
+#: home/templates/home/home.html:159
 msgid ""
 "Real-time monitor and manage the project Create new industry\n"
 "                            standard"
-msgstr "對項目進行實時把控 建立裝修行業標準 "
+msgstr "對項目進行實時監管 建立裝修行業標準 "
 
-#: home/templates/home/home.html:142
+#: home/templates/home/home.html:168
 msgid "Payment Guarantee"
 msgstr "付款保障"
 
-#: home/templates/home/home.html:143
+#: home/templates/home/home.html:169
 msgid ""
 " Save payment in our platform to ensure safety on\n"
 "                            both sides"
-msgstr "平臺進行支付托管 保障雙方權益 "
+msgstr "平臺進行工程款托管 保障雙方權益 "
 
-#: home/templates/home/home.html:190
+#: home/templates/home/home.html:182
 msgid "Database in California State"
 msgstr "加州數據庫"
 
@@ -232,15 +232,27 @@ msgstr "匿名用戶"
 msgid "Find Professionals"
 msgstr "尋找裝修專業人士或承包商"
 
-#: search/templates/search_bar/search_bar.html:11
+#: search/templates/search_bar/search_bar.html:12
 msgid "Zipcode or City"
 msgstr "請輸入郵政編碼或者城市名稱"
 
-#: search/templates/search_bar/search_bar.html:13
+#: search/templates/search_bar/search_bar.html:15
 msgid "Current Location"
 msgstr "當前位置"
 
-#: search/templates/search_list/search_list.html:65
+#: search/templates/search_bar/search_bar.html:31
+msgid "Contractor"
+msgstr "承包商"
+
+#: search/templates/search_bar/search_bar.html:70
+msgid "Designer"
+msgstr "設計師"
+
+#: search/templates/search_bar/search_bar.html:87
+msgid "Architect"
+msgstr "建築師"
+
+#: search/templates/search_list/search_list.html:92
 msgid "No Contractor match your condition"
 msgstr "沒有商家符合您的要求"
 
@@ -668,7 +680,7 @@ msgid "Gender"
 msgstr "性別"
 
 msgid "Field Selections"
- msgstr "專長選擇"
+msgstr "專長選擇"
 
 msgid "Postal Code"
 msgstr "郵編"
