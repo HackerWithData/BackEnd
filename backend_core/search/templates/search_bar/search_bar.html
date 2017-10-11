@@ -198,6 +198,9 @@
         });
 
         $('#searchForm').submit(function (event) {
+            console.log($('#inlineFormInputSearchType').val());
+            console.log($('#inlineFormInputSearchTargetType').val());
+
             switch (searchLocationType) {
                 case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
                     event.preventDefault();

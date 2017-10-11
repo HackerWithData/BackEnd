@@ -39,16 +39,19 @@ def search_by_zipcode(request):
     search_type = request.GET['type'].upper()
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
+    print search_type
+    print search_target
 
     # mediate query set
     if search_type.upper() == 'NAME':
         # name search
-        qs_prof = Professional.objects.filter(name__iexact=search_target)
+        qs_prof = Professional.objects.filter(name__icontains=search_target)
         prof_qs = qs_prof
         if not prof_qs:
             return prof_qs
         # retrieve type of value from name search
-        professional = prof_qs.values('type')[0].upper()
+        print prof_qs.values('type')[0]
+        professional = prof_qs.values('type')[0]['type'].upper()
     else:
         # type search
         prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
