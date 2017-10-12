@@ -20,6 +20,7 @@ from .utils import convert_hscore_to_rank
 
 import datetime
 
+
 # Create your views here.
 
 def getStateFullName(state):
@@ -130,8 +131,9 @@ def display_contractor(request, contractor_id):
         overview = _("""{bus_name} is a contractor company located in {csp} . 
     The company holds a license number according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score is {score} and is rated as {rank}.
     The License is verified as active when we checked last time. If you consider to hire {bus_name}, 
-    we suggest double-checking the license status and contact through us.
-    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore, rank=letter_grade,
+    we suggest contact through us. We will share more information about this designer to you.
+    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore,
+                rank=letter_grade,
                 full_state_name=full_state_name)
 
     # ,contractor.bus_name

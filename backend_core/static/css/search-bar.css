@@ -66,6 +66,7 @@
     background-color: #6892D5
 }
 
+pip
 .blue-btn:hover {
     background-color: #6892D5
 }
@@ -80,14 +81,14 @@
         margin: 0 25%;
     }
 
-
-
     #searchForm .search-row .dropdown {
         width: 45%;
     }
-    #searchForm  .search-row > *:first-child {
+
+    #searchForm .search-row > *:first-child {
         width: 52.5%;
     }
+
     .search-row input, .search-row
     button {
         border-radius: 0
@@ -102,7 +103,7 @@
         width: 64px;
     }
 
-    .search-row > *:first-child,.search-row > *:last-child  {
+    .search-row > *:first-child, .search-row > *:last-child {
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
     }
