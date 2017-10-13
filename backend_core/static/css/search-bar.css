@@ -1,3 +1,13 @@
+.target-container-close {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.target-container-open {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 0px;
+}
+
 .search-categories {
     list-style-type: none;
     margin: 0;
@@ -30,6 +40,10 @@
     left: 0;
     width: 80%;
     margin: 0 10%;
+}
+
+.dropdown-suggestion {
+    margin: 0;
 }
 
 #searchForm .form-row {
