@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-
+{% load i18n %}
 {#style#}
 
 {% block metainfo %}
@@ -81,26 +81,27 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.architect.csp }}</li>
-                        {% if  info_dict.score %}
-                            <li>{{ Score }}: {{ info_dict.score }}</li>
-                        {%  endif %}
+                            {% if  info_dict.score %}
+                                <li id="score-popup" class='popup' onmouseover="popUp()" onclick="popUp()">
+                                    {{ Score }}: {{ info_dict.score }}
+                                    <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>
+                                    <div id="Score-explaination" class="popuptext">
+                                        <h2>{{ Score }}</h2>
+                                        <p>{% blocktrans %}Hoome Score is caculated by how many years it is in the
+                                            industry,
+                                            suspension history,
+                                            complaints and other many factors. Now we calculate the Hoome Score by
+                                            number of
+                                            work experience, suspension
+                                            history, complaints. Later the score will evolve with more
+                                            factors. {% endblocktrans %}</p>
+                                    </div>
+                                </li>
+                            {% endif %}
                             {% if info_dict.architect.phone %}
                                 <li>{{ Phone }}: {{ info_dict.architect.phone }}</li>
                             {% endif %}
                             <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
-                                {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
-                                {#                                <div class="star-ratings-css">#}
-                                {#                                    <div class="star-ratings-css-top" style="width:100%">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                    <div class="star-ratings-css-bottom">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
                             </li>
                         </ul>
                     </div>
@@ -212,6 +213,12 @@
 
         }
 
+        // When the user clicks on <div>, open the popup
+        function popUp() {
+            var popup = document.getElementById("Score-explaination");
+            popup.classList.toggle("show");
+        }
+
         {#        TODO: simplify the function by changing naming convention#}
 
         function projectPhotosListener() {
@@ -260,7 +267,9 @@
             $('#readmore').click(function () {
                 readMore();
             });
-
+            $("#Score-explaination").css({
+                'width': ($(".head-info").width() + 'px')
+            });
             $('.popup-with-form').magnificPopup({
                 type: 'inline',
                 preloader: true,
