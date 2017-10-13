@@ -4,7 +4,8 @@
         {# TODO: make sure the counter is correct#}
         <h5 class="mb-1">
             {{ forloop.counter }}
-            <a href="{% url professional.type professional.lic_num %}">
+            <!--{{ professional.type|lower }}-->
+            <a href="{% url professional.type|lower professional.lic_num %}">
                 {{ professional.bus_name }}
             </a>
         </h5>
@@ -12,7 +13,7 @@
         {{ License_num }}: {{ professional.lic_num }} </br>
         <!--TODO: validate to_list tag-->
             <span class="mb-1">{{ License_Status }}: </span>
-        {% if professional.lic_status != "Expired" or professional.lic_status != "Cancelled" or professional.lic_status != "Canceled" or professional.lic_status != "Revoked" or professional.lic_status != "Under Suspension" or professional.lic_status != "Inactive" or professional.lic_status != "Inactive and Under Suspension" %}
+        {% if professional.lic_status == "Expired" or professional.lic_status == "Cancelled" or professional.lic_status == "Canceled" or professional.lic_status == "Revoked" or professional.lic_status == "Under Suspension" or professional.lic_status == "Inactive" or professional.lic_status == "Inactive and Under Suspension" %}
             <span class="red"> {{professional.lic_status }}</span>
         {% else %}
             <span> {{professional.lic_status }}</span>
@@ -20,7 +21,7 @@
         </br>
         {% if professional.type == 'CONTRACTOR' %}
             {% if professional.score %}
-                {% if professional.lic_status != "Expired" or professional.lic_status != "Cancelled" or professional.lic_status != "Canceled" or professional.lic_status != "Revoked" or professional.lic_status != "Under Suspension" or professional.lic_status != "Inactive" or professional.lic_status != "Inactive and Under Suspension" %}
+                {% if professional.lic_status != "Expired" and professional.lic_status != "Cancelled" and professional.lic_status != "Canceled" and professional.lic_status != "Revoked" and professional.lic_status != "Under Suspension" and professional.lic_status != "Inactive" and professional.lic_status != "Inactive and Under Suspension" %}
                     {{ Score }}:  {{ score }} </br>
                 {% endif %}
             {% endif %}

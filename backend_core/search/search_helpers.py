@@ -77,7 +77,6 @@ def search_by_zipcode(request):
             item['score'] = hscore.score
             item['rank'] = convert_hscore_to_rank(hscore)
             item['type'] = CONTRACTOR
-            ret_list.append(item)
         elif professional.type.upper() == ARCHITECT:
             architect = Architect.objects.filter(lic_num=professional.lic_num).first()
             item = model_to_dict(architect).copy()
