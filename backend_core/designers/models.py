@@ -26,3 +26,6 @@ class Designer(models.Model):
     pos_code = models.CharField(max_length=25, blank=True, null=True)
     country = models.CharField(max_length=63, blank=True, null=True)
 
+    def __iter__(self):
+        return self.__dict__.iteritems()
+
