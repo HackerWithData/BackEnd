@@ -22,16 +22,16 @@
         {% if professional.type == 'CONTRACTOR' %}
             {% if professional.score %}
                 {% if professional.lic_status != "Expired" and professional.lic_status != "Cancelled" and professional.lic_status != "Canceled" and professional.lic_status != "Revoked" and professional.lic_status != "Under Suspension" and professional.lic_status != "Inactive" and professional.lic_status != "Inactive and Under Suspension" %}
-                    {{ Score }}:  {{ score }} </br>
+                    {{ Score }}:  {{ professional.score }} </br>
                 {% endif %}
             {% endif %}
             {{ Address }}: {{ professional.street_address }} {{ professional.csp }} </br>
         {% elif professional.type == 'DESIGNER' %}
-            {{ Address }}: {{ professional.address }} </br> {{ professional.city }},{{ professional.state }}
-                    {{ professional.pos_code }} </br>
+            {{ Address }}: {{ professional.address }} </br>
+            {{ professional.city }},{{ professional.state }} {{ professional.pos_code }} </br>
         {% elif professional.type == 'Architect' %}
-            {{ Address }}: {{ professional.street_address }} </br> {{ professional.city }},{{ professional.state }}
-            {{ professional.pos_code }} </br>
+            {{ Address }}: {{ professional.street_address }} </br>
+            {{ professional.city }},{{ professional.state }}{{ professional.pos_code }} </br>
 {#            TODO: Add meister#}
         {% endif %}
 </div>
