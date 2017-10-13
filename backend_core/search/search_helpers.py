@@ -89,7 +89,8 @@ def search_by_zipcode(request):
             raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
         ret_list.append(item)
 
-    return ret_list
+    sorted_list = sorted(ret_list, key=lambda k: k['score'] if k['type'] == CONTRACTOR else 1000, reverse=True)
+    return sorted_list
 
 
 class UndefinedProfessionalType(Exception):
