@@ -27,8 +27,8 @@ class Contractor(models.Model):
 
     #ratings = GenericRelation(Rating, related_query_name='contractors')
 
-    # def __unicode__(self):
-    #     return self.LicNum
+    def __iter__(self):
+        return self.__dict__.iteritems()
 
 
 class BondCompany(models.Model):

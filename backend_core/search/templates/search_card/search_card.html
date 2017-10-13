@@ -1,61 +1,37 @@
 {% load search_extras %}
-<div id="searchListCard{{ contractor.lic_num }}"
-     class="list-group-item list-group-item-action flex-column align-items-start">
-
+<div id="searchListCard{{ professional.lic_num }}" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
         {# TODO: make sure the counter is correct#}
-        <h5 class="mb-1">{{ forloop.counter }} <a
-                href="{% url 'contractor' contractor.lic_num %}">{{ contractor.bus_name }}</a></h5>
-
+        <h5 class="mb-1">
+            {{ forloop.counter }}
+            <a href="{% url 'professional' professional.lic_num %}">
+                {{ professional.bus_name }}
+            </a>
+        </h5>
     </div>
-    {{ License_num }}: {{ contractor.lic_num }} </br>
-        <span class="mb-1">{{ License_Status }}: </span>
-        {% if contractor.lic_status == "Expired" %}
-        <span class="red"> {{contractor.lic_status }}</span>
-        {% elif contractor.lic_status == "Cancelled" %}
-        <span class="red"> {{contractor.lic_status }}</span>
-        {% elif contractor.lic_status == "Revoked" %}
-        <span class="red"> {{contractor.lic_status }}</span>
-        {% elif contractor.lic_status == "Under Suspension" %}
-        <span class="red"> {{contractor.lic_status }}</span>
-        {% elif contractor.lic_status == "Inactive" %}
-        <span class="red"> {{contractor.lic_status }}</span>
-        {% elif contractor.lic_status == "Inactive and Under Suspension" %}
-        <span class="red"> {{contractor.lic_status }}</span>
+        {{ License_num }}: {{ professional.lic_num }} </br>
+        {% to_list "Expired" "Cancelled" "Canceled" "Revoked" "Under Suspension" "Inactive" "Inactive and Under Suspension" as inactive_list %}
+            <span class="mb-1">{{ License_Status }}: </span>
+        {% if professional.lic_status in inactive_list %}
+            <span class="red"> {{professional.lic_status }}</span>
         {% else %}
-        <span> {{contractor.lic_status }}</span>
+            <span> {{professional.lic_status }}</span>
         {% endif %}
         </br>
-        {% if lic_type == 'CONTRACTOR' %}
-            {% with score_list|index:forloop.counter0 as score %}
-                {% if score %}
-                    {% if contractor.lic_status == "Expired" %}
-
-                    {% elif contractor.lic_status == "Cancelled" %}
-
-                    {% elif contractor.lic_status == "Canceled" %}
-
-                    {% elif contractor.lic_status == "Revoked" %}
-
-                    {% elif contractor.lic_status == "Under Suspension" %}
-
-                    {% elif contractor.lic_status == "Inactive" %}
-
-                    {% elif contractor.lic_status == "Inactive and Under Suspension" %}
-
-                    {% else %}
-                        {{ Score }}:  {{ score }} </br>
-                    {% endif %}
+        {% if professional.type == 'CONTRACTOR' %}
+            {% if professional.score %}
+                {% to_list "Expired" "Cancelled" "Canceled" "Revoked" "Under Suspension" "Inactive" "Inactive and Under Suspension" as inactive_list %}
+                {% if professional.lic_status not in inactive_list %}
+                    {{ Score }}:  {{ score }} </br>
                 {% endif %}
-            {% endwith %}
-            {{ Address }}: {{ contractor.street_address }} {{ contractor.csp }} </br>
-        {% endif %}
-        {% if lic_type == 'DESIGNER' %}
-            {{ Address }}: {{ contractor.address }} </br> {{ contractor.city }},{{ contractor.state }}
-                    {{ contractor.pos_code }} </br>
-        {% endif %}
-        {% if lic_type == 'Architect' %}
-            {{ Address }}: {{ contractor.street_address }} </br> {{ contractor.city }},{{ contractor.state }}
-            {{ contractor.pos_code }} </br>
+            {% endif %}
+            {{ Address }}: {{ professional.street_address }} {{ professional.csp }} </br>
+        {% elif professional.type == 'DESIGNER' %}
+            {{ Address }}: {{ professional.address }} </br> {{ professional.city }},{{ professional.state }}
+                    {{ professional.pos_code }} </br>
+        {% elif professional.type == 'Architect' %}
+            {{ Address }}: {{ professional.street_address }} </br> {{ professional.city }},{{ professional.state }}
+            {{ professional.pos_code }} </br>
+{#            TODO: Add meister#}
         {% endif %}
 </div>

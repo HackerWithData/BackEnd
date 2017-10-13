@@ -12,7 +12,7 @@
                     <li class="suggestion-categories"><a href="#" type="Meister">Meister</a></li>
                 </ul>
             </div>
-            <input type="hidden" class="form-control" name="type" value="Name" id="inlineFormInputSearchType">
+            <input type="hidden" class="form-control" name="type" value="NameOrLic" id="inlineFormInputSearchType">
             <!--<span class="input-group-addon" id="currentLocationAddon">Nearby</span>-->
             <!--TODO: add dropdown in input for current location                       -->
             <div class="dropdown">
@@ -136,7 +136,6 @@
     //    Professional Subtype
     let categorySearchTarget;
 
-
     let options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -204,7 +203,7 @@
             switch (searchLocationType) {
                 case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
                     event.preventDefault();
-                    const type = $('#inlineFormInputSearchType').val() || 'Name';
+                    const type = $('#inlineFormInputSearchType').val() || 'NameOrLic';
                     const target = $('#inlineFormInputSearchTargetType').val();
                     const formData = {
                         'type': type,
