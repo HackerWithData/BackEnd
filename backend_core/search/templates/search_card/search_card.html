@@ -4,15 +4,15 @@
         {# TODO: make sure the counter is correct#}
         <h5 class="mb-1">
             {{ forloop.counter }}
-            <a href="{% url 'professional' professional.lic_num %}">
+            <a href="{% url professional.type professional.lic_num %}">
                 {{ professional.bus_name }}
             </a>
         </h5>
     </div>
         {{ License_num }}: {{ professional.lic_num }} </br>
-        {% to_list "Expired" "Cancelled" "Canceled" "Revoked" "Under Suspension" "Inactive" "Inactive and Under Suspension" as inactive_list %}
+        <!--TODO: validate to_list tag-->
             <span class="mb-1">{{ License_Status }}: </span>
-        {% if professional.lic_status in inactive_list %}
+        {% if professional.lic_status != "Expired" or professional.lic_status != "Cancelled" or professional.lic_status != "Canceled" or professional.lic_status != "Revoked" or professional.lic_status != "Under Suspension" or professional.lic_status != "Inactive" or professional.lic_status != "Inactive and Under Suspension" %}
             <span class="red"> {{professional.lic_status }}</span>
         {% else %}
             <span> {{professional.lic_status }}</span>
@@ -20,8 +20,7 @@
         </br>
         {% if professional.type == 'CONTRACTOR' %}
             {% if professional.score %}
-                {% to_list "Expired" "Cancelled" "Canceled" "Revoked" "Under Suspension" "Inactive" "Inactive and Under Suspension" as inactive_list %}
-                {% if professional.lic_status not in inactive_list %}
+                {% if professional.lic_status != "Expired" or professional.lic_status != "Cancelled" or professional.lic_status != "Canceled" or professional.lic_status != "Revoked" or professional.lic_status != "Under Suspension" or professional.lic_status != "Inactive" or professional.lic_status != "Inactive and Under Suspension" %}
                     {{ Score }}:  {{ score }} </br>
                 {% endif %}
             {% endif %}
