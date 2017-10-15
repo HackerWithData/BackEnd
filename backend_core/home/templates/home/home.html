@@ -8,17 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">
     <style>
-        {#        {% for path in background %}#}
-        {#            {% with 'image/background-pic/'|add:path as image_static %}#}
-        {#                .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {#}
-        {#                    background-image: url("{% static image_static %}");#}
-        {#                }#}
-        {#            {% endwith %}#}
-        {#        {% endfor %}#}
+        {#                {% for path in background %}#}
+        {#                    {% with 'image/background-pic/'|add:path as image_static %}#}
+        {#                        .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {#}
+        {#                            background-image: url("{% static image_static %}");#}
+        {#                        }#}
+        {#                    {% endwith %}#}
+        {#                {% endfor %}#}
+        {% for path in background %}
+            {% with 'image/background-pic/bg_set/'|add:path as image_static %}
+                .cd-hero-slider li:nth-of-type(1) {
+                    background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static image_static %}");
+                }
+            {% endwith %}
+        {% endfor %}
 
-        .cd-hero-slider li:nth-of-type(1) {
-            background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static 'image/background-pic/slide-14.jpeg' %}");
-        }
 
         {#        #what-we-do {#}
         {#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
@@ -141,48 +145,48 @@
         var target = document.getElementById('target-position');
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
     </script>
-{#    <div id="about" class="page-section">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col-md-12">#}
-{#                    <div class="section-heading">#}
-{#                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>#}
-{#                        <div class="line-dec"></div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="row">#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-{#                    <div class="service-item first-service">#}
-{#                        <div class="icon"></div>#}
-{##}
-{#                        <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %}Using big data analysis to rate 215606 California licensed#}
-{#                            contractors.{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-{#                    <div class="service-item second-service">#}
-{#                        <div class="icon">#}
-{#                        </div>#}
-{#                        <h4>{% blocktrans %}Project Management{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %}Real-time monitor and manage the project Create new industry#}
-{#                            standard{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-                    {#                                        TODO: Change the height dynamiclly#}
-{#                    <div class="service-item third-service">#}
-{#                        <div class="icon">#}
-{#                        </div>#}
-{#                        <h4>{% blocktrans %}Payment Guarantee{% endblocktrans %}</h4>#}
-{#                        <p>{% blocktrans %} Save payment in our platform to ensure safety on#}
-{#                            both sides{% endblocktrans %}</p>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    {#    <div id="about" class="page-section">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-12">#}
+    {#                    <div class="section-heading">#}
+    {#                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>#}
+    {#                        <div class="line-dec"></div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
+    {#                    <div class="service-item first-service">#}
+    {#                        <div class="icon"></div>#}
+    {##}
+    {#                        <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>#}
+    {#                        <p>{% blocktrans %}Using big data analysis to rate 215606 California licensed#}
+    {#                            contractors.{% endblocktrans %}</p>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
+    {#                    <div class="service-item second-service">#}
+    {#                        <div class="icon">#}
+    {#                        </div>#}
+    {#                        <h4>{% blocktrans %}Project Management{% endblocktrans %}</h4>#}
+    {#                        <p>{% blocktrans %}Real-time monitor and manage the project Create new industry#}
+    {#                            standard{% endblocktrans %}</p>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
+    {#                                        TODO: Change the height dynamiclly#}
+    {#                    <div class="service-item third-service">#}
+    {#                        <div class="icon">#}
+    {#                        </div>#}
+    {#                        <h4>{% blocktrans %}Payment Guarantee{% endblocktrans %}</h4>#}
+    {#                        <p>{% blocktrans %} Save payment in our platform to ensure safety on#}
+    {#                            both sides{% endblocktrans %}</p>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 
     <div id="fun-facts">
         <div class="container">
@@ -256,8 +260,8 @@
             vizElement.parentNode.insertBefore(scriptElement, vizElement);
         </script>
     </div>
-    <div class="blocker" >
-    <div class="container"></div>
+    <div class="blocker">
+        <div class="container"></div>
     </div>
     <div class="container" style="height:20px"></div>
 {% endblock %}

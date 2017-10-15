@@ -2,14 +2,20 @@
 <form class="form" id="searchForm" action="/search" method="get">
     <div class="form-row">
         <div class="search-row">
-            <div class="dropdown target-container">
-                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" name="target" id="inlineFormInputSearchTargetType"
+            <div class="dropdown target-container target-container-close">
+                <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" name="target"
+                       id="inlineFormInputSearchTargetType"
                        placeholder="{% trans 'Find Professionals' %}">
                 <ul class="dropdown-suggestion dropdown-menu">
-                    <li class="suggestion-categories"><a href="#" type="Contractor">General Contractor</a></li>
-                    <li class="suggestion-categories"><a href="#" type="Contractor">Architect</a></li>
-                    <li class="suggestion-categories"><a href="#" type="Designer">Designer</a></li>
-                    <li class="suggestion-categories"><a href="#" type="Meister">Meister</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Contractor"
+                                                         target="General Contractor">{% trans 'General Contractor' %}</a>
+                    </li>
+                    <li class="suggestion-categories"><a href="#" type="Contractor"
+                                                         target="Architect">{% trans 'Architect' %}</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Designer"
+                                                         target="Designer">{% trans 'Designer' %}</a></li>
+                    <li class="suggestion-categories"><a href="#" type="Meister"
+                                                         target="Meister">{% trans 'Meister' %}</a></li>
                 </ul>
             </div>
             <input type="hidden" class="form-control" name="type" value="NameOrLic" id="inlineFormInputSearchType">
@@ -30,32 +36,60 @@
     </div>
 </form>
 
-<ul class="search-categories" >
+<ul class="search-categories">
     <li class="search-category">
         <div class="dropdown">
             <div class="dropdown-toggle" data-toggle="dropdown">
                 <span></span>
-                <a href="#" class="search-category-title" >
-                    <div id="contractor-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Contractor' %}</span> <span class="caret"></span></a>
+                <a href="#" class="search-category-title">
+                    <div id="contractor-icon"></div>&nbsp;<span
+                        class="search-category-word">{% trans 'Contractor' %}</span> <span class="caret"></span></a>
             </div>
             <ul class="dropdown-menu contractor-dropdown">
-                <li class="contractor-categories"><a href="#" type="Contractor">General Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Carpentry Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Concrete Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Doors, Gates and Activating Devices</a>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="General Contractor">{% trans 'General Contractor' %}</a>
                 </li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Drywall Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Electrical Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Fencing Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">HVAC</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Kitchen & Bath Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Landscaping Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Painting And Decorating Contractor</a>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Carpentry Contractor">{% trans 'Carpentry Contractor' %}</a>
                 </li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Plumbing Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Roofing</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Sheet Metal Contractor</a></li>
-                <li class="contractor-categories"><a href="#" type="Contractor">Swimming Pool Contractor</a></li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Concrete Contractor">{% trans 'Concrete Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Doors, Gates and Activating Devices">{% trans 'Doors, Gates and Activating Devices' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Drywall Contractor">{% trans 'Drywall Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Electrical Contractor">{% trans 'Electrical Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Fencing Contractor">{% trans 'Fencing Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor" target="HVAC">{% trans 'HVAC' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Kitchen & Bath Contractor">{% trans 'Kitchen & Bath Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Landscaping Contractor">{% trans 'Landscaping Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Painting And Decorating Contractor">{% trans 'Painting And Decorating Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Plumbing Contractor">{% trans 'Plumbing Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Roofing">{% trans 'Roofing' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Sheet Metal Contractor">{% trans 'Sheet Metal Contractor' %}</a>
+                </li>
+                <li class="contractor-categories"><a href="#" type="Contractor"
+                                                     target="Swimming Pool Contractor">{% trans 'Swimming Pool Contractor' %}</a>
+                </li>
             </ul>
         </div>
     </li>
@@ -73,7 +107,8 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="DESIGNER" target="DESIGNER"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">{%  trans 'Designer' %}</span></a>
+            <a href="#" class="search-category-title" type="DESIGNER" target="DESIGNER">
+                <div id="designer-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Designer' %}</span></a>
         </div>
     </li>
     <li class="search-category">
@@ -90,12 +125,15 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="ARCHITECT" target="ARCHITECT"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Architect' %}</span></a>
+            <a href="#" class="search-category-title" type="ARCHITECT" target="ARCHITECT">
+                <div id="architect-icon"></div>&nbsp;<span
+                    class="search-category-word">{% trans 'Architect' %}</span></a>
         </div>
     </li>
     <li class="search-category">
-            <div class="single-category-link">
-            <a href="#" class="search-category-title" type="Meister" target="MEISTER"><div id="meister-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Meister' %}</span></a>
+        <div class="single-category-link">
+            <a href="#" class="search-category-title" type="Meister" target="MEISTER">
+                <div id="meister-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Meister' %}</span></a>
         </div>
     </li>
 </ul>
@@ -107,6 +145,7 @@
 
     //    professional enums
     //    TODO: update using static json
+    //    TODO: Need to consider translation in frontend or backend
     const PROFESSIONAL_TYPE = [
         {value: 'General Contractor', data: {category: 'Contractor'}},
         {value: 'Landscaping Contractor', data: {category: 'Contractor'}},
@@ -152,8 +191,9 @@
             }
         );
 
-        $('.contractor-dropdown').on('click', 'a', function () {
-            categorySearchTarget = this.text;
+        $('.contractor-dropdown').on('click', 'a', function (event) {
+            event.preventDefault();
+            categorySearchTarget = this.target;
             categorySearchType = this.type;
             categoryNearbySearch = true;
             getLocation();
@@ -170,12 +210,12 @@
 //        TODO: Add meister
         $('.suggestion-categories a').click(function (event) {
             event.preventDefault();
-            if (this.type !== 'Meister'){
+            if (this.type !== 'Meister') {
                 $('#inlineFormInputSearchType').val(this.type);
-                $('#inlineFormInputSearchTargetType').val(this.text)
+                $('#inlineFormInputSearchTargetType').val(this.target);
                 $('.dropdown-suggestion').hide();
+                $('#searchForm .target-container').removeClass('target-container-open').addClass('target-container-close');
             }
-
         });
 
         $('#currentLocationDropdownItem').click(function () {
@@ -197,8 +237,8 @@
         });
 
         $('#searchForm').submit(function (event) {
-            console.log($('#inlineFormInputSearchType').val());
-            console.log($('#inlineFormInputSearchTargetType').val());
+            {#            console.log($('#inlineFormInputSearchType').val());#}
+            {#            console.log($('#inlineFormInputSearchTargetType').val());#}
 
             switch (searchLocationType) {
                 case INPUT_SEARCH_LOCATION_TYPE_GEOINFO:
@@ -260,12 +300,19 @@
         $('#inlineFormInputSearchTargetType').keydown(function (event) {
             $('.dropdown-suggestion').hide();
         });
-        
-        $('#inlineFormInputSearchTargetType').click(function (event) {
-            $('.target-container .dropdown-menu').slideToggle();
-        });
 
-    });
+        $('#inlineFormInputSearchTargetType').click(function (event) {
+            $('.target-container ul.dropdown-suggestion.dropdown-menu').slideToggle(0, function () {
+                if ($('#searchForm .dropdown.target-container').hasClass('target-container-close')) {
+                    $('#searchForm .target-container').removeClass('target-container-close').addClass('target-container-open');
+                }
+                else {
+                    $('#searchForm .target-container').removeClass('target-container-open').addClass('target-container-close');
+                }
+            });
+        });
+    })
+    ;
 
     function getLocation() {
         if (navigator.geolocation) {

@@ -1,6 +1,6 @@
- body, html {
-    background-color: #F8FCFB;
-}
+/*body, html {*/
+/*background-color: #ffffff;*/
+/*}*/
 
 body {
     min-height: 100%;
@@ -10,7 +10,19 @@ body {
     box-sizing: border-box;
 }
 
+#architect-content {
+    margin: 5px;
+    padding: 0 5%;
+    min-height: 80%;
+}
+
 #contractor-content {
+    margin: 5px;
+    padding: 0 5%;
+    min-height: 80%;
+}
+
+#designer-content {
     margin: 5px;
     padding: 0 5%;
     min-height: 80%;
@@ -91,8 +103,13 @@ h1 {
 /*********************** masthead **********************/
 
 #masthead {
-    margin: 0;
-    padding: 0;
+    width: auto;
+    background-size: cover;
+    min-height: 300px;
+    display: flex;
+    padding: 0px;
+    margin-top: 80px;
+    box-sizing: border-box;
     color: black;
 }
 
@@ -123,9 +140,9 @@ h1 {
     /*margin: 0px;*/
 }
 
-#masthead .head-info {
-    padding-left: 0px;
-}
+/*#masthead .head-info {*/
+/*padding-left: 0px;*/
+/*}*/
 
 /* other information*/
 .horizontal-list ul {
@@ -159,7 +176,7 @@ h1 {
 }
 
 /*#BasicInfo table td {*/
-    /*font-size: 1px;*/
+/*font-size: 1px;*/
 /*}*/
 
 #BasicInfo table {
@@ -201,21 +218,18 @@ h1 {
     padding: 0px;
 }
 
-
-
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 
     #contractor-content {
         margin: 0 5%;
     }
 
     /*.container {*/
-        /*margin: 0 1%;*/
-        /*padding: 0px;*/
-        /*width: 100%;*/
-        /*box-sizing: border-box;*/
+    /*margin: 0 1%;*/
+    /*padding: 0px;*/
+    /*width: 100%;*/
+    /*box-sizing: border-box;*/
     /*}*/
-
     #masthead .container {
         /*width:auto;*/
         margin: 0 10%;
@@ -256,62 +270,6 @@ h1 {
 
 }
 
-@media (max-width: 767px) {
-    .container {
-        margin: 0px;
-        padding: 0px;
-        width: auto;
-    }
-
-    .horizontal-list ul li {
-        font-size: 0.75em;
-        padding: 5px;
-        display: block;
-    }
-
-    .menu .nav li a {
-        padding: auto 5px;
-    }
-
-    .menu .nav .nav-item:first-child a {
-        padding-left: 0px;
-    }
-
-    .menu .nav .nav-item:last-child a {
-        padding-right: 15px;
-    }
-
-    #masthead .container {
-        margin: 0 7.5%;
-    }
-
-    #BasicInfo {
-        width: 100%;
-    }
-
-    #summary {
-        width: auto;
-    }
-
-    #BasicInfo {
-        padding-left: 0px;
-    }
-
-    #Review {
-        padding-left: 0px;
-        padding-right: 0px;
-        /*padding: auto 0px;*/
-    }
-
-    #photo {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        /*position: relative;*/
-    }
-
-}
-
 /*photos*/
 #photo {
     height: auto;
@@ -336,10 +294,6 @@ h1 {
 #photo .panel-body {
     padding: 0px;
 }
-
-
-
-
 
 @media (max-width: 480px) {
     #photo {
@@ -483,47 +437,190 @@ h1 {
 /*width: auto;*/
 /*}*/
 
-
-
 /*#review-submission {*/
-    /*background-color: transparent;*/
+/*background-color: transparent;*/
 /*}*/
 
 /*#review-submission * {*/
-    /*background-color: transparent;*/
+/*background-color: transparent;*/
 /*}*/
-.white-popup-block {
-    background: #FFF;
-    padding: 20px 30px;
-    text-align: left;
-    max-width: 650px;
-    margin: 40px auto;
+/*.white-popup-block {*/
+/*background: #FFF;*/
+/*padding: 20px 30px;*/
+/*text-align: left;*/
+/*max-width: 650px;*/
+/*margin: 40px auto;*/
+/*position: relative;*/
+/*}*/
+
+/* Popup container - can be anything you want */
+.popup {
     position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.header .navbar  {
-    color: #000000 ;
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 100%;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 20%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-bottom-color: #555;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 0px;
+        padding: 0px;
+        width: auto;
+    }
+
+    .header a.navbar-brand {
+        text-align: center;
+        vertical-align: top;
+    }
+
+    .header .logo.cursive {
+        padding: 0px 10px;
+
+    }
+
+    .horizontal-list ul {
+        width: 100%;
+    }
+
+    .horizontal-list ul li {
+        font-size: 0.75em;
+        padding: 5px;
+        display: block;
+        width: 100%;
+
+    }
+
+    .menu .nav li a {
+        padding: auto 5px;
+    }
+
+    .menu .nav .nav-item:first-child a {
+        padding-left: 0px;
+    }
+
+    .menu .nav .nav-item:last-child a {
+        padding-right: 15px;
+    }
+
+    #masthead .container {
+        margin: 0 7.5%;
+    }
+
+    #BasicInfo {
+        width: 100%;
+    }
+
+    #summary {
+        width: auto;
+    }
+
+    #BasicInfo {
+        padding-left: 0px;
+    }
+
+    #Review {
+        padding-left: 0px;
+        padding-right: 0px;
+        /*padding: auto 0px;*/
+    }
+
+    #photo {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        /*position: relative;*/
+    }
+
+    .row > div {
+        padding-right: 0px;
+    }
+
+}
+
+.header .navbar {
+    color: #000000;
 }
 
 .header .navbar .logo.cursive {
-    color: #000000;
-    background-color: inherit;
+    color: #ffffff;
 }
 
-
-
-.header .navbar-nav > li > a {
-    color: #121212 !important;
-}
-.header.active #main-nav .navbar-nav > li > a {
-    color: #ffffff !important;
-
-}
-
-.header.active  {
-        background-color: #6892D5;
-}
 .header.active .navbar .logo.cursive {
     color: #ffffff;
+}
+
+.header.active #main-nav .navbar-nav > li > a {
+    color: #ffffff;
+
+}
+
+.header {
+    background-color: #6892D5;
+}
+
+.header.active {
+    background-color: #6892D5;
+}
+
+.header .navbar-nav > li > a {
+    color: #ffffff;
+    background-color: #6892D5;
 }
 

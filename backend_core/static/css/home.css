@@ -627,15 +627,14 @@ footer, footer * {
         position: relative;
     }
 
-.blocker {
-    background-color: #f4f4f4;
-    position: relative;
-    margin-top: -145px;
-    height: 80px;
-    width: 100%;
-    z-index: 9999999999;
-}
-
+    .blocker {
+        background-color: #f4f4f4;
+        position: relative;
+        margin-top: -145px;
+        height: 80px;
+        width: 100%;
+        z-index: 9999999999;
+    }
 }
 
 /*.autocomplete-suggestions strong {*/
