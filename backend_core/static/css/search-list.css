@@ -69,6 +69,7 @@
 
 /* search bar location*/
 .search-bar {
+    background-color: rgb(245,245,245);
     margin-top: 100px;
     padding-top: 100px;
     box-sizing: border-box;
@@ -121,8 +122,12 @@
 
 @media (min-width: 769px) {
     .search-bar {
-        width: 50%;
-        margin: 0 25%;
+        min-height:25%;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 25%;
+        padding-right: 25%;
     }
 
 
@@ -268,4 +273,18 @@
 .red{
     color: red;
     font-weight: 700;
+}
+
+.dropdown-menu.contractor-dropdown::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 35%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #ffffff;
 }
