@@ -8,25 +8,17 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">
     <style>
-        {#                {% for path in background %}#}
-        {#                    {% with 'image/background-pic/'|add:path as image_static %}#}
-        {#                        .cd-hero-slider li:nth-of-type({{ forloop.counter }}) {#}
-        {#                            background-image: url("{% static image_static %}");#}
-        {#                        }#}
-        {#                    {% endwith %}#}
-        {#                {% endfor %}#}
+
         {% for path in background %}
             {% with 'image/background-pic/bg_set/'|add:path as image_static %}
                 .cd-hero-slider li:nth-of-type(1) {
                     background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static image_static %}");
+                backgroud:  no-repeat center;
                 }
             {% endwith %}
         {% endfor %}
 
 
-        {#        #what-we-do {#}
-        {#            background-image: url("{% static 'image/homepage/what-we-do-bg3.png' %}");#}
-        {#        }#}
 
         .first-service .icon {
             background-image: url("{% static 'image/background-pic/mag-black.svg' %}");

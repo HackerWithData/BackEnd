@@ -45,10 +45,7 @@ ul.dropdown-menu {
     margin-left: 0px;
     margin-bottom: 0px;
     margin-top: -1px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-radius: 3px;
 }
 
 #searchForm .form-row {
@@ -217,4 +214,20 @@ pip
     display: table-row;
     text-align: left;
     color: #000000;
+}
+
+/* Popup arrow */
+
+.dropdown-menu.contractor-dropdown::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 35%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #ffffff;
 }
