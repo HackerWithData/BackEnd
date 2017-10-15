@@ -6,12 +6,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.urls import reverse
 from django.core import serializers
+import json
 
 from contractors.models import Contractor
 from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
 from search_helpers import search_by_zipcode, search_by_address_object_redirect_url
-
-import json
+from .utils import json_serial
 
 
 def search_new(request):
@@ -27,7 +27,7 @@ def search_new(request):
 
     elif request.method == 'GET':
         # TODO: set default value
-        query_set, score_list, rank_list, lic_type = search_by_zipcode(request)
+        query_set = search_by_zipcode(request)
 
         # TODO: set customized item number per page, default = 10
         # pagination logic
@@ -45,35 +45,41 @@ def search_new(request):
         get_copy = request.GET.copy()
         parameters = get_copy.pop('page', True) and get_copy.urlencode()
 
-        contractors_json = serializers.serialize("json", page_query_set.object_list)
+        # professionals_json = serializers.serialize("json", page_query_set.object_list)
+
     else:
         return redirect('home_index')
 
-    if lic_type == CONTRACTOR:
-        return render(request, 'search_list/search_list.html', {
-            'contractors': page_query_set,
-            'contractors_json': contractors_json,
-            'zipcode': request.GET.get('zipcode'),
-            'parameters': parameters,
-            'lic_type': lic_type,
-            'score_list': score_list,
-            'rank_list': rank_list
-        })
-    else:
-        return render(request, 'search_list/search_list.html', {
-            'contractors': page_query_set,
-            'contractors_json': contractors_json,
-            'zipcode': request.GET.get('zipcode'),
-            'parameters': parameters,
-            'lic_type': lic_type
-        })
+    # if lic_type == CONTRACTOR:
+    #     return render(request, 'search_list/search_list.html', {
+    #         'contractors': page_query_set,
+    #         'contractors_json': contractors_json,
+    #         'zipcode': request.GET.get('zipcode'),
+    #         'parameters': parameters,
+    #         'lic_type': lic_type,
+    #         'score_list': score_list,
+    #         'rank_list': rank_list
+    #     })
+    # else:
+    #     return render(request, 'search_list/search_list.html', {
+    #         'contractors': page_query_set,
+    #         'contractors_json': contractors_json,
+    #         'zipcode': request.GET.get('zipcode'),
+    #         'parameters': parameters,
+    #     })
+    return render(request, 'search_list/search_list.html', {
+        'professionals': page_query_set,
+        'professionals_json': json.dumps(page_query_set.object_list, default=json_serial),
+        'zipcode': request.GET.get('zipcode'),
+        'parameters': parameters,
+    })
 
 
 def search_dispatch_test(request):
     return HttpResponse('<h1>search dispatch successfully!!!</h1>')
 
 
-# def search_target_type(request):
+# def search_target_type(requ
 #     if request.method == 'POST':
 #         target_type_search_text = request.POST['target_type_search_text']
 #     else:
@@ -81,7 +87,7 @@ def search_dispatch_test(request):
 #
 #     contractors = Contractor.objects.filter(LicType__icontains=target_type_search_text)
 #
-#     return render_to_response('search_list/ajax_search_list.html', {'contractors': contractors})
+#     return render_to_response('search_list/ajax_search_list.html', {'contractors': contractors})est):
 
 
 class UnexpectedRequest(Exception):

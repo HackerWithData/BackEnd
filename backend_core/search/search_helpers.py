@@ -1,5 +1,7 @@
 import urllib
 
+from django.forms.models import model_to_dict
+
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
@@ -43,38 +45,52 @@ def search_by_zipcode(request):
     print search_target
 
     # mediate query set
-    if search_type.upper() == 'NAME':
+    # name or lic num search
+    if search_type.upper() == 'NAMEORLIC':
+        # search target is whether a name or lic
+        if search_target.isnumeric():
+            name_or_lic = int(search_target)
+            qs_prof_by_name = Professional.objects.filter(name=str(name_or_lic))
+            qs_prof_by_lic = Professional.objects.filter(lic_num=name_or_lic)
+            prof_qs = list(qs_prof_by_lic) + list(qs_prof_by_name)
         # name search
-        qs_prof = Professional.objects.filter(name__icontains=search_target)
-        prof_qs = qs_prof
-        if not prof_qs:
-            return prof_qs
-        # retrieve type of value from name search
-        print prof_qs.values('type')[0]
-        professional = prof_qs.values('type')[0]['type'].upper()
+        else:
+            prof_qs = Professional.objects.filter(name__icontains=search_target)
+            # no result found
+            if not prof_qs:
+                return prof_qs.values()
+            # retrieve type of value from name search
+            # print prof_qs.values('type')[0]
+            # professional = prof_qs.values('type')[0]['type'].upper()
     else:
         # type search
         prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
-        professional = search_type.upper()
-
-    ret_score_list = []
-    ret_rank_list = []
+        # professional = search_type.upper()
 
     # retrieve corresponding professional through different table
-    if professional == CONTRACTOR:
-        ret_qs = Contractor.objects.filter(lic_num__in=prof_qs.values('lic_num')).order_by('-hscore__score')
-        for prof in ret_qs:
-            hscore = prof.hscores.first()
-            ret_score_list.append(hscore.score)
-            ret_rank_list.append(convert_hscore_to_rank(hscore))
-    elif professional == ARCHITECT:
-        ret_qs = Architect.objects.filter(lic_num__in=prof_qs.values('lic_num'))
-    elif professional == DESIGNER:
-        ret_qs = Designer.objects.filter(lic_num__in=prof_qs.values('lic_num'))
-    else:
-        raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
+    ret_list = []
+    for professional in prof_qs:
+        if professional.type.upper() == CONTRACTOR:
+            contractor = Contractor.objects.filter(lic_num=professional.lic_num).first()
+            hscore = contractor.hscores.first()
+            item = model_to_dict(contractor).copy()
+            item['score'] = hscore.score
+            item['rank'] = convert_hscore_to_rank(hscore)
+            item['type'] = CONTRACTOR
+        elif professional.type.upper() == ARCHITECT:
+            architect = Architect.objects.filter(lic_num=professional.lic_num).first()
+            item = model_to_dict(architect).copy()
+            item['type'] = ARCHITECT
+        elif professional.type.upper() == DESIGNER:
+            designer = Designer.objects.filter(lic_num=professional.lic_num).first()
+            item = model_to_dict(designer).copy()
+            item['type'] = DESIGNER
+        else:
+            raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
+        ret_list.append(item)
 
-    return ret_qs, ret_score_list, ret_rank_list, professional
+    sorted_list = sorted(ret_list, key=lambda k: k['score'] if k['type'] == CONTRACTOR else 1000, reverse=True)
+    return sorted_list
 
 
 class UndefinedProfessionalType(Exception):

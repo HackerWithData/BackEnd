@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load search_extras %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/search-list.css' %}">
@@ -47,43 +48,37 @@
 
 
 {% block content %}
-
     <div id='search-bar' class="search-bar">
         {% include 'search_bar/search_bar.html' %}
     </div>
-
     <div id="search-list" class="container">
         <div class="row">
-            {% if contractors.count > 0 %}
-                {#                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">#}
-                {#                    {% include 'search_sidebar/search_sidebar.html' %}#}
-                {#                </div>#}
+            {% if professionals.count > 0 %}
                 <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <div class="list-group">
-                        {% for contractor in contractors %}
+                        {% for professional in professionals %}
                             {% include 'search_card/search_card.html' %}
                         {% endfor %}
                     </div>
                     <!--TODO: show all pagination numbers-->
                     <div class="list-pagination">
                         <ul class="pagination">
-                            {% if contractors.has_previous %}
+                            {% if professionals.has_previous %}
                                 <li class="page-item">
                             <span class="page-link">
-                                <a href="?{{ parameters }}&page={{ contractors.previous_page_number }}">{{ previous }}</a>
+                                <a href="?{{ parameters }}&page={{ professionals.previous_page_number }}">{{ previous }}</a>
                             </span>
                                 </li>
                             {% endif %}
                             <li class="page-item active">
                         <span class="page-link">
-                            <!--Page {{ contractors.number }} of {{ contractors.paginator.num_pages }}.-->
-                            {{ contractors.number }}
+                            {{ professionals.number }}
                         </span>
                             </li>
-                            {% if contractors.has_next %}
+                            {% if professionals.has_next %}
                                 <li class="page-item">
                             <span class="page-link">
-                                <a href="?{{ parameters }}&page={{ contractors.next_page_number }}&">{{ next }}</a>
+                                <a href="?{{ parameters }}&page={{ professionals.next_page_number }}&">{{ next }}</a>
                             </span>
                                 </li>
                             {% endif %}
@@ -98,7 +93,7 @@
             {% else %}
                 </div>
                 <!--TODO: change to nearby zipcode in render-->
-                <p>{% trans 'No Contractor match your condition' %}</p>
+                <p>{% trans 'No professional match your condition' %}</p>
             {% endif %}
 
     </div>
@@ -107,7 +102,7 @@
         var geocoder;
         var bounds;
         var userZipcode = "{{ zipcode }}";
-        var contractors = [];
+        var professionals = [];
 
         const smallMapMarker = "{% static 'image/searchListAsset/mapMarker.png' %}"
         const largeMapMarker = "{% static 'image/searchListAsset/mapMarkerSmall.png' %}"
@@ -116,13 +111,13 @@
             $('.list-group-item').each(function (index) {
                 $(this).hover(
                     function (event) {
-                        if (contractors[index]) {
-                            contractors[index]['marker'].setIcon(smallMapMarker);
+                        if (professionals[index]) {
+                            professionals[index]['marker'].setIcon(smallMapMarker);
                         }
                     },
                     function (event) {
-                        if (contractors[index]) {
-                            contractors[index]['marker'].setIcon(largeMapMarker);
+                        if (professionals[index]) {
+                            professionals[index]['marker'].setIcon(largeMapMarker);
                         }
                     }
                 )
@@ -158,8 +153,7 @@
             }
 
             //add markers
-            console.log(JSON.parse('{{ contractors_json | escapejs }}'));
-            addContractorMarkers(JSON.parse('{{ contractors_json | escapejs }}'));
+            addProfessionalMarkers(JSON.parse('{{ professionals_json | escapejs }}'));
         }
 
         function userGeocoderCallBack(results, status) {
@@ -172,7 +166,7 @@
             }
         }
 
-        function contractorGeocoderCallBack(results, status, contractor, index) {
+        function professionalGeocoderCallBack(results, status, professional, index) {
             if (status === 'OK') {
                 //TODO: change when implement customized pagination function
                 const zIndex = 20 - index;
@@ -188,20 +182,20 @@
                 map.fitBounds(bounds);
 
                 marker.addListener('mouseover', function () {
-                    $('#searchListCard' + contractor['pk']).css('background-color', '#d9534f');
+                    $('#searchListCard-' + professional['type'] + professional['-lic_num']).css('background-color', 'grey');
                     this.setZIndex(50);
                     this.setIcon(smallMapMarker);
                 });
                 marker.addListener('mouseout', function () {
-                    $('#searchListCard' + contractor['pk']).css('background-color', '');
+                    $('#searchListCard-' + professional['type'] + professional['-lic_num']).css('background-color', '');
                     this.setZIndex(zIndex);
                     this.setIcon(largeMapMarker);
                 });
 
-                contractors[index] = {'item': contractor, 'marker': marker, 'index': index};
+                professionals[index] = {'item': professional, 'marker': marker, 'index': index};
             } else {
-                //TODO: add specific ID for contractor fail to get marker
-                console.warn(`Error(${status}): Cannot find location for contractor ID: `);
+                //TODO: add specific ID for professional fail to get marker
+                console.warn(`Error(${status}): Cannot find location for professional ID: `);
             }
         }
 
@@ -217,11 +211,11 @@
             map.fitBounds(bounds);
         }
 
-        function addContractorMarkers(contractorList) {
-            for (let i = 0; i < contractorList.length; i++) {
-                var address = `${contractorList[i]['fields']['street_address']} ${contractorList[i]['fields']['csp']}`;
+        function addProfessionalMarkers(professionalList) {
+            for (let i = 0; i < professionalList.length; i++) {
+                var address = `${professionalList[i]['street_address']}, ${professionalList[i]['csp']}`;
                 geocoder.geocode({'address': address}, function (result, status) {
-                    contractorGeocoderCallBack(result, status, contractorList[i], i);
+                    professionalGeocoderCallBack(result, status, professionalList[i], i);
                 });
             }
         }
