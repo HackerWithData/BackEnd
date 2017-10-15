@@ -425,9 +425,11 @@ h1 {
     padding: 20px 30px;
     text-align: left;
     max-width: 650px;
-    margin: 40px auto;
+    margin: 80px auto;
+    margin-top: 100px;
     position: relative;
 }
+
 #readmore {
     font-weight: bold;
 
