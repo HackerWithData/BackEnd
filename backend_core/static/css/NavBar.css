@@ -313,3 +313,7 @@
 .header-gap{
     margin-top:100px
 }
+
+.bold-900{
+    font-weight: 900;
+}

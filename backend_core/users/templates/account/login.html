@@ -46,12 +46,15 @@
             height: 30px;
         }
 
-        .forget-password {
+        .text-right {
             text-align: right;
         }
 
-        .btn-full {
+        .full-width {
             width: 100%;
+        }
+
+        .btn-hoome {
             color: white;
             border-color: #6892D5;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
@@ -93,26 +96,46 @@
                             By logging in, you agree to Hoome’s <a href="/rule/service">Terms of Service</a> and <a
                                 href="/rule/privacy">Privacy Policy</a>.
                         </p>
-                        {% get_providers as socialaccount_providers %}
 
+                        <br/>
+                        {% get_providers as socialaccount_providers %}
                         {% if socialaccount_providers %}
                             <div class="socialaccount_ballot">
                                 <ul class="socialaccount_providers">
-                                    {#      TODO: Change Facebook account #}
-
-                                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-
+                                    {% for provider in socialaccount_providers %}
+                                        {% if provider.id == "openid" %}
+                                            {% for brand in provider.get_brands %}
+                                                <li>
+                                                    <a title="{{ brand.name }}"
+                                                       class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+                                                        <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                        <span style="font-weight:900">Sign in with {{ provider.name }}</span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <li>
+                                            <a title="{{ provider.name }}"
+                                               class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><span
+                                                    class="fa fa-{{ provider.name|lower }}"></span><span
+                                                    style="font-weight:900">Sign in with {{ provider.name }}</span></a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
 
                             {% include "socialaccount/snippets/login_extra.html" %}
-
                         {% else %}
                             <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
                                 <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
                         {% endif %}
+
+                        <br/>
                         <p class="hr-line"><span>{% trans 'OR' %}</span></p>
                         <br/>
+
                         <form class="login" method="POST" action="{% url 'account_login' %}">
                             {% csrf_token %}
                             <p><input type="text" name="login" autofocus="autofocus" required=""
@@ -124,13 +147,17 @@
                                 <input type="hidden" name="{{ redirect_field_name }}"
                                        value="{{ redirect_field_value }}"/>
                             {% endif %}
-                            <div class="forget-password">
+                            <div class="text-right">
                                 <a class="button secondaryAction"
                                    href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                             </div>
-
-                            <button class="primaryAction btn btn-full" type="submit">{% trans "Sign In" %}</button>
+                            <br/>
+                            <button class="primaryAction btn btn-hoome full-width"
+                                    type="submit">{% trans "Sign In" %}</button>
                         </form>
+                        <br/>
+                        <div class="text-right">New to Hoome? <a href="{% url 'account_signup' %}">Sign up</a>
+                        </div>
                     </div>
                 </div>
             </div>
