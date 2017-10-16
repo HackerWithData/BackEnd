@@ -13,12 +13,15 @@
             {% with 'image/background-pic/bg_set/'|add:path as image_static %}
                 .cd-hero-slider li:nth-of-type(1) {
                     background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static image_static %}");
-                backgroud:  no-repeat center;
+                    background-position: center bottom;
                 }
             {% endwith %}
         {% endfor %}
 
-
+        {#        .cd-hero-slider li:nth-of-type(1) {#}
+        {#            background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static 'image/background-pic/bg_set/slider_1.jpg' %}");#}
+        {#            background-position: center;#}
+        {#        }#}
 
         .first-service .icon {
             background-image: url("{% static 'image/background-pic/mag-black.svg' %}");
