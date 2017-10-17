@@ -24,12 +24,7 @@
             text-align: center;
         }
 
-        .signup-wrapper {
-            padding: 30px;
-            overflow: hidden;
-            min-height: 80%;
-            text-align: center;
-        }
+
 
         .socialaccount_providers {
             list-style-type: None;
@@ -41,25 +36,8 @@
             margin: auto
         }
 
-        .height-30 {
-            height: 30px;
-        }
 
-        .text-right {
-            text-align: right;
-        }
 
-        .full-width {
-            width: 100%;
-        }
-
-        .btn-hoome {
-            color: white;
-            border-color: #6892D5;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-            background-color: #6892D5;
-            background: linear-gradient(#6892D4, #6892D6);
-        }
 
         .picture-container {
             padding-bottom: 12px;
@@ -180,12 +158,12 @@
                                 <option value="CONSUMER">{% trans 'Consumer' %}</option>
                             </select></p>
                             <p><input type="password" name="password1" required=""
-                                      placeholder="Password" id="id_password1"></p>
+                                      placeholder="{% trans 'Password' %}" id="id_password1"></p>
                             <p><input type="password" name="password2" required=""
-                                      placeholder="Password (again)" id="id_password2"></p>
+                                      placeholder="{% trans 'Password (again)' %}" id="id_password2"></p>
                             <input type="hidden" name="next"
                                    value="/accounts/signup/info/">
-                            <button class='btn btn-hoome full-width' type="submit">{% trans 'Sign Up' %} »</button>
+                            <button class='btn btn-hoome full-width' type="submit">{% trans 'Sign Up' %}</button>
                         </form>
                         <br/>
                         <div class="text-right">{% trans 'Already on Hoome?' %} <a
