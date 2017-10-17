@@ -122,7 +122,7 @@
                                                        class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                        href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
                                                         <span class="fa fa-{{ provider.name|lower }}"></span>
-                                                        <span style="font-weight:900">Sign in with {{ provider.name }}</span>
+                                                        <span style="font-weight:900">Sign up with {{ provider.name }}</span>
                                                     </a>
                                                 </li>
                                             {% endfor %}
@@ -130,9 +130,12 @@
                                         <li>
                                             <a title="{{ provider.name }}"
                                                class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><span
-                                                    class="fa fa-{{ provider.name|lower }}"></span><span
-                                                    style="font-weight:900">Sign in with {{ provider.name }}</span></a>
+                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                                                <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                <div style="display: flex; justify-content: center; font-weight:900;">
+                                                    Sign in with {{ provider.name }}
+                                                </div>
+                                            </a>
                                         </li>
                                     {% endfor %}
                                 </ul>
