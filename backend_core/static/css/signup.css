@@ -10,7 +10,19 @@
 /*===============================================================
 *   professional fill up form
 ===============================================================*/
+/* professional type*/
 
+#id_professional_type label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#id_professional_type .input-professional-type {
+    display: none;
+}
+
+/* common page style */
 .stages {
     font-size: 0;
     text-align: justify;

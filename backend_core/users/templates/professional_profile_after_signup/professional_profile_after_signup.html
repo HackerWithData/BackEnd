@@ -13,7 +13,6 @@
 <div class="container container-sign-up-professional-profile-form">
     <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile_after_signup' %}">
       {% csrf_token %}
-      <!--{{ form.as_p }}-->
         <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
 	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
 	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
@@ -35,7 +34,49 @@
             {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
                 <h4>{% trans "Choose License Type" %}</h4>
-                {{ form.professional_type }}
+{#                {{ form.professional_type }}#}
+                <ul id="id_professional_type" class="input-professional-type row">
+                    <li class="col-md-4">
+                        <label for="id_professional_type_0">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="CONTRACTOR"
+                                   required=""
+                                   checked=""
+                                   class="input-professional-type"
+                                   id="id_professional_type_0"
+                            >
+                            <img alt="contractor" src="{% static 'image/sign-up-info-icon/contractor.png' %}">
+{#                            Contractor#}
+                        </label>
+                    </li>
+                    <li class="col-md-4">
+                        <label for="id_professional_type_1">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="ARCHITECT"
+                                   required=""
+                                   class="input-professional-type"
+                                   id="id_professional_type_1"
+                            >
+{#                            Architect#}
+                            <img alt="architect" src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
+                        </label>
+                    </li>
+                    <li class="col-md-4">
+                        <label for="id_professional_type_2">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="DESIGNER"
+                                   required=""
+                                   class="input-professional-type"
+                                   id="id_professional_type_2"
+                            >
+{#                            Designer#}
+                            <img alt="designer" src="{% static 'image/sign-up-info-icon/designer.png' %}">
+                        </label>
+                    </li>
+                </ul>
             </div>
             <div data-panel="two" id="stage-two">
                 <h4>{%  trans "Find Your License In Our Database" %}</h4>
@@ -59,12 +100,13 @@
             </div>
         </div>
         </br>
-        <button type="submit" id="next">{% trans "Next" %}</button>
+        <button type="submit" id="next" class="btn">{% trans "Next" %}</button>
     </form>
 </div>
 
 <script>
     var globalTimeout = null;
+    var selectedProfessionalType = '';
 
 //    TODO: add more robusic logic here
     $(function () {
@@ -142,6 +184,12 @@
 
                 $('#next').submit();
             }
+        });
+
+        $('#id_professional_type label img').click(function () {
+            $('id_professional_type label').filter();
+            console.log($(this))
+            $(this).attr('alt');
         });
 
 //        TODO: async

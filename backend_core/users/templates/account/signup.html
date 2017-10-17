@@ -152,7 +152,7 @@
                         <br/>
 
 
-                        <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
+                        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                             {% csrf_token %}
                             {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
                             <p><input class='full-width height-30' type="email" name="email" required="" placeholder="Email"
@@ -173,7 +173,7 @@
                                       placeholder="Password" id="id_password1"></p>
                             <p><input class='full-width height-30' type="password" name="password2" required=""
                                       placeholder="Password (again)" id="id_password2"></p>
-                            <input class='full-width height-30' type="hidden" name="next" value="/accounts/signup/info/">
+                            <input class='full-width height-30' type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_signup_complete_info' %}">
                             <button class='btn btn-hoome full-width' type="submit">Sign Up »</button>
                         </form>
                         <br/>
