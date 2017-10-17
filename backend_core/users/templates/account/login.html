@@ -29,14 +29,17 @@
             list-style-type: None;
         }
 
-        .login {
+        .login-container {
             margin-top: 114px;
             max-width: 300px;
             margin: auto
         }
 
-        .height-30 {
+        .login input {
+            width: 100%;
             height: 30px;
+            border-radius: 3px;
+            border: 1px solid rgb(153,153,153);
         }
 
         .text-right {
@@ -76,11 +79,20 @@
         }
 
         @media (max-width: 1023px) {
-            .login-pic {
+            .pic {
                 display: none;
             }
         }
 
+        .errorlist.nonfield {
+            list-style-type: none;
+        }
+
+        .social-word {
+            display: flex;
+            justify-content: center;
+            font-weight: 900;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
@@ -92,13 +104,12 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="login-wrapper ">
-                    <div class="login">
+                    <div class="login-container">
                         <h1>{% trans "Log In to Hoome" %}</h1>
-                        <p>
-                            By logging in, you agree to Hoome’s <a href="/rule/service">Terms of Service</a> and <a
-                                href="/rule/privacy">Privacy Policy</a>.
+                        <p>{% blocktrans %}By logging in, you agree to Hoome’s {% endblocktrans %}<a
+                                href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
+                                href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
                         </p>
-
                         <br/>
                         {% get_providers as socialaccount_providers %}
                         {% if socialaccount_providers %}
@@ -112,7 +123,7 @@
                                                        class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                        href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
                                                         <span class="fa fa-{{ provider.name|lower }}"></span>
-                                                        <span style="font-weight:900">Sign in with {{ provider.name }}</span>
+                                                        <span style="font-weight:900">{% trans "Sign in with" %} {{ provider.name }}</span>
                                                     </a>
                                                 </li>
                                             {% endfor %}
@@ -121,8 +132,9 @@
                                             <a title="{{ provider.name }}"
                                                class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><span
-                                                    class="fa fa-{{ provider.name|lower }}"></span><span
-                                                    style="font-weight:900">Sign in with {{ provider.name }}</span></a>
+                                                    class="fa fa-{{ provider.name|lower }}"></span>
+                                                <div class="social-word">{% trans "Sign in with" %} {{ provider.name }}</div>
+                                            </a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -140,14 +152,17 @@
 
                         <form class="login" method="POST" action="{% url 'account_login' %}">
                             {% csrf_token %}
-                            <ul class="errorlist alert alert-warning" style="list-style-type: none">
-                                <li>The e-mail address and/or password you specified are not correct.</li>
-                            </ul>
-                            <p><input class='height-30 full-width' type="text" name="login" autofocus="autofocus"
+                            {% if  form.errors %}
+                                <div class="alert alert-warning">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            <p><input type="text" name="login" autofocus="autofocus"
                                       required=""
-                                      placeholder="Username or Email" id="id_login"></p>
-                            <p><input class='height-30 full-width' type="password" name="password" required=""
-                                      placeholder="Password" id="id_password"></p>
+                                      placeholder="{% trans 'Username' %} {% trans 'or' %} {% trans 'Email' %}"
+                                      id="id_login"></p>
+                            <p><input type="password" name="password" required=""
+                                      placeholder="{% trans 'Password' %}" id="id_password"></p>
                             {#<label for="id_remember">Remember Me:</label><p><input type="checkbox" name="remember" id="id_remember"> </p>#}
                             {% if redirect_field_value %}
                                 <input type="hidden" name="{{ redirect_field_name }}"
@@ -163,14 +178,15 @@
                                     type="submit">{% trans "Sign In" %}</button>
                         </form>
                         <br/>
-                        <div class="text-right">New to Hoome? <a href="{% url 'account_signup' %}">Sign up</a>
+                        <div class="text-right">{% trans 'New to Hoome?' %} <a
+                                href="{% url 'account_signup' %}">{% trans 'Sign up' %}</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="picture-container">
-                    <img class="login-pic" src="{% static 'image/icon/log-in.svg' %}">
+                    <img class="pic" src="{% static 'image/icon/log-in.svg' %}">
                 </div>
             </div>
         </div>
