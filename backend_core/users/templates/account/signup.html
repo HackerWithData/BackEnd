@@ -5,7 +5,6 @@
 {% load account socialaccount %}
 {% block metainfo %}
     <style>
-
         .header {
             background-color: #6892D5;
         }
@@ -19,32 +18,15 @@
         }
 
         .signup-wrapper {
+            padding: 30px;
+            overflow: hidden;
             min-height: 80%;
-            margin-top: 80px;
-        }
-
-        .socialaccount_providers {
-            list-style-type: None;
-        }
-    </style>
-        <style>
-
-        .header {
-            background-color: #6892D5;
-        }
-
-        .header .navbar .logo.cursive {
-            color: #ffffff;
-        }
-
-        .footer {
-            position: relative;
+            text-align: center;
         }
 
         .login-wrapper {
             padding: 30px;
             overflow: hidden;
-            margin-top: 25%;
             min-height: 80%;
             text-align: center;
         }
@@ -59,15 +41,11 @@
             margin: auto
         }
 
-        #id_login {
-            width: 100%;
+
+        .height-30{
             height: 30px;
         }
 
-        #id_password {
-            width: 100%;
-            height: 30px;
-        }
 
         .text-right {
             text-align: right;
@@ -86,8 +64,8 @@
         }
 
         .picture-container {
-            margin-top: 117px;
             padding-bottom: 12px;
+            margin-top: 80px;
             text-align: center;
         }
 
@@ -96,7 +74,15 @@
             vertical-align: middle;
         }
 
-        @media (max-width: 960px) {
+        @media (min-width: 1024px) {
+            .row {
+                width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 1023px) {
             .login-pic {
                 display: none;
             }
@@ -108,15 +94,19 @@
 
 
 {% block content %}
-        <div class="container header-gap">
+
+
+
+    <div class="container header-gap">
         <div class="row">
             <div class="col-md-6">
                 <div class="login-wrapper ">
                     <div class="login">
-                        <h1>{% trans "Log In to Hoome" %}</h1>
-                        <p>
-                            By logging in, you agree to Hoome’s <a href="/rule/service">Terms of Service</a> and <a
-                                href="/rule/privacy">Privacy Policy</a>.
+                        <h1>{% trans "Sign Up for Hoome" %}</h1>
+                        <p>{% blocktrans %}
+                            By signing up, you agree to Hoome’s {% endblocktrans %}<a
+                                href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
+                                href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
                         </p>
 
                         <br/>
@@ -158,27 +148,34 @@
                         <p class="hr-line"><span>{% trans 'OR' %}</span></p>
                         <br/>
 
-                        <form class="login" method="POST" action="{% url 'account_login' %}">
+
+                        <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
                             {% csrf_token %}
-                            <p><input type="text" name="login" autofocus="autofocus" required=""
-                                      placeholder="Username or Email" id="id_login"></p>
-                            <p><input type="password" name="password" required=""
-                                      placeholder="Password" id="id_password"></p>
-                            {#                            <p><input type="checkbox" name="remember" id="id_remember"> </p>#}
-                            {% if redirect_field_value %}
-                                <input type="hidden" name="{{ redirect_field_name }}"
-                                       value="{{ redirect_field_value }}"/>
-                            {% endif %}
-                            <div class="text-right">
-                                <a class="button secondaryAction"
-                                   href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-                            </div>
-                            <br/>
-                            <button class="primaryAction btn btn-hoome full-width"
-                                    type="submit">{% trans "Sign In" %}</button>
+                            {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
+                            <p><input class='full-width height-30' type="email" name="email" required="" placeholder="Email"
+                                      id="id_email">
+                            </p>
+                            <p><input class='full-width height-30' type="text" name="username" maxlength="150" minlength="1"
+                                      autofocus="autofocus" required=""
+                                      placeholder="Username"
+                                      id="id_username"></p>
+                            {#                            TODO: make Role to be option with pic after signing up #}
+                            <p><label for="id_role">Role:</label> <select class='full-width' name="role" required=""
+                                                                          multiple="multiple"
+                                                                          id="id_role">
+                                <option value="PROFESSIONAL">Professional</option>
+                                <option value="CONSUMER">Consumer</option>
+                            </select></p>
+                            <p><input class='full-width height-30' type="password" name="password1" required=""
+                                      placeholder="Password" id="id_password1"></p>
+                            <p><input class='full-width height-30' type="password" name="password2" required=""
+                                      placeholder="Password (again)" id="id_password2"></p>
+                            <input class='full-width height-30' type="hidden" name="next" value="/accounts/signup/info/">
+                            <button class='btn btn-hoome full-width' type="submit">Sign Up »</button>
                         </form>
                         <br/>
-                        <div class="text-right">New to Hoome? <a href="{% url 'account_signup' %}">Sign up</a>
+                        <div class="text-right">{% trans 'Already on Hoome?' %}<a
+                                href="{% url 'account_login' %}"> {% trans 'Log in' %} </a>
                         </div>
                     </div>
                 </div>
@@ -192,17 +189,5 @@
     </div>
 
 
-    <div class="container signup-wrapper">
-        <h1>{% trans "Sign Up" %}</h1>
 
-        <p>{% blocktrans %}Already have an account? Then please {% endblocktrans %}<a
-                href="{{ login_url }}">{% trans 'sign in' %}</a>.</p>
-
-        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_signup_complete_info' %}"/>
-            <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-        </form>
-    </div>
 {% endblock %}
