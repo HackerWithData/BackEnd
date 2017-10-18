@@ -56,7 +56,6 @@ DATABASES = {
 #         }
 #     }
 # }
->>>>>>> f573c8d8a91ea7a4c84323f64ed3763f298b049a
 
 # DATABASES = {
 #     'default': {
