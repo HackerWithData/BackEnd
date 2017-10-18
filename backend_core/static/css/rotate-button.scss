@@ -1,0 +1,72 @@
+// Mixin for easier colors
+@mixin button-container($color) {
+  .button-cube {
+    .front, .back {
+      background: $color;
+    }
+    .bottom {
+      background: darken($color, 10%);
+    }
+  }
+  &:hover .button-cube {
+    .bottom {
+      background: $color;
+    }
+    .front {
+      background: lighten($color, 10%);
+    }
+  }
+}
+
+// Social container styles
+.button-container {
+  position: relative;
+  display: block;
+  width: 164px;
+  height: 36px;
+  perspective: 300px;
+  font-size: 24px;
+  margin: auto;
+  text-align: center;
+  .button-cube {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.333s;
+    transform: translateZ(-18px);
+    .front, .bottom {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      transition: background 0.333s;
+    }
+    .front {
+      transform: rotateX(0deg) translateZ(18px);
+    }
+    .bottom {
+      transform: rotateX(-90deg) translateZ(18px);
+    }
+  }
+
+  &:hover .button-cube {
+    transform: translateZ(-18px) rotateX(90deg);
+  }
+}
+
+// Custom colors
+$hoome-blue: #6892D5;
+
+.button-container {
+  &.next-button {
+    @include button-container($hoome-blue);
+  }
+}

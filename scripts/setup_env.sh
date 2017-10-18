@@ -16,6 +16,10 @@ apt-get install python-virtualenv -y > /dev/null
 echo "Installing python-dev"
 apt-get install python-dev -y > /dev/null
 
+echo "Installing ruby"
+apt-get install ruby -y > /dev/null
+apt-get install ruby-sass -y > /dev/null
+
 echo "Preparing MySQL"
 apt-get install debconf-utils -y > /dev/null
 

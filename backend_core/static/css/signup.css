@@ -10,18 +10,6 @@
 /*===============================================================
 *   professional fill up form
 ===============================================================*/
-/* professional type*/
-
-#id_professional_type label {
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-}
-
-#id_professional_type .input-professional-type {
-    display: none;
-}
-
 /* common page style */
 .stages {
     font-size: 0;
@@ -123,7 +111,7 @@
     width: calc(100% / 4 * 4);
 }
 
-.panels div {
+.panels:not(.button-container) div {
     display: none;
 }
 
@@ -138,14 +126,29 @@
 /*===============================================================
 *   professional fill up form customized  TODO
 ===============================================================*/
+h4 {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
 
-/*.container-sign-up-professional-profile-form {*/
-/*margin-top: auto;*/
-/*margin-left: 20%;*/
-/*margin-right: 20%;*/
-/*min-width: 50%;*/
-/*height: 50%;*/
-/*}*/
+/* professional type*/
+
+#id_professional_type {
+    margin-top: 50px;
+}
+
+#id_professional_type label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#id_professional_type .input-professional-type {
+    display: none;
+}
 
 #professionalProfileForm {
     background: #ffffff;
@@ -153,7 +156,8 @@
     margin: 4em;
     min-width: 50%;
     padding: 1em;
-    height: 100%;
+    height: 75%;
+    text-align: justify;
 }
 
 li {
@@ -161,7 +165,16 @@ li {
 }
 
 .panels {
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+div[id^="stage-"] {
+    text-align: center;
+}
+
+.btn {
+    background-color: #6892D5;
 }
 
 .container-sign-up-professional-profile-form {
@@ -197,6 +210,11 @@ li {
         padding: 0;
         min-width: 50%;
         padding: 1em;
-        height: 100%;
+        height: auto;
+        min-height: 70%;
     }
 }
+
+
+/*test
+*/

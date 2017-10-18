@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% load i18n %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">
     <script src="{% static 'js/jquery.validate.min.js'%}"></script>
 {% endblock %}
 
@@ -34,7 +35,6 @@
             {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
                 <h4>{% trans "Choose License Type" %}</h4>
-{#                {{ form.professional_type }}#}
                 <ul id="id_professional_type" class="input-professional-type row">
                     <li class="col-md-4">
                         <label for="id_professional_type_0">
@@ -46,8 +46,13 @@
                                    class="input-professional-type"
                                    id="id_professional_type_0"
                             >
-                            <img alt="contractor" src="{% static 'image/sign-up-info-icon/contractor.png' %}">
-{#                            Contractor#}
+                            <figure>
+                            <img alt="contractor"
+                                 active="{% static 'image/sign-up-info-icon/contractor.png' %}"
+                                 inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
+                                 src="{% static 'image/sign-up-info-icon/contractor.png' %}">
+                                <figcaption>Contractor</figcaption>
+                            </figure>
                         </label>
                     </li>
                     <li class="col-md-4">
@@ -59,8 +64,13 @@
                                    class="input-professional-type"
                                    id="id_professional_type_1"
                             >
-{#                            Architect#}
-                            <img alt="architect" src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
+                            <figure>
+                                <img alt="architect"
+                                     active="{% static 'image/sign-up-info-icon/architect.png' %}"
+                                     inactive="{% static 'image/sign-up-info-icon/architect-inactive.png' %}"
+                                     src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
+                                <figcaption>Architect</figcaption>
+                            </figure>
                         </label>
                     </li>
                     <li class="col-md-4">
@@ -72,8 +82,13 @@
                                    class="input-professional-type"
                                    id="id_professional_type_2"
                             >
-{#                            Designer#}
-                            <img alt="designer" src="{% static 'image/sign-up-info-icon/designer.png' %}">
+                            <figure>
+                                <img alt="designer"
+                                     active="{% static 'image/sign-up-info-icon/designer.png' %}"
+                                     inactive="{% static 'image/sign-up-info-icon/designer-inactive.png' %}"
+                                     src="{% static 'image/sign-up-info-icon/designer-inactive.png' %}">
+                                <figcaption>Designer</figcaption>
+                            </figure>
                         </label>
                     </li>
                 </ul>
@@ -99,14 +114,21 @@
                 {% trans "Zipcode" %}:{{ form.zipcode }} </br>
             </div>
         </div>
-        </br>
-        <button type="submit" id="next" class="btn">{% trans "Next" %}</button>
+        <div class="button-container next-button">
+             <div type="submit" id="next" class="button-cube">
+                 <div class="front">
+                     {% trans "Next" %}
+                 </div>
+                 <div class="bottom">
+                     {% trans "Next" %}
+                 </div>
+             </div>
+        </div>
     </form>
 </div>
 
 <script>
     var globalTimeout = null;
-    var selectedProfessionalType = '';
 
 //    TODO: add more robusic logic here
     $(function () {
@@ -186,10 +208,13 @@
             }
         });
 
-        $('#id_professional_type label img').click(function () {
-            $('id_professional_type label').filter();
-            console.log($(this))
-            $(this).attr('alt');
+        $('#id_professional_type').find('label').click(function () {
+            $('input[name=professional_type]:checked').parent().find('figure img').attr('src', function () {
+                return $(this).attr('active');
+            });
+            $('input[name=professional_type]:not(:checked)').parent().find('figure img').attr('src', function () {
+                return $(this).attr('inactive');
+            });
         });
 
 //        TODO: async
