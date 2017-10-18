@@ -103,7 +103,7 @@
             <div data-panel="three" id="stage-three">
                 <h4>{%  trans "Enter Or Modify Your Company Entity Type" %}</h4>
                 <div class="input-company-info-container">
-                    <div class="error"></div>
+                    <div class="error-container"></div>
                     {% trans "Company Name" %} : {{ form.company_name }} </br></br>
                     {% trans "Entity Type" %} : {{ form.entity_type }}
                 </div>
@@ -111,14 +111,14 @@
             <div data-panel="four" id="stage-four">
                 <h4>{%  trans "Enter Or Modify Your Company Field" %}</h4>
                 <div class="input-professional-subtype-container">
-                    <div class="error"></div>
+                    <div class="error-container"></div>
                     {{ form.professional_subtype }}
                 </div>
             </div>
             <div data-panel="five" id="stage-five">
                 <h4>{%  trans "Enter Or Modify Your Company Address" %}</h4>
                 <div class="input-address-container">
-                    <div class="error"></div>
+                    <div class="error-container"></div>
                     {% trans "Street" %}:{{ form.street }} </br></br>
                     {% trans "State" %}:{{ form.state }} </br></br>
                     {% trans "Zipcode" %}:{{ form.zipcode }} </br>
@@ -181,7 +181,7 @@
             rules: rules,
             messages: messages,
             errorPlacement: function (error, element) {
-                error.appendTo(element.parent().parent().find('.error-container'));
+                error.addClass('alert alert-warning').appendTo(element.parent().parent().find('.error-container'));
             },
             highlight: function (element) {
                 

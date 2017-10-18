@@ -146,7 +146,7 @@ h4 {
     cursor: pointer;
 }
 
-#id_professional_type .input-professional-type-container {
+#id_professional_type .input-professional-type {
     display: none;
 }
 
@@ -160,6 +160,10 @@ h4 {
     text-align: justify;
 }
 
+.error-container {
+    display: block;
+}
+
 li {
     list-style-type: none;
 }
@@ -171,6 +175,12 @@ li {
 
 div[id^="stage-"] {
     text-align: center;
+}
+
+div[id^="stage-"] > div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
 }
 
 .btn {
@@ -193,6 +203,10 @@ div[id^="stage-"] {
     position: relative;
 }
 
+.footer-wrapper {
+    margin-top: 20px;
+}
+
 .login-wrapper {
     min-height: 80%;
     margin-top: 80px;
@@ -202,7 +216,7 @@ div[id^="stage-"] {
     list-style-type: None;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     #professionalProfileForm {
         background: #ffffff;
         box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
@@ -214,20 +228,5 @@ div[id^="stage-"] {
         min-height: 70%;
     }
 }
-
-@media (max-width: 768px) {
-    #professionalProfileForm {
-        background: #ffffff;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
-        margin: 0;
-        padding: 0;
-        min-width: 50%;
-        padding: 1em;
-        height: auto;
-        min-height: 70%;
-    }
-}
-
-
 /*test
 */
