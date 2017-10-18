@@ -109,7 +109,7 @@
     width: calc(100% / 4 * 4);
 }
 
-.panels div {
+.panels:not(.button-container) > div {
     display: none;
 }
 
@@ -124,14 +124,29 @@
 /*===============================================================
 *   professional fill up form customized  TODO
 ===============================================================*/
+h4 {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
 
-/*.container-sign-up-professional-profile-form {*/
-/*margin-top: auto;*/
-/*margin-left: 20%;*/
-/*margin-right: 20%;*/
-/*min-width: 50%;*/
-/*height: 50%;*/
-/*}*/
+/* professional type*/
+
+#id_professional_type {
+    margin-top: 50px;
+}
+
+#id_professional_type label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#id_professional_type .input-professional-type-container {
+    display: none;
+}
 
 #professionalProfileForm {
     background: #ffffff;
@@ -139,7 +154,12 @@
     margin: 4em;
     min-width: 50%;
     padding: 1em;
-    height: 100%;
+    height: 75%;
+    text-align: justify;
+}
+
+.error-container {
+    display: block;
 }
 
 li {
@@ -147,7 +167,21 @@ li {
 }
 
 .panels {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+div[id^="stage-"] {
+    text-align: center;
+}
+
+div[id^="stage-"] > div {
     margin-top: 20px;
+    padding-top: 20px;
+}
+
+.btn {
+    background-color: #6892D5;
 }
 
 .container-sign-up-professional-profile-form {
@@ -166,6 +200,10 @@ li {
     position: relative;
 }
 
+.footer-wrapper {
+    margin-top: 20px;
+}
+
 .login-wrapper {
     min-height: 80%;
     margin-top: 80px;
@@ -175,7 +213,7 @@ li {
     list-style-type: None;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     #professionalProfileForm {
         background: #ffffff;
         box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
@@ -183,6 +221,7 @@ li {
         padding: 0;
         min-width: 50%;
         padding: 1em;
-        height: 100%;
+        height: auto;
+        min-height: 80%;
     }
 }
