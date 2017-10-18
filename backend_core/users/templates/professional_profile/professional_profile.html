@@ -15,13 +15,14 @@
                 </div>
             {% endif %}
             <p><label for="id_company_name">{{ Name }}:</label> <input type="text" name="company_name"
-                                                                       value="AL PONCE" id="id_company_name"
+                                                                       value="{{ form.company_name.initial }}"
+                                                                       id="id_company_name"
                                                                        readonly="true" required=""
                                                                        class="input-company-name"
                                                                        maxlength="128">
                 <label for="id_license_num">{{ License_Number }}:</label> <input type="text"
                                                                                  name="license_num"
-                                                                                 value="178144"
+                                                                                 value="{{ form.license_num.initial }}"
                                                                                  readonly="true"
                                                                                  required=""
                                                                                  class="input-license-number"
@@ -29,16 +30,17 @@
             <div class="form-section-container">
                 {#                                <h3 class="form-title">Address</h3>#}
                 <p><label for="id_street">{{ Street }}:</label><br/> <input type="text" name="street"
-                                                                            value="11910 GREYFORD STREET"
+                                                                            value="{{ form.street.initial }}"
                                                                             id="id_street" required=""
                                                                             class="input-street"
                                                                             maxlength="128"></p>
-                <p><label for="id_state">{{ State }}:</label><br/> <input type="text" name="state" value="CA"
+                <p><label for="id_state">{{ State }}:</label><br/> <input type="text" name="state"
+                                                                          value="{{ form.state.initial }}"
                                                                           id="id_state" required=""
                                                                           class="input-state"
                                                                           maxlength="32"></p>
                 <p><label for="id_zipcode">{{ Postal_Code }}:</label><br/> <input type="text" name="zipcode"
-                                                                                  value="90606"
+                                                                                  value="{{ form.zipcode.initial }}"
                                                                                   id="id_zipcode"
                                                                                   required=""
                                                                                   class="input-zipcode"
@@ -48,198 +50,17 @@
                 <div class="col-xs-12 col-sm-6">
 
                     <p><label for="id_entity_type_0">{{ Entity }} {{ Type }}:</label></p>
-                    <ul id="id_entity_type" class="input-entity-type">
-                        <li><label for="id_entity_type_0"><input type="radio" name="entity_type"
-                                                                 value="Corporation" required=""
-                                                                 class="input-entity-type"
-                                                                 id="id_entity_type_0">
-                            Corporation</label>
-
-                        </li>
-                        <li><label for="id_entity_type_1"><input type="radio" name="entity_type"
-                                                                 value="Partnership" required=""
-                                                                 class="input-entity-type"
-                                                                 id="id_entity_type_1">
-                            Partnership</label>
-
-                        </li>
-                        <li><label for="id_entity_type_2"><input type="radio" name="entity_type"
-                                                                 value="Sole Ownership" required=""
-                                                                 checked=""
-                                                                 class="input-entity-type"
-                                                                 id="id_entity_type_2">
-                            Sole Ownership</label>
-
-                        </li>
-                    </ul>
+                    {{ form.entity_type }}
                     <br/>
 
                     <p><label for="id_professional_type_0">{{ Professional }} {{ Category }}:</label></p>
-                    <ul id="id_professional_type" class="input-professional-type">
-                        <li><label for="id_professional_type_0"><input type="radio"
-                                                                       name="professional_type"
-                                                                       value="CONTRACTOR"
-                                                                       readonly="true"
-                                                                       required="" checked=""
-                                                                       class="input-professional-type"
-                                                                       id="id_professional_type_0">
-                            Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_type_1"><input type="radio"
-                                                                       name="professional_type"
-                                                                       value="ARCHITECT" readonly="true"
-                                                                       required=""
-                                                                       class="input-professional-type"
-                                                                       id="id_professional_type_1">
-                            Architect</label>
-
-                        </li>
-                        <li><label for="id_professional_type_2"><input type="radio"
-                                                                       name="professional_type"
-                                                                       value="DESIGNER" readonly="true"
-                                                                       required=""
-                                                                       class="input-professional-type"
-                                                                       id="id_professional_type_2">
-                            Designer</label>
-
-                        </li>
-                    </ul>
+                    {#                    #TODO: Translate#}
+                    {{ form.professional_type }}
                     <br/>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <p><label>{{ Professional }} {{ Sub_Category }}:</label></p>
-                    <ul id="id_professional_subtype" class="input-professional-subtype">
-                        <li><label for="id_professional_subtype_0"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="General Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_0">
-                            General Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_1"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Landscaping Contractor"
-                                                                          checked=""
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_1">
-                            Landscaping Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_2"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Swimming Pool Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_2">
-                            Swimming Pool Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_3"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="KBR"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_3">
-                            Kitchen &amp; Bath Remodelor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_4"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Roofing Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_4">
-                            Roofing Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_5"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Plumbing Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_5">
-                            Plumbing Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_6"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Fencing Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_6">
-                            Fencing Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_7"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="HVAC Contractor"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_7">
-                            HVAC Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_8"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Designer"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_8">
-                            Designer</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_9"><input type="checkbox"
-                                                                          name="professional_subtype"
-                                                                          value="Doors, Gates and Activating Devices"
-                                                                          class="input-professional-subtype"
-                                                                          id="id_professional_subtype_9">
-                            Doors, Gates and Activating Devices</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_10"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Carpentry Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_10">
-                            Carpentry Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_11"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Concrete Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_11">
-                            Concrete Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_12"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Drywall Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_12">
-                            Drywall Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_13"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Electrical Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_13">
-                            Electrical Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_14"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Painting And Decorating Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_14">
-                            Painting And Decorating Contractor</label>
-
-                        </li>
-                        <li><label for="id_professional_subtype_15"><input type="checkbox"
-                                                                           name="professional_subtype"
-                                                                           value="Sheet Metal Contractor"
-                                                                           class="input-professional-subtype"
-                                                                           id="id_professional_subtype_15">
-                            Sheet Metal Contractor</label>
-
-                        </li>
-                    </ul>
+                    {{ form.professional_subtype }}
                     <br/>
                 </div>
             </div>

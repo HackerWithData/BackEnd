@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
 
-from contractors.models import Contractor, BondHistory, WorkerCompensationHistory  # , EfficiencyRating #,ContractorRate
+from contractors.models import Contractor, BondHistory, WorkerCompensationHistory, Complaint_Overall  # , EfficiencyRating #,ContractorRate
 from users.models import User
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
@@ -184,11 +184,23 @@ def display_contractor(request, contractor_id):
 
     project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                           object_id=contractor_id)
+    if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date.date()<datetime.datetime.today()):
+        length = int(contractor.lic_expire_date.date() - contractor.lic_issue_date.date())
+    else:
+        length = int(datetime.datetime.today() - contractor.lic_issue_date.date())
+
+    try:
+        complaint = Complaint_Overall.objects.get(lic_num=contractor_id)
+    except:
+        complaint.case = 0
+        complaint.citation = 0
+        complaint.arbitration = 0
+        complaint.complaint = 0
 
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
                  "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                 "user_rating_form": user_rating_form, }
+                 "user_rating_form": user_rating_form, "complaint": complaint}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 

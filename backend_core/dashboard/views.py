@@ -10,10 +10,7 @@ from users.utils import CONSUMER, PROFESSIONAL
 
 @login_required
 def show_dashboard(request, **kwargs):
-    if request.user.role == CONSUMER:
-        return render(request, 'dashboard/consumer_dashboard.html')
-    else:
-        return render(request, 'dashboard/professional_dashboard.html')
+    return render(request, 'dashboard/dashboard.html')
 
 
 @login_required
