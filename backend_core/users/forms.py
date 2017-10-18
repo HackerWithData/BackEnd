@@ -90,7 +90,6 @@ class ConsumerInfoFillUpForm(forms.Form):
         profile.save()
 
 
-# TODO: implement professional form
 class ProfessionalInfoFillUpForm(forms.Form):
     """
         Professional information form after sign up

@@ -35,15 +35,15 @@
             {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
                 <h4>{% trans "Choose License Type" %}</h4>
-                <ul id="id_professional_type" class="input-professional-type row">
-                    <li class="col-md-4">
+                <ul id="id_professional_type" class="input-professional-type-container row">
+                    <li class="col-sm-12 col-md-4">
                         <label for="id_professional_type_0">
                             <input type="radio"
                                    name="professional_type"
                                    value="CONTRACTOR"
                                    required=""
                                    checked=""
-                                   class="input-professional-type"
+                                   class="input-professional-type-container"
                                    id="id_professional_type_0"
                             >
                             <figure>
@@ -55,13 +55,13 @@
                             </figure>
                         </label>
                     </li>
-                    <li class="col-md-4">
+                    <li class="col-sm-12 col-md-4">
                         <label for="id_professional_type_1">
                             <input type="radio"
                                    name="professional_type"
                                    value="ARCHITECT"
                                    required=""
-                                   class="input-professional-type"
+                                   class="input-professional-type-container"
                                    id="id_professional_type_1"
                             >
                             <figure>
@@ -73,13 +73,13 @@
                             </figure>
                         </label>
                     </li>
-                    <li class="col-md-4">
+                    <li class="col-sm-12 col-md-4">
                         <label for="id_professional_type_2">
                             <input type="radio"
                                    name="professional_type"
                                    value="DESIGNER"
                                    required=""
-                                   class="input-professional-type"
+                                   class="input-professional-type-container"
                                    id="id_professional_type_2"
                             >
                             <figure>
@@ -95,23 +95,34 @@
             </div>
             <div data-panel="two" id="stage-two">
                 <h4>{%  trans "Find Your License In Our Database" %}</h4>
-                {{ form.license_num }}
+                <div class="input-license-number-container">
+                    <div class="error-container"></div>
+                    {% trans "License Number" %} : {{ form.license_num }}
+                </div>
             </div>
             <div data-panel="three" id="stage-three">
                 <h4>{%  trans "Enter Or Modify Your Company Entity Type" %}</h4>
-                </br>
-                {% trans "Company Name" %} : {{ form.company_name }} </br></br>
-                {% trans "Entity Type" %} : {{ form.entity_type }}
+                <div class="input-company-info-container">
+                    <div class="error"></div>
+                    {% trans "Company Name" %} : {{ form.company_name }} </br></br>
+                    {% trans "Entity Type" %} : {{ form.entity_type }}
+                </div>
             </div>
             <div data-panel="four" id="stage-four">
                 <h4>{%  trans "Enter Or Modify Your Company Field" %}</h4>
-                {{ form.professional_subtype }}
+                <div class="input-professional-subtype-container">
+                    <div class="error"></div>
+                    {{ form.professional_subtype }}
+                </div>
             </div>
             <div data-panel="five" id="stage-five">
                 <h4>{%  trans "Enter Or Modify Your Company Address" %}</h4>
-                {% trans "Street" %}:{{ form.street }} </br></br>
-                {% trans "State" %}:{{ form.state }} </br></br>
-                {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                <div class="input-address-container">
+                    <div class="error"></div>
+                    {% trans "Street" %}:{{ form.street }} </br></br>
+                    {% trans "State" %}:{{ form.state }} </br></br>
+                    {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                </div>
             </div>
         </div>
         <div class="button-container next-button">
@@ -168,7 +179,16 @@
 
         const stageValidator = $('#professionalProfileForm').validate({
             rules: rules,
-            messages: messages
+            messages: messages,
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parent().parent().find('.error-container'));
+            },
+            highlight: function (element) {
+                
+            },
+            unhighlight: function (element) {
+                
+            }
         });
 
         $('#next').click(function(event) {
@@ -203,7 +223,6 @@
                 event.preventDefault();
                 alert("Please complete form");
             } else {
-
                 $('#next').submit();
             }
         });

@@ -111,7 +111,7 @@
     width: calc(100% / 4 * 4);
 }
 
-.panels:not(.button-container) div {
+.panels:not(.button-container) > div {
     display: none;
 }
 
@@ -146,7 +146,7 @@ h4 {
     cursor: pointer;
 }
 
-#id_professional_type .input-professional-type {
+#id_professional_type .input-professional-type-container {
     display: none;
 }
 
@@ -200,6 +200,19 @@ div[id^="stage-"] {
 
 .socialaccount_providers {
     list-style-type: None;
+}
+
+@media (max-width: 768px) {
+    #professionalProfileForm {
+        background: #ffffff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+        margin: 0;
+        padding: 0;
+        min-width: 50%;
+        padding: 1em;
+        height: auto;
+        min-height: 70%;
+    }
 }
 
 @media (max-width: 768px) {
