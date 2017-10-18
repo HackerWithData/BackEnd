@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-content header-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3" id="dropdown">
+                    <div class="menu-dropdown">
+                        <div class="account-setting-header">
+                            <span><b>{{ request.user.username }}</b>’s Account Settings</span>
+                            <span id="account-setting-collapse-button"><i
+                                    class="fa fa-angle-up"></i></span>
+                        </div>
+                        <div id="account-settings-content-dropdown">
+                            <ul class="account-setting-list">
+                                <li class="account-setting-list-item">
+                                    <a class="link is-active"
+                                       href="{% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
+                                        <div class="link">
+                                            <span>{{ Profile }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="link" href="{% url 'account_change_password' %}">
+                                        <div class="link">
+                                            <span class="">{{ Password }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="link" href="{% url 'account_email' %}">
+                                        <div class="link">
+                                            <span class="">{{ Email }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="menu-side">
+                        <div class="account-setting-header">
+                            <span><b>{{ request.user.username }}</b>’s Account Settings</span>
+                        </div>
+                        <div class="account-setting-list">
+                            <ul>
+                                <li class="account-setting-list-item">
+                                    <a class="titled-nav_link is-active"
+                                       href="
+                                               {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
+                                        <span class="titled-nav_link-label">Profile</span>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="titled-nav_link" href="{% url 'account_change_password' %}">
+                                        <span class="titled-nav_link-label">Password</span>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="titled-nav_link" href="{% url 'account_email' %}">
+                                        <span class="titled-nav_link-label">Email</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    {% block dashboard_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#account-setting-collapse-button').click(function () {
+                var content = $("#account-settings-content-dropdown");
+                if (content.hasClass('show')) {
+                    content.removeClass('show');
+                    $('#account-setting-collapse-button').html('<i class="fa fa-angle-up"> </i>');
+                }
+                else {
+                    content.addClass('show');
+                    $('#account-setting-collapse-button').html('<i class="fa fa-angle-down"> </i>');
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        (function () {
+            var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+            var actions = document.getElementsByName('action_remove');
+            if (actions.length) {
+                actions[0].addEventListener("click", function (e) {
+                    if (!confirm(message)) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        })();
+    </script>
+{% endblock javascript %}
+
+

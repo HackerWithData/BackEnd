@@ -9,11 +9,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-sign-up-profile-form">
+<div class="container header-gap main-content">
     <form class="sign-up-consumer-profile-form" id="consumerProfileForm" method="post" action="{% url 'account_consumer_profile_after_signup' %}">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">{% trans "Complete" %}</button>
+      <button class="btn btn-hoome" type="submit">{% trans "Submit" %}</button>
     </form>
 </div>
 {% endblock %}

@@ -24,8 +24,6 @@
             text-align: center;
         }
 
-
-
         .socialaccount_providers {
             list-style-type: None;
         }
@@ -35,9 +33,6 @@
             max-width: 300px;
             margin: auto
         }
-
-
-
 
         .picture-container {
             padding-bottom: 12px;
@@ -73,7 +68,7 @@
         .signup input {
             width: 100%;
             height: 30px;
-            border: 1px solid rgb(153,153,153);
+            border: 1px solid rgb(153, 153, 153);
             border-radius: 3px;
         }
     </style>
@@ -140,9 +135,22 @@
 
                         <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
                             {% csrf_token %}
+                            {% if  form.errors %}
+                                <div class="alert alert-warning">
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            {% for error in field.errors %}
+                                                {{ error }}
+                                                <br/>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ form.non_field.errors }}
+                                </div>
+                            {% endif %}
                             {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
                             <p><input type="email" name="email" required=""
-                                      placeholder="{% trans 'Email'%}"
+                                      placeholder="{% trans 'Email' %}"
                                       id="id_email">
                             </p>
                             <p><input type="text" name="username" maxlength="150"
@@ -154,7 +162,7 @@
                             <p><label for="id_role">Role:</label> <select class='full-width' name="role" required=""
                                                                           multiple="multiple"
                                                                           id="id_role">
-                                <option value="PROFESSIONAL">{% trans 'Professional'%}</option>
+                                <option value="PROFESSIONAL">{% trans 'Professional' %}</option>
                                 <option value="CONSUMER">{% trans 'Consumer' %}</option>
                             </select></p>
                             <p><input type="password" name="password1" required=""

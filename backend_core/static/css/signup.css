@@ -1,16 +1,14 @@
 /*===============================================================
-*   consumer fill up form
-===============================================================*/
-.container-sign-up-profile-form {
-    margin-top: 20%;
-    margin-left: 20%;
-    margin-right: 20%;
-}
-
-/*===============================================================
 *   professional fill up form
 ===============================================================*/
+.main-content {
+    margin-bottom: 50px;
+    min-height: calc(100% - 170px);
+}
 
+.footer {
+    position: relative;
+}
 .stages {
     font-size: 0;
     text-align: justify;

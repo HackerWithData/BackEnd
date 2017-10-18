@@ -5,7 +5,6 @@
 
 {% block metainfo %}
     <style>
-
         .header {
             background-color: #6892D5;
         }
@@ -138,7 +137,15 @@
                             {% csrf_token %}
                             {% if  form.errors %}
                                 <div class="alert alert-warning">
-                                    {{ form.non_field_errors }}
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            {% for error in field.errors %}
+                                                {{ error }}
+                                                <br/>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ form.non_field.errors }}
                                 </div>
                             {% endif %}
                             <p><input type="text" name="login" autofocus="autofocus"

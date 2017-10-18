@@ -1,9 +1,15 @@
+{% extends "dashboard/dashboard.html" %}
 {% load i18n %}
 
-<div class="container-consumer-profile">
-    <form class="consumer-profile-form" id="consumerProfileEditForm" method="post" action="{% url 'account_consumer_profile' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% trans "Submit" %}</button>
-    </form>
-</div>
+
+{% block dashboard_content %}
+    <div class="container-consumer-profile">
+        <h2 class="section-title">{{ Profile }}</h2>
+        <form class="consumer-profile-form" id="consumerProfileEditForm" method="post"
+              action="{% url 'account_consumer_profile' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-hoome" type="submit">{% trans "Submit" %}</button>
+        </form>
+    </div>
+{% endblock %}
