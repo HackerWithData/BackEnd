@@ -146,7 +146,7 @@ h4 {
     cursor: pointer;
 }
 
-#id_professional_type .input-professional-type {
+#id_professional_type .input-professional-type-container {
     display: none;
 }
 
@@ -179,8 +179,7 @@ div[id^="stage-"] {
 
 div[id^="stage-"] > div {
     margin-top: 20px;
-    margin-bottom: 20px;
-    
+    padding-top: 20px;
 }
 
 .btn {
@@ -225,7 +224,7 @@ div[id^="stage-"] > div {
         min-width: 50%;
         padding: 1em;
         height: auto;
-        min-height: 70%;
+        min-height: 80%;
     }
 }
 /*test
