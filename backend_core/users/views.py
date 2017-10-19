@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy
 from allauth.account.signals import user_signed_up
+from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
 
 from professionals.models import Professional, ProfessionalType
@@ -28,10 +29,17 @@ def set_role_before_sign_up_complete(request, **kwargs):
     user.save()
 
 
+# TODO: extra avatar image from socail account
+@receiver(pre_social_login)
+def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
+    print sociallogin.account.extra_data
+
+
 @login_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
-        return redirect('account_consumer_profile_after_signup')
+        # return redirect('account_consumer_profile_after_signup')
+        return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
         return redirect('account_professional_profile_after_signup')
     else:
@@ -83,7 +91,6 @@ class ProfessionalProfileAfterSignupView(View):
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             data_to_send = retrieve_professional_info(request)
-            print data_to_send
             if not data_to_send:
                 raise Http404("Lic number does not exist")
             return HttpResponse(json.dumps(data_to_send), content_type="application/json")
@@ -93,7 +100,6 @@ class ProfessionalProfileAfterSignupView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print form.is_valid()
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)

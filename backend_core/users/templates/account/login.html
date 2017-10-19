@@ -39,6 +39,8 @@
             height: 30px;
             border-radius: 3px;
             border: 1px solid rgb(153, 153, 153);
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
         .picture-container {
@@ -76,6 +78,11 @@
             justify-content: center;
             font-weight: 900;
         }
+
+        .socialaccount_providers li {
+            margin-top: 10px;
+        }
+
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
@@ -93,7 +100,6 @@
                                 href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
                                 href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
                         </p>
-                        <br/>
                         {% get_providers as socialaccount_providers %}
                         {% if socialaccount_providers %}
                             <div class="socialaccount_ballot">
