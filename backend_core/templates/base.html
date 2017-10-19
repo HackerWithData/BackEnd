@@ -12,11 +12,8 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
@@ -138,17 +135,17 @@
                                         {% if user.socialaccount_set.all.0.get_avatar_url %}
                                             <img class="avatar-image" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
                                         {% else %}
-                                            <canvas class="avatar-image" width="80" height="80" data-jdenticon-value="{{ user.email }}"></canvas>
+                                            <canvas class="avatar-image" width="60" height="60" data-jdenticon-value="{{ user.email }}"></canvas>
                                         {% endif %}
                                         </div>
                                         <div>
                                             <ul>
-                                                <li></li>
+                                                <li>{{ user.username }}</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">{{ Dashboard }}</a>
+                                    <a class="dropdown-item" href="{% url 'show_dashboard' %}">{{ Dashboard }}</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{% url 'account_logout' %}">{{ Logout }}</a>
                                 </div>

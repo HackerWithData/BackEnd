@@ -151,8 +151,8 @@
 }
 
 .avatar-image {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 }
 
 @media (min-width: 768px) {
