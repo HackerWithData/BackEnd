@@ -29,12 +29,10 @@ def set_role_before_sign_up_complete(request, **kwargs):
     user.save()
 
 
+# TODO: extra avatar image from socail account
 @receiver(pre_social_login)
 def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
-    user = kwargs.pop('user')
-    role = PROFESSIONAL
-    user.role = role
-    user.save
+    print sociallogin.account.extra_data
 
 
 @login_required
@@ -93,7 +91,6 @@ class ProfessionalProfileAfterSignupView(View):
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             data_to_send = retrieve_professional_info(request)
-            print data_to_send
             if not data_to_send:
                 raise Http404("Lic number does not exist")
             return HttpResponse(json.dumps(data_to_send), content_type="application/json")
@@ -103,7 +100,6 @@ class ProfessionalProfileAfterSignupView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print form.is_valid()
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)

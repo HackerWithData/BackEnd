@@ -62,6 +62,7 @@ AUTH_APPS = [
 
     # include the providers you want to enable:
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
 
 WEB_APPS = [
@@ -200,6 +201,15 @@ SOCIALACCOUNT_PROVIDERS = {
         'EXCHANGE_TOKEN': True,
         'VERIFIED_EMAIL': False,
         'VERSION': 'v2.4',
+    },
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
     }
 }
 
@@ -223,8 +233,8 @@ SOCIAL_AUTH_GITHUB_SECRET = '324a396f44f7858a9d3fbef208ba6d058f11b19c'
 SOCIAL_AUTH_TWITTER_KEY = 'Jc8Fhb8XDbCygE5ki3GOljNwp'
 SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '374045419044-2beku5e7dmp46hgrg8ogdanq375th0rh.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '1Q4Jm9Ve_mbbro6quQT3QV7N'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '167647890871-46behgrf3g0hkda1o5oe1r77bbtjdchf.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '_NErMjXqKFPkf0WKWt90fnVV'
 # SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 #   'https://www.googleapis.com/auth/userinfo.email',

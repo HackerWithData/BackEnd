@@ -66,6 +66,8 @@
         }
 
         .signup input {
+            padding-left: 10px;
+            padding-right: 10px;
             width: 100%;
             height: 30px;
             border: 1px solid rgb(153, 153, 153);
@@ -83,7 +85,6 @@
         .signup-user-selection-container {
             display: flex;
             width: 100%;
-{#            justify-content: center;#}
             align-items: stretch;
         }
 
@@ -93,6 +94,10 @@
 
         .signup-user-selection {
             width: 50%;
+        }
+
+        .socialaccount_providers li {
+            margin-top: 10px;
         }
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
@@ -120,7 +125,6 @@
                                 </li>
                             </ul>
                         </div>
-                        <br/>
                         <div id="consumer-signup-option" class="show">
                             {% get_providers as socialaccount_providers %}
                             {% if socialaccount_providers %}
@@ -129,7 +133,7 @@
                                         {% for provider in socialaccount_providers %}
                                             {% if provider.id == "openid" %}
                                                 {% for brand in provider.get_brands %}
-                                                    <li>
+                                                    <li >
                                                         <a title="{{ brand.name }}"
                                                            class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                            href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
@@ -161,7 +165,6 @@
 
                             <br/>
                             <p class="hr-line"><span>{% trans 'OR' %}</span></p>
-                            <br/>
                         </div>
 
                         <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
@@ -180,6 +183,7 @@
                                 </div>
                             {% endif %}
                             {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
+                            <br/>
                             <p><input type="email" name="email" required=""
                                       placeholder="{% trans 'Email' %}"
                                       id="id_email">
@@ -189,7 +193,6 @@
                                       autofocus="autofocus" required=""
                                       placeholder="{% trans 'Username' %}"
                                       id="id_username"></p>
-                            {#                            TODO: make Role to be option with pic after signing up #}
                             <div class="hide">
                                 <label for="id_role">Role:</label>
                                 <select class='full-width'

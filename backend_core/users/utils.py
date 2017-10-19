@@ -1,3 +1,4 @@
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.conf import settings
 
 import json
@@ -32,6 +33,34 @@ def setup_professional_type():
         json_professional_file.close()
 
     return professional
+
+
+class SocialAdapter(DefaultSocialAccountAdapter):
+    def pre_social_login(self, request, sociallogin):
+        """
+        check for data and save what you want.
+
+        :param request:
+        :param sociallogin:
+        :return:
+        """
+        user = sociallogin.account.user
+        user.first = sociallogin.account.data['first_name']
+
+    def populate_user(self, request, sociallogin, data):
+        """
+        save data during social signup
+
+        :param request:
+        :param sociallogin:
+        :param data:
+        :return:
+        """
+        user = sociallogin.account.user
+        user.first_name = data['first_name']
+        user.last_name = data['last_name']
+        user.username = data['username']
+        user.email = data['email']
 
 
 class UnexpectedMultipleChoice(Exception):
