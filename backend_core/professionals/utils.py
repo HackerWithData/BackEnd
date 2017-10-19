@@ -5,9 +5,9 @@ ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
 
 PROFESSIONAL_CHOICES = (
-    (CONTRACTOR, 'Contractor'),
-    (ARCHITECT, 'Architect'),
-    (DESIGNER, 'Designer'),
+    (CONTRACTOR, __('Contractor')),
+    (ARCHITECT, __('Architect')),
+    (DESIGNER, __('Designer')),
 )
 
 # entity type
@@ -43,7 +43,7 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
     (GC, __('General Contractor')),
     (LC, __('Landscaping Contractor')),
     (SPC, __('Swimming Pool Contractor')),
-    (KBR, __('Kitchen & Bath Remodelor')),
+    (KBR, __('Kitchen & Bath Remodeler')),
     (RG, __('Roofing Contractor')),
     (PL, __('Plumbing Contractor')),
     (FC, __('Fencing Contractor')),

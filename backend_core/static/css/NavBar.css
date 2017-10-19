@@ -46,7 +46,6 @@
     color: #fff;
     font-size: 13px;
     font-weight: 300;
-    text-transform: uppercase;
     text-shadow: none;
     line-height: 80px;
     padding: 0px;
@@ -60,7 +59,6 @@
 .header.active #main-nav .navbar-nav > li > a {
     font-size: 13px;
     font-weight: 300;
-    text-transform: uppercase;
     text-shadow: none;
     color: #121212;
 }
@@ -178,13 +176,6 @@
     .header #main-nav .navbar-nav > li > a {
         background-color: #FFFFFF;
         color: #000000;
-        font-size: 13px;
-        font-weight: 300;
-        text-transform: uppercase;
-        text-shadow: none;
-        line-height: 80px;
-        padding: 0px;
-        letter-spacing: 0.5px;
     }
 
 }

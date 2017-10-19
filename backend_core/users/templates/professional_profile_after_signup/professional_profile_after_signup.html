@@ -7,272 +7,290 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
     <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">
-    <script src="{% static 'js/jquery.validate.min.js'%}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <style>
+        .input-license-number-container input, .input-company-info-container input, .input-address-container input {
+            height: 30px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-<div class="container container-sign-up-professional-profile-form">
-    <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile_after_signup' %}">
-      {% csrf_token %}
-        <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
-	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
-	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
-        <input id="four" type="radio" class="stages-radio-input" name="stage" />
-        <input id="five" type="radio" class="stages-radio-input" name="stage" />
+    <div class="container container-sign-up-professional-profile-form">
+        <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post"
+              action="{% url 'account_professional_profile_after_signup' %}">
+            {% csrf_token %}
+            <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked"/>
+            <input id="two" type="radio" class="stages-radio-input" name="stage"/>
+            <input id="three" type="radio" class="stages-radio-input" name="stage"/>
+            <input id="four" type="radio" class="stages-radio-input" name="stage"/>
+            <input id="five" type="radio" class="stages-radio-input" name="stage"/>
 
-        <div class="stages">
-		    <label for="one" class="stages-label">1</label>
-		    <label for="two" class="stages-label">2</label>
-		    <label for="three" class="stages-label">3</label>
-            <label for="four" class="stages-label">4</label>
-            <label for="five" class="stages-label">5</label>
-	    </div>
-
-        <span class="progress"><span></span></span>
-
-        <div class="panels">
-            {{ form.errors }}
-            {{ form.non_field_errors }}
-            <div data-panel="one" id="stage-one">
-                <h4>{% trans "Choose License Type" %}</h4>
-                <ul id="id_professional_type" class="input-professional-type-container row">
-                    <li class="col-sm-12 col-md-4">
-                        <label for="id_professional_type_0">
-                            <input type="radio"
-                                   name="professional_type"
-                                   value="CONTRACTOR"
-                                   required=""
-                                   checked=""
-                                   class="input-professional-type-container"
-                                   id="id_professional_type_0"
-                            >
-                            <figure>
-                            <img alt="contractor"
-                                 active="{% static 'image/sign-up-info-icon/contractor.png' %}"
-                                 inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
-                                 src="{% static 'image/sign-up-info-icon/contractor.png' %}">
-                                <figcaption>Contractor</figcaption>
-                            </figure>
-                        </label>
-                    </li>
-                    <li class="col-sm-12 col-md-4">
-                        <label for="id_professional_type_1">
-                            <input type="radio"
-                                   name="professional_type"
-                                   value="ARCHITECT"
-                                   required=""
-                                   class="input-professional-type-container"
-                                   id="id_professional_type_1"
-                            >
-                            <figure>
-                                <img alt="architect"
-                                     active="{% static 'image/sign-up-info-icon/architect.png' %}"
-                                     inactive="{% static 'image/sign-up-info-icon/architect-inactive.png' %}"
-                                     src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
-                                <figcaption>Architect</figcaption>
-                            </figure>
-                        </label>
-                    </li>
-                    <li class="col-sm-12 col-md-4">
-                        <label for="id_professional_type_2">
-                            <input type="radio"
-                                   name="professional_type"
-                                   value="DESIGNER"
-                                   required=""
-                                   class="input-professional-type-container"
-                                   id="id_professional_type_2"
-                            >
-                            <figure>
-                                <img alt="designer"
-                                     active="{% static 'image/sign-up-info-icon/designer.png' %}"
-                                     inactive="{% static 'image/sign-up-info-icon/designer-inactive.png' %}"
-                                     src="{% static 'image/sign-up-info-icon/designer-inactive.png' %}">
-                                <figcaption>Designer</figcaption>
-                            </figure>
-                        </label>
-                    </li>
-                </ul>
+            <div class="stages">
+                <label for="one" class="stages-label">1</label>
+                <label for="two" class="stages-label">2</label>
+                <label for="three" class="stages-label">3</label>
+                <label for="four" class="stages-label">4</label>
+                <label for="five" class="stages-label">5</label>
             </div>
-            <div data-panel="two" id="stage-two">
-                <h4>{%  trans "Find Your License In Our Database" %}</h4>
-                <div class="input-license-number-container">
-                    <div class="error-container"></div>
-                    {% trans "License Number" %} : {{ form.license_num }}
+
+            <span class="progress"><span></span></span>
+
+            <div class="panels">
+                <div class="alert alert-warning">
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                </div>
+                <div data-panel="one" id="stage-one">
+                    <h4>{% trans "Choose License Type" %}</h4>
+                    <ul id="id_professional_type" class="input-professional-type-container row">
+                        <li class="col-sm-12 col-md-4">
+                            <label for="id_professional_type_0">
+                                <input type="radio"
+                                       name="professional_type"
+                                       value="CONTRACTOR"
+                                       required=""
+                                       checked=""
+                                       class="input-professional-type-container"
+                                       id="id_professional_type_0"
+                                >
+                                <figure>
+                                    <img alt="contractor"
+                                         active="{% static 'image/sign-up-info-icon/contractor.png' %}"
+                                         inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
+                                         src="{% static 'image/sign-up-info-icon/contractor.png' %}">
+                                    <figcaption>{{ Contractor }}</figcaption>
+                                </figure>
+                            </label>
+                        </li>
+                        <li class="col-sm-12 col-md-4">
+                            <label for="id_professional_type_1">
+                                <input type="radio"
+                                       name="professional_type"
+                                       value="ARCHITECT"
+                                       required=""
+                                       class="input-professional-type-container"
+                                       id="id_professional_type_1"
+                                >
+                                <figure>
+                                    <img alt="architect"
+                                         active="{% static 'image/sign-up-info-icon/architect.png' %}"
+                                         inactive="{% static 'image/sign-up-info-icon/architect-inactive.png' %}"
+                                         src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
+                                    <figcaption>{{ Architect }}</figcaption>
+                                </figure>
+                            </label>
+                        </li>
+                        <li class="col-sm-12 col-md-4">
+                            <label for="id_professional_type_2">
+                                <input type="radio"
+                                       name="professional_type"
+                                       value="DESIGNER"
+                                       required=""
+                                       class="input-professional-type-container"
+                                       id="id_professional_type_2">
+                                <figure>
+                                    <img alt="designer"
+                                         active="{% static 'image/sign-up-info-icon/designer.png' %}"
+                                         inactive="{% static 'image/sign-up-info-icon/designer-inactive.png' %}"
+                                         src="{% static 'image/sign-up-info-icon/designer-inactive.png' %}">
+                                    <figcaption>{{ Designer }}</figcaption>
+                                </figure>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div data-panel="two" id="stage-two">
+                    <h4>{% trans "Find Your License In Our Database" %}</h4>
+                    <div class="input-license-number-container">
+                        <div class="error-container"></div>
+                        {% trans "License Number" %} : {{ form.license_num }}
+                    </div>
+                </div>
+                <div data-panel="three" id="stage-three">
+                    <h4>{% trans "Enter Or Modify Your Company Name and Entity Type" %}</h4>
+                    <div class="input-company-info-container">
+                        <div class="error-container"></div>
+                        {% trans "Company Name" %} : {{ form.company_name }} </br></br>
+                        {% trans "Entity Type" %} : {{ form.entity_type }}
+                    </div>
+                </div>
+                <div data-panel="four" id="stage-four">
+                    {#                    TODO: add validation rule none#}
+                    <h4>{% trans "Enter Or Modify Your Company Category" %}</h4>
+                    <div class="input-professional-subtype-container">
+                        <div class="error-container"></div>
+                        {{ form.professional_subtype }}
+                    </div>
+                </div>
+                <div data-panel="five" id="stage-five">
+                    <h4>{% trans "Enter Or Modify Your Company Address" %}</h4>
+                    <div class="input-address-container">
+                        <div class="error-container"></div>
+                        {% trans "Street" %}:{{ form.street }} </br></br>
+                        {% trans "State" %}:{{ form.state }} </br></br>
+                        {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                    </div>
                 </div>
             </div>
-            <div data-panel="three" id="stage-three">
-                <h4>{%  trans "Enter Or Modify Your Company Entity Type" %}</h4>
-                <div class="input-company-info-container">
-                    <div class="error-container"></div>
-                    {% trans "Company Name" %} : {{ form.company_name }} </br></br>
-                    {% trans "Entity Type" %} : {{ form.entity_type }}
-                </div>
+            {#            <div class="button-container next-button">#}
+            {#                <button type="submit" id="next" class="button-cube">#}
+            {#                    <div class="front">#}
+            {#                        {% trans "Next" %}#}
+            {#                    </div>#}
+            {#                    <div class="bottom">#}
+            {#                        {% trans "Next" %}#}
+            {#                    </div>#}
+            {#                </button>#}
+            {#            </div>#}
+            <div style="width:100%;">
+                <button type="submit" id="next" class="btn btn-hoome" style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
             </div>
-            <div data-panel="four" id="stage-four">
-                <h4>{%  trans "Enter Or Modify Your Company Field" %}</h4>
-                <div class="input-professional-subtype-container">
-                    <div class="error-container"></div>
-                    {{ form.professional_subtype }}
-                </div>
-            </div>
-            <div data-panel="five" id="stage-five">
-                <h4>{%  trans "Enter Or Modify Your Company Address" %}</h4>
-                <div class="input-address-container">
-                    <div class="error-container"></div>
-                    {% trans "Street" %}:{{ form.street }} </br></br>
-                    {% trans "State" %}:{{ form.state }} </br></br>
-                    {% trans "Zipcode" %}:{{ form.zipcode }} </br>
-                </div>
-            </div>
-        </div>
-        <div class="button-container next-button">
-             <div type="submit" id="next" class="button-cube">
-                 <div class="front">
-                     {% trans "Next" %}
-                 </div>
-                 <div class="bottom">
-                     {% trans "Next" %}
-                 </div>
-             </div>
-        </div>
-    </form>
-</div>
 
-<script>
-    var globalTimeout = null;
+        </form>
+    </div>
 
-//    TODO: add more robusic logic here
-    $(function () {
-        const rules = {
-            professional_type: 'required',
-            license_num: {
-                required: true,
-                number: true
-            },
-            company_name: 'required',
-            entity_type: 'required',
-            professional_subtype: 'required',
-            street: 'required',
-            state: 'required',
-            zipcode: {
-                required: true,
-                number: true
-            }
-        };
+    <script>
+        var globalTimeout = null;
 
-        const messages = {
-            professional_type: "Please choose your field",
-            license_num: {
-                required: "We need your license number",
-                number: "Your license number must be a number"
-            },
-            company_name: "Please specify your company name",
-            entity_type: "Please choose your company entity type",
-            professional_subtype: "Please choose your professional field",
-            street: "Please specify your company street",
-            state: "Please specify your company state",
-            zipcode: {
-                required: "Please specify your company postal code",
-                number: "Please enter correct postal code"
-            }
-        };
-
-        const stageValidator = $('#professionalProfileForm').validate({
-            rules: rules,
-            messages: messages,
-            errorPlacement: function (error, element) {
-                error.addClass('alert alert-warning').appendTo(element.parent().parent().find('.error-container'));
-            },
-            highlight: function (element) {
-                
-            },
-            unhighlight: function (element) {
-                
-            }
-        });
-
-        $('#next').click(function(event) {
-	        var radioButtons = $('.stages-radio-input');
-	        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-	        selectedIndex = selectedIndex + 1;
-            if (selectedIndex === 1) {
-                console.log(stageValidator.form());
-                if (stageValidator.form()) {
-                    event.preventDefault();
-                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+        //    TODO: add more robusic logic here
+        $(function () {
+            const rules = {
+                professional_type: 'required',
+                license_num: {
+                    required: true,
+                    number: true
+                },
+                company_name: 'required',
+                entity_type: 'required',
+                professional_subtype: 'required',
+                street: 'required',
+                state: 'required',
+                zipcode: {
+                    required: true,
+                    number: true
                 }
-            } else if (selectedIndex === 2) {
-                console.log(stageValidator.form());
-                if (stageValidator.form()) {
-                    event.preventDefault();
-                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+            };
+            {#            TODO: add a validation rule: consider postal code situation#}
+            const messages = {
+                professional_type: "Please choose your field",
+                license_num: {
+                    required: "We need your license number",
+                    number: "Your license number must be a number"
+                },
+                company_name: "Please specify your company name",
+                entity_type: "Please choose your company entity type",
+                professional_subtype: "Please choose your professional field",
+                street: "Please specify your company street",
+                state: "Please specify your company state",
+                zipcode: {
+                    required: "Please specify your company postal code",
+                    number: "Please enter correct postal code"
                 }
-            } else if (selectedIndex === 3) {
-                console.log(stageValidator.form());
-                if (stageValidator.form()) {
-                    event.preventDefault();
-                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
-                }
-            } else if (selectedIndex === 4) {
-                console.log(stageValidator.form());
-                if (stageValidator.form()) {
-                    event.preventDefault();
-                    $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
-                }
-            } else if (!stageValidator.form()) {
-                event.preventDefault();
-                alert("Please complete form");
-            } else {
-                $('#next').submit();
-            }
-        });
+            };
 
-        $('#id_professional_type').find('label').click(function () {
-            $('input[name=professional_type]:checked').parent().find('figure img').attr('src', function () {
-                return $(this).attr('active');
+            const stageValidator = $('#professionalProfileForm').validate({
+                rules: rules,
+                messages: messages,
+                errorPlacement: function (error, element) {
+                    error.addClass('alert alert-warning').appendTo(element.parent().parent().find('.error-container'));
+                },
+                highlight: function (element) {
+
+                },
+                unhighlight: function (element) {
+
+                }
             });
-            $('input[name=professional_type]:not(:checked)').parent().find('figure img').attr('src', function () {
-                return $(this).attr('inactive');
+
+            $('#next').click(function (event) {
+                var radioButtons = $('.stages-radio-input');
+                var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+                selectedIndex = selectedIndex + 1;
+                if (selectedIndex === 1) {
+                    console.log(stageValidator.form());
+                    if (stageValidator.form()) {
+                        event.preventDefault();
+                        $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                    }
+                } else if (selectedIndex === 2) {
+                    console.log(stageValidator.form());
+                    if (stageValidator.form()) {
+                        event.preventDefault();
+                        $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                    }
+                } else if (selectedIndex === 3) {
+                    console.log(stageValidator.form());
+                    if (stageValidator.form()) {
+                        event.preventDefault();
+                        $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                    }
+                } else if (selectedIndex === 4) {
+                    console.log(stageValidator.form());
+                    if (stageValidator.form()) {
+                        event.preventDefault();
+                        $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
+                    }
+                } else if (!stageValidator.form()) {
+                    console.log("test");
+                    event.preventDefault();
+                    alert("Please complete form");
+                } else {
+                    console.log("sucess");
+                    $('#next').submit();
+                }
             });
-        });
+
+            $('#id_professional_type').find('label').click(function () {
+                $('input[name=professional_type]:checked').parent().find('figure img').attr('src', function () {
+                    return $(this).attr('active');
+                });
+                $('input[name=professional_type]:not(:checked)').parent().find('figure img').attr('src', function () {
+                    return $(this).attr('inactive');
+                });
+            });
 
 //        TODO: async
-        $('#id_license_num').keyup(function () {
-            if (globalTimeout != null) {
-                clearTimeout(globalTimeout);
-            }
-            globalTimeout = setTimeout(function () {
-                globalTimeout = null;
-                const dataToSend = {
-                    type: $("input:radio[name='professional_type']:checked").val(),
-                    lic: $('#id_license_num').val()
-                };
-                console.log(JSON.stringify(dataToSend));
-                $.ajax({
-                    type: "GET",
-                    url: "{% url 'account_professional_profile_after_signup' %}",
-                    data: dataToSend,
-                    dataType: "json"
-                }).done(function (data) {
-                    $('#id_company_name').val(data['name']);
+            $('#id_license_num').keyup(function () {
+                if (globalTimeout != null) {
+                    clearTimeout(globalTimeout);
+                }
+                globalTimeout = setTimeout(function () {
+                    globalTimeout = null;
+                    const dataToSend = {
+                        type: $("input:radio[name='professional_type']:checked").val(),
+                        lic: $('#id_license_num').val()
+                    };
+                    console.log(JSON.stringify(dataToSend));
+                    $.ajax({
+                        type: "GET",
+                        url: "{% url 'account_professional_profile_after_signup' %}",
+                        data: dataToSend,
+                        dataType: "json"
+                    }).done(function (data) {
+                        $('#id_company_name').val(data['name']);
 //                    set entity type field
-                    const entityType =data['entity_type'];
-                    $(`input[type=radio][value='${entityType}']`).prop('checked', true);
-                    $('#id_professional_subtype').val(data['subtype']);
+                        const entityType = data['entity_type'];
+                        $(`input[type=radio][value='${entityType}']`).prop('checked', true);
+                        $('#id_professional_subtype').val(data['subtype']);
 //                    set subtype field
-                    data['subtype'].forEach(function (subtype) {
-                        $(`input[type=checkbox][value='${subtype}']`).prop('checked', true);
+                        data['subtype'].forEach(function (subtype) {
+                            $(`input[type=checkbox][value='${subtype}']`).prop('checked', true);
+                        });
+                        $('#id_street').val(data['street_address']);
+                        $('#id_state').val(data['state']);
+                        $('#id_zipcode').val(data['postal_code']);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR !== 404)
+                            console.warn(`ERROR: ${textStatus}`);
                     });
-                    $('#id_street').val(data['street_address']);
-                    $('#id_state').val(data['state']);
-                    $('#id_zipcode').val(data['postal_code']);
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR !== 404)
-                        console.warn(`ERROR: ${textStatus}`);
-                });
-            }, 500)
+                }, 500)
+            });
         });
-    });
 
-</script>
+    </script>
 {% endblock %}

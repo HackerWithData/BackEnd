@@ -13,7 +13,7 @@
                 <div class="col-xs-12 col-sm-3" id="dropdown">
                     <div class="menu-dropdown">
                         <div class="account-setting-header">
-                            <span><b>{{ request.user.username }}</b>’s Account Settings</span>
+                            <span><b>{{ request.user.username }}</b>{%  trans "’s Account Settings" %}</span>
                             <span id="account-setting-collapse-button"><i
                                     class="fa fa-angle-up"></i></span>
                         </div>
@@ -23,7 +23,7 @@
                                     <a class="link is-active"
                                        href="{% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
                                         <div class="link">
-                                            <span>{{ Profile }}</span>
+                                            <span>{% trans 'Profile'%}</span>
                                         </div>
                                     </a>
                                 </li>
@@ -47,25 +47,24 @@
 
                     <div class="menu-side">
                         <div class="account-setting-header">
-                            <span><b>{{ request.user.username }}</b>’s Account Settings</span>
+                            <span><b>{{ request.user.username }}</b>{% trans "’s Account Settings" %}</span>
                         </div>
                         <div class="account-setting-list">
                             <ul>
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link is-active"
-                                       href="
-                                               {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
-                                        <span class="titled-nav_link-label">Profile</span>
+                                       href="{% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
+                                        <span class="titled-nav_link-label">{{ Profile }}</span>
                                     </a>
                                 </li>
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link" href="{% url 'account_change_password' %}">
-                                        <span class="titled-nav_link-label">Password</span>
+                                        <span class="titled-nav_link-label">{{ Password }}</span>
                                     </a>
                                 </li>
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link" href="{% url 'account_email' %}">
-                                        <span class="titled-nav_link-label">Email</span>
+                                        <span class="titled-nav_link-label">{{ Email }}</span>
                                     </a>
                                 </li>
                             </ul>

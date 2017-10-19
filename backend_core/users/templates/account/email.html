@@ -9,17 +9,9 @@
             <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
             <form action="{% url 'account_email' %}" class="email_list" method="post">
                 {% csrf_token %}
-                {% if  form.errors %}
+                {% if  form.non_field_errors %}
                     <div class="alert alert-warning">
-                        {% for field in form %}
-                            {% if field.errors %}
-                                {% for error in field.errors %}
-                                    {{ error }}
-                                    <br/>
-                                {% endfor %}
-                            {% endif %}
-                        {% endfor %}
-                        {{ form.non_field.errors }}
+                        {{ form.non_field_errors }}
                     </div>
                 {% endif %}
                 <fieldset class="blockLabels">
@@ -80,7 +72,7 @@
             {#                            TODO: Translate errorlist#}
             <p><label for="id_email">{% trans 'Email' %}:</label> <input type="email" name="email"
                                                                          required=""
-                                                                         placeholder="E-mail address"
+                                                                         placeholder="{% trans "Email address"  %}"
                                                                          id="id_email"
                                                                          size="30"></p>
             <button name="action_add" class="btn btn-hoome"

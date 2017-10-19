@@ -135,20 +135,9 @@
 
                         <form class="login" method="POST" action="{% url 'account_login' %}">
                             {% csrf_token %}
-                            {% if  form.errors %}
+                            {% if form.non_field_errors %}
                                 <div class="alert alert-warning">
-                                {{form.errors}}
-                                    {% for field in form %}
-                                        {% if field.errors %}
-                                            {% for error in field.errors %}
-                                                {{ error }}
-                                                <br/>
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if form.non_field.errors %}
-                                        {{ form.non_field.errors }}
-                                    {% endif %}
+                                        {{ form.non_field_errors }}
                                 </div>
                             {% endif %}
                             <p><input type="text" name="login" autofocus="autofocus"

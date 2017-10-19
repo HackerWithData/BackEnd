@@ -141,13 +141,6 @@ p {
 
 .header .navbar-nav > li > a {
     color: #fff;
-    font-size: 13px;
-    font-weight: 300;
-    text-transform: uppercase;
-    text-shadow: none;
-    line-height: 80px;
-    padding: 0px;
-    letter-spacing: 0.5px;
 }
 
 .navbar-nav > li {
@@ -155,10 +148,6 @@ p {
 }
 
 .header.active .navbar-nav > li > a {
-    font-size: 13px;
-    font-weight: 300;
-    text-transform: uppercase;
-    text-shadow: none;
     color: #121212;
 }
 
