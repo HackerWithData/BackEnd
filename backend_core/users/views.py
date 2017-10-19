@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy
 from allauth.account.signals import user_signed_up
+from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
 
 from professionals.models import Professional, ProfessionalType
@@ -26,6 +27,14 @@ def set_role_before_sign_up_complete(request, **kwargs):
     role = request.POST.get('role')
     user.role = role
     user.save()
+
+
+@receiver(pre_social_login)
+def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
+    user = kwargs.pop('user')
+    role = PROFESSIONAL
+    user.role = role
+    user.save
 
 
 @login_required
