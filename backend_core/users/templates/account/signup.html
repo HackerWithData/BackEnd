@@ -71,15 +71,35 @@
             border: 1px solid rgb(153, 153, 153);
             border-radius: 3px;
         }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .signup-user-selection-container {
+            display: flex;
+            width: 100%;
+{#            justify-content: center;#}
+            align-items: stretch;
+        }
+
+        .nav-tabs {
+            width: 100%;
+        }
+
+        .signup-user-selection {
+            width: 50%;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
 
 
 {% block content %}
-
-
-
     <div class="container header-gap">
         <div class="row">
             <div class="col-md-6">
@@ -90,48 +110,59 @@
                                 href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
                                 href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
                         </p>
+                        <div class="signup-user-selection-container">
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="signup-user-selection active" value="consumer">
+                                    <a href="#">{% trans 'Consumer' %}</a>
+                                </li>
+                                <li role="presentation" class="signup-user-selection" value="professional">
+                                    <a href="#">{% trans 'Professional' %}</a>
+                                </li>
+                            </ul>
+                        </div>
                         <br/>
-                        {% get_providers as socialaccount_providers %}
-                        {% if socialaccount_providers %}
-                            <div class="socialaccount_ballot">
-                                <ul class="socialaccount_providers">
-                                    {% for provider in socialaccount_providers %}
-                                        {% if provider.id == "openid" %}
-                                            {% for brand in provider.get_brands %}
-                                                <li>
-                                                    <a title="{{ brand.name }}"
-                                                       class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
-                                                        <span class="fa fa-{{ provider.name|lower }}"></span>
-                                                        <span style="font-weight:900">{% trans 'Sign up with' %} {{ provider.name }}</span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        {% endif %}
-                                        <li>
-                                            <a title="{{ provider.name }}"
-                                               class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-                                                <span class="fa fa-{{ provider.name|lower }}"></span>
-                                                <div class="social-word">
-                                                    {% trans 'Sign up with' %} {{ provider.name }}
-                                                </div>
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                        <div id="consumer-signup-option" class="show">
+                            {% get_providers as socialaccount_providers %}
+                            {% if socialaccount_providers %}
+                                <div class="socialaccount_ballot">
+                                    <ul class="socialaccount_providers">
+                                        {% for provider in socialaccount_providers %}
+                                            {% if provider.id == "openid" %}
+                                                {% for brand in provider.get_brands %}
+                                                    <li>
+                                                        <a title="{{ brand.name }}"
+                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+                                                            <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                            <span style="font-weight:900">{% trans 'Sign up with' %} {{ provider.name }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <li>
+                                                <a title="{{ provider.name }}"
+                                                   class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                                                    <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                    <div class="social-word">
+                                                        {% trans 'Sign up with' %} {{ provider.name }}
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
-                            {% include "socialaccount/snippets/login_extra.html" %}
-                        {% else %}
-                            <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
-                                <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
-                        {% endif %}
+                                {% include "socialaccount/snippets/login_extra.html" %}
+                            {% else %}
+                                <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
+                                    <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
+                            {% endif %}
 
-                        <br/>
-                        <p class="hr-line"><span>{% trans 'OR' %}</span></p>
-                        <br/>
-
+                            <br/>
+                            <p class="hr-line"><span>{% trans 'OR' %}</span></p>
+                            <br/>
+                        </div>
 
                         <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
                             {% csrf_token %}
@@ -159,12 +190,17 @@
                                       placeholder="{% trans 'Username' %}"
                                       id="id_username"></p>
                             {#                            TODO: make Role to be option with pic after signing up #}
-                            <p><label for="id_role">Role:</label> <select class='full-width' name="role" required=""
-                                                                          multiple="multiple"
-                                                                          id="id_role">
-                                <option value="PROFESSIONAL">{% trans 'Professional' %}</option>
-                                <option value="CONSUMER">{% trans 'Consumer' %}</option>
-                            </select></p>
+                            <div class="hide">
+                                <label for="id_role">Role:</label>
+                                <select class='full-width'
+                                        name="role"
+                                        required=""
+                                        multiple="multiple"
+                                        id="id_role">
+                                    <option value="PROFESSIONAL">{% trans 'Professional' %}</option>
+                                    <option value="CONSUMER">{% trans 'Consumer' %}</option>
+                                </select>
+                            </div>
                             <p><input type="password" name="password1" required=""
                                       placeholder="{% trans 'Password' %}" id="id_password1"></p>
                             <p><input type="password" name="password2" required=""
@@ -187,7 +223,22 @@
             </div>
         </div>
     </div>
-
-
-
+<script>
+$(function () {
+    $('.signup-user-selection').click(function () {
+        let selection = $(this).attr('value');
+        if (selection === 'consumer') {
+            $('.role-selection').find('select').val('CONSUMER');
+            $('#consumer-signup-option').removeClass('hide').addClass('show');
+        } else if (selection === 'professional') {
+            $('.role-selection').find('select').val('PROFESSIONAL');
+            $('#consumer-signup-option').removeClass('show').addClass('hide');
+        } else {
+            console.warn('Error: undefined user type')
+        }
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    })
+})
+</script>
 {% endblock %}
