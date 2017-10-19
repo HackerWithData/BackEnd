@@ -45,7 +45,7 @@
 .header #main-nav .navbar-nav > li > a {
     color: #fff;
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 900;
     text-transform: uppercase;
     text-shadow: none;
     line-height: 80px;
@@ -59,7 +59,7 @@
 
 .header.active #main-nav .navbar-nav > li > a {
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 900;
     text-transform: uppercase;
     text-shadow: none;
     color: #121212;
@@ -147,6 +147,16 @@
     border-radius: 4px;
 }
 
+.dropdown-menu {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.avatar-image {
+    width: 80px;
+    height: 80px;
+}
+
 @media (min-width: 768px) {
     .header .navbar-brand {
         padding-left: 0;
@@ -155,11 +165,35 @@
     .navbar-nav {
         float: right;
     }
+
+    .navbar-nav > ul {
+        float: right;
+
+    }
+
+    .navbar-nav > li {
+        height: 80px;
+
+    }
+
+    .navbar-nav > li .dropdown {
+        /*margin:30px 0;*/
+        /*vertical-align: center;*/
+
+    }
+
+    .navbar-nav > li .dropdown div {
+        margin: 23px 0;
+        /*vertical-align: center;*/
+
+    }
+
 }
 
 @media (max-width: 767px) {
     .navbar-nav > li {
         margin-left: 0px;
+        height: 80px;
     }
 
     .header #main-nav ul li a {
@@ -172,14 +206,13 @@
 
     .header #main-nav .navbar-nav {
         margin: 0px;
-
     }
 
     .header #main-nav .navbar-nav > li > a {
         background-color: #FFFFFF;
         color: #000000;
         font-size: 13px;
-        font-weight: 300;
+        font-weight: 900;
         text-transform: uppercase;
         text-shadow: none;
         line-height: 80px;
