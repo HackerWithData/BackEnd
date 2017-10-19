@@ -6,7 +6,8 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
 
-from contractors.models import Contractor, BondHistory, WorkerCompensationHistory, Complaint_Overall  # , EfficiencyRating #,ContractorRate
+from contractors.models import Contractor, BondHistory, WorkerCompensationHistory, \
+    Complaint_Overall  # , EfficiencyRating #,ContractorRate
 from users.models import User
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
@@ -116,7 +117,6 @@ def display_contractor(request, contractor_id):
 
     hscore = Hscore.objects.get(contractor_id=contractor_id)
 
-
     letter_grade = convert_hscore_to_rank(hscore)
 
     full_state_name = getStateFullName(contractor.state)
@@ -187,7 +187,6 @@ def display_contractor(request, contractor_id):
     project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                           object_id=contractor_id)
 
-
     if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
 
         length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
@@ -197,12 +196,13 @@ def display_contractor(request, contractor_id):
     try:
         complaint = Complaint_Overall.objects.get(lic_num=contractor_id)
     except:
-        class Complaint1():
+        class Complaint1:
             def __init__(self):
                 self.case = 0
                 self.citation = 0
                 self.arbitration = 0
                 self.complaint = 0
+
         complaint = Complaint1
         complaint.case = 0
         complaint.citation = 0
@@ -212,7 +212,7 @@ def display_contractor(request, contractor_id):
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
                  "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                 "user_rating_form": user_rating_form, "complaint": complaint,"length":length}
+                 "user_rating_form": user_rating_form, "complaint": complaint, "length": length}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
