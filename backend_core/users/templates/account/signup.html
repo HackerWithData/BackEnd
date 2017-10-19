@@ -170,7 +170,7 @@
                             <p><input type="password" name="password2" required=""
                                       placeholder="{% trans 'Password (again)' %}" id="id_password2"></p>
                             <input type="hidden" name="next"
-                                   value="/accounts/signup/info/">
+                                   value="{% url 'account_signup_complete_info' %}">
                             <button class='btn btn-hoome full-width' type="submit">{% trans 'Sign Up' %}</button>
                         </form>
                         <br/>
