@@ -87,8 +87,23 @@
                                 {{ Score }}: {{ info_dict.score }}
                                 <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>
                                 <div id="Score-explaination" class="popuptext">
-                                    <h2>{{ Score }}</h2>
-                                    <p></p>
+{#                                        <p><span>{{ year }}</span><span>{{ info_dict.length }}</span></p>#}
+{#                                        <p><span>{{ aribitration }}</span><span>{{ info_dict.complaint.arbitration }}</span></p>#}
+{#                                        <p><span>{{ citation }}</span><span>{{ info_dict.complaint.citation }}</span></p>#}
+{#                                        <p><span>{{ case }}</span><span>{{ info_dict.complaint.case }}</span></p>#}
+{#                                        <p><span>{{ suits }}</span><span>{{ info_dict.complaint.complaint }}</span></p>#}
+                                    <table>
+                                        <tr><th>{{ Work_Year }}</th>
+                                            <th>{{ Arbitration }}</th>
+                                            <th>{{ Citation }}</th>
+                                            <th>{{ Case }}</th>
+                                            <th>{{ Lawsuit }}</th></tr>
+                                        <tr><td>{{ info_dict.length }}</td>
+                                            <td>{{ info_dict.complaint.arbitration }}</td>
+                                            <td>{{ info_dict.complaint.citation }}</td>
+                                            <td>{{ info_dict.complaint.case }}</td>
+                                            <td>{{ info_dict.complaint.complaint }}</td></tr>
+                                    </table>
                                 </div>
                             </li>
                             <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
