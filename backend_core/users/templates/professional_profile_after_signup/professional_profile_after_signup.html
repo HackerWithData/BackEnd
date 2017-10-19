@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% load i18n %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">
     <script src="{% static 'js/jquery.validate.min.js'%}"></script>
 {% endblock %}
 
@@ -13,7 +14,6 @@
 <div class="container container-sign-up-professional-profile-form">
     <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post" action="{% url 'account_professional_profile_after_signup' %}">
       {% csrf_token %}
-      <!--{{ form.as_p }}-->
         <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked" />
 	    <input id="two" type="radio" class="stages-radio-input" name="stage" />
 	    <input id="three" type="radio" class="stages-radio-input" name="stage" />
@@ -35,31 +35,106 @@
             {{ form.non_field_errors }}
             <div data-panel="one" id="stage-one">
                 <h4>{% trans "Choose License Type" %}</h4>
-                {{ form.professional_type }}
+                <ul id="id_professional_type" class="input-professional-type-container row">
+                    <li class="col-sm-12 col-md-4">
+                        <label for="id_professional_type_0">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="CONTRACTOR"
+                                   required=""
+                                   checked=""
+                                   class="input-professional-type-container"
+                                   id="id_professional_type_0"
+                            >
+                            <figure>
+                            <img alt="contractor"
+                                 active="{% static 'image/sign-up-info-icon/contractor.png' %}"
+                                 inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
+                                 src="{% static 'image/sign-up-info-icon/contractor.png' %}">
+                                <figcaption>Contractor</figcaption>
+                            </figure>
+                        </label>
+                    </li>
+                    <li class="col-sm-12 col-md-4">
+                        <label for="id_professional_type_1">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="ARCHITECT"
+                                   required=""
+                                   class="input-professional-type-container"
+                                   id="id_professional_type_1"
+                            >
+                            <figure>
+                                <img alt="architect"
+                                     active="{% static 'image/sign-up-info-icon/architect.png' %}"
+                                     inactive="{% static 'image/sign-up-info-icon/architect-inactive.png' %}"
+                                     src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
+                                <figcaption>Architect</figcaption>
+                            </figure>
+                        </label>
+                    </li>
+                    <li class="col-sm-12 col-md-4">
+                        <label for="id_professional_type_2">
+                            <input type="radio"
+                                   name="professional_type"
+                                   value="DESIGNER"
+                                   required=""
+                                   class="input-professional-type-container"
+                                   id="id_professional_type_2"
+                            >
+                            <figure>
+                                <img alt="designer"
+                                     active="{% static 'image/sign-up-info-icon/designer.png' %}"
+                                     inactive="{% static 'image/sign-up-info-icon/designer-inactive.png' %}"
+                                     src="{% static 'image/sign-up-info-icon/designer-inactive.png' %}">
+                                <figcaption>Designer</figcaption>
+                            </figure>
+                        </label>
+                    </li>
+                </ul>
             </div>
             <div data-panel="two" id="stage-two">
                 <h4>{%  trans "Find Your License In Our Database" %}</h4>
-                {{ form.license_num }}
+                <div class="input-license-number-container">
+                    <div class="error-container"></div>
+                    {% trans "License Number" %} : {{ form.license_num }}
+                </div>
             </div>
             <div data-panel="three" id="stage-three">
                 <h4>{%  trans "Enter Or Modify Your Company Entity Type" %}</h4>
-                </br>
-                {% trans "Company Name" %} : {{ form.company_name }} </br></br>
-                {% trans "Entity Type" %} : {{ form.entity_type }}
+                <div class="input-company-info-container">
+                    <div class="error-container"></div>
+                    {% trans "Company Name" %} : {{ form.company_name }} </br></br>
+                    {% trans "Entity Type" %} : {{ form.entity_type }}
+                </div>
             </div>
             <div data-panel="four" id="stage-four">
                 <h4>{%  trans "Enter Or Modify Your Company Field" %}</h4>
-                {{ form.professional_subtype }}
+                <div class="input-professional-subtype-container">
+                    <div class="error-container"></div>
+                    {{ form.professional_subtype }}
+                </div>
             </div>
             <div data-panel="five" id="stage-five">
                 <h4>{%  trans "Enter Or Modify Your Company Address" %}</h4>
-                {% trans "Street" %}:{{ form.street }} </br></br>
-                {% trans "State" %}:{{ form.state }} </br></br>
-                {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                <div class="input-address-container">
+                    <div class="error-container"></div>
+                    {% trans "Street" %}:{{ form.street }} </br></br>
+                    {% trans "State" %}:{{ form.state }} </br></br>
+                    {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                </div>
             </div>
         </div>
-        </br>
-        <button type="submit" id="next">{% trans "Next" %}</button>
+        <div class="button-container next-button">
+             <div type="submit" id="next" class="button-cube">
+                 <div class="front">
+                     {% trans "Next" %}
+                 </div>
+                 <div class="bottom">
+                     {% trans "Next" %}
+                 </div>
+             </div>
+        </div>
     </form>
 </div>
 
@@ -104,7 +179,16 @@
 
         const stageValidator = $('#professionalProfileForm').validate({
             rules: rules,
-            messages: messages
+            messages: messages,
+            errorPlacement: function (error, element) {
+                error.addClass('alert alert-warning').appendTo(element.parent().parent().find('.error-container'));
+            },
+            highlight: function (element) {
+                
+            },
+            unhighlight: function (element) {
+                
+            }
         });
 
         $('#next').click(function(event) {
@@ -139,9 +223,17 @@
                 event.preventDefault();
                 alert("Please complete form");
             } else {
-
                 $('#next').submit();
             }
+        });
+
+        $('#id_professional_type').find('label').click(function () {
+            $('input[name=professional_type]:checked').parent().find('figure img').attr('src', function () {
+                return $(this).attr('active');
+            });
+            $('input[name=professional_type]:not(:checked)').parent().find('figure img').attr('src', function () {
+                return $(this).attr('inactive');
+            });
         });
 
 //        TODO: async

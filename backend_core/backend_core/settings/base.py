@@ -49,6 +49,7 @@ PREREQ_APPS = [
     'django.contrib.staticfiles',
     'haystack',
     'storages',
+    # 'django_scss',
 ]
 
 AUTH_APPS = [
