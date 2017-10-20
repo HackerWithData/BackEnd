@@ -178,6 +178,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # auth and all allauth settings
 LOGIN_REDIRECT_URL = 'home_index'
+LOGOUT_REDIRECT_URL = 'home_index'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
@@ -217,7 +218,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 8888
 
-LOGIN_REDIRECT_URL = 'home_index'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQURIED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
@@ -235,11 +235,6 @@ SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '167647890871-46behgrf3g0hkda1o5oe1r77bbtjdchf.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '_NErMjXqKFPkf0WKWt90fnVV'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-#   'https://www.googleapis.com/auth/userinfo.email',
-#    'https://www.googleapis.com/auth/userinfo.profile'
-# ]
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
@@ -261,5 +256,6 @@ LANGUAGES = (
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'extra_locales', 'allauth'),
 )
-LOGOUT_REDIRECT_URL = 'home_index'
+

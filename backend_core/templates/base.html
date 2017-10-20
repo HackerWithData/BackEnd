@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load staticfiles %}
+{% load static %}
 
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -161,6 +161,16 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'show_dashboard' %}">{{ Dashboard }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form class="dropdown-item" method="post" action="{% url 'account_logout' %}">
+                                        {% csrf_token %}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <a id="logoutButton" href="#">{{ Logout }}</a>
+                                    </form>
                                 </div>
                                 <div class="mobile-dropdown">
                                     <a id="primary-menu">
@@ -209,7 +219,6 @@
         </div>
         <!--/.container-->
     </div>
-
 {% endblock %}
 
 {% block header %}
