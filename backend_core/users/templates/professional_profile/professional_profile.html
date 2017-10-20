@@ -1,30 +1,71 @@
+{% extends "dashboard/dashboard.html" %}
+{% load staticfiles %}
 {% load i18n %}
-<html>
-<style>
-    #id_professional_subtype {
-        list-style-type: None;
-    }
+{% block dashboard_content %}
+    <div class="container-professional-profile">
+        <h2 class="section-title">{{ Profile }}</h2>
+        <form class="professional-profile-form" id="professionalProfileEditForm" method="post"
+              action="/accounts/professional_profile/">
+            {% csrf_token %}
+            {#                            {{ form.as_p }}#}
+            {#TODO: Translate form error#}
+            {% if  form.errors %}
+                <div class="alert alert-warning">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <p><label for="id_company_name">{{ Name }}:</label> <input type="text" name="company_name"
+                                                                       value="{{ form.company_name.initial }}"
+                                                                       id="id_company_name"
+                                                                       readonly="true" required=""
+                                                                       class="input-company-name"
+                                                                       maxlength="128">
+                <label for="id_license_num">{{ License_Number }}:</label> <input type="text"
+                                                                                 name="license_num"
+                                                                                 value="{{ form.license_num.initial }}"
+                                                                                 readonly="true"
+                                                                                 required=""
+                                                                                 class="input-license-number"
+                                                                                 id="id_license_num"></p>
+            <div class="form-section-container">
+                {#                                <h3 class="form-title">Address</h3>#}
+                <p><label for="id_street">{{ Street }}:</label><br/> <input type="text" name="street"
+                                                                            value="{{ form.street.initial }}"
+                                                                            id="id_street" required=""
+                                                                            class="input-street"
+                                                                            maxlength="128"></p>
+                <p><label for="id_state">{{ State }}:</label><br/> <input type="text" name="state"
+                                                                          value="{{ form.state.initial }}"
+                                                                          id="id_state" required=""
+                                                                          class="input-state"
+                                                                          maxlength="32"></p>
+                <p><label for="id_zipcode">{{ Postal_Code }}:</label><br/> <input type="text" name="zipcode"
+                                                                                  value="{{ form.zipcode.initial }}"
+                                                                                  id="id_zipcode"
+                                                                                  required=""
+                                                                                  class="input-zipcode"
+                                                                                  maxlength="16"></p>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
 
-    #id_professional_type {
-        list-style-type: None;
-    }
+                    <p><label for="id_entity_type_0">{{ Entity_Type }}:</label></p>
+                    {{ form.entity_type }}
+                    <br/>
 
-    #id_entity_type {
-        list-style-type: None;
-    }
-    #id_license_num {
-        border: 0px;
-    }
-</style>
-<body>
-<div class="container-professional-profile">
-    <form class="professional-profile-form" id="professionalProfileEditForm" method="post"
-          action="{% url 'account_professional_profile' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% trans "Submit" %}</button>
-    </form>
-</div>
-</body>
-</html>
-
+                    <p><label for="id_professional_type_0">{{ Professional_Category }}:</label></p>
+                    {#                    #TODO: Translate#}
+                    {{ form.professional_type }}
+                    <br/>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <p><label>{{ Professional_Sub_Category }}:</label></p>
+                    {{ form.professional_subtype }}
+                    <br/>
+                </div>
+            </div>
+            <button class="btn btn-hoome" type="submit">{% trans 'Save Changes' %}</button>
+        </form>
+        {# TODO: need to add a primary language #}
+    </div>
+{% endblock %}

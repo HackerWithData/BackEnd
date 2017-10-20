@@ -88,3 +88,22 @@ class LicenseRelation(models.Model):
 
     class Meta:
         unique_together = ('name', 'contractor', 'related_contractor')
+
+class Complaint(models.Model):
+    lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
+    complaint_type = models.CharField(max_length=255,null=False, blank=False)
+    complain_num = models.CharField(max_length=255)
+    time = models.DateField()
+    result = models.CharField(max_length=255)
+    complaint_count = models.IntegerField(null=True, blank=False)
+    code_source = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
+    code_detail = models.CharField(max_length=255)
+    doc_link = models.CharField(max_length=255)
+
+class Complaint_Overall(models.Model):
+    lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
+    case = models.IntegerField(null=True, blank=False)
+    citation = models.IntegerField(null=True, blank=False)
+    arbitration = models.IntegerField(null=True, blank=False)
+    complaint = models.IntegerField(null=True, blank=False)

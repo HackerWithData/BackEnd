@@ -23,7 +23,6 @@ from contractors.utils import convert_hscore_to_rank
 
 # Ajax POST request
 def search_by_address_object_redirect_url(request):
-    print request
     zipcode = int(request['address']['address_components'][6]['short_name'])
     search_type = request['type']
     search_target = request['target']

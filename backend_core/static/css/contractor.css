@@ -491,6 +491,15 @@ h1 {
     margin-left: -80px;
 }
 
+.popup .popuptext table td,.popup .popuptext table th, .popup .popuptext table tr {
+    padding: 5px;
+}
+.popup .popuptext table td,.popup .popuptext table th {
+    background-color: #555;
+    color: #fff;
+
+}
+
 /* Popup arrow */
 .popup .popuptext::after {
     content: "";

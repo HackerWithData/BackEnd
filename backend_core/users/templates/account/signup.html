@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 
-
+{% load account socialaccount %}
 {% block metainfo %}
     <style>
-
         .header {
             background-color: #6892D5;
         }
@@ -18,29 +18,222 @@
         }
 
         .signup-wrapper {
+            padding: 30px;
+            overflow: hidden;
             min-height: 80%;
-            margin-top: 80px;
+            text-align: center;
         }
 
         .socialaccount_providers {
             list-style-type: None;
         }
+
+        .signup-container {
+            margin-top: 114px;
+            max-width: 300px;
+            margin: auto
+        }
+
+        .picture-container {
+            padding-bottom: 12px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .picture-container img {
+            width: 386px;
+            vertical-align: middle;
+        }
+
+        @media (min-width: 1024px) {
+            .row {
+                width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .pic {
+                display: none;
+            }
+        }
+
+        .social-word {
+            display: flex;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .signup input {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100%;
+            height: 30px;
+            border: 1px solid rgb(153, 153, 153);
+            border-radius: 3px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .signup-user-selection-container {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .nav-tabs {
+            width: 100%;
+        }
+
+        .signup-user-selection {
+            width: 50%;
+        }
+
+        .socialaccount_providers li {
+            margin-top: 10px;
+        }
     </style>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
 
 
 {% block content %}
-    <div class="container signup-wrapper">
-        <h1>{% trans "Sign Up" %}</h1>
+    <div class="container header-gap">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="signup-wrapper ">
+                    <div class="signup-container">
+                        <h1>{% trans "Sign Up for Hoome" %}</h1>
+                        <p>{% blocktrans %}By signing up, you agree to Hoome’s {% endblocktrans %}<a
+                                href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
+                                href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
+                        </p>
+                        <div class="signup-user-selection-container">
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="signup-user-selection active" value="consumer">
+                                    <a href="#">{% trans 'Consumer' %}</a>
+                                </li>
+                                <li role="presentation" class="signup-user-selection" value="professional">
+                                    <a href="#">{% trans 'Professional' %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="consumer-signup-option" class="show">
+                            {% get_providers as socialaccount_providers %}
+                            {% if socialaccount_providers %}
+                                <div class="socialaccount_ballot">
+                                    <ul class="socialaccount_providers">
+                                        {% for provider in socialaccount_providers %}
+                                            {% if provider.id == "openid" %}
+                                                {% for brand in provider.get_brands %}
+                                                    <li >
+                                                        <a title="{{ brand.name }}"
+                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+                                                            <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                            <span style="font-weight:900">{% trans 'Sign up with' %} {{ provider.name }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <li>
+                                                <a title="{{ provider.name }}"
+                                                   class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                                                    <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                    <div class="social-word">
+                                                        {% trans 'Sign up with' %} {{ provider.name }}
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
-        <p>{% blocktrans %}Already have an account? Then please {% endblocktrans %}<a
-                href="{{ login_url }}">{% trans 'sign in' %}</a>.</p>
+                                {% include "socialaccount/snippets/login_extra.html" %}
+                            {% else %}
+                                <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
+                                    <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
+                            {% endif %}
 
-        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_signup_complete_info' %}"/>
-            <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-        </form>
+                            <br/>
+                            <p class="hr-line"><span>{% trans 'OR' %}</span></p>
+                        </div>
+
+                        <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
+                            {% csrf_token %}
+                            {% if  form.non_field_errors  %}
+                                <div class="alert alert-warning">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
+                            <br/>
+                            <p><input type="email" name="email" required=""
+                                      placeholder="{% trans 'Email' %}"
+                                      id="id_email">
+                            </p>
+                            <p><input type="text" name="username" maxlength="150"
+                                      minlength="1"
+                                      autofocus="autofocus" required=""
+                                      placeholder="{% trans 'Username' %}"
+                                      id="id_username"></p>
+                            <div class="hide">
+                                <label for="id_role">Role:</label>
+                                <select class='full-width'
+                                        name="role"
+                                        required=""
+                                        multiple="multiple"
+                                        id="id_role">
+                                    <option value="PROFESSIONAL">{% trans 'Professional' %}</option>
+                                    <option value="CONSUMER">{% trans 'Consumer' %}</option>
+                                </select>
+                            </div>
+                            <p><input type="password" name="password1" required=""
+                                      placeholder="{% trans 'Password' %}" id="id_password1"></p>
+                            <p><input type="password" name="password2" required=""
+                                      placeholder="{% trans 'Password (again)' %}" id="id_password2"></p>
+                            <input type="hidden" name="next"
+                                   value="{% url 'account_signup_complete_info' %}">
+                            <button class='btn btn-hoome full-width' type="submit">{% trans 'Sign Up' %}</button>
+                        </form>
+                        <br/>
+                        <div class="text-right">{% trans 'Already on Hoome?' %} <a
+                                href="{% url 'account_login' %}">{% trans 'Log in' %} </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="picture-container">
+                    <img class="pic" src="{% static 'image/icon/log-in.svg' %}">
+                </div>
+            </div>
+        </div>
     </div>
+<script>
+$(function () {
+    $('.signup-user-selection').click(function () {
+        let selection = $(this).attr('value');
+        if (selection === 'consumer') {
+            $('.role-selection').find('select').val('CONSUMER');
+            $('#consumer-signup-option').removeClass('hide').addClass('show');
+        } else if (selection === 'professional') {
+            $('.role-selection').find('select').val('PROFESSIONAL');
+            $('#consumer-signup-option').removeClass('show').addClass('hide');
+        } else {
+            console.warn('Error: undefined user type')
+        }
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    })
+})
+</script>
 {% endblock %}

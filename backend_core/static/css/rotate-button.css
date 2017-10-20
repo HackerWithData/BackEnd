@@ -1,0 +1,46 @@
+.button-container {
+  position: relative;
+  display: block;
+  width: 164px;
+  height: 36px;
+  perspective: 300px;
+  font-size: 24px;
+  margin: auto;
+  text-align: center; }
+  .button-container .button-cube {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.333s;
+    transform: translateZ(-18px); }
+    .button-container .button-cube .front, .button-container .button-cube .bottom {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      transition: background 0.333s; }
+    .button-container .button-cube .front {
+      transform: rotateX(0deg) translateZ(18px); }
+    .button-container .button-cube .bottom {
+      transform: rotateX(-90deg) translateZ(18px); }
+  .button-container:hover .button-cube {
+    transform: translateZ(-18px) rotateX(90deg); }
+
+.button-container.next-button .button-cube .front, .button-container.next-button .button-cube .back {
+  background: #6892D5; }
+.button-container.next-button .button-cube .bottom {
+  background: #4075ca; }
+.button-container.next-button:hover .button-cube .bottom {
+  background: #6892D5; }
+.button-container.next-button:hover .button-cube .front {
+  background: #90afe0; }
+
+/*# sourceMappingURL=rotate-button.css.map */

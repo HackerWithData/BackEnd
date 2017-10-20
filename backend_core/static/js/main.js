@@ -2,6 +2,22 @@ jQuery(document).ready(function ($) {
 
     'use strict';
 
+    $('#logoutButton').click(function (event) {
+            $(this).parent('form').submit();
+        }
+    );
+
+    $('#primary-menu').click(function () {
+        if ($('.mobile-dropdown-group').hasClass('hide')) {
+            $('.mobile-dropdown-group').removeClass('hide');
+            console.log($('#main-nav ul.nav.navbar-nav').css.height)
+            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()+80)) ;
+        } else {
+            $('.mobile-dropdown-group').addClass('hide');
+            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()-80)) ;
+        }
+    });
+
 
     $('.counter').each(function () {
         var $this = $(this),
