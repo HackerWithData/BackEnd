@@ -63,6 +63,24 @@
     color: #121212;
 }
 
+.header #main-nav .navbar-nav > li .dropdown > a {
+    color: #fff;
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: 300;
+    text-shadow: none;
+    line-height: 80px;
+    padding: 0px;
+    letter-spacing: 0.5px;
+}
+
+.header.active #main-nav .navbar-nav > li .dropdown > a {
+    font-size: 13px;
+    font-weight: 300;
+    text-shadow: none;
+    color: #121212;
+}
+
 .header.active {
     background-color: rgba(250, 250, 250, 0.98);
     -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
@@ -155,6 +173,46 @@
     height: 60px;
 }
 
+.navbar-nav > li .dropdown .dropdown-menu {
+    min-width: 237px;
+    margin: 0;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu .passport, .navbar-nav > li .dropdown .dropdown-menu .passport .row {
+    margin: 0px;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu .passport .user-image {
+    margin: 0px;
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu .passport .user-name {
+    margin: 0px;
+    margin-left: 10px;
+    float: left;
+    width: 122px;
+    height: 60px;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu .dropdown-menu-group-list {
+    margin: 0px;
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid #e6e6e6;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu .dropdown-menu-items {
+    height: 32px;
+}
+
+.navbar-nav > li .dropdown .dropdown-menu {
+    margin-top: -33px;
+
+}
+
 @media (min-width: 768px) {
     .header .navbar-brand {
         padding-left: 0;
@@ -166,28 +224,67 @@
 
     .navbar-nav > ul {
         float: right;
-
     }
 
     .navbar-nav > li {
         height: 80px;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu {
+        padding: 12px;
+    }
+
+    /*.navbar-nav > li .dropdown .dropdown-toggle {*/
+    /*margin: 23px 0;*/
+    /*!*vertical-align: center;*!*/
+    /*}*/
+    .navbar-nav > li .dropdown .dropdown-menu {
+        min-width: 237px;
+        margin: 0;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu .passport, .navbar-nav > li .dropdown .dropdown-menu .passport .row {
+        margin: 0px;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu .passport .user-image {
+        margin: 0px;
+        width: 60px;
+        height: 60px;
+        float: left;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu .passport .user-name {
+        margin: 0px;
+        margin-left: 10px;
+        float: left;
+        width: 122px;
+        height: 60px;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu .dropdown-menu-group-list {
+        margin: 0px;
+        margin-top: 12px;
+        padding-top: 11px;
+        border-top: 1px solid #e6e6e6;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu .dropdown-menu-items {
+        height: 32px;
+    }
+
+    .navbar-nav > li .dropdown .dropdown-menu {
+        margin-top: -33px;
 
     }
 
-    .navbar-nav > li .dropdown {
-        /*margin:30px 0;*/
-        /*vertical-align: center;*/
-
+    .mobile-dropdown {
+        display: none;
     }
-
-    .navbar-nav > li .dropdown div {
-        margin: 23px 0;
-        /*vertical-align: center;*/
-
-    }
-
 }
-
+#main-nav .navbar-nav  li {
+    list-style-type: none;
+}
 @media (max-width: 767px) {
     .navbar-nav > li {
         margin-left: 0px;
@@ -200,6 +297,7 @@
 
     #main-nav {
         padding: 0px;
+        height: auto;
     }
 
     .header #main-nav .navbar-nav {
@@ -211,6 +309,42 @@
         color: #000000;
     }
 
+    .header.active #main-nav .navbar-nav > li > a {
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+
+    /*.mobile-hide {*/
+    /*display: none;*/
+    /*}*/
+    .nav.navbar-nav .dropdown {
+        background-color: white;
+    }
+
+    .open {
+        display: block;
+    }
+
+    .dropdown {
+        display: none;
+    }
+
+    .header #main-nav .navbar-nav > li{
+        height: 40px;
+    }
+
+    .header #main-nav .navbar-nav > li  a {
+        background-color: white;
+        font-size: 13px;
+        font-weight: 300;
+        text-shadow: none;
+        line-height: 40px;
+        padding: 0px;
+        letter-spacing: 0.5px;
+    }
+     .mobile-dropdown{
+         background-color: white;
+     }
 }
 
 /* footer */
@@ -370,4 +504,19 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
     background-color: #6892D5;
     background: linear-gradient(#6892D4, #6892D6);
+}
+
+.popup .popuptext {
+    visibility: hidden;
+    width: 100%;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 20%;
+    margin-left: -80px;
 }
