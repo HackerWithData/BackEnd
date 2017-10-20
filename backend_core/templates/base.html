@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load staticfiles %}
+{% load static %}
 
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -147,7 +147,13 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{% url 'show_dashboard' %}">{{ Dashboard }}</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{% url 'account_logout' %}">{{ Logout }}</a>
+                                    <form class="dropdown-item" method="post" action="{% url 'account_logout' %}">
+                                        {% csrf_token %}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <a id="logoutButton" href="#">{{ Logout }}</a>
+                                    </form>
                                 </div>
                             </div>
                         </li>
@@ -194,8 +200,6 @@
             {#            </ul>#}
             <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome Inc.</a> © 2017
         </div>
-
-
     </div>
 {% endblock %}
 
