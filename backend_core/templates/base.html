@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load retrieve_professional %}
 
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -100,6 +101,7 @@
 
 <!--nav bar start-->
 {% block nav %}
+{#    {%  %}#}
     {#        TODO: change the color of pop out menu#}
     <div class="header">
         <div class="container">
@@ -139,7 +141,7 @@
                                                         <img class="avatar-image"
                                                              src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
                                                     {% else %}
-                                                        <canvas class="avatar-image" style='width:60px;height:60px'
+                                                        <canvas class="avatar-image" width=60 height=60
                                                                 data-jdenticon-value="{{ user.email }}"></canvas>
                                                     {% endif %}
                                                 </div>
@@ -201,8 +203,6 @@
                         {% else %}
                             <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                         {% endif %}
-                        {#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
-                        {#                        <li><a href="/#contact-us" class="scroll-link" data-id="contact-us">{{ Contact_Us }}</a></li>#}
                     </ul>
                 </div>
                 <!--/.navbar-collapse-->

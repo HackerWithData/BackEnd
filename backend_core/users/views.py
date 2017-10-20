@@ -29,10 +29,10 @@ def set_role_before_sign_up_complete(request, **kwargs):
     user.save()
 
 
-# TODO: extra avatar image from socail account
-@receiver(pre_social_login)
-def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
-    print sociallogin.account.extra_data
+# # TODO: extra avatar image from socail account
+# @receiver(pre_social_login)
+# def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
+#     print sociallogin.account.extra_data
 
 
 @login_required
