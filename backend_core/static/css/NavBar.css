@@ -168,6 +168,20 @@
     padding-right: 5px;
 }
 
+.dropdown-item {
+    color: #6892D5;
+    font-weight: 900;
+}
+
+.dropdown-menu-icon-container {
+    padding: 0px 2px;
+}
+
+.dropdown-menu-icon {
+    height: 25px;
+    width: 25px;
+}
+
 .avatar-image {
     width: 60px;
     height: 60px;

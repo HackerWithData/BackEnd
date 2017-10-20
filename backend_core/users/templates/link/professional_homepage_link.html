@@ -1,0 +1,3 @@
+{% load i18n %}
+{% trans 'Professional Homepage' as Professional_Page %}
+<a class="dropdown-item" href="{% url professional.type|lower professional.lic_num %}">{{ Professional_Page }}</a>

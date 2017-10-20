@@ -15,7 +15,7 @@ from allauth.account.views import PasswordChangeView
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
 from models import ConsumerProfile, ProfessionalProfile
-from user_helpers import retrieve_professional_info, get_professional_corresponding_object
+from user_helpers import retrieve_professional_info, get_professional_corresponding_object_by_type_and_lic
 from utils import *
 
 import json
@@ -172,7 +172,7 @@ class ProfessionalProfileView(View):
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
         self.initial['zipcode'] = professional.postal_code
-        professional_object = get_professional_corresponding_object(prof_type=professional.type, lic=professional.lic_num)
+        professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type, lic=professional.lic_num)
         self.initial['street'] = professional_object.street_address
 
         form = self.form_class(initial=self.initial)

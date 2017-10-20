@@ -6,7 +6,7 @@ from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 from models import User, ConsumerProfile, ProfessionalProfile
 from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, ARCHITECT, DESIGNER
 from professionals.models import Professional, ProfessionalType
-from user_helpers import get_professional_corresponding_object, create_professional_corresponding_object
+from user_helpers import get_professional_corresponding_object_by_type_and_lic, create_professional_corresponding_object
 from utils import *
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
@@ -231,7 +231,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
         if exists:
             # get existing corresponding professional
-            professional_object = get_professional_corresponding_object(prof_type=clean_professional_type,
+            professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=clean_professional_type,
                                                                         lic=clean_license_num)
         else:
             # create new corresponding professional
@@ -309,7 +309,7 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         professional.entity_type = clean_entity_type
         professional.save()
 
-        professional_object = get_professional_corresponding_object(prof_type=clean_professional_type, lic=clean_license_num)
+        professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=clean_professional_type, lic=clean_license_num)
         professional_object.street_address = clean_street
         professional_object.save()
 
