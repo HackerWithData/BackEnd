@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-20 03:28+0000\n"
+"POT-Creation-Date: 2017-10-20 04:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,19 +37,18 @@ msgstr ""
 
 # python-brace-format
 #: architects/views.py:129
-#, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
 "            The License is verified as active when we checked last time. If "
-"you consider to hire {bus_name}, \n"
-"            we suggest contact through us. We will share more information "
-"about this designer to you.\n"
+"you would like to know {bus_name} more, \n"
+"            we suggest contact us and we will share more information about "
+"this architect to you.\n"
 "            "
 msgstr ""
 "{bus_name} 是一位来自{city} 建筑师。根据{data_source}，该建筑师持有相关有效证"
-"件，并被Hoome认证有效。 如果您有意雇佣{bus_name}，我们建议您通过我们向他们联"
-"系，我们会提供更多关于该商家的信息。"
+"件，并被Hoome认证有效。 如果您了解{bus_name}更多，我们建议您联系我们"
+"，我们会向您分享更多关于该商家的信息和数据。"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -92,22 +91,21 @@ msgid "Full Stack Data Scientist Intern"
 msgstr "全栈数据科学家实习"
 
 #: contractors/views.py:133
-#, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
 "    The company holds a license number according to {data_source}. According "
 "to real-time data analysis, this licensed contractor's hoome score is "
 "{score} and is rated as {rank}.\n"
 "    The License is verified as active when we checked last time. If you "
-"consider to hire {bus_name}, \n"
-"    we suggest contact through us. We will share more information about this "
-"designer to you.\n"
+"would like to know {bus_name} more, \n"
+"    we suggest contact us and we will share more information and data about "
+"this contractor to you.\n"
 "    "
 msgstr ""
 "{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
-"{score}， 评定区间为{rank}。如果您有意雇佣{bus_name}，我们建议通过我们向他们"
-"联系，我们会提供更多关于该商家的信息。"
+"{score}， 评定区间为{rank}。如果您了解{bus_name}更多，我们建议您联系我们"
+"，我们会向您分享更多关于该商家的信息和数据。"
 
 #: dashboard/templates/dashboard/dashboard.html:16
 #: dashboard/templates/dashboard/dashboard.html:50
@@ -123,19 +121,27 @@ msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
 #: designers/views.py:129
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "{bus_name} is a designer based on {city} {state} . The company holds a "
+#| "license number according to {data_source}. \n"
+#| "            The License is verified as active when we checked last time. "
+#| "If you consider to hire {bus_name}, \n"
+#| "            we suggest contact through us. We will share more information "
+#| "about this designer to you.\n"
+#| "            "
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
 "            The License is verified as active when we checked last time. If "
-"you consider to hire {bus_name}, \n"
-"            we suggest contact through us. We will share more information "
-"about this designer to you.\n"
+"you would like to know {bus_name} more, \n"
+"            we suggest contact us and we will share more information about "
+"this designer to you.\n"
 "            "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
-"关有效证件，并被Hoome认证有效。 如果您有意雇佣{bus_name}，我们建议您通过我们"
-"向他们联系，我们会提供更多关于该商家的信息。"
+"关有效证件，并被Hoome认证有效。 如果您了解{bus_name}更多，我们建议您联系我们"
+"，我们会向您分享更多关于该商家的信息和数据。"
 
 #: home/templates/home/home.html:114
 msgid "Find excellent professionals"
@@ -547,7 +553,7 @@ msgstr "工作年限"
 msgid "Account Settings"
 msgstr "账户设置"
 
-#: templates/base.html:200 users/templates/account/login.html:167
+#: templates/base.html:202 users/templates/account/login.html:167
 msgid "Sign In"
 msgstr "登入"
 
