@@ -6,7 +6,7 @@ from professionals.models import Professional
 from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER
 
 
-def get_professional_corresponding_object(prof_type, lic):
+def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
     if prof_type == CONTRACTOR:
         ret_professional_object = Contractor.objects.get(lic_num=lic)
     elif prof_type == ARCHITECT:
@@ -16,6 +16,37 @@ def get_professional_corresponding_object(prof_type, lic):
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
+
+
+def get_professional_corresponding_object_by_user(user):
+    professional_profile = user.professional_profiles.first()
+    professional = professional_profile.professional
+    prof_type = professional.type
+    if prof_type == CONTRACTOR:
+        ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
+    elif prof_type == ARCHITECT:
+        ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
+    elif prof_type == DESIGNER:
+        ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    else:
+        raise UndefinedType("Error: Undefined Type in Object")
+    return ret_professional_object
+
+
+def get_professional_and_professional_corresponding_object_by_user(user):
+    professional_profile = user.professional_profiles.first()
+    professional = professional_profile.professional
+    ret_professional = professional
+    prof_type = professional.type
+    if prof_type == CONTRACTOR:
+        ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
+    elif prof_type == ARCHITECT:
+        ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
+    elif prof_type == DESIGNER:
+        ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    else:
+        raise UndefinedType("Error: Undefined Type in Object")
+    return ret_professional, ret_professional_object
 
 
 def create_professional_corresponding_object(prof_type, lic):
@@ -41,7 +72,7 @@ def retrieve_professional_info(request):
         return None
 
     # retrieve corresponding professional through different table
-    ret_professional_object = get_professional_corresponding_object(prof_type=prof_type, lic=lic)
+    ret_professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=prof_type, lic=lic)
 
     ret = {
         'name': professional.name,

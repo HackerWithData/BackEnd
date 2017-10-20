@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load users_tag %}
 
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -139,7 +140,7 @@
                                                         <img class="avatar-image"
                                                              src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
                                                     {% else %}
-                                                        <canvas class="avatar-image" style='width:60px;height:60px'
+                                                        <canvas class="avatar-image" width=60 height=60
                                                                 data-jdenticon-value="{{ user.email }}"></canvas>
                                                     {% endif %}
                                                 </div>
@@ -151,9 +152,26 @@
                                         <div class="dropdown-menu-group">
                                             <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
+                                                    <span class="dropdown-menu-icon-container">
+                                                        <img class="dropdown-menu-icon" src="{% static 'image/icon/settings-icon.svg' %}">
+                                                    </span>
                                                     <a class="dropdown-item"
-                                                       href="{% url 'show_dashboard' %}">{{ Account_Settings }}</a></li>
+                                                       href="{% url 'show_dashboard' %}">
+                                                        {{ Account_Settings }}
+                                                    </a>
+                                                </li>
                                             </ul>
+                                            {% is_professional as show_professional_link %}
+                                            {% if show_professional_link %}
+                                                <ul class="dropdown-menu-group-list">
+                                                    <li class="dropdown-menu-items">
+                                                        <span class="dropdown-menu-icon-container">
+                                                            <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
+                                                        </span>
+                                                        {% retrieve_professional_link %}
+                                                    </li>
+                                                </ul>
+                                            {% endif %}
                                             <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
                                                     <form class="dropdown-item" method="post"
@@ -178,7 +196,7 @@
                                     <div class="mobile-dropdown-group hide">
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
-                                                <a class="dropdown-item"
+                                                <span><img src="{% static 'image/icon/settings-icon.svg' %}"></span><a class="dropdown-item"
                                                    href="{% url 'show_dashboard' %}">{{ Account_Settings }}</a></li>
                                         </ul>
                                         <ul class="dropdown-menu-group-list">
@@ -201,8 +219,6 @@
                         {% else %}
                             <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                         {% endif %}
-                        {#                        <li><a href="#" class="scroll-link" data-id="about">About Us</a></li>#}
-                        {#                        <li><a href="/#contact-us" class="scroll-link" data-id="contact-us">{{ Contact_Us }}</a></li>#}
                     </ul>
                 </div>
                 <!--/.navbar-collapse-->
@@ -238,7 +254,7 @@
             <span class="sep">|</span>
             {#                <li></li>#}
             {#            </ul>#}
-            <a href="http://hoome.io" target="_blank" class="ph_link" title="Hoome">Hoome Inc.</a> © 2017
+            <a href="{% url 'home_index' %}" target="_blank" class="ph_link" title="Hoome">Hoome Inc.</a> © 2017
         </div>
     </div>
 {% endblock %}
