@@ -156,21 +156,19 @@
                                             </ul>
                                             <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
-                                                    <a class="dropdown-item"
-                                                       href="{% url 'account_logout' %}">{{ Logout }}</a></li>
+                                                    <form class="dropdown-item" method="post"
+                                                          action="{% url 'account_logout' %}">
+                                                        {% csrf_token %}
+                                                        {% if redirect_field_value %}
+                                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                                   value="{{ redirect_field_value }}"/>
+                                                        {% endif %}
+                                                        <a id="logoutButton" href="#">{{ Logout }}</a>
+                                                    </form>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{% url 'show_dashboard' %}">{{ Dashboard }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <form class="dropdown-item" method="post" action="{% url 'account_logout' %}">
-                                        {% csrf_token %}
-                                        {% if redirect_field_value %}
-                                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                                        {% endif %}
-                                        <a id="logoutButton" href="#">{{ Logout }}</a>
-                                    </form>
                                 </div>
                                 <div class="mobile-dropdown">
                                     <a id="primary-menu">
@@ -185,8 +183,16 @@
                                         </ul>
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
-                                                <a class="dropdown-item"
-                                                   href="{% url 'account_logout' %}">{{ Logout }}</a></li>
+                                                <form class="dropdown-item" method="post"
+                                                      action="{% url 'account_logout' %}">
+                                                    {% csrf_token %}
+                                                    {% if redirect_field_value %}
+                                                        <input type="hidden" name="{{ redirect_field_name }}"
+                                                               value="{{ redirect_field_value }}"/>
+                                                    {% endif %}
+                                                    <a id="logoutButton" href="#">{{ Logout }}</a>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
