@@ -128,7 +128,7 @@ def display_designer(request, o_id):
     else:
         overview = _("""{bus_name} is a designer based on {city} {state} . The company holds a license number according to {data_source}. 
             The License is verified as active when we checked last time. If you would like to know {bus_name} more, 
-            we suggest contact us and we will share more information about this designer to you.
+            please contact us and we will share more information about this designer to you.
             """).format(bus_name=designer.lic_name, city=designer.city, state=designer.state, data_source=data_source,
                         rank=rank, full_state_name=full_state_name)
     # Lic Type
