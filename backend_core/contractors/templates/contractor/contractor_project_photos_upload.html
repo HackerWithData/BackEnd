@@ -1,12 +1,37 @@
-{%  extends 'contractor/contractor.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
+{% block metainfo %}
+    <style>
+        .header {
+            background-color: #6892D5;
+        }
 
+        .header.active {
+            background-color: #6892D5;
+        }
+
+        .header .navbar-nav > li > a {
+            color: #ffffff;
+            background-color: #6892D5;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-        <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-{#            <input type="file" name="myfiles" multiple>#}
-            <button type="submit"> {{ Submit }}</button>
-        </form>
-{%  endblock %}
+    <div class="header-gap container">
+        <div class="row">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="id_img">{% trans "Project Photos" %}:</label>
+{#                #TODO: Change button text.#}
+                <input type="file" name="img" required="" multiple="" id="id_img">
+
+                {#                "{% trans 'Please choose pictures' %}"#}
+                {#            <input type="file" name="myfiles" multiple>#}
+                <br/>
+                <button type="submit" class="btn btn-hoome"> {{ Submit }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 
