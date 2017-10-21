@@ -217,7 +217,7 @@ def display_contractor(request, contractor_id):
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
                  "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                 "user_rating_form": user_rating_form, "complaint": complaint, "length": length,'p_lic_num': p_lic_num}
+                 "user_rating_form": user_rating_form, "complaint": complaint, "length": length,'p_lic_num': p_lic_num,'rank':letter_grade}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
