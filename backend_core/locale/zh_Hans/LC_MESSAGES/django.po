@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-21 05:46+0000\n"
+"POT-Creation-Date: 2017-10-21 07:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,36 +19,26 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: architects/templates/architect/architect.html:85
-#: contractors/templates/contractor/contractor.html:88
+#: contractors/templates/contractor/contractor.html:84
 #: designers/templates/designer/designer.html:51
 msgid "Edit page?"
-msgstr "编辑页面"
+msgstr "编辑页面?"
 
 #: architects/templates/architect/architect.html:120
-#: contractors/templates/contractor/contractor.html:119
+#: contractors/templates/contractor/contractor.html:122
 #: designers/templates/designer/designer.html:99
-#, fuzzy
-#| msgid "Project Photos"
 msgid "Project Photo Upload"
-msgstr "项目照片"
+msgstr "上传项目照片"
 
 #: architects/templates/architect/architect.html:122
-#: contractors/templates/contractor/contractor.html:121
+#: contractors/templates/contractor/contractor.html:124
 #: designers/templates/designer/designer.html:101
 msgid "Background Image Upload"
 msgstr "上传主页背景图案"
 
 # python-brace-format
 #: architects/views.py:129
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is an architect from {city}. The company holds a license "
-#| "number according to {data_source}. \n"
-#| "            The License is verified as active when we checked last time. "
-#| "If you would like to know {bus_name} more, \n"
-#| "            we suggest contact us and we will share more information "
-#| "about this architect to you.\n"
-#| "            "
+#, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
@@ -59,8 +49,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是一位来自{city} 建筑师。根据{data_source}，该建筑师持有相关有效证"
-"件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们会"
-"向您分享更多关于该商家的信息和数据。"
+"件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们"
+"会向您分享更多关于该商家的信息和数据。"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -108,17 +98,7 @@ msgid "Project Photos"
 msgstr "项目照片"
 
 #: contractors/views.py:131
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is a contractor company located in {csp} . \n"
-#| "    The company holds a license number according to {data_source}. "
-#| "According to real-time data analysis, this licensed contractor's hoome "
-#| "score is {score} and is rated as {rank}.\n"
-#| "    The License is verified as active when we checked last time. If you "
-#| "would like to know {bus_name} more, \n"
-#| "    we suggest contact us and we will share more information and data "
-#| "about this contractor to you.\n"
-#| "    "
+#, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
 "    The company holds a license number according to {data_source}. According "
@@ -132,8 +112,8 @@ msgid ""
 msgstr ""
 "{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
-"{score}， 评定区间为{rank}。如果您需要了解{bus_name}更多的资讯，请联系我们，我"
-"们会向您分享更多关于该商家的信息和数据。"
+"{score}， 评定区间为{rank}。如果您需要了解{bus_name}更多的资讯，请联系我们，"
+"我们会向您分享更多关于该商家的信息和数据。"
 
 #: dashboard/templates/dashboard/dashboard.html:16
 #: dashboard/templates/dashboard/dashboard.html:51
@@ -146,7 +126,7 @@ msgstr "档案"
 
 #: dashboard/templates/dashboard/dashboard.html:79
 msgid "Hello, Welcome to Hoome!"
-msgstr ""
+msgstr "您好，欢迎来到Hoome!"
 
 #: dashboard/templates/dashboard/dashboard.html:81
 msgid ""
@@ -175,15 +155,7 @@ msgstr ""
 "评分囊括了工作年限，执照吊销记录和投诉记录。 后期该评分会添加更多考量因素。"
 
 #: designers/views.py:129
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is a designer based on {city} {state} . The company holds a "
-#| "license number according to {data_source}. \n"
-#| "            The License is verified as active when we checked last time. "
-#| "If you consider to hire {bus_name}, \n"
-#| "            we suggest contact through us. We will share more information "
-#| "about this designer to you.\n"
-#| "            "
+#, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
@@ -194,8 +166,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
-"关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，"
-"我们会向您分享更多关于该商家的信息和数据。"
+"关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
+"们，我们会向您分享更多关于该商家的信息和数据。"
 
 #: home/templates/home/home.html:114
 msgid "Find excellent professionals"
@@ -567,19 +539,19 @@ msgid "Professional Sub-Category"
 msgstr "专业子分类"
 
 #: templates/base.html:87
-msgid "Number of Arbitrations"
+msgid "Arbitrations"
 msgstr "仲裁次数"
 
 #: templates/base.html:88
-msgid "Number of Cases"
+msgid "Cases"
 msgstr "案件次数"
 
 #: templates/base.html:89
-msgid "Number of Citations"
+msgid "Citations"
 msgstr "传票次数"
 
 #: templates/base.html:90
-msgid "Number of Lawsuits"
+msgid "Lawsuits"
 msgstr "诉讼次数"
 
 #: templates/base.html:91 users/templates/account/login.html:154
@@ -600,14 +572,18 @@ msgid "Current Password"
 msgstr "当前密码"
 
 #: templates/base.html:96
-msgid "Number of Years in Industry"
+msgid "Years in Industry"
 msgstr "工作年限"
 
 #: templates/base.html:100
 msgid "Account Settings"
 msgstr "账户设置"
 
-#: templates/base.html:221 users/templates/account/login.html:167
+#: templates/base.html:101
+msgid "Rank"
+msgstr "评分区间"
+
+#: templates/base.html:222 users/templates/account/login.html:167
 msgid "Sign In"
 msgstr "登入"
 
@@ -800,10 +776,8 @@ msgid "Log in"
 msgstr "登入"
 
 #: users/templates/link/professional_homepage_link.html:2
-#, fuzzy
-#| msgid "Professional"
 msgid "Professional Homepage"
-msgstr "专业"
+msgstr "商家页面"
 
 #: users/templates/professional_profile/professional_profile.html:67
 msgid "Save Changes"
@@ -837,6 +811,18 @@ msgstr "邮政编码"
 msgid "Next"
 msgstr "下一步"
 
+#~ msgid ""
+#~ "\n"
+#~ "                                    In Hoome, Contractors could be "
+#~ "classified into 6 categories: A+++,A++,A+,A,A-,Warning.\n"
+#~ "                                    "
+#~ msgstr ""
+#~ "\n"
+#~ "Hoome将承包商分成了6大类：A+++,A++,A+,A,A-,警告。"
+
+#~ msgid "Number of Cases"
+#~ msgstr "案件次数"
+
 #~ msgid "Current"
 #~ msgstr "当前"
 
@@ -858,7 +844,6 @@ msgstr "下一步"
 #~ msgid "Corporation"
 #~ msgstr "公司经营"
 
-#, fuzzy
 #~| msgid "sign up"
 #~ msgid "Sign up"
 #~ msgstr "注册"

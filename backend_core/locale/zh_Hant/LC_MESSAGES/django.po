@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 03:22+0000\n"
+"POT-Creation-Date: 2017-10-21 07:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,36 +19,26 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: architects/templates/architect/architect.html:85
-#: contractors/templates/contractor/contractor.html:88
+#: contractors/templates/contractor/contractor.html:84
 #: designers/templates/designer/designer.html:51
 msgid "Edit page?"
-msgstr "編輯頁面"
+msgstr "編輯頁面?"
 
 #: architects/templates/architect/architect.html:120
-#: contractors/templates/contractor/contractor.html:119
+#: contractors/templates/contractor/contractor.html:122
 #: designers/templates/designer/designer.html:99
-#, fuzzy
-#| msgid "Project Photos"
 msgid "Project Photo Upload"
-msgstr "項目照片"
+msgstr "上傳項目照片"
 
 #: architects/templates/architect/architect.html:122
-#: contractors/templates/contractor/contractor.html:121
+#: contractors/templates/contractor/contractor.html:124
 #: designers/templates/designer/designer.html:101
 msgid "Background Image Upload"
 msgstr "上傳主頁背景圖案"
 
 # python-brace-format
 #: architects/views.py:129
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is an architect from {city}. The company holds a license "
-#| "number according to {data_source}. \n"
-#| "            The License is verified as active when we checked last time. "
-#| "If you would like to know {bus_name} more, \n"
-#| "            we suggest contact us and we will share more information "
-#| "about this architect to you.\n"
-#| "            "
+#, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
@@ -59,8 +49,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是壹位來自{city} 建築師。根據{data_source}，該建築師持有相關有效證"
-"件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我們，我們會"
-"向您分享更多關於該商家的信息和數據。"
+"件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我們，我們"
+"會向您分享更多關於該商家的信息和數據。"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -79,7 +69,7 @@ msgid ""
 "                    fast paced start-up like environment and want to invent "
 "the future. "
 msgstr ""
-"歡迎來到Hoome! Hoome 平臺通過大數據分析幫助用戶篩選和推動優秀的設計師，可靠的"
+"歡迎來到Hoome! Hoome 平臺通過大數據分析幫助用護篩選和推動優秀的設計師，可靠的"
 "承包商和裝修專業員工。我們誠心邀請各界社會精英加入我們！"
 
 #: career/templates/career/career.html:85
@@ -108,17 +98,7 @@ msgid "Project Photos"
 msgstr "項目照片"
 
 #: contractors/views.py:131
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is a contractor company located in {csp} . \n"
-#| "    The company holds a license number according to {data_source}. "
-#| "According to real-time data analysis, this licensed contractor's hoome "
-#| "score is {score} and is rated as {rank}.\n"
-#| "    The License is verified as active when we checked last time. If you "
-#| "would like to know {bus_name} more, \n"
-#| "    we suggest contact us and we will share more information and data "
-#| "about this contractor to you.\n"
-#| "    "
+#, python-brace-format
 msgid ""
 "{bus_name} is a contractor company located in {csp} . \n"
 "    The company holds a license number according to {data_source}. According "
@@ -132,13 +112,13 @@ msgid ""
 msgstr ""
 "{bus_name} 是壹家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
 "相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
-"{score}， 評定區間為{rank}。如果您需要了解{bus_name}更多的資訊，請聯系我們，我"
-"們會向您分享更多關於該商家的信息和數據。"
+"{score}， 評定區間為{rank}。如果您需要了解{bus_name}更多的資訊，請聯系我們，"
+"我們會向您分享更多關於該商家的信息和數據。"
 
 #: dashboard/templates/dashboard/dashboard.html:16
 #: dashboard/templates/dashboard/dashboard.html:51
 msgid "’s Account Settings"
-msgstr "的賬戶設置"
+msgstr "的帳護設置"
 
 #: dashboard/templates/dashboard/dashboard.html:27 templates/base.html:81
 msgid "Profile"
@@ -146,13 +126,13 @@ msgstr "檔案"
 
 #: dashboard/templates/dashboard/dashboard.html:79
 msgid "Hello, Welcome to Hoome!"
-msgstr ""
+msgstr "您好，歡迎來到Hoome!"
 
 #: dashboard/templates/dashboard/dashboard.html:81
 msgid ""
 "It's Your Personal Dashboard. You could set up you account by clicking left "
 "buttons"
-msgstr "這是您的個人用戶面板。您可以通過點擊左邊按鈕來設置您的賬戶。"
+msgstr "這是您的個人用護面板。您可以通過點擊左邊按鈕來設置您的帳護。"
 
 #: dashboard/templates/dashboard/dashboard.html:114
 msgid "Do you really want to remove the selected e-mail address?"
@@ -175,15 +155,7 @@ msgstr ""
 "評分囊括了工作年限，執照吊銷記錄和投訴記錄。 後期該評分會添加更多考量因素。"
 
 #: designers/views.py:129
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "{bus_name} is a designer based on {city} {state} . The company holds a "
-#| "license number according to {data_source}. \n"
-#| "            The License is verified as active when we checked last time. "
-#| "If you consider to hire {bus_name}, \n"
-#| "            we suggest contact through us. We will share more information "
-#| "about this designer to you.\n"
-#| "            "
+#, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
@@ -194,8 +166,8 @@ msgid ""
 "            "
 msgstr ""
 "{bus_name} 是壹位基於{city} {state}設計師。根據{data_source}，該建築師持有相"
-"關有效證件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我們，"
-"我們會向您分享更多關於該商家的信息和數據。"
+"關有效證件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我"
+"們，我們會向您分享更多關於該商家的信息和數據。"
 
 #: home/templates/home/home.html:114
 msgid "Find excellent professionals"
@@ -253,7 +225,7 @@ msgstr "項目地址"
 
 #: review/forms.py:18
 msgid "Is Anonymous?"
-msgstr "匿名用戶"
+msgstr "匿名用護"
 
 #: search/templates/search_bar/search_bar.html:8
 msgid "Find Professionals"
@@ -321,11 +293,11 @@ msgstr "空調通風承包商"
 
 #: search/templates/search_bar/search_bar.html:73
 msgid "Kitchen & Bath Contractor"
-msgstr "廚房衛浴承包商"
+msgstr "櫥房衛浴承包商"
 
 #: search/templates/search_bar/search_bar.html:76
 msgid "Landscaping Contractor"
-msgstr "景觀園藝承包商"
+msgstr "景觀員藝承包商"
 
 #: search/templates/search_bar/search_bar.html:79
 msgid "Painting And Decorating Contractor"
@@ -353,11 +325,11 @@ msgstr "沒有商家符合您的要求"
 
 #: templates/base.html:30
 msgid "Account"
-msgstr "賬戶"
+msgstr "帳護"
 
 #: templates/base.html:31
 msgid "Dashboard"
-msgstr "用戶面板"
+msgstr "用護面板"
 
 #: templates/base.html:32
 msgid "Log out"
@@ -373,7 +345,7 @@ msgstr "電話"
 
 #: templates/base.html:35
 msgid "Overall Rating"
-msgstr "總體用戶評分"
+msgstr "總體用護評分"
 
 #: templates/base.html:36
 msgid "Overview"
@@ -451,7 +423,7 @@ msgstr "瀏覽更多"
 
 #: templates/base.html:55
 msgid "Anonymous User"
-msgstr "匿名用戶"
+msgstr "匿名用護"
 
 #: templates/base.html:59
 msgid "Read less"
@@ -567,19 +539,19 @@ msgid "Professional Sub-Category"
 msgstr "專業子分類"
 
 #: templates/base.html:87
-msgid "Number of Arbitrations"
+msgid "Arbitrations"
 msgstr "仲裁次數"
 
 #: templates/base.html:88
-msgid "Number of Cases"
+msgid "Cases"
 msgstr "案件次數"
 
 #: templates/base.html:89
-msgid "Number of Citations"
+msgid "Citations"
 msgstr "傳票次數"
 
 #: templates/base.html:90
-msgid "Number of Lawsuits"
+msgid "Lawsuits"
 msgstr "訴訟次數"
 
 #: templates/base.html:91 users/templates/account/login.html:154
@@ -600,14 +572,18 @@ msgid "Current Password"
 msgstr "當前密碼"
 
 #: templates/base.html:96
-msgid "Number of Years in Industry"
+msgid "Years in Industry"
 msgstr "工作年限"
 
 #: templates/base.html:100
 msgid "Account Settings"
-msgstr "賬戶設置"
+msgstr "帳護設置"
 
-#: templates/base.html:221 users/templates/account/login.html:167
+#: templates/base.html:101
+msgid "Rank"
+msgstr "評分區間"
+
+#: templates/base.html:222 users/templates/account/login.html:167
 msgid "Sign In"
 msgstr "登入"
 
@@ -629,7 +605,7 @@ msgstr "必須選擇您的專業類別"
 
 #: users/forms.py:168
 msgid "Must select a entity type"
-msgstr "必須選擇您的註冊實體類型，比如：個體戶還是公司"
+msgstr "必須選擇您的註冊實體類型，比如：個體護還是公司"
 
 #: users/templates/account/email.html:6
 msgid "Email Addresses"
@@ -637,7 +613,7 @@ msgstr "郵箱地址"
 
 #: users/templates/account/email.html:9
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "下列郵箱地址已關連到您的賬號上："
+msgstr "下列郵箱地址已關連到您的帳號上："
 
 #: users/templates/account/email.html:29
 msgid "Verified"
@@ -716,7 +692,7 @@ msgstr "第三方登入："
 #: users/templates/account/login.html:134
 #: users/templates/account/signup.html:165
 msgid "If you have not created an account yet, then please"
-msgstr "如果妳還沒有創建用戶，請"
+msgstr "如果妳還沒有創建用護，請"
 
 #: users/templates/account/login.html:135
 #: users/templates/account/signup.html:166
@@ -736,7 +712,7 @@ msgstr "或"
 #: users/templates/account/login.html:151
 #: users/templates/account/signup.html:194
 msgid "Username"
-msgstr "用戶名"
+msgstr "用護名"
 
 #: users/templates/account/login.html:151
 msgid "or"
@@ -793,17 +769,15 @@ msgstr "再壹次輸入密碼"
 
 #: users/templates/account/signup.html:215
 msgid "Already on Hoome?"
-msgstr "已經擁有Hoome賬號了？"
+msgstr "已經擁有Hoome帳號了？"
 
 #: users/templates/account/signup.html:216
 msgid "Log in"
 msgstr "登入"
 
 #: users/templates/link/professional_homepage_link.html:2
-#, fuzzy
-#| msgid "Professional"
 msgid "Professional Homepage"
-msgstr "專業"
+msgstr "商家頁面"
 
 #: users/templates/professional_profile/professional_profile.html:67
 msgid "Save Changes"
@@ -837,6 +811,18 @@ msgstr "郵政編碼"
 msgid "Next"
 msgstr "下壹步"
 
+#~ msgid ""
+#~ "\n"
+#~ "                                    In Hoome, Contractors could be "
+#~ "classified into 6 categories: A+++,A++,A+,A,A-,Warning.\n"
+#~ "                                    "
+#~ msgstr ""
+#~ "\n"
+#~ "Hoome將承包商分成了6大類：A+++,A++,A+,A,A-,警告。"
+
+#~ msgid "Number of Cases"
+#~ msgstr "案件次數"
+
 #~ msgid "Current"
 #~ msgstr "當前"
 
@@ -844,7 +830,7 @@ msgstr "下壹步"
 #~ msgstr "暖通空調承包商"
 
 #~ msgid "Kitchen & Bath Remodeler"
-#~ msgstr "廚房衛浴承包商"
+#~ msgstr "櫥房衛浴承包商"
 
 #~ msgid "Roofing Contractor"
 #~ msgstr "屋頂承包商"
@@ -858,7 +844,6 @@ msgstr "下壹步"
 #~ msgid "Corporation"
 #~ msgstr "公司經營"
 
-#, fuzzy
 #~| msgid "sign up"
 #~ msgid "Sign up"
 #~ msgstr "註冊"
@@ -867,13 +852,13 @@ msgstr "下壹步"
 #~ msgstr "關閉"
 
 #~ msgid "Please sign in with one of your existing third party accounts. Or,"
-#~ msgstr "請登入您其中壹個第三方賬戶，或者"
+#~ msgstr "請登入您其中壹個第三方帳護，或者"
 
 #~ msgid " for a third-party account and sign in below:"
-#~ msgstr "第三方用戶，請通過以下方式登入"
+#~ msgstr "第三方用護，請通過以下方式登入"
 
 #~ msgid "Already have an account? Then please "
-#~ msgstr "已經創建賬戶？ "
+#~ msgstr "已經創建帳護？ "
 
 #~ msgid "Complete"
 #~ msgstr "完成"
@@ -945,7 +930,7 @@ msgstr "下壹步"
 #~ "                            will enjoy the benefit –”Work first and pay "
 #~ "later”, after background check."
 #~ msgstr ""
-#~ "我們致力於為客戶提供完美的體驗。 在Hoome高質量客戶中，我們想盡可能地向他們"
+#~ "我們致力於為客護提供完美的體驗。 在Hoome高質量客護中，我們想盡可能地向他們"
 #~ "提供實惠的價格。 大約10%%的業主在通過背景調查之後享受了先施工後付款的服"
 #~ "務。"
 
@@ -968,13 +953,13 @@ msgstr "下壹步"
 #~ "enhance user\n"
 #~ "                            experience in Hoome platform. "
 #~ msgstr ""
-#~ "我們奮力建設更完全更多的功能並增強數據分析的力度來改善用戶使用我們平臺的體"
+#~ "我們奮力建設更完全更多的功能並增強數據分析的力度來改善用護使用我們平臺的體"
 #~ "驗。"
 
 #~ msgid ""
 #~ "If you have any questions or want to invest us, don't hesitate to contact "
 #~ "us:"
-#~ msgstr "如果您有什麽問題或有意願投資我們，不要猶豫，請跟聯系我們!"
+#~ msgstr "如果您有什麼問題或有意願投資我們，不要猶豫，請跟聯系我們!"
 
 #~ msgid "Gender"
 #~ msgstr "性別"
