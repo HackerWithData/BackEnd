@@ -75,3 +75,4 @@ DEBUG_TOOLBAR_CONFIG = {
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

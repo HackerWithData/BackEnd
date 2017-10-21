@@ -7,19 +7,18 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <style>
         #masthead {
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
+            background-size:cover;
         }
 
-
+        .bus-name {
+            font-size: 88px;
+            font-weight: 900;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -34,6 +33,7 @@
             }
         });
     </script>
+
 {% endblock %}
 
 {% block Trans %}
@@ -78,8 +78,16 @@
     <div id="masthead">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-lg-8 head-info">
-                    <h1>{{ info_dict.contractor.bus_name }}</h1>
+                <div class="col-md-9 col-lg-9 head-info">
+                    <span class="bus-name">{{ info_dict.contractor.bus_name }}</span>
+
+                    {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
+                        <label class="switch">
+                            <input id="edit" type="checkbox" class="off">
+                            <span class="slider round"></span>
+                        </label> {% trans 'Edit page?' %}
+                    {% endif %}
+                    <br/>
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.contractor.csp }}</li>
@@ -87,18 +95,13 @@
                                 {{ Score }}: {{ info_dict.score }}
                                 <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>
                                 <div id="Score-explaination" class="popuptext">
-                                    <table>
-                                        <tr><th>{{ Work_Year }}</th>
-                                            <th>{{ Arbitration }}</th>
-                                            <th>{{ Citation }}</th>
-                                            <th>{{ Case }}</th>
-                                            <th>{{ Lawsuit }}</th></tr>
-                                        <tr><td>{{ info_dict.length }}</td>
-                                            <td>{{ info_dict.complaint.arbitration }}</td>
-                                            <td>{{ info_dict.complaint.citation }}</td>
-                                            <td>{{ info_dict.complaint.case }}</td>
-                                            <td>{{ info_dict.complaint.complaint }}</td></tr>
-                                    </table>
+                                    <ul>
+                                        <li>{{ Work_Year }}: {{ info_dict.length }}</li>
+                                        <li>{{ Arbitration }}: {{ info_dict.complaint.arbitration }}</li>
+                                        <li>{{ Citation }}: {{ info_dict.complaint.citation }}</li>
+                                        <li>{{ Case }}: {{ info_dict.complaint.case }}</li>
+                                        <li>{{ Lawsuit }}: {{ info_dict.complaint.complaint }}</li>
+                                    </ul>
                                 </div>
                             </li>
                             <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
@@ -106,34 +109,27 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <div class="bus-btn">
+                        <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
+                        {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
+                            <div class='hide' id="edit-btn">
+                                <a href="{{ request.path }}project-photos/upload"
+                                   class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
+                                <a href="{{ request.path }}background-upload"
+                                   class='btn btn-hoome'>{% trans 'Background Image Upload' %}</a>
+                            </div>
+                        {% endif %}
+                    </div>
 
                 </div>
-                <div class="col-md-4 col-lg-4">
-                    <div id="review-us">
-                        <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
     <!-- /cont -->
 
-
-
-    {#    <script>#}
-    {#        $(function () {#}
-    {#            $('.popup-modal').magnificPopup({#}
-    {#                type: 'inline',#}
-    {#                preloader: false,#}
-    {#                focus: '#username',#}
-    {#                modal: true#}
-    {#            });#}
-    {#            $(document).on('click', '.popup-modal-dismiss', function (e) {#}
-    {#                e.preventDefault();#}
-    {#                $.magnificPopup.close();#}
-    {#            });#}
-    {#        });#}
-    {#    </script>#}
 {% endblock %}
 
 {% block content %}
@@ -298,12 +294,20 @@
 
         {#        photoSlider();#}
         $(document).ready(function () {
+            $("#edit").click(function () {
+                if ($("#edit").prop("checked") === true) {
+                    $('#edit-btn').removeClass('hide');
+                } else {
+                    $('#edit-btn').addClass('hide');
+                }
+            })
+
             $('#readmore').click(function () {
                 readMore();
             });
-            $("#Score-explaination").css({
-                'width': ($(".head-info").width() + 'px')
-            });
+            {#            $("#Score-explaination").css({#}
+            {#                'width': ($(".head-info").width() + 'px')#}
+            {#            });#}
             $('.popup-with-form').magnificPopup({
                 type: 'inline',
                 preloader: true,

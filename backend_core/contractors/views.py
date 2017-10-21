@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
-
 from contractors.models import Contractor, BondHistory, WorkerCompensationHistory, \
     Complaint_Overall  # , EfficiencyRating #,ContractorRate
 from users.models import User
@@ -18,7 +17,6 @@ from hscore.models import Hscore
 from photos.models import Photo, BackgroundPhoto
 from photos.forms import PhotoForm
 from .utils import convert_hscore_to_rank
-
 import datetime
 
 
@@ -208,11 +206,18 @@ def display_contractor(request, contractor_id):
         complaint.citation = 0
         complaint.arbitration = 0
         complaint.complaint = 0
-
+    # print(request.user)
+    if request.user.is_anonymous():
+        p_lic_num = None
+    else:
+        try:
+            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        except:
+            p_lic_num = None
     info_dict = {"contractor": contractor, "bg_image": bgimage, "overview": overview,
                  "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                 "user_rating_form": user_rating_form, "complaint": complaint, "length": length}
+                 "user_rating_form": user_rating_form, "complaint": complaint, "length": length,'p_lic_num': p_lic_num}
 
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
@@ -243,26 +248,36 @@ def display_project_photos(request, contractor_id):
 
 
 def upload_project_photos(request, contractor_id):
-    template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
-    success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
+    if request.user.is_anonymous():
+        p_lic_num = None
+    else:
+        try:
+            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        except:
+            p_lic_num = None
+    if str(p_lic_num) == str(contractor_id):
+        template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
+        success_url = '/contractor/'+contractor_id  # Replace with your URL or reverse().
 
-    if request.method == "POST":
-        # contractor = Contractor.objects.get(lic_num=contractor_id)
-        form = PhotoForm(request.POST, request.FILES)
-        content_type = ContentType.objects.get(model='contractor')
-        object_id = int(contractor_id)
-        files = request.FILES.getlist('img')
-        if form.is_valid():
-            if len(files) > 0:
-                for f in files:
-                    instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
-                    instance.save()
-            else:
-                pass
-            return render(request, success_url)
-    form = PhotoForm()
-    info_dict = {'form': form}
-    return render(request, template_name, info_dict)
+        if request.method == "POST":
+            # contractor = Contractor.objects.get(lic_num=contractor_id)
+            form = PhotoForm(request.POST, request.FILES)
+            content_type = ContentType.objects.get(model='contractor')
+            object_id = int(contractor_id)
+            files = request.FILES.getlist('img')
+            if form.is_valid():
+                if len(files) > 0:
+                    for f in files:
+                        instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
+                        instance.save()
+                else:
+                    pass
+                return redirect(success_url)
+        form = PhotoForm()
+        info_dict = {'form': form}
+        return render(request, template_name, info_dict)
+    else:
+        return HttpResponseNotFound('No Pages Found.')
 
     # class ProjectPhotosUpload(View):
     #     def get(self, request, contractor_id):

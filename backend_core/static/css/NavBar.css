@@ -325,7 +325,7 @@
         display: block;
     }
 
-    .dropdown {
+    .nav.navbar-nav .dropdown {
         display: none;
     }
 

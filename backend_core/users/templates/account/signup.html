@@ -99,6 +99,9 @@
         .socialaccount_providers li {
             margin-top: 10px;
         }
+    .alert.alert-warning li {
+        list-style-type: none;
+    }
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
@@ -133,7 +136,7 @@
                                         {% for provider in socialaccount_providers %}
                                             {% if provider.id == "openid" %}
                                                 {% for brand in provider.get_brands %}
-                                                    <li >
+                                                    <li>
                                                         <a title="{{ brand.name }}"
                                                            class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                            href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
@@ -159,7 +162,8 @@
 
                                 {% include "socialaccount/snippets/login_extra.html" %}
                             {% else %}
-                                <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
+                                <p>{% blocktrans %}If you have not created an account yet, then
+                                    please{% endblocktrans %}
                                     <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
                             {% endif %}
 
@@ -169,9 +173,16 @@
 
                         <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
                             {% csrf_token %}
-                            {% if  form.non_field_errors  %}
+                            {% if form.errors %}
+
+
                                 <div class="alert alert-warning">
-                                    {{ form.non_field_errors }}
+                                    {% for field in form %}
+                                        {{ field.errors }}
+                                    {% endfor %}
+                                    {% if  form.non_field_errors %}
+                                        {{ form.non_field_errors }}
+                                    {% endif %}
                                 </div>
                             {% endif %}
                             {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
@@ -218,22 +229,22 @@
             </div>
         </div>
     </div>
-<script>
-$(function () {
-    $('.signup-user-selection').click(function () {
-        let selection = $(this).attr('value');
-        if (selection === 'consumer') {
-            $('.role-selection').find('select').val('CONSUMER');
-            $('#consumer-signup-option').removeClass('hide').addClass('show');
-        } else if (selection === 'professional') {
-            $('.role-selection').find('select').val('PROFESSIONAL');
-            $('#consumer-signup-option').removeClass('show').addClass('hide');
-        } else {
-            console.warn('Error: undefined user type')
-        }
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-    })
-})
-</script>
+    <script>
+        $(function () {
+            $('.signup-user-selection').click(function () {
+                let selection = $(this).attr('value');
+                if (selection === 'consumer') {
+                    $('.role-selection').find('select').val('CONSUMER');
+                    $('#consumer-signup-option').removeClass('hide').addClass('show');
+                } else if (selection === 'professional') {
+                    $('.role-selection').find('select').val('PROFESSIONAL');
+                    $('#consumer-signup-option').removeClass('show').addClass('hide');
+                } else {
+                    console.warn('Error: undefined user type')
+                }
+                $(this).siblings().removeClass('active');
+                $(this).addClass('active');
+            })
+        })
+    </script>
 {% endblock %}

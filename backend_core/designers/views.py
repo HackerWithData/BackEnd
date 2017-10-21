@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 # Create your views here.
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from users.models import User
 from review.forms import ReviewForm
 from review.models import Review
@@ -175,13 +175,19 @@ def display_designer(request, o_id):
                            contractor_ratings]
     except:
         pass
-
+    if request.user.is_anonymous():
+        p_lic_num = None
+    else:
+        try:
+            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        except:
+            p_lic_num = None
     project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='designer'),
                                           object_id=o_id)
     info_dict = {"designer": designer, "bg_image": bgimage, "overview": overview,
                  "score": score, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                 "user_rating_form": user_rating_form, }  # 'bond_history': bh, "wc_history": wh,
+                 "user_rating_form": user_rating_form, 'p_lic_num': p_lic_num}  # 'bond_history': bh, "wc_history": wh,
     return render(request, 'designer/designer.html', {"info_dict": info_dict})
 
 
@@ -192,10 +198,6 @@ def display_project_photos(request, o_id):
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='designer'),
                                               object_id=o_id)
         info_dict = {'project_photos': project_photos, 'designer': designer}
-        # if request.is_ajax():
-        #     html = render_to_string(template_name, {'info_dict': info_dict})
-        #     return HttpResponse(html)
-        # else:
         return render(request, template_name, {'info_dict': info_dict})
     else:
         return HttpResponseNotFound('No Pages Found.')
@@ -203,21 +205,33 @@ def display_project_photos(request, o_id):
 
 # %% TODO: change function to accept all instance like architects or designers
 def upload_project_photos(request, o_id):
-    template_name = 'designer/designer_project_photos_upload.html'  # Replace with your template.
-    success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
+    if request.user.is_anonymous():
+        p_lic_num = None
+    else:
+        try:
+            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        except:
+            p_lic_num = None
 
-    if request.method == "POST":
-        form = PhotoForm(request.POST, request.FILES)
-        content_type = ContentType.objects.get(model='designer')
-        files = request.FILES.getlist('img')
-        if form.is_valid():
-            if len(files) > 0:
-                for f in files:
-                    instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=int(o_id))
-                    instance.save()
-            else:
-                pass
-            return render(request, success_url)
-    form = PhotoForm()
-    info_dict = {'form': form}
-    return render(request, template_name, info_dict)
+    if str(p_lic_num) == str(o_id):
+        template_name = 'designer/designer_project_photos_upload.html'  # Replace with your template.
+        success_url = '/designer/'+o_id  # Replace with your URL or reverse().
+
+        if request.method == "POST":
+            form = PhotoForm(request.POST, request.FILES)
+            content_type = ContentType.objects.get(model='designer')
+            files = request.FILES.getlist('img')
+            if form.is_valid():
+                if len(files) > 0:
+                    for f in files:
+                        instance = Photo.objects.create(img=f, title=f.name, content_type=content_type,
+                                                        object_id=int(o_id))
+                        instance.save()
+                else:
+                    pass
+                return redirect(success_url)
+        form = PhotoForm()
+        info_dict = {'form': form}
+        return render(request, template_name, info_dict)
+    else:
+        return HttpResponseNotFound('No Pages Found.')

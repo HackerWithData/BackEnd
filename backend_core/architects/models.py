@@ -15,7 +15,7 @@ class Architect(models.Model):
     lic_status = models.CharField(max_length=63)
     issue_date = models.DateField(null=True, blank=True)
     expire_date = models.DateField(null=True, blank=True)
-    address = models.CharField(max_length=255)
+    street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=63)
     county = models.CharField(max_length=63)
     state = models.CharField(max_length=63)
