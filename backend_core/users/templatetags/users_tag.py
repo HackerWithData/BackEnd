@@ -27,3 +27,11 @@ def is_professional(context):
     user = context['request'].user
     return user.role.upper() == 'PROFESSIONAL'
 
+
+@register.simple_tag(takes_context=True)
+def is_sign_up_completed(context):
+    user = context['request'].user
+    print not (user.professional_profiles is None)
+    return not (user.professional_profiles is None)
+
+

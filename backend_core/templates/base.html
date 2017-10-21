@@ -162,7 +162,8 @@
                                                 </li>
                                             </ul>
                                             {% is_professional as show_professional_link %}
-                                            {% if show_professional_link %}
+                                            {% is_sign_up_completed as sign_up_complete %}
+                                            {% if show_professional_link and is_sign_up_completed %}
                                                 <ul class="dropdown-menu-group-list">
                                                     <li class="dropdown-menu-items">
                                                         <span class="dropdown-menu-icon-container">
