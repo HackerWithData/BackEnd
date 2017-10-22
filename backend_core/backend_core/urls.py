@@ -49,6 +49,7 @@ urlpatterns = [
     url(r'contractor/', include('contractors.urls')),
     url(r'architect/', include('architects.urls')),
     url(r'designer/', include('designers.urls')),
+    url(r'project/', include('projects.urls')),
     # url(r'^settings/password/$', userviews.password, name='password'),
     # url(r'^upload/',include('disk.urls')),
     # url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),

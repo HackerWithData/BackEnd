@@ -1,0 +1,15 @@
+{% extends "dashboard/dashboard.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block dashboard_content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ info_dict.project_form.as_p }}
+        <br/>
+        {{ info_dict.project_attachment_form.as_p }}
+        <br/>
+        {{ info_dict.project_photo_form.as_p }}
+        <br/>
+        <button class="btn btn-hoome" type="submit" value="submit" name="submit">{% trans 'Create' %}</button>
+    </form>
+{% endblock %}

@@ -69,6 +69,7 @@ def display_contractor(request, contractor_id):
                                          rating_score=int(user_rating_form.cleaned_data[field]))
                 user_rating.save()
             # direct to the page to upload photos
+            #TODO: ADD PHOTOFORM VALIDATION FOR SECURITY
             content_type = ContentType.objects.get(model='review')
             object_id = int(review.id)
             files = request.FILES.getlist('project photos')
