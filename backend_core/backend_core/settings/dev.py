@@ -76,3 +76,11 @@ GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Forte test account configure
+FORTE_CONFIG = {
+    'api_login_id': '76Pwd2YP8t',
+    'method': 'sale',
+    'version_number': '1.0',
+    'allowed_methods': 'visa, mast, disc, amex, echeck',
+    'hash_method': 'md5',
+}

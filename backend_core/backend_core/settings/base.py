@@ -82,7 +82,8 @@ WEB_APPS = [
     'career',
     'dashboard',
     "hscore",
-    'projects'
+    'projects',
+    'transactions',
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
