@@ -23,8 +23,8 @@ class TransactionForm(forms.Form):
         label=_('Update Date')
     )
 
-    status = forms.ChoiceField(
-        choices=TRANSACTION_STATUS_CHOICES,
+    status = forms.CharField(
+        max_length=8,
         label=_('Transaction Status')
     )
 
@@ -61,7 +61,7 @@ class TransactionHistoryForm(forms.Form):
         label=_('Create Date')
     )
 
-    status = forms.ChoiceField(
-        choices=TRANSACTION_STATUS_CHOICES,
+    status = forms.CharField(
+        max_length=8,
         label=_('Transaction Status')
     )
