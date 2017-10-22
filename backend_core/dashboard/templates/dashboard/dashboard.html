@@ -22,6 +22,8 @@
                                 <li class="account-setting-list-item">
                                     <a class="link is-active"
                                        href="
+
+
                                                {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
                                         <div class="link">
                                             <span>{% trans 'Profile' %}</span>
@@ -55,6 +57,8 @@
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link is-active"
                                        href="
+
+
                                                {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
                                         <span class="titled-nav_link-label">{{ Profile }}</span>
                                     </a>
@@ -78,13 +82,14 @@
                         <div class="jumbotron">
                             <h1 class="display-3">{% trans 'Hello, Welcome to Hoome!' %}</h1>
                             <br/>
-                            <p class="lead">{%  blocktrans %}It's Your Personal Dashboard. You could set up you account by clicking left buttons{% endblocktrans %}</p>
-{#                            <hr class="my-4">#}
-{#                            <p>It uses utility classes for typography and spacing to space content out within the larger#}
-{#                                container.</p>#}
-{#                            <p class="lead">#}
-{#                                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>#}
-{#                            </p>#}
+                            <p class="lead">{% blocktrans %}It's Your Personal Dashboard. You could set up you account
+                                by clicking left buttons{% endblocktrans %}</p>
+                            {#                            <hr class="my-4">#}
+                            {#                            <p>It uses utility classes for typography and spacing to space content out within the larger#}
+                            {#                                container.</p>#}
+                            {#                            <p class="lead">#}
+                            {#                                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>#}
+                            {#                            </p>#}
                         </div>
                     {% endblock %}
                 </div>
