@@ -23,16 +23,14 @@ class TransactionForm(forms.Form):
         label=_('Update Date')
     )
 
-    status = forms.CharField(
+    status = forms.ChoiceField(
         choices=TRANSACTION_STATUS_CHOICES,
-        default=PENDING,
-        max_length=8,
-        verbose_name=_('Transaction Status')
+        label=_('Transaction Status')
     )
 
     transaction_key = forms.CharField(
         max_length=32,
-        verbose_name=_('Transaction ID')
+        label=_('Transaction ID')
     )
 
     def clean_amount(self):
@@ -63,9 +61,7 @@ class TransactionHistoryForm(forms.Form):
         label=_('Create Date')
     )
 
-    status = forms.CharField(
+    status = forms.ChoiceField(
         choices=TRANSACTION_STATUS_CHOICES,
-        default=PENDING,
-        max_length=8,
-        verbose_name=_('Transaction Status')
+        label=_('Transaction Status')
     )
