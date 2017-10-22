@@ -1,0 +1,39 @@
+{% load i18n %}
+{% trans 'Make a payment' as Pay %}
+<script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>
+<button class="forte-checkout-button"
+        api_login_id="{{ api_login_id }}"
+        method="{{ method }}"
+        version_number="{{ version_number }}"
+        utc_time="{{ utc_time }}"
+        hash_method="{{ hash_method }}"
+        signature="{{ signature }}"
+        callback="oncallback"
+        total_amount="{{ total_amount }}"
+        order_number="{{ order_number }}">
+    {{ Pay }}
+</button>
+<script>
+    $(function () {
+        $('.forte-checkout-button').click(function (event) {
+            console.log($('.forte-checkout-button').attr('total_amount'));
+            const amount = $('.forte-checkout-button').attr('total_amount');
+            const transactionKey = $('.forte-checkout-button').attr('{{ order_number }}');
+            const projectId = $('.forte-checkout-button').attr('{{ project_id }}');
+            const formData = {
+                'amount': amount,
+                'transaction_key': transactionKey,
+                'project_id': projectId
+            };
+            $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                },
+                url: "{% url 'transaction' %}",
+                data: JSON.stringify(formData),
+                contentType: "application/json"
+            })
+        })
+    })
+</script>

@@ -32,9 +32,7 @@ def render_pay_now_button(context, professional_id, project_id):
     """
     ret = settings.FORTE_CONFIG.copy()
     ret['total_amount'] = ''
-    ret['order_number'] = generate_transaction_number(consumer_id=context['request'].user.id,
-                                                      professional_id=professional_id,
-                                                      project_id=project_id)
+    ret['order_number'] = generate_transaction_number(project_id=project_id)
     ret['utc_time'] = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     # no customer_token and paymehtod_token
     # string eg.   api_login_id | method | version_number | total_amount | utc_time | order_number | customer_token | paymethod_token
@@ -45,4 +43,5 @@ def render_pay_now_button(context, professional_id, project_id):
                                          ret['utc_time'],
                                          ret['order_number']))
     ret['signature'] = m.digest()
+    ret['project_id'] = project_id
     return ret
