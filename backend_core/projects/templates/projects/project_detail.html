@@ -1,0 +1,119 @@
+{% extends "dashboard/dashboard.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+{% block dashboard_content %}
+    <style>
+
+        {#        .project-basic-info, .project-attachments, .project-photos {#}
+        {#            border: 1px solid;#}
+        {#        }#}
+
+        .project-photo {
+            width: 200px;
+            height: 200px;
+        }
+
+        .project-basic-info, .project-attachments, .project-photos {
+            margin: 10px 0;
+        }
+    </style>
+    <div class="page-header">
+        <h1>{{ Project_Detail }}</h1>
+    </div>
+{#payment button#}
+    <div class="payment-wrapper">
+
+    </div>
+    <div class="project-detail-wrapper">
+        <div class="panel panel-default project-basic-info">
+            <div class="panel-heading">
+                {{ Project_Basic_Information }}
+            </div>
+            <div class="panel-body">
+                {{ Project_Name }}: {{ info_dict.project.project_name }}
+                <br>
+                {{ First_Name }}: {{ info_dict.project.first_name }}
+                <br>
+                {{ Last_Name }}: {{ info_dict.project.last_name }}
+                <br>
+                {{ Bus_Name }} :
+                {% if info_dict.content_type == 'contractor' %}
+                    {{ info_dict.professional.bus_name }}
+                {% else %}
+                    {{ info_dict.professional.lic_name }}
+                {% endif %}
+                {{ Project_Type }}: {{ info_dict.project.project_type }}
+                {{ Start_Date }}: {{ info_dict.project.start_date }}
+                <div class="Address">
+                    {{ Address }}: <br/>
+                    {{ info_dict.project.street_address }}{{ info_dict.project.street_address2 }}<br/>
+                    {{ info_dict.project.county }}, {{ info_dict.project.state }} {{ info_dict.project.zipcode }}
+                </div>
+                {#        TODO: Add trigger to calculate the cost#}
+                {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
+                {{ Project_Enddate }}: {{ info_dict.project.end_date }}
+                {% if info_dict.project.project_description %}
+                    <div class="project-description">
+                        {{ Project_Description }}: <br/>
+                        {{ info_dict.project.project_description }}
+                    </div>
+                {% endif %}
+                {{ Project_Status }}:
+                {{ info_dict.project.project_status }}
+                {{ Project_Action }}:
+                {{ info_dict.project.project_action }}
+            </div>
+
+        </div>
+
+
+        {#        TODO: need to write ajax for this in the future#}
+
+        {% if info_dict.project_attachments %}
+            <div class="panel panel-default project-attachments">
+                <div class="panel-heading">
+                    {{ Project_Attachment }}
+                </div>
+                <div class="panel-body">
+                    {% for attachment in info_dict.project_attachments %}
+                        <a class="project-attachment"
+                           href="{{ attachment.project_attachment.url }}">{{ attachment.title }}</a>
+                        {{ attachment.attachment_type }}
+                        <br/>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if info_dict.project_photos %}
+            <div class="panel panel-default project-photos">
+                <div class="panel-heading">
+                    {{ Project_Photo }}
+                </div>
+                <div class="panel-body">
+                    {% for photo in info_dict.project_photos %}
+                        <img class="project-photo" src="{{ photo.project_photo.url }}">
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if info_dict.transactions %}
+            <div class="panel panel-default project-transactions">
+            <div class="panel-heading">
+                {{ Project_Transaction }}
+            </div>
+            <div class="panel-body">
+            {% for transaction in info_dict.transactions %}
+                {{ transaction.amount }}
+                {{ transaction.status }}
+                {{ transaction.created }}
+            {% endfor %}
+        {% endif %}
+        </div>
+        </div>
+    </div>
+    {#        <a href="{% url 'display_project_detail' info_dict.project.project_id %}">detail</a>#}
+
+{% endblock %}
