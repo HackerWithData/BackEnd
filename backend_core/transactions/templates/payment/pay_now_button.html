@@ -37,35 +37,38 @@
         })
     })
 
-   function oncallback(e) {
-        var response = JSON.parse(e.data);
-        switch (response.event)
-        {
-	        case 'begin':
-	        //call to forte checkout is successful
-	            break;
-	        case 'success':
-                //transaction successful
-                //(optional) validate from response.signature that this message is coming from forte
-                //display a receipt
-                alert('thanks for your order. the trace number is ' + response.trace_number);
-                break;
-            case 'failure':
-                //handle failed transaction
-                alert('sorry, transaction failed. failed reason is ' + response.response_description);
-                break;
-            case 'error':
-                //handle error transaction
-                break;
-            case 'abort':
-                //handle abort transaction
-                break;
-            case 'expired':
-                //handle expired transaction
-                break;
-        }
-
+function oncallback(e) {
+   var response = JSON.parse(e.data);
+   switch (response.event)
+   {
+       case 'begin':
+           //call to forte checkout is successful
+           beginHandler(response);
+           break;
+       case 'success':
+           //transaction successful
+           //(optional) validate from response.signature that this message is coming from forte
+           //display a receipt
+           successHandler(response);
+           break;
+       case 'failure':
+           //handle failed transaction
+           failureHandler(response);
+           break;
+       case 'error':
+           //handle error transaction
+           errorHandler(response);
+           break;
+       case 'abort':
+           //handle abort transaction
+           abortHandler(response);
+           break;
+       case 'expired':
+           //handle expired transaction
+           expiredHandler(response);
+           break;
    }
+}
 
 /*=========================================================================
     {
@@ -75,7 +78,7 @@
     }
 ==========================================================================*/
    function beginHandler(response) {
-
+       console.log('begin');
    }
 
 /*=========================================================================
@@ -97,9 +100,9 @@
        "hash_method":"md5"
     }
 ==========================================================================*/
-   function successHandler(response) {
-
-   }
+    function successHandler(response) {
+        alert('thanks for your order. the trace number is ' + response.trace_number);
+    }
 
 /*=========================================================================
     {
@@ -120,9 +123,9 @@
        "hash_method":"md5"
     }
 ==========================================================================*/
-   function failureHandler(response) {
-
-   }
+    function failureHandler(response) {
+        alert('sorry, transaction failed. failed reason is ' + response.response_description);
+    }
 
 /*=========================================================================
     {
@@ -131,7 +134,7 @@
     }
 ==========================================================================*/
    function errorHandler(response) {
-
+        alert(response);
    }
 
 /*=========================================================================
@@ -141,7 +144,7 @@
     }
 ==========================================================================*/
    function abortHandler(response) {
-
+        console.log(response);
    }
 
 /*=========================================================================
@@ -152,6 +155,6 @@
     }
 ==========================================================================*/
    function expiredHandler(response) {
-
+        console.log(response);
    }
 </script>
