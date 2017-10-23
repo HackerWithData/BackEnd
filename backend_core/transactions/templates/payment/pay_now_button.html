@@ -1,6 +1,8 @@
 {% load i18n %}
 {% trans 'Make a payment' as Pay %}
 <script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>
+<script type="text/javascript" src="http://crypto-js.googlecode.com/files/2.2.0-crypto-md5.js"></script>
+<script type="text/javascript" src="http://crypto-js.googlecode.com/files/2.2.0-hmac-min.js"></script>
 <button class="forte-checkout-button"
         api_login_id="{{ api_login_id }}"
         method="{{ method }}"
