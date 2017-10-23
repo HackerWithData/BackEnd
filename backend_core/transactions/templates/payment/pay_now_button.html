@@ -36,4 +36,122 @@
             })
         })
     })
+
+   function oncallback(e) {
+        var response = JSON.parse(e.data);
+        switch (response.event)
+        {
+	        case 'begin':
+	        //call to forte checkout is successful
+	            break;
+	        case 'success':
+                //transaction successful
+                //(optional) validate from response.signature that this message is coming from forte
+                //display a receipt
+                alert('thanks for your order. the trace number is ' + response.trace_number);
+                break;
+            case 'failure':
+                //handle failed transaction
+                alert('sorry, transaction failed. failed reason is ' + response.response_description);
+                break;
+            case 'error':
+                //handle error transaction
+                break;
+            case 'abort':
+                //handle abort transaction
+                break;
+            case 'expired':
+                //handle expired transaction
+                break;
+        }
+
+   }
+
+/*=========================================================================
+    {
+       "event":"begin",
+       "method":"sale",
+       "request_id":"1414edf7-2816-4968-ced2-b7d3e7156da7"
+    }
+==========================================================================*/
+   function beginHandler(response) {
+
+   }
+
+/*=========================================================================
+    {
+       "event":"success",
+       "method":"sale",
+       "request_id":"9ea365d6-40d8-416f-ca3c-1aef43529213",
+       "response_code":"A01",
+       "version_number":"1.0",
+       "trace_number":"fb25a0c5-c5a5-4505-9c56-4297799aeb77",
+       "authorization_code": "123456",
+       "subtotal_amount":"50.00",
+       "service_fee_amount":"1.23",
+       "total_amount":"51.23",
+       "expire_month":"12",
+       "expire_year":"2020",
+       "signature":"c1d704c4711595f48e1552a9af9b8ada",
+       "utc_time": "635210889954381263",
+       "hash_method":"md5"
+    }
+==========================================================================*/
+   function successHandler(response) {
+
+   }
+
+/*=========================================================================
+    {
+       "event":"failure",
+       "method":"sale",
+       "request_id":"21e2d11d-bfd9-4991-ca50-16170bc21329",
+       "response_code":"U02",
+       "response_description": "ACCOUNT NOT APPROVED",
+       "version_number":"1.0",
+       "trace_number": "89748473-6eb2-483f-81af-1d787a903f5c",
+       "subtotal_amount":"50.00",
+       "service_fee_amount":"1.23",
+       "total_amount":"51.23",
+       "last_4":"2222",
+       "method_used":"echeck",
+       "signature":"e83dee1c9fa2067786fb53c149ebbe62",
+       "utc_time":"635295420748992999",
+       "hash_method":"md5"
+    }
+==========================================================================*/
+   function failureHandler(response) {
+
+   }
+
+/*=========================================================================
+    {
+       "event":"error",
+       "msg": "Invalid total_amount: 1-9.5;5d"
+    }
+==========================================================================*/
+   function errorHandler(response) {
+
+   }
+
+/*=========================================================================
+    {
+       "event":"abort",
+       "request_id":"46f27f88-5f00-4d0a-e1a3-d32b4f57bc12"
+    }
+==========================================================================*/
+   function abortHandler(response) {
+
+   }
+
+/*=========================================================================
+    {
+       "event":"expired",
+       "request_id":"9ea365d6-2816-4968-e1a3-d32b4f57bc12"
+       "expire_utc":"635295420748992999"
+    }
+==========================================================================*/
+   function expiredHandler(response) {
+
+   }
 </script>
