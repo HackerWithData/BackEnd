@@ -261,3 +261,4 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'extra_locales', 'allauth'),
 )
 
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdWazUUAAAAANWO1-wzqu7GII4QGp084y-2_qjq'

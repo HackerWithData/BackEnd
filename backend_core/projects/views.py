@@ -7,16 +7,17 @@ from models import ProjectAttachment, Project, ProjectPhoto
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
-
 import datetime
-
+from django.conf import settings
+from django.contrib import messages
+from decorators import check_recaptcha
 
 # Create your views here.
 @login_required
 def upload_project_attachment(request, project_id):
-    template_name = 'projects/project_attachment_upload.html'  # Replace with your template.
+    template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
     # TODO: Need to change sucess url.
-    success_url = reverse('show_dashboard')
+    success_url = reverse('display_project')
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
@@ -37,9 +38,9 @@ def upload_project_attachment(request, project_id):
 
 @login_required
 def upload_project_photo(request, project_id):
-    template_name = 'projects/project_photo_upload.html'  # Replace with your template.
+    template_name = 'projects/upload_project_photo.html'  # Replace with your template.
     # TODO: Need to change sucess url.
-    success_url = reverse('show_dashboard')
+    success_url = reverse('display_project')
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
@@ -59,18 +60,17 @@ def upload_project_photo(request, project_id):
 
 
 @login_required
-def upload_project(request, professional_type, lic_id):
+@check_recaptcha
+def create_project(request, professional_type, lic_id):
     if request.user.is_authenticated:
-        template_name = 'projects/project_upload.html'  # Replace with your template.
+        template_name = 'projects/create_project.html'  # Replace with your template.
         # TODO: Need to change success url.
-        success_url = reverse('show_dashboard')
+        success_url = reverse('display_project')
 
         if request.method == "POST":
-            project_attachment_form = ProjectAttachmentForm(request.POST, request.FILES)
-            project_form = ProjectForm(request.POST)
-            project_photo_form = ProjectPhotoForm(request.POST, request.FILES)
+            project_form = ProjectForm(request.POST, request.FILES)
             # project = Project.objects.get(project_id=project_id)
-            if (project_attachment_form.is_valid() and project_form.is_valid()) and project_photo_form.is_valid():
+            if project_form.is_valid() and request.recaptcha_is_valid:
 
                 # consider another interface
                 content_type = ContentType.objects.get(model=professional_type.lower())
@@ -99,7 +99,7 @@ def upload_project(request, professional_type, lic_id):
                 if len(files) > 0:
                     for f in files:
                         instance = ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                                                    attachment_type=project_attachment_form.cleaned_data['attachment_type'])
+                                                                    attachment_type=project_form.cleaned_data['attachment_type'])
                         instance.save()
                 else:
                     pass
@@ -117,15 +117,17 @@ def upload_project(request, professional_type, lic_id):
         if request.user.is_authenticated:
             project_form = ProjectForm(initial={'first_name': request.user.first_name,
                                                 'last_name': request.user.last_name,
-                                                'start_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+                                                'start_date': datetime.datetime.today()})
         else:
             project_form = ProjectForm(initial={'first_name': request.user.first_name,
                                                 'last_name': request.user.last_name,
-                                                'start_date': datetime.datetime.today().strftime('%Y-%m-%d')})
-        project_attachment_form = ProjectAttachmentForm()
-        project_photo_form = ProjectPhotoForm()
-        info_dict = {'project_form': project_form, 'project_attachment_form': project_attachment_form,
-                     'project_photo_form': project_photo_form}
+                                                'start_date': datetime.datetime.today()})
+
+        info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
         return HttpResponseNotFound("Sorry. Pages Not Found")
+
+
+def display_project(request):
+    pass
