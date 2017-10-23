@@ -231,3 +231,10 @@ pip
     border-right-color: transparent;
     border-bottom-color: #ffffff;
 }
+
+/* Remove the blue glow in the form inputs */
+#searchForm .dropdown input {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+}
