@@ -32,7 +32,7 @@
                 beforeSend: function (request) {
                     request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
                 },
-                url: "{% url 'transaction' %}",
+                url: "{% url 'transactions' %}",
                 data: JSON.stringify(formData),
                 contentType: "application/json"
             })

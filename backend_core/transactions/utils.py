@@ -1,5 +1,6 @@
 from datetime import datetime
 from hashlib import md5
+from Crypto.Hash import HMAC, MD5
 
 
 # status type
@@ -27,5 +28,5 @@ def generate_transaction_number(project_id):
     :type ret_md5: str
     """
     utc_time = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
-    m = md5.new('%d|%s' % (project_id, utc_time))
-    return m.digest()
+    h = HMAC.new(b'%d|%s' % (project_id, utc_time))
+    return h.hexdigest()

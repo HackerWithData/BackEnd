@@ -18,7 +18,7 @@ from .views import TransactionsView, TransactionView, TransactionHistoryView, Tr
 
 urlpatterns = [
     url(r'^/$', TransactionsView.as_view, name='transactions'),
-    url(r'^/([0-9]{0,8})$', TransactionView.as_view, name='transaction'),
+    url(r'^([0-9]{0,8})$', TransactionView.as_view, name='transaction'),
     url(r'^([0-9]{0,8})/histories/$', TransactionHistoriesView.as_view, name='transaction_histories'),
     url(r'^([0-9]{0,8})/histories/([0-9]{0,8})/$', TransactionHistoryView.as_view, name='transaction_history'),
 ]

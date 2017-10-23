@@ -1,8 +1,7 @@
 {% extends "dashboard/dashboard.html" %}
 {% load staticfiles %}
 {% load i18n %}
-
-
+{% load payment_tag %}
 
 {% block dashboard_content %}
     <style>
@@ -25,7 +24,7 @@
     </div>
 {#payment button#}
     <div class="payment-wrapper">
-
+        {% render_pay_now_button info_dict.project.project_id %}
     </div>
     <div class="project-detail-wrapper">
         <div class="panel panel-default project-basic-info">
