@@ -24,6 +24,8 @@
                                        href="
 
 
+
+
                                                {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
                                         <div class="link">
                                             <span>{% trans 'Profile' %}</span>
@@ -44,6 +46,13 @@
                                         </div>
                                     </a>
                                 </li>
+                                <li class="account-setting-list-item">
+                                    <a class="link" href="{% url 'display_project_overview' %}">
+                                        <div class="link">
+                                            <span class="">{{ Project_Overview }}</span>
+                                        </div>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -56,10 +65,11 @@
                             <ul>
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link is-active"
-                                       href="
-
-
-                                               {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
+                                       href="{% if request.user.role == "CONSUMER" %}
+                                                {% url 'account_consumer_profile' %}
+                                                {% else %}
+                                                {% url 'account_professional_profile' %}
+                                                {% endif %}">
                                         <span class="titled-nav_link-label">{{ Profile }}</span>
                                     </a>
                                 </li>
@@ -71,6 +81,11 @@
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link" href="{% url 'account_email' %}">
                                         <span class="titled-nav_link-label">{{ Email }}</span>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="titled-nav_link" href="{% url 'display_project_overview' %}">
+                                            <span class="titled-nav_link-label">{{ Project_Overview }}</span>
                                     </a>
                                 </li>
                             </ul>

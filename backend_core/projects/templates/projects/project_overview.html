@@ -1,0 +1,11 @@
+{% extends "dashboard/dashboard.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+{% block dashboard_content %}
+    {% for p in info_dict.projects %}
+        {{ p.last_name }}
+        <a href="{% url 'display_project_detail' p.project_id %}">detail</a>
+    {% endfor %}
+{% endblock %}

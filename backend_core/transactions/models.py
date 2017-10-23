@@ -18,7 +18,7 @@ class Transaction(models.Model):
         verbose_name=_('amount')
     )
 
-    create_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_('created at')
     )
@@ -59,7 +59,7 @@ class TransactionHistory(models.Model):
         related_query_name='transaction_history'
     )
 
-    create_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_('created at')
     )

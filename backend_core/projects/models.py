@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as __
 
 
 # Create your models here.
+# TODO: Consider cache ?? Interesting!
 class Project(models.Model):
     PENDING = 'P'
     ACCEPTED = 'A'
@@ -45,7 +46,8 @@ class Project(models.Model):
     county = models.CharField(max_length=64)
     state = models.CharField(max_length=64)
     zipcode = models.CharField(max_length=10)
-    cost = models.IntegerField(default=0)
+    #country = models.CharField(max_length=255)
+    project_cost = models.IntegerField(default=0)
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(null=True, blank=True)
     project_description = models.TextField()

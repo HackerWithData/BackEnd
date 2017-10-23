@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, reverse
 from forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm
-from models import ProjectAttachment, Project, ProjectPhoto
+from models import Project, ProjectPhoto, ProjectAttachment
+# from transactions.models import Transaction
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
@@ -12,12 +13,12 @@ from django.conf import settings
 from django.contrib import messages
 from decorators import check_recaptcha
 
+
 # Create your views here.
 @login_required
 def upload_project_attachment(request, project_id):
     template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
-    # TODO: Need to change sucess url.
-    success_url = reverse('display_project')
+    success_url = reverse('display_project_overview')
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
@@ -36,11 +37,11 @@ def upload_project_attachment(request, project_id):
     info_dict = {'form': form}
     return render(request, template_name, info_dict)
 
+
 @login_required
 def upload_project_photo(request, project_id):
     template_name = 'projects/upload_project_photo.html'  # Replace with your template.
-    # TODO: Need to change sucess url.
-    success_url = reverse('display_project')
+    success_url = reverse('display_project_overview')
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
@@ -62,10 +63,9 @@ def upload_project_photo(request, project_id):
 @login_required
 @check_recaptcha
 def create_project(request, professional_type, lic_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.role == "CONSUMER":
         template_name = 'projects/create_project.html'  # Replace with your template.
-        # TODO: Need to change success url.
-        success_url = reverse('display_project')
+        success_url = reverse('display_project_overview')
 
         if request.method == "POST":
             project_form = ProjectForm(request.POST, request.FILES)
@@ -76,6 +76,7 @@ def create_project(request, professional_type, lic_id):
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
                 project = Project(user=request.user,
+                                  project_name=project_form.cleaned_data['project_name'],
                                   first_name=project_form.cleaned_data['first_name'],
                                   last_name=project_form.cleaned_data['last_name'],
                                   content_type=content_type,
@@ -86,24 +87,26 @@ def create_project(request, professional_type, lic_id):
                                   county=project_form.cleaned_data['county'],
                                   state=project_form.cleaned_data['state'],
                                   zipcode=project_form.cleaned_data['zipcode'],
-                                  # cost=project_form.cleaned_data['cost'],
+                                  # country=project_form.cleaned_data['country'],
+                                  # cost=project_form.cleaned_data['project_cost'],
                                   start_date=project_form.cleaned_data['start_date'],
                                   # end_date=project_form.cleaned_data['end_date'],
                                   project_description=project_form.cleaned_data['project_description'],
                                   # project_status=project_form.cleaned_data['project_status']
                                   )
-                #TODO:need to consider extrem scenario
+                # TODO:need to consider extrem scenario
                 project.save()
-                #attachment
+                # attachment
                 files = request.FILES.getlist('project_attachment')
                 if len(files) > 0:
                     for f in files:
                         instance = ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                                                    attachment_type=project_form.cleaned_data['attachment_type'])
+                                                                    attachment_type=project_form.cleaned_data[
+                                                                        'attachment_type'])
                         instance.save()
                 else:
                     pass
-                #photos
+                # photos
                 files = request.FILES.getlist('project_photo')
                 if len(files) > 0:
                     for f in files:
@@ -129,5 +132,33 @@ def create_project(request, professional_type, lic_id):
         return HttpResponseNotFound("Sorry. Pages Not Found")
 
 
-def display_project(request):
-    pass
+@login_required
+def display_project_overview(request):
+    template_name = 'projects/project_overview.html'
+    if request.user.role == "CONSUMER":
+        projects = Project.objects.filter(user=request.user)
+    elif request.user.role == 'PROFESSIONAL':
+        projects = Project.objects.filter(
+            conternt_type=request.user.professional_profiles.first().professional.type.lower(),
+            object_id=int(request.user.professional_profiles.first().professional.lic_num))
+    info_dict = {'projects': projects}
+    return render(request, template_name, {'info_dict': info_dict})
+
+
+@login_required
+def display_project_detail(request, project_id):
+    template_name = 'projects/project_detail.html'
+    project = Project.objects.get(project_id=project_id)
+    project_attachments = ProjectAttachment.objects.filter(project=project)
+    project_photos = ProjectPhoto.objects.filter(project=project)
+    transactions = project.transactions.all()
+    print(transactions)
+    if request.user == project.user:
+        professional = project.content_type.get_object_for_this_type(pk=project.object_id)
+        info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
+                     'project_photos': project_photos, 'transactions': transactions,
+                     'content_type': str(project.content_type)}
+
+        return render(request, template_name, {'info_dict': info_dict})
+    else:
+        return HttpResponseNotFound("Page Not Found")
