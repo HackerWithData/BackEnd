@@ -6,6 +6,12 @@ from professionals.models import Professional
 from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER
 
 
+def get_professional_user(user):
+    professional_profile = user.professional_profiles.first()
+    professional = professional_profile.professional
+    return professional
+
+
 def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
     if prof_type == CONTRACTOR:
         ret_professional_object = Contractor.objects.get(lic_num=lic)
