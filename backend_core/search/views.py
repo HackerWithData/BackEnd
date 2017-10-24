@@ -10,7 +10,9 @@ import json
 
 from contractors.models import Contractor
 from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
-from search_helpers import search_by_zipcode, search_by_address_object_redirect_url
+from search_helpers import (search_by_zipcode,
+                            search_by_address_object_redirect_url,
+                            search_by_name_or_lic)
 from .utils import json_serial
 
 
@@ -27,7 +29,10 @@ def search_new(request):
 
     elif request.method == 'GET':
         # TODO: set default value
-        query_set = search_by_zipcode(request)
+        if request.GET['type'].upper() == 'NAMEORLIC':
+            query_set = search_by_name_or_lic(request)
+        else:
+            query_set = search_by_zipcode(request)
 
         # TODO: set customized item number per page, default = 10
         # pagination logic
@@ -45,31 +50,14 @@ def search_new(request):
         get_copy = request.GET.copy()
         parameters = get_copy.pop('page', True) and get_copy.urlencode()
 
-        # professionals_json = serializers.serialize("json", page_query_set.object_list)
-
     else:
         return redirect('home_index')
 
-    # if lic_type == CONTRACTOR:
-    #     return render(request, 'search_list/search_list.html', {
-    #         'contractors': page_query_set,
-    #         'contractors_json': contractors_json,
-    #         'zipcode': request.GET.get('zipcode'),
-    #         'parameters': parameters,
-    #         'lic_type': lic_type,
-    #         'score_list': score_list,
-    #         'rank_list': rank_list
-    #     })
-    # else:
-    #     return render(request, 'search_list/search_list.html', {
-    #         'contractors': page_query_set,
-    #         'contractors_json': contractors_json,
-    #         'zipcode': request.GET.get('zipcode'),
-    #         'parameters': parameters,
-    #     })
+    print not query_set
+
     return render(request, 'search_list/search_list.html', {
         'professionals': page_query_set,
-        'professionals_json': json.dumps(page_query_set.object_list, default=json_serial),
+        'professionals_json': json.dumps(page_query_set.object_list, default=json_serial) if not query_set else None,
         'zipcode': request.GET.get('zipcode'),
         'parameters': parameters,
     })

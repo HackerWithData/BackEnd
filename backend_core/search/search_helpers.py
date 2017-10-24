@@ -36,37 +36,40 @@ def search_by_address_object_redirect_url(request):
 
 # GET request
 # search through zipcode
+def search_by_name_or_lic(request):
+    search_type = request.GET['type'].upper()
+    search_target = request.GET['target']
+    # search target is whether a name or lic
+    if search_target.isnumeric():
+        name_or_lic = int(search_target)
+        qs_prof_by_name = Professional.objects.filter(name=str(name_or_lic))
+        qs_prof_by_lic = Professional.objects.filter(lic_num=name_or_lic)
+        prof_qs = list(qs_prof_by_lic) + list(qs_prof_by_name)
+    # name search
+    else:
+        prof_qs = Professional.objects.filter(name__icontains=search_target)
+    # no result found
+    if not prof_qs:
+        return prof_qs.values()
+
+    return retrieve_all_kind_professional(prof_qs)
+
+
+# GET request
+# search through zipcode
 def search_by_zipcode(request):
     search_type = request.GET['type'].upper()
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
-    print search_type
-    print search_target
 
-    # mediate query set
-    # name or lic num search
-    if search_type.upper() == 'NAMEORLIC':
-        # search target is whether a name or lic
-        if search_target.isnumeric():
-            name_or_lic = int(search_target)
-            qs_prof_by_name = Professional.objects.filter(name=str(name_or_lic))
-            qs_prof_by_lic = Professional.objects.filter(lic_num=name_or_lic)
-            prof_qs = list(qs_prof_by_lic) + list(qs_prof_by_name)
-        # name search
-        else:
-            prof_qs = Professional.objects.filter(name__icontains=search_target)
-            # no result found
-            if not prof_qs:
-                return prof_qs.values()
-            # retrieve type of value from name search
-            # print prof_qs.values('type')[0]
-            # professional = prof_qs.values('type')[0]['type'].upper()
-    else:
-        # type search
-        prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
-        # professional = search_type.upper()
+    # type search
+    prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
 
     # retrieve corresponding professional through different table
+    return retrieve_all_kind_professional(prof_qs)
+
+
+def retrieve_all_kind_professional(prof_qs):
     ret_list = []
     for professional in prof_qs:
         if professional.type.upper() == CONTRACTOR:
