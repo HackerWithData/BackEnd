@@ -53,11 +53,9 @@ def search_new(request):
     else:
         return redirect('home_index')
 
-    print not query_set
-
     return render(request, 'search_list/search_list.html', {
         'professionals': page_query_set,
-        'professionals_json': json.dumps(page_query_set.object_list, default=json_serial) if not query_set else None,
+        'professionals_json': json.dumps(page_query_set.object_list, default=json_serial) if query_set else None,
         'zipcode': request.GET.get('zipcode'),
         'parameters': parameters,
     })
