@@ -37,7 +37,6 @@ def search_by_address_object_redirect_url(request):
 # GET request
 # search through zipcode
 def search_by_name_or_lic(request):
-    search_type = request.GET['type'].upper()
     search_target = request.GET['target']
     # search target is whether a name or lic
     if search_target.isnumeric():
