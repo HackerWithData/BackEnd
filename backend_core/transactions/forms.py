@@ -45,6 +45,7 @@ class TransactionForm(forms.Form):
         transaction, created = Transaction.objects.get_or_create(
             transaction_key=clean_transaction_key)
         transaction.amount = self.clean_amount
+        transaction.project = project
         transaction.save()
 
         # insert a new transaction history with pending status as soon as a transaction created
