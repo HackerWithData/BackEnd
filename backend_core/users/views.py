@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
@@ -15,7 +15,9 @@ from allauth.account.views import PasswordChangeView
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
 from models import ConsumerProfile, ProfessionalProfile
-from user_helpers import retrieve_professional_info, get_professional_corresponding_object_by_type_and_lic
+from user_helpers import (retrieve_professional_info,
+                          get_professional_corresponding_object_by_type_and_lic,
+                          get_professional_user)
 from utils import *
 
 import json
@@ -101,10 +103,12 @@ class ProfessionalProfileAfterSignupView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            # <process form cleaned data>
             form.save(request)
-            # TODO: change redirect to professional dashboard after implemented
-            return redirect('home_index')
+            professional = get_professional_user(request.user)
+            # reverse url name with professional type
+            business_page_url = reverse(professional.type.lower(), args=[professional.lic_num])
+            print business_page_url
+            return redirect(business_page_url)
 
         return render(request, self.template_name, {'form': form})
 
