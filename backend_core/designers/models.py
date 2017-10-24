@@ -18,7 +18,7 @@ class Designer(models.Model):
     mobile = models.CharField(max_length=255, blank=True, null=True)
     fax = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
+    street_address = models.CharField(max_length=255, blank=True, null=True)
     state_designer_num = models.CharField(max_length=15, blank=True, null=True)
     contractor_lic_num = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=63, blank=True, null=True)
