@@ -26,6 +26,7 @@
 
 
 
+
                                                {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
                                         <div class="link">
                                             <span>{% trans 'Profile' %}</span>
@@ -85,9 +86,10 @@
                                 </li>
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link" href="{% url 'display_project_overview' %}">
-                                            <span class="titled-nav_link-label">{{ Project_Overview }}</span>
+                                        <span class="titled-nav_link-label">{{ Project_Overview }}</span>
                                     </a>
                                 </li>
+                                {#                                TODO : ADD Transsaction Interface#}
                             </ul>
                         </div>
                     </div>
