@@ -35,7 +35,7 @@ class ProjectForm(forms.Form):
     county = forms.CharField(label=__('County/City'), max_length=64)
     state = forms.CharField(label=__('State'), max_length=64)
     zipcode = forms.CharField(label=__('Zip Code'), max_length=10)
-    #country = forms.CharField(label=__('Cou'), max_length=10)
+    #country = forms.CharField(label=__('Country'), max_length=10)
     #TODO: need to add a calender widget
     start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget())
     # end_date = forms.DateField(label=__('End Date'), help_text="YYYY-MM-DD")

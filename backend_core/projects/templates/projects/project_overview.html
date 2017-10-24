@@ -1,11 +1,51 @@
 {% extends "dashboard/dashboard.html" %}
 {% load staticfiles %}
 {% load i18n %}
-
+{% load helpers %}
 
 {% block dashboard_content %}
-    {% for p in info_dict.projects %}
-        {{ p.last_name }}
-        <a href="{% url 'display_project_detail' p.project_id %}">detail</a>
+    <style>
+        .title, .value {
+            color: #555 !important
+        }
+
+        .title {
+            font-weight: 900;
+            font-size: 0.75em;
+        }
+    </style>
+    {% for project in info_dict.projects %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class=""><span class="title">Project Created</span></div>
+                        <div class=""><span class="value">{{ project.start_date }}</span></div>
+                    </div>
+                    <div class="col-xs-2">
+                    <div class=""><span class="title">Contracted With</span></div>
+                        {% if request.user.role == "CONSUMER" %}
+                            <div class=""><span class="value">{{ info_dict.get_object_name_for_this_content_type }}</span></div>
+                        {% elif request.user.role == "PROFESSIONAL" %}
+                            <div class=""><span class="value">{{ project.first_name }} {{ project.last_name }}</span></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-7">
+                        <div class=""><span class="title">Project placed</span></div>
+                        <div class=""><span class="value">Order placed</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                {{ project.last_name }}
+                <a href="{% url 'display_project_detail' project.project_id %}">detail</a>
+            </div>
+        </div>
+
     {% endfor %}
+
+
+
 {% endblock %}

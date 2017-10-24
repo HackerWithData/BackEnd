@@ -34,6 +34,7 @@ class Project(models.Model):
     project_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
+    bus_name = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -56,7 +57,7 @@ class Project(models.Model):
     # Project_Action =
 
     class Meta:
-        unique_together = ('project_id', 'content_type','object_id', 'user')
+        unique_together = ('project_id', 'content_type', 'object_id', 'user')
 
 
 class ProjectAttachment(models.Model):

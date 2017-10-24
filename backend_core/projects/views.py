@@ -13,7 +13,6 @@ from django.conf import settings
 from django.contrib import messages
 from decorators import check_recaptcha
 
-
 # Create your views here.
 @login_required
 def upload_project_attachment(request, project_id):
@@ -75,12 +74,14 @@ def create_project(request, professional_type, lic_id):
                 # consider another interface
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
+                professional = content_type.objects.get_object_for_this_type(pk=lic_id)
                 project = Project(user=request.user,
                                   project_name=project_form.cleaned_data['project_name'],
                                   first_name=project_form.cleaned_data['first_name'],
                                   last_name=project_form.cleaned_data['last_name'],
                                   content_type=content_type,
                                   object_id=lic_id,
+                                  bus_name=professional.lic_name,
                                   project_type=project_form.cleaned_data['project_type'],
                                   street_address=project_form.cleaned_data['street_address'],
                                   street_address2=project_form.cleaned_data['street_address2'],
@@ -137,11 +138,13 @@ def display_project_overview(request):
     template_name = 'projects/project_overview.html'
     if request.user.role == "CONSUMER":
         projects = Project.objects.filter(user=request.user)
+        info_dict = {'projects': projects}
     elif request.user.role == 'PROFESSIONAL':
+        professional = request.user.professional_profiles.first().professional
         projects = Project.objects.filter(
-            conternt_type=request.user.professional_profiles.first().professional.type.lower(),
-            object_id=int(request.user.professional_profiles.first().professional.lic_num))
-    info_dict = {'projects': projects}
+            conternt_type=professional.type.lower(),
+            object_id=int(professional.professional.lic_num))
+        info_dict = {'projects': projects, 'professional': professional}
     return render(request, template_name, {'info_dict': info_dict})
 
 
