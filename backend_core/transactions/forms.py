@@ -16,11 +16,11 @@ class TransactionForm(forms.Form):
     )
 
     create_at = forms.DateTimeField(
-        label=_('Create Date')
+        label=_('Created Date')
     )
 
     updated_at = forms.DateTimeField(
-        label=_('Update Date')
+        label=_('Updated Date')
     )
 
     status = forms.CharField(
@@ -58,7 +58,7 @@ class TransactionHistoryForm(forms.Form):
     """
 
     create_at = forms.DateTimeField(
-        label=_('Create Date')
+        label=_('Created Date')
     )
 
     status = forms.CharField(

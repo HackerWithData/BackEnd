@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-21 07:53+0000\n"
+"POT-Creation-Date: 2017-10-24 07:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,13 +25,13 @@ msgid "Edit page?"
 msgstr "编辑页面?"
 
 #: architects/templates/architect/architect.html:120
-#: contractors/templates/contractor/contractor.html:122
+#: contractors/templates/contractor/contractor.html:123
 #: designers/templates/designer/designer.html:99
 msgid "Project Photo Upload"
 msgstr "上传项目照片"
 
 #: architects/templates/architect/architect.html:122
-#: contractors/templates/contractor/contractor.html:124
+#: contractors/templates/contractor/contractor.html:125
 #: designers/templates/designer/designer.html:101
 msgid "Background Image Upload"
 msgstr "上传主页背景图案"
@@ -92,20 +92,25 @@ msgstr "网页开发人员"
 msgid "Full Stack Data Scientist Intern"
 msgstr "全栈数据科学家实习"
 
+#: contractors/templates/contractor/contractor.html:118
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contract Us"
+msgstr "联系我们"
+
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
 #: templates/base.html:37
 msgid "Project Photos"
 msgstr "项目照片"
 
-#: contractors/views.py:131
-#, python-brace-format
+#: contractors/views.py:132
 msgid ""
-"{bus_name} is a contractor company located in {csp} . \n"
+"{lic_name} is a contractor company located in {csp} . \n"
 "    The company holds a license number according to {data_source}. According "
 "to real-time data analysis, this licensed contractor's hoome score is "
 "{score} and is rated as {rank}.\n"
 "    The License is verified as active when we checked last time. If you "
-"would like to know {bus_name} more, \n"
+"would like to know {lic_name} more, \n"
 "    please contact us and we will share more information and data about this "
 "contractor to you.\n"
 "    "
@@ -116,25 +121,25 @@ msgstr ""
 "我们会向您分享更多关于该商家的信息和数据。"
 
 #: dashboard/templates/dashboard/dashboard.html:16
-#: dashboard/templates/dashboard/dashboard.html:51
+#: dashboard/templates/dashboard/dashboard.html:62
 msgid "’s Account Settings"
 msgstr "的账户设置"
 
-#: dashboard/templates/dashboard/dashboard.html:27 templates/base.html:81
+#: dashboard/templates/dashboard/dashboard.html:31 templates/base.html:81
 msgid "Profile"
 msgstr "档案"
 
-#: dashboard/templates/dashboard/dashboard.html:79
+#: dashboard/templates/dashboard/dashboard.html:98
 msgid "Hello, Welcome to Hoome!"
 msgstr "您好，欢迎来到Hoome!"
 
-#: dashboard/templates/dashboard/dashboard.html:81
+#: dashboard/templates/dashboard/dashboard.html:100
 msgid ""
-"It's Your Personal Dashboard. You could set up you account by clicking left "
-"buttons"
+"It's Your Personal Dashboard. You could set up you account\n"
+"                                by clicking left buttons"
 msgstr "这是您的个人用户面板。您可以通过点击左边按钮来设置您的账户。"
 
-#: dashboard/templates/dashboard/dashboard.html:114
+#: dashboard/templates/dashboard/dashboard.html:134
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
@@ -181,15 +186,19 @@ msgstr "加州数据库"
 msgid "Background Images"
 msgstr "背景图案"
 
+#: projects/templates/projects/create_project.html:15
+msgid "Create"
+msgstr "创建"
+
 #: review/forms.py:5
 msgid "Comments"
 msgstr "评论"
 
-#: review/forms.py:7
+#: review/forms.py:7 templates/base.html:107
 msgid "First Name"
 msgstr "名"
 
-#: review/forms.py:8
+#: review/forms.py:8 templates/base.html:106
 msgid "Last Name"
 msgstr "姓"
 
@@ -413,7 +422,7 @@ msgstr "保险公司"
 msgid "Address"
 msgstr "地址"
 
-#: templates/base.html:53
+#: templates/base.html:53 templates/base.html:117
 msgid "Photo"
 msgstr "照片"
 
@@ -583,9 +592,118 @@ msgstr "账户设置"
 msgid "Rank"
 msgstr "评分区间"
 
-#: templates/base.html:222 users/templates/account/login.html:167
+#: templates/base.html:102 templates/base.html:125
+msgid "Project Overview"
+msgstr "项目总览"
+
+#: templates/base.html:103
+msgid "Project Detail"
+msgstr "项目细节"
+
+#: templates/base.html:104
+msgid "Basic Information"
+msgstr "商家资讯"
+
+#: templates/base.html:105
+msgid "Project Name"
+msgstr "项目名称"
+
+#: templates/base.html:108
+msgid "Client Name"
+msgstr "客户姓名"
+
+#: templates/base.html:109
+msgid "Bussiness Name"
+msgstr "商家姓名"
+
+#: templates/base.html:110
+msgid "Contracted With"
+msgstr "承包商"
+
+#: templates/base.html:111
+msgid "Start Date"
+msgstr "施工起始时间"
+
+#: templates/base.html:112
+msgid "End Date"
+msgstr "发布日期"
+
+#: templates/base.html:113
+msgid "Description"
+msgstr "描述"
+
+#: templates/base.html:114 templates/base.html:122
+msgid "Status"
+msgstr "州"
+
+#: templates/base.html:115
+msgid "Action"
+msgstr "具体操作"
+
+#: templates/base.html:116
+msgid "Attachment"
+msgstr "附件"
+
+#: templates/base.html:118
+msgid "Transaction History"
+msgstr "交易记录"
+
+#: templates/base.html:119
+msgid "Type"
+msgstr "类型"
+
+#: templates/base.html:120
+msgid "Time"
+msgstr "时间"
+
+#: templates/base.html:121 transactions/forms.py:15
+msgid "Amount"
+msgstr "账户"
+
+#: templates/base.html:123 transactions/forms.py:23
+msgid "Updated At"
+msgstr "上传日期"
+
+#: templates/base.html:124
+msgid "Project Created"
+msgstr "项目创建于"
+
+#: templates/base.html:246 users/templates/account/login.html:167
 msgid "Sign In"
 msgstr "登入"
+
+#: transactions/forms.py:19 transactions/forms.py:61
+msgid "Created Date"
+msgstr "创建日期"
+
+
+#: transactions/forms.py:28 transactions/forms.py:66
+msgid "Transaction Status"
+msgstr "交易状态"
+
+#: transactions/forms.py:33
+msgid "Transaction ID"
+msgstr "交易ID"
+
+#: transactions/models.py:18
+msgid "amount"
+msgstr "交易金额"
+
+#: transactions/models.py:23 transactions/models.py:64
+msgid "created at"
+msgstr "创建于"
+
+#: transactions/models.py:28
+msgid "updated at"
+msgstr "上传于"
+
+#: transactions/models.py:35 transactions/models.py:70
+msgid "transaction status"
+msgstr "交易状态"
+
+#: transactions/templates/payment/pay_now_button.html:2
+msgid "Make a payment"
+msgstr "支付"
 
 #: users/forms.py:33
 msgid "Must select a role"
