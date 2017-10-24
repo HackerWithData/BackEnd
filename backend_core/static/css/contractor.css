@@ -500,6 +500,70 @@ h1 {
     font-weight: 900;
 }
 
+.header .navbar .logo.cursive {
+    color: #ffffff;
+}
+
+.header.active .navbar .logo.cursive {
+    color: #ffffff;
+}
+
+.header.active #main-nav .navbar-nav > li > a {
+    color: #ffffff;
+
+}
+
+.header {
+    background-color: #6892D5;
+}
+
+.header.active {
+    background-color: #6892D5;
+}
+
+.header .navbar-nav > li > a {
+    color: #ffffff;
+    background-color: #6892D5;
+}
+
+.header.active #main-nav .navbar-nav > li .dropdown > a {
+    font-size: 13px;
+    font-weight: 300;
+    text-shadow: none;
+    color: #ffffff;
+}
+
+@media (min-width: 768px) {
+
+    #contractor-content {
+        margin: 0 5%;
+    }
+
+    #masthead .container {
+        /*width:auto;*/
+        margin: 0 10%;
+    }
+
+    .footer {
+        position: relative;
+        margin-top: 50px;
+    }
+
+    .popup .popuptext {
+        margin-left: 0px;
+        min-width: 120px;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+#PPU {
+    height: 80px;
+    color: black;
+}
+
 @media (max-width: 767px) {
     .container {
         margin: 0px;
@@ -582,68 +646,9 @@ h1 {
     .bus-name {
         font-size: 56px;
     }
-}
 
-.header .navbar .logo.cursive {
-    color: #ffffff;
-}
+    .header.active #main-nav .navbar-nav > li > a {
+        color: #000000;
 
-.header.active .navbar .logo.cursive {
-    color: #ffffff;
-}
-
-.header.active #main-nav .navbar-nav > li > a {
-    color: #ffffff;
-
-}
-
-.header {
-    background-color: #6892D5;
-}
-
-.header.active {
-    background-color: #6892D5;
-}
-
-.header .navbar-nav > li > a {
-    color: #ffffff;
-    background-color: #6892D5;
-}
-
-.header.active #main-nav .navbar-nav > li .dropdown > a {
-    font-size: 13px;
-    font-weight: 300;
-    text-shadow: none;
-    color: #ffffff;
-}
-
-@media (min-width: 768px) {
-
-    #contractor-content {
-        margin: 0 5%;
     }
-
-    #masthead .container {
-        /*width:auto;*/
-        margin: 0 10%;
-    }
-
-    .footer {
-        position: relative;
-        margin-top: 50px;
-    }
-
-    .popup .popuptext {
-        margin-left: 0px;
-        min-width: 120px;
-    }
-}
-
-.hide {
-    display: none;
-}
-
-#PPU {
-    height: 80px;
-    color: black;
 }
