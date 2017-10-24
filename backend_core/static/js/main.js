@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
     'use strict';
 
-    $('#logoutButton').click(function (event) {
+    $('.logoutButton').click(function (event) {
             $(this).parent('form').submit();
         }
     );

@@ -5,98 +5,6 @@
 
 
 {% block dashboard_content %}
-    <style>
-
-        {#        .project-basic-info, .project-attachments, .project-photos {#}
-        {#            border: 1px solid;#}
-        {#        }#}
-
-        .project-photo {
-            width: calc(100% / 3);
-            height: 200px;
-            min-width: 200px;
-        }
-
-        .project-basic-info, .project-attachments, .project-photos {
-            margin: 10px 0;
-        }
-
-        .project-detail-wrapper .row {
-            margin: 0;
-        }
-
-        .Address, .project-basic-info .panel-body .row .col-xs-12 {
-            padding-left: 0px;
-        }
-
-        .text {
-            overflow: hidden;
-        }
-
-        .height {
-            max-height: 100px;
-        }
-
-        .heightAuto {
-            max-height: none;
-        }
-
-        .project-description .link {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            margin: 0;
-            padding: 3px 0;
-            background-color: rgba(0, 0, 0, 0);
-            /* "transparent" only works here because == rgba(0,0,0,0) */
-            background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
-        }
-
-        #peek a i {
-            color: #6892D5;
-        }
-
-        .project-attachments .panel-body td, .project-attachments .panel-body th {
-            padding: 0 5px;
-            vertical-align: top;
-        }
-
-        .project-attachments .panel-body table {
-            border-spacing: 0 5px;
-            border-collapses: seperate;
-            width: 100%;
-        }
-
-        @media (max-width: 767px) {
-            .desktop {
-                display: none;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .mobile {
-                display: none;
-            }
-
-            .page-header {
-                margin-top: -20px;
-            }
-        }
-
-        .project-attachments ul li {
-            list-style-type: none;
-        }
-
-        .title {
-            font-weight: 900;
-        }
-
-        .project-transactions .panel-body table {
-            width: 100%
-        }
-    </style>
     <div class="page-header">
         <h1>{{ Project_Detail }}</h1>
     </div>
@@ -117,11 +25,7 @@
                         <span class="title">{{ Client_Name }}:</span> {{ info_dict.project.first_name }} {{ info_dict.project.last_name }}
                         <br>
                         <span class="title">{{ Contracted_With }}:</span>
-                        {% if info_dict.content_type == 'contractor' %}
-                            {{ info_dict.professional.bus_name }}
-                        {% else %}
-                            {{ info_dict.professional.lic_name }}
-                        {% endif %}
+                            {{ info_dict.project.bus_name }}
                         <br/>
                         <span class="title">{{ Project_Type }}:</span> {{ info_dict.project.get_project_type_display }}
                     </div>

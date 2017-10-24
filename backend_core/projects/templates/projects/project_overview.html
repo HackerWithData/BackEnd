@@ -1,51 +1,57 @@
 {% extends "dashboard/dashboard.html" %}
 {% load staticfiles %}
 {% load i18n %}
-{% load helpers %}
+
 
 {% block dashboard_content %}
-    <style>
-        .title, .value {
-            color: #555 !important
-        }
+    <div class="project-overview">
+        <div class="page-header">
+            <h1>{{ Project_Detail }}</h1>
+        </div>
+        {% for project in info_dict.projects %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class=""><span class="title">Project Created</span></div>
+                            <div class=""><span class="value">{{ project.start_date }}</span></div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class=""><span class="title">Contracted With</span></div>
+                            {% if request.user.role == "CONSUMER" %}
+                                <div class=""><span class="value">{{ project.bus_name }}</span></div>
+                            {% elif request.user.role == "PROFESSIONAL" %}
+                                <div class=""><span
+                                        class="value">{{ project.first_name }} {{ project.last_name }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="{% url 'display_project_detail' project.project_id %}">Project Detail</a>
+                        </div>
+                    </div>
+                </div>
 
-        .title {
-            font-weight: 900;
-            font-size: 0.75em;
-        }
-    </style>
-    {% for project in info_dict.projects %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <div class=""><span class="title">Project Created</span></div>
-                        <div class=""><span class="value">{{ project.start_date }}</span></div>
-                    </div>
-                    <div class="col-xs-2">
-                    <div class=""><span class="title">Contracted With</span></div>
-                        {% if request.user.role == "CONSUMER" %}
-                            <div class=""><span class="value">{{ info_dict.get_object_name_for_this_content_type }}</span></div>
-                        {% elif request.user.role == "PROFESSIONAL" %}
-                            <div class=""><span class="value">{{ project.first_name }} {{ project.last_name }}</span></div>
-                        {% endif %}
-                    </div>
-                    <div class="col-xs-7">
-                        <div class=""><span class="title">Project placed</span></div>
-                        <div class=""><span class="value">Order placed</span></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-5 col-md-6">
+                            <div class=""><span class="title">Project Status</span></div>
+                            <div class=""><span class="value">{{ project.get_project_status_display }}</span></div>
+                            {% if project.project_action %}
+                                <br/>
+                                <div class=""><span class="title">Project Action</span></div>
+                                <div class=""><span class="value">{{ project.project_action }}</span></div>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-6 Address">
+                            <span class="title">{{ Address }}:</span><br/>
+                            {{ project.street_address }}{{ project.street_address2 }}<br/>
+                            {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="panel-body">
-
-                {{ project.last_name }}
-                <a href="{% url 'display_project_detail' project.project_id %}">detail</a>
-            </div>
-        </div>
-
-    {% endfor %}
-
-
+        {% endfor %}
+</div>
 
 {% endblock %}

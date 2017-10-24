@@ -137,13 +137,13 @@ def create_project(request, professional_type, lic_id):
 def display_project_overview(request):
     template_name = 'projects/project_overview.html'
     if request.user.role == "CONSUMER":
-        projects = Project.objects.filter(user=request.user)
+        projects = Project.objects.filter(user=request.user).order_by('-project_id')
         info_dict = {'projects': projects}
     elif request.user.role == 'PROFESSIONAL':
         professional = request.user.professional_profiles.first().professional
         projects = Project.objects.filter(
             conternt_type=professional.type.lower(),
-            object_id=int(professional.professional.lic_num))
+            object_id=int(professional.professional.lic_num)).order_by('-project_id')
         info_dict = {'projects': projects, 'professional': professional}
     return render(request, template_name, {'info_dict': info_dict})
 

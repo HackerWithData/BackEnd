@@ -163,7 +163,7 @@
                                                         <img class="avatar-image"
                                                              src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
                                                     {% else %}
-                                                        <canvas class="avatar-image" width=60 height=60
+                                                        <canvas class="" width=60 height=60
                                                                 data-jdenticon-value="{{ user.email }}"></canvas>
                                                     {% endif %}
                                                 </div>
@@ -205,7 +205,7 @@
                                                             <input type="hidden" name="{{ redirect_field_name }}"
                                                                    value="{{ redirect_field_value }}"/>
                                                         {% endif %}
-                                                        <a id="logoutButton" href="#">{{ Logout }}</a>
+                                                        <a class="logoutButton" href="#">{{ Logout }}</a>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -232,7 +232,7 @@
                                                         <input type="hidden" name="{{ redirect_field_name }}"
                                                                value="{{ redirect_field_value }}"/>
                                                     {% endif %}
-                                                    <a id="logoutButton" href="#">{{ Logout }}</a>
+                                                    <a class="logoutButton" href="#">{{ Logout }}</a>
                                                 </form>
                                             </li>
                                         </ul>

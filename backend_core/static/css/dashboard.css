@@ -138,6 +138,9 @@
         padding-left: 15px;
     }
 
+    .dashboard-content {
+        margin-top: 20px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -150,14 +153,109 @@
     position: relative;
 }
 
-html,body{
-    min-height:100%;
+html, body {
+    min-height: 100%;
 }
+
 .main-content {
-    display:block;
+    display: block;
     margin-bottom: 50px;
 
     min-height: -webkit-calc(100vh - 170px);
     min-height: -moz-calc(100vh - 170px);
     min-height: calc(100% - 170px);
+}
+
+.project-photo {
+    width: calc(100% / 3);
+    height: 200px;
+    min-width: 200px;
+}
+
+.project-basic-info, .project-attachments, .project-photos {
+    margin: 10px 0;
+}
+
+.project-detail-wrapper .row {
+    margin: 0;
+}
+
+.Address, .project-basic-info .panel-body .row .col-xs-12 {
+    padding-left: 0px;
+}
+
+.text {
+    overflow: hidden;
+}
+
+.height {
+    max-height: 100px;
+}
+
+.heightAuto {
+    max-height: none;
+}
+
+.project-description .link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 3px 0;
+    background-color: rgba(0, 0, 0, 0);
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
+}
+
+#peek a i {
+    color: #6892D5;
+}
+
+.project-attachments .panel-body td, .project-attachments .panel-body th {
+    padding: 0 5px;
+    vertical-align: top;
+}
+
+.project-attachments .panel-body table {
+    border-spacing: 0 5px;
+    border-collapses: seperate;
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .desktop {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile {
+        display: none;
+    }
+
+    .page-header {
+        margin-top: -20px;
+    }
+}
+
+.project-attachments ul li {
+    list-style-type: none;
+}
+
+.title {
+    font-weight: 900;
+}
+
+.project-transactions .panel-body table {
+    width: 100%
+}
+
+.title, .value {
+    color: #555;
+}
+
+.project-overview .title {
+    font-size: 0.75em;
 }
