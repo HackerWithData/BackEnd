@@ -197,7 +197,6 @@ h1 {
     /*margin: 0px;*/
 }
 
-
 /* other information*/
 .horizontal-list ul {
     type: None;
@@ -229,13 +228,10 @@ h1 {
     vertical-align: top;
 }
 
-
 #BasicInfo table {
     border-collapse: separate;
     border-spacing: 10px 0px;
 }
-
-
 
 #BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
     color: white;
@@ -284,7 +280,6 @@ h1 {
     padding-left: 0px;
 }
 
-
 #photo .panel-body {
     padding: 0px;
 }
@@ -322,8 +317,9 @@ h1 {
     top: 50px;
     /*right: 10%;*/
 }
-.bus-btn a{
-margin:3px;
+
+.bus-btn a {
+    margin: 3px;
 }
 
 #photo .panel-heading a.viewmore {
@@ -418,13 +414,12 @@ margin:3px;
     color: white;
 }
 
-
-
 /* Popup container - can be anything you want */
 
-.popup .popuptext ul li{
+.popup .popuptext ul li {
     list-style-type: none;
 }
+
 .popup {
     position: relative;
     display: inline-block;
@@ -473,7 +468,6 @@ margin:3px;
     border-bottom-color: #555;
 }
 
-
 /* Toggle this class - hide and show the popup */
 .popup .show {
     width: auto;
@@ -501,11 +495,21 @@ margin:3px;
     }
 }
 
+.bus-name {
+    font-size: 88px;
+    font-weight: 900;
+}
+
 @media (max-width: 767px) {
     .container {
         margin: 0px;
         padding: 0px;
         width: auto;
+    }
+
+    .bus-btn {
+        position: relative;
+        top: 0px;
     }
 
     .header a.navbar-brand {
@@ -575,6 +579,9 @@ margin:3px;
         padding-right: 0px;
     }
 
+    .bus-name {
+        font-size: 56px;
+    }
 }
 
 .header .navbar .logo.cursive {
@@ -637,6 +644,6 @@ margin:3px;
 }
 
 #PPU {
-    height:80px;
-    color:black;
+    height: 80px;
+    color: black;
 }
