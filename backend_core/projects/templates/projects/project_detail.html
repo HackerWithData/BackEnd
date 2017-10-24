@@ -12,18 +12,95 @@
         {#        }#}
 
         .project-photo {
-            width: 200px;
+            width: calc(100% / 3);
             height: 200px;
+            min-width: 200px;
         }
 
         .project-basic-info, .project-attachments, .project-photos {
             margin: 10px 0;
         }
+
+        .project-detail-wrapper .row {
+            margin: 0;
+        }
+
+        .Address, .project-basic-info .panel-body .row .col-xs-12 {
+            padding-left: 0px;
+        }
+
+        .text {
+            overflow: hidden;
+        }
+
+        .height {
+            max-height: 100px;
+        }
+
+        .heightAuto {
+            max-height: none;
+        }
+
+        .project-description .link {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            padding: 3px 0;
+            background-color: rgba(0, 0, 0, 0);
+            /* "transparent" only works here because == rgba(0,0,0,0) */
+            background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
+        }
+
+        #peek a i {
+            color: #6892D5;
+        }
+
+        .project-attachments .panel-body td, .project-attachments .panel-body th {
+            padding: 0 5px;
+            vertical-align: top;
+        }
+
+        .project-attachments .panel-body table {
+            border-spacing: 0 5px;
+            border-collapses: seperate;
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .desktop {
+                display: none;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile {
+                display: none;
+            }
+
+            .page-header {
+                margin-top: -20px;
+            }
+        }
+
+        .project-attachments ul li {
+            list-style-type: none;
+        }
+
+        .title {
+            font-weight: 900;
+        }
+
+        .project-transactions .panel-body table {
+            width: 100%
+        }
     </style>
     <div class="page-header">
         <h1>{{ Project_Detail }}</h1>
     </div>
-{#payment button#}
+    {#payment button#}
     <div class="payment-wrapper">
 
     </div>
@@ -33,44 +110,62 @@
                 {{ Project_Basic_Information }}
             </div>
             <div class="panel-body">
-                {{ Project_Name }}: {{ info_dict.project.project_name }}
-                <br>
-                {{ First_Name }}: {{ info_dict.project.first_name }}
-                <br>
-                {{ Last_Name }}: {{ info_dict.project.last_name }}
-                <br>
-                {{ Bus_Name }} :
-                {% if info_dict.content_type == 'contractor' %}
-                    {{ info_dict.professional.bus_name }}
-                {% else %}
-                    {{ info_dict.professional.lic_name }}
-                {% endif %}
-                {{ Project_Type }}: {{ info_dict.project.project_type }}
-                {{ Start_Date }}: {{ info_dict.project.start_date }}
-                <div class="Address">
-                    {{ Address }}: <br/>
-                    {{ info_dict.project.street_address }}{{ info_dict.project.street_address2 }}<br/>
-                    {{ info_dict.project.county }}, {{ info_dict.project.state }} {{ info_dict.project.zipcode }}
-                </div>
-                {#        TODO: Add trigger to calculate the cost#}
-                {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
-                {{ Project_Enddate }}: {{ info_dict.project.end_date }}
-                {% if info_dict.project.project_description %}
-                    <div class="project-description">
-                        {{ Project_Description }}: <br/>
-                        {{ info_dict.project.project_description }}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <span class="title">{{ Project_Name }}:</span> {{ info_dict.project.project_name }}
+                        <br>
+                        <span class="title">{{ Client_Name }}:</span> {{ info_dict.project.first_name }} {{ info_dict.project.last_name }}
+                        <br>
+                        <span class="title">{{ Contracted_With }}:</span>
+                        {% if info_dict.content_type == 'contractor' %}
+                            {{ info_dict.professional.bus_name }}
+                        {% else %}
+                            {{ info_dict.professional.lic_name }}
+                        {% endif %}
+                        <br/>
+                        <span class="title">{{ Project_Type }}:</span> {{ info_dict.project.get_project_type_display }}
                     </div>
-                {% endif %}
-                {{ Project_Status }}:
-                {{ info_dict.project.project_status }}
-                {{ Project_Action }}:
-                {{ info_dict.project.project_action }}
-            </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <span class="title">{{ Start_Date }}:</span> {{ info_dict.project.start_date }}
+                        <br/>
+                        <span class="title">{{ Project_Status }}:</span> {{ info_dict.project.get_project_status_display }}
+                        {% if not Project_Action %}
+                            <br/>
+                            <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
+                        {% endif %}
+                        {% if not Project_Enddate %}
+                            <br/>
+                            <span class="title">{{ Project_Enddate }}:</span> {{ info_dict.project.end_date }}
+                        {% endif %}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="Address col-xs-12 col-md-4">
+                        <span class="title">{{ Address }}:</span><br/>
+                        {{ info_dict.project.street_address }}{{ info_dict.project.street_address2 }}<br/>
+                        {{ info_dict.project.county }}, {{ info_dict.project.state }} {{ info_dict.project.zipcode }}
+                    </div>
+                    {#        TODO: Add trigger to calculate the cost#}
+                    {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
 
+                    {% if info_dict.project.project_description %}
+                        <div class="project-description col-xs-12 col-md-8">
+                            <div class="text height">
+                                <span class="title">{{ Project_Description }}:</span> <br/>
+                                {{ info_dict.project.project_description }}
+                            </div>
+                            <div id="peek" class="link">
+                                <a id="readmore" class="btn btn-db"> <i class="fa fa-chevron-down "> </i></a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
 
-        {#        TODO: need to write ajax for this in the future#}
+        {#        TODO: need to write ajax for this in the future and overflow button #}
 
         {% if info_dict.project_attachments %}
             <div class="panel panel-default project-attachments">
@@ -78,12 +173,41 @@
                     {{ Project_Attachment }}
                 </div>
                 <div class="panel-body">
-                    {% for attachment in info_dict.project_attachments %}
-                        <a class="project-attachment"
-                           href="{{ attachment.project_attachment.url }}">{{ attachment.title }}</a>
-                        {{ attachment.attachment_type }}
-                        <br/>
-                    {% endfor %}
+                    <div class="desktop">
+                        <table>
+                            <tr>
+                                <th>{{ Name }}</th>
+                                <th>{{ Type }}</th>
+                                <th>{{ Time }}</th>
+                            </tr>
+                            {% for attachment in info_dict.project_attachments %}
+                                <tr>
+                                    <td>
+                                        <a class="project-attachment" target="_blank"
+                                           href="{{ attachment.project_attachment.url }}">{{ attachment.title }}</a>
+                                    </td>
+                                    <td>
+                                        {{ attachment.attachment_type }}
+                                    </td>
+                                    <td>
+                                        {{ attachment.uploaded_at|date:"M d, Y" }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="mobile">
+                        {% for attachment in info_dict.project_attachments %}
+                            <ul>
+                                <li><span class="title">{{ Name }}</span>: <a class="project-attachment" target="_blank"
+                                                                              href="{{ attachment.project_attachment.url }}">{{ attachment.title }}</a>
+                                </li>
+                                <li><span class="title">{{ Type }}</span>: {{ attachment.attachment_type }}</li>
+                                <li><span class="title">{{ Time }}</span>: {{ attachment.uploaded_at|date:"M d, Y" }}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -105,15 +229,52 @@
                 {{ Project_Transaction }}
             </div>
             <div class="panel-body">
-            {% for transaction in info_dict.transactions %}
-                {{ transaction.amount }}
-                {{ transaction.status }}
-                {{ transaction.created }}
-            {% endfor %}
+            <table>
+                <tr>
+                    <th>{{ Amount }}</th>
+                    <th>{{ Status }}</th>
+                    <th>{{ Updated_At }}</th>
+                </tr>
+                {% for transaction in info_dict.transactions %}
+                    <tr>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.get_status_display }}</td>
+                        <td>{{ transaction.updated_at }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         {% endif %}
         </div>
         </div>
     </div>
     {#        <a href="{% url 'display_project_detail' info_dict.project.project_id %}">detail</a>#}
+    <script>
+        var curHeight = $('.project-description .text').height();
+        if (curHeight >= 100) {
+            $('#readmore').show();
+        }
+        else {
+            $('#readmore').hide();
+            $('#peek').removeClass('link');
+        }
 
+        function readMore() {
+            var readmore = $('#readmore');
+            if (readmore.find('i.fa-chevron-down').length !== 0) {
+                readmore.html('<i class="fa fa-chevron-up"> </i>');
+                $('#peek').removeClass('link');
+            } else {
+                readmore.html('<i class="fa fa-chevron-down"> </i>');
+                $('#peek').addClass('link');
+            }
+            $('.height').toggleClass("heightAuto");
+        }
+
+        $(document).ready(function () {
+
+            $('#readmore').click(function () {
+                readMore();
+            });
+        })
+    </script>
 {% endblock %}

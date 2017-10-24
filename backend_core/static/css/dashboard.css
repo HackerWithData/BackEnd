@@ -54,6 +54,7 @@
 
 #account-setting-collapse-button {
     float: right;
+    padding-right: 10px;
 }
 
 .show {

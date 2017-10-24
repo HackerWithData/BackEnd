@@ -149,10 +149,10 @@ def display_project_overview(request):
 def display_project_detail(request, project_id):
     template_name = 'projects/project_detail.html'
     project = Project.objects.get(project_id=project_id)
-    project_attachments = ProjectAttachment.objects.filter(project=project)
+    project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
     project_photos = ProjectPhoto.objects.filter(project=project)
-    transactions = project.transactions.all()
-    print(transactions)
+    transactions = project.transactions.all().order_by('-updated_at')
+    # print(transactions)
     if request.user == project.user:
         professional = project.content_type.get_object_for_this_type(pk=project.object_id)
         info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
