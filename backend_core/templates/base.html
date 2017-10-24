@@ -216,6 +216,16 @@
                                                 <span><img src="{% static 'image/icon/settings-icon.svg' %}"></span><a class="dropdown-item"
                                                    href="{% url 'show_dashboard' %}">{{ Account_Settings }}</a></li>
                                         </ul>
+                                        {% if show_professional_link and is_sign_up_completed %}
+                                            <ul class="dropdown-menu-group-list">
+                                                <li class="dropdown-menu-items">
+                                                    <span class="dropdown-menu-icon-container">
+                                                        <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
+                                                    </span>
+                                                    {% retrieve_professional_link %}
+                                                </li>
+                                            </ul>
+                                        {% endif %}
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
                                                 <form class="dropdown-item" method="post"
