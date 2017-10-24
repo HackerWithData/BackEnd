@@ -223,7 +223,7 @@
         });
 
         // close Find professionals dropdown when open Zipcode or City dropdown
-        $('#inlineFormInputSearchLocation').click(function () {
+        $('#inlineFormInputSearchTargetType').focusout(function () {
             $('.dropdown.target-container.target-container-open.open').removeClass('target-container-open').removeClass('open').addClass('target-container-close');
             $('.dropdown-suggestion.dropdown-menu').css('display','none');
         });
