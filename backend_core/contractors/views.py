@@ -69,6 +69,7 @@ def display_contractor(request, contractor_id):
                                          rating_score=int(user_rating_form.cleaned_data[field]))
                 user_rating.save()
             # direct to the page to upload photos
+            #TODO: ADD PHOTOFORM VALIDATION FOR SECURITY
             content_type = ContentType.objects.get(model='review')
             object_id = int(review.id)
             files = request.FILES.getlist('project photos')
@@ -128,15 +129,15 @@ def display_contractor(request, contractor_id):
     if overview:
         pass
     else:
-        overview = _("""{bus_name} is a contractor company located in {csp} . 
+        overview = _("""{lic_name} is a contractor company located in {csp} . 
     The company holds a license number according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score is {score} and is rated as {rank}.
-    The License is verified as active when we checked last time. If you would like to know {bus_name} more, 
+    The License is verified as active when we checked last time. If you would like to know {lic_name} more, 
     please contact us and we will share more information and data about this contractor to you.
-    """).format(bus_name=contractor.bus_name, csp=contractor.csp, data_source=data_source, score=hscore.score,
+    """).format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source, score=hscore.score,
                 rank=letter_grade,
                 full_state_name=full_state_name)
 
-    # ,contractor.bus_name
+    # ,contractor.lic_name
     # Lic Type
     lic_type = contractor.lic_type.split('&')
     # review

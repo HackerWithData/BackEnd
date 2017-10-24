@@ -15,27 +15,26 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hoome_local',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci"
+        }
     }
 }
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'hoome_local',
-#         'USER': 'root',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES', default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci"
-#         }
-#     }
-# }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -76,3 +75,12 @@ GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Forte test account configure
+FORTE_CONFIG = {
+    'api_login_id': 'HPBuBdGvU',
+    'secure_trans_key': 'mPJHiA51HQS93X',
+    'method': 'sale',
+    'version_number': '1.0',
+    'allowed_methods': 'visa, mast, disc, amex, echeck',
+    'hash_method': 'md5',
+}

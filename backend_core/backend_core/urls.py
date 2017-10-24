@@ -29,6 +29,7 @@ js_info_dict = {
     'packages': ('contractors.package',),
 }
 urlpatterns = [
+    # admin
     url(r'^admin/', admin.site.urls),
     # home page
     url(r'^$', include('home.urls')),
@@ -36,25 +37,29 @@ urlpatterns = [
     # users.urls must place before allauth urls to override
     url(r'^accounts/', include('users.urls')),
     url(r'^accounts/', include('allauth.urls')),
-
+    url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 
     # dashboard
     url(r'^dashboard/', include('dashboard.urls')),
-
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
-    url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 
     # search
     url(r'^search/', include('search.urls')),
+
+    # overview
     url(r'contractor/', include('contractors.urls')),
     url(r'architect/', include('architects.urls')),
     url(r'designer/', include('designers.urls')),
+    url(r'project/', include('projects.urls')),
     # url(r'^settings/password/$', userviews.password, name='password'),
     # url(r'^upload/',include('disk.urls')),
     # url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
     # url(r'^reviews/', include('review.urls')),
     url(r'^rule/', include('rule.urls')),
-    url(r'^career/', include('career.urls'))
+    url(r'^career/', include('career.urls')),
+
+    # transaction
+    url(r'^transactions/', include('transactions.urls'))
 ]
 if settings.DEBUG:
     import debug_toolbar

@@ -81,7 +81,9 @@ WEB_APPS = [
     'rule',
     'career',
     'dashboard',
-    "hscore"
+    "hscore",
+    'projects',
+    'transactions',
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
@@ -90,7 +92,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -259,3 +260,4 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'extra_locales', 'allauth'),
 )
 
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdWazUUAAAAANWO1-wzqu7GII4QGp084y-2_qjq'

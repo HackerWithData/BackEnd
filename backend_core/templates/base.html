@@ -99,6 +99,29 @@
 {% trans 'Designer' as Designer %}
 {% trans 'Account Settings' as Account_Settings %}
 {% trans 'Rank' as Rank %}
+{% trans 'Project Overview' as Project_Overview %}
+{% trans "Project Detail" as Project_Detail %}
+{% trans "Basic Information" as Project_Basic_Information %}
+{% trans "Project Name" as Project_Name %}
+{% trans "Last Name" as Last_Name %}
+{% trans "First Name" as First_Name %}
+{% trans "Client Name" as Client_Name %}
+{% trans "Bussiness Name" as Bus_Name %}
+{% trans "Contracted With" as Contracted_With %}
+{% trans "Start Date" as Start_Date %}
+{% trans "End Date" as Project_Enddate %}
+{% trans "Description" as Project_Description %}
+{% trans "Status" as Project_Status %}
+{% trans "Action" as Project_Action %}
+{% trans "Attachment" as Project_Attachment %}
+{% trans "Photo" as Project_Photo %}
+{% trans "Transaction History" as Project_Transaction %}
+{% trans "Type" as Type %}
+{% trans "Time" as Time %}
+{% trans "Amount" as Amount %}
+{% trans "Status" as Status %}
+{% trans "Updated At" as Updated_At %}
+{% trans "Project Created" as Project_Created %}
 
 <!--nav bar start-->
 {% block nav %}
@@ -141,7 +164,7 @@
                                                         <img class="avatar-image"
                                                              src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
                                                     {% else %}
-                                                        <canvas class="avatar-image" width=60 height=60
+                                                        <canvas class="" width=60 height=60
                                                                 data-jdenticon-value="{{ user.email }}"></canvas>
                                                     {% endif %}
                                                 </div>
@@ -201,6 +224,16 @@
                                                 <span><img src="{% static 'image/icon/settings-icon.svg' %}"></span><a class="dropdown-item"
                                                    href="{% url 'show_dashboard' %}">{{ Account_Settings }}</a></li>
                                         </ul>
+                                        {% if show_professional_link and is_sign_up_completed %}
+                                            <ul class="dropdown-menu-group-list">
+                                                <li class="dropdown-menu-items">
+                                                    <span class="dropdown-menu-icon-container">
+                                                        <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
+                                                    </span>
+                                                    {% retrieve_professional_link %}
+                                                </li>
+                                            </ul>
+                                        {% endif %}
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
                                                 <form class="dropdown-item" method="post"
