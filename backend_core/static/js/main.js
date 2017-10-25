@@ -7,13 +7,21 @@ jQuery(document).ready(function ($) {
         }
     );
 
+    $(".dashboard-content .alert").fadeTo(2000, 500).slideUp(500, function () {
+        $(".dashboard-content .alert").slideUp(500);
+    });
+
+    // $(".alert-base.alert").fadeTo(2000, 500).slideUp(500, function () {
+    //     $(".alert-base.alert").slideUp(500);
+    // });
+
     $('#primary-menu').click(function () {
         if ($('.mobile-dropdown-group').hasClass('hide')) {
             $('.mobile-dropdown-group').removeClass('hide');
-            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()+120)) ;
+            $('#main-nav ul.nav.navbar-nav').css('height', ($('#main-nav ul.nav.navbar-nav').height() + 120));
         } else {
             $('.mobile-dropdown-group').addClass('hide');
-            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()-120)) ;
+            $('#main-nav ul.nav.navbar-nav').css('height', ($('#main-nav ul.nav.navbar-nav').height() - 120));
         }
     });
 
