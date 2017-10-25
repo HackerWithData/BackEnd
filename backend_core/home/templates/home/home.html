@@ -5,8 +5,9 @@
     <meta name="description" content="">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="{% static 'css/hero-slider.css' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
     <style>
 
         {% for path in background %}
@@ -23,78 +24,119 @@
         {#            background-position: center;#}
         {#        }#}
 
-        .first-service .icon {
-            background-image: url("{% static 'image/background-pic/mag-black.svg' %}");
-            height: 50px;
-            width: 50px;
-            display: inline-block;
-            background-size: contain;
+        {#        .first-service .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/mag-black.svg' %}");#}
+        {#            height: 50px;#}
+        {#            width: 50px;#}
+        {#            display: inline-block;#}
+        {#            background-size: contain;#}
+        {#        }#}
+
+        {#        .first-service:hover .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/mag-white.svg' %}");#}
+        {#        }#}
+        {##}
+        {#        .second-service .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/manage-black.svg' %}");#}
+        {#            height: 50px;#}
+        {#            width: 50px;#}
+        {#            display: inline-block;#}
+        {#            background-size: contain;#}
+        {#        }#}
+        {##}
+        {#        .second-service:hover .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/manage-white.svg' %}");#}
+        {#        }#}
+        {##}
+        {#        .third-service .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/host-black.svg' %}");#}
+        {#            height: 50px;#}
+        {#            width: 50px;#}
+        {#            display: inline-block;#}
+        {#            background-size: contain;#}
+        {#        }#}
+        {##}
+        {#        .third-service:hover .icon {#}
+        {#            background-image: url("{% static 'image/background-pic/host-white.svg' %}");#}
+        {#        }#}
+        @media (min-width: 768px) {
+            #contractor-icon {
+                background-image: url("{% static 'image/search-category-icon/contractor-white.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+            }
+
+            #architect-icon {
+                background-image: url("{% static 'image/search-category-icon/architect-white.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+            }
+
+            #designer-icon {
+                background-image: url("{% static 'image/search-category-icon/designer-white.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+
+            }
+
+            #meister-icon {
+                background-image: url("{% static 'image/search-category-icon/meister-white.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+
+            }
         }
 
-        .first-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/mag-white.svg' %}");
+        @media (max-width: 767px) {
+            #contractor-icon {
+                background-image: url("{% static 'image/search-category-icon/contractor-black.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+            }
+
+            #architect-icon {
+                background-image: url("{% static 'image/search-category-icon/architect-black.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+            }
+
+            #designer-icon {
+                background-image: url("{% static 'image/search-category-icon/designer-black.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+
+            }
+
+            #meister-icon {
+                background-image: url("{% static 'image/search-category-icon/meister-black.svg' %}");
+                height: 1.2em;
+                width: 1.2em;
+                display: inline-block;
+                background-size: contain;
+                font-weight: 900;
+
+            }
         }
 
-        .second-service .icon {
-            background-image: url("{% static 'image/background-pic/manage-black.svg' %}");
-            height: 50px;
-            width: 50px;
-            display: inline-block;
-            background-size: contain;
-        }
-
-        .second-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/manage-white.svg' %}");
-        }
-
-        .third-service .icon {
-            background-image: url("{% static 'image/background-pic/host-black.svg' %}");
-            height: 50px;
-            width: 50px;
-            display: inline-block;
-            background-size: contain;
-        }
-
-        .third-service:hover .icon {
-            background-image: url("{% static 'image/background-pic/host-white.svg' %}");
-        }
-
-        #contractor-icon {
-            background-image: url("{% static 'image/search-category-icon/contractor-white.svg' %}");
-            height: 1.2em;
-            width: 1.2em;
-            display: inline-block;
-            background-size: contain;
-        }
-
-        #architect-icon {
-            background-image: url("{% static 'image/search-category-icon/architect-white.svg' %}");
-            height: 1.2em;
-            width: 1.2em;
-            display: inline-block;
-            background-size: contain;
-            font-weight: 900;
-        }
-
-        #designer-icon {
-            background-image: url("{% static 'image/search-category-icon/designer-white.svg' %}");
-            height: 1.2em;
-            width: 1.2em;
-            display: inline-block;
-            background-size: contain;
-            font-weight: 900;
-
-        }
-
-        #meister-icon {
-            background-image: url("{% static 'image/search-category-icon/meister-white.svg' %}");
-            height: 1.2em;
-            width: 1.2em;
-            display: inline-block;
-            background-size: contain;
-            font-weight: 900;
-
-        }
     </style>
     <script src="{% static 'js/jQuery-Autocomplete-master/src/jquery.autocomplete.js' %}"></script>
 {% endblock %}
@@ -134,12 +176,19 @@
             };
         };
         var elem = document.getElementById('search-bar');
+        var elem2 = document.getElementById('home-slider');
         var target = document.getElementById('target-position');
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
+        if (jQuery(window).width() < 768) {
+            elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
+        }
         $(window).resize(function () {
             var elem = document.getElementById('search-bar');
             var target = document.getElementById('target-position');
             elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
+            if (jQuery(window).width() < 768) {
+                elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
+            }
         });
     </script>
     {#    <div id="about" class="page-section">#}

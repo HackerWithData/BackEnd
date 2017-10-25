@@ -49,7 +49,6 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     padding: 0;
     /*Quicksand*/
     font-family: 'Quicksand', Helvetica, Arial, sans-serif;
-    background-color: transparent;
 }
 
 ul {
@@ -302,6 +301,7 @@ ul.cd-hero-slider {
 #fun-facts {
     padding: 100px 0px;
     background-color: #fff;
+
 }
 
 #fun-facts .section-heading {
@@ -348,7 +348,7 @@ footer, footer * {
 
 /*RESPONSIVE */
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     #main-nav {
         border-color: rgba(250, 250, 250, 0.95);
         margin-top: 16px;
@@ -429,7 +429,7 @@ footer, footer * {
     z-index: 9999999999;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
     .footer {
         position: relative;
     }
@@ -442,6 +442,22 @@ footer, footer * {
         width: 100%;
         z-index: 9999999999;
     }
+
+    #home-slider h1.logo.cursive {
+        font-weight: 900;
+        font-size: 88px;
+        color: #ffffff;
+        /*text-shadow:0px 0px 0px #FFFFFF;*/
+    }
+
+    /*#home-slider {*/
+        /*height: calc(75%);*/
+    /*}*/
+
+    #search-bar .search-category-title {
+        color: black;
+    }
+
 }
 
 /*.autocomplete-suggestions strong {*/
