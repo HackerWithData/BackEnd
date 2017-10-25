@@ -93,10 +93,8 @@ msgid "Full Stack Data Scientist Intern"
 msgstr "全栈数据科学家实习"
 
 #: contractors/templates/contractor/contractor.html:118
-#, fuzzy
-#| msgid "Contact Us"
 msgid "Contract Us"
-msgstr "联系我们"
+msgstr "与我们签订合约"
 
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
 #: templates/base.html:37
@@ -613,7 +611,7 @@ msgid "Client Name"
 msgstr "客户姓名"
 
 #: templates/base.html:109
-msgid "Bussiness Name"
+msgid "Business Name"
 msgstr "商家姓名"
 
 #: templates/base.html:110
