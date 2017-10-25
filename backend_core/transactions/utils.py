@@ -4,17 +4,17 @@ from Crypto.Hash import HMAC, MD5
 
 
 # status type
-PENDING = 'PENDING'
-FAIL = 'FAIL'
-SUCCESS = 'SUCCESS'
-ABORT = 'ABORT'
-CANCEL = 'CANCEL'
+PENDING = 'P'
+FAIL = 'F'
+SUCCESS = 'S'
+ABORT = 'A'
+CANCEL = 'C'
 TRANSACTION_STATUS_CHOICES = (
-    (PENDING, 'Pending'),
-    (FAIL, 'Fail'),
-    (SUCCESS, 'Success'),
-    (ABORT, 'Abort'),
-    (CANCEL, 'Cancel'),
+    (PENDING, 'PENDING'),
+    (FAIL, 'FAILED'),
+    (SUCCESS, 'SUCCESS'),
+    (ABORT, 'ABORTED'),
+    (CANCEL, 'CANCELED'),
 )
 
 

@@ -16,18 +16,6 @@
     <div class="page-header">
         <h1>{{ Project_Detail }}</h1>
     </div>
-    {#payment button#}
-    <div class="payment-wrapper">
-        {% render_pay_now_button info_dict.project.project_id %}
-    </div>
-    <div class="request-wrapper">
-        <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>
-        <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">
-            {% csrf_token %}
-            <button class="btn btn-hoome" type="submit" name="request-money" value="request-money">Request
-            </button>
-        </form>
-    </div>
 
     <div class="project-detail-wrapper">
         <div class="panel panel-default project-basic-info">
@@ -50,14 +38,36 @@
                         <span class="title">{{ Start_Date }}:</span> {{ info_dict.project.start_date }}
                         <br/>
                         <span class="title">{{ Project_Status }}:</span> {{ info_dict.project.get_project_status_display }}
-                        {% if not Project_Action %}
-                            <br/>
-                            <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
-                        {% endif %}
-                        {% if not Project_Enddate %}
+                        {% if info_dict.project.end_date is not None %}
                             <br/>
                             <span class="title">{{ Project_Enddate }}:</span> {{ info_dict.project.end_date }}
                         {% endif %}
+                        {% if info_dict.project.project_action is not None %}
+                            <br/>
+                            <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
+                        {% endif %}
+                        {#payment button#}
+                        {% if request.user.role == "CONSUMER" %}
+                            <div class="payment-wrapper">
+                                {% render_pay_now_button info_dict.project.project_id %}
+                            </div>
+                            {#                        {% elif request.user.role == "PROFESSIONAL" %}#}
+                            {#                            <div class="request-wrapper">#}
+                            {#                                <form id='request-money' action="" method="post" class="">#}
+                            {#                                    {% csrf_token %}#}
+                            {#                                    <button class="btn btn-hoome" type="submit" name="request-money"#}
+                            {#                                            value="request-money">Request#}
+                            {#                                    </button>#}
+                            {#                                </form>#}
+                            {#        <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>#}
+                            {#        <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">#}
+                            {#            {% csrf_token %}#}
+                            {#            <button class="btn btn-hoome" type="submit" name="request-money" value="request-money">Request#}
+                            {#            </button>#}
+                            {#        </form>#}
+                            {#                            </div>#}
+                        {% endif %}
+
                     </div>
                 </div>
                 <hr/>
@@ -69,7 +79,6 @@
                     </div>
                     {#        TODO: Add trigger to calculate the cost#}
                     {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
-
                     {% if info_dict.project.project_description %}
                         <div class="project-description col-xs-12 col-md-8">
                             <div class="text height">
@@ -138,9 +147,12 @@
                     {{ Project_Photo }}
                 </div>
                 <div class="panel-body">
-                    {% for photo in info_dict.project_photos %}
-                        <img class="project-photo" src="{{ photo.project_photo.url }}">
-                    {% endfor %}
+                    <div id="photo-gallery" class="popup-gallery">
+                        {% for photo in info_dict.project_photos %}
+                            <a href="{{ photo.project_photo.url }}" title="{{ photo.project_photo.title }}">
+                                <img class="project-photo" src="{{ photo.project_photo.url }}"></a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -196,6 +208,46 @@
             $('#readmore').click(function () {
                 readMore();
             });
+
+            {#        $('.popup-with-form').magnificPopup({#}
+            {#            type: 'inline',#}
+            {#            preloader: true,#}
+            {#            focus: '.request-money',#}
+            {##}
+            {#            // When elemened is focused, some mobile browsers in some cases zoom in#}
+            {#            // It looks not nice, so we disable it:#}
+            {#            callbacks: {#}
+            {#                beforeOpen: function () {#}
+            {#                    if ($(window).width() < 700) {#}
+            {#                        this.st.focus = false;#}
+            {#                    } else {#}
+            {#                        this.st.focus = '.request-money';#}
+            {#                    }#}
+            {#                }#}
+            {#            }#}
+            {#        });#}
+
+            $('#photo-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                fixedContentPos: true,
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function (item) {
+                        return item.el.attr('title');
+                        {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                    }
+                }
+            });
         })
     </script>
+
+
 {% endblock %}
