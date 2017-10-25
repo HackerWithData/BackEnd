@@ -8,9 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
+from allauth.exceptions import ImmediateHttpResponse
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
+from allauth.account.utils import perform_login
+from allauth.utils import get_user_model
 
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
@@ -26,15 +29,28 @@ import json
 @receiver(user_signed_up)
 def set_role_before_sign_up_complete(request, **kwargs):
     user = kwargs.pop('user')
-    role = request.POST.get('role')
-    user.role = role
+    if 'sociallogin' in kwargs:
+        user.role = CONSUMER
+    else:
+        user.role = request.POST.get('role')
     user.save()
 
 
-# # TODO: extra avatar image from socail account
-# @receiver(pre_social_login)
-# def set_role_before_sign_up_complete(request, sociallogin, **kwargs):
-#     print sociallogin.account.extra_data
+@receiver(pre_social_login)
+def link_to_local_user(sender, request, sociallogin, **kwargs):
+    """
+        Login and redirect
+        This is done in order to tackle the situation where user's email retrieved
+        from one provider is different from already existing email in the database
+        (e.g facebook and google both use same email-id). Specifically, this is done to
+        tackle following issues:
+        * https://github.com/pennersr/django-allauth/issues/215
+    """
+    email_address = sociallogin.account.extra_data['email']
+    users = get_user_model().objects.filter(email=email_address)
+    if users:
+        perform_login(request=request, user=users[0], email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
+        raise ImmediateHttpResponse(redirect(settings.LOGIN_REDIRECT_URL))
 
 
 @login_required
