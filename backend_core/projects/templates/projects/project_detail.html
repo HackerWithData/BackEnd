@@ -4,6 +4,15 @@
 {% load payment_tag %}
 
 {% block dashboard_content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div{% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible"{% endif %} role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <div class="page-header">
         <h1>{{ Project_Detail }}</h1>
     </div>
@@ -11,6 +20,15 @@
     <div class="payment-wrapper">
         {% render_pay_now_button info_dict.project.project_id %}
     </div>
+    <div class="request-wrapper">
+        <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>
+        <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">
+            {% csrf_token %}
+            <button class="btn btn-hoome" type="submit" name="request-money" value="request-money">Request
+            </button>
+        </form>
+    </div>
+
     <div class="project-detail-wrapper">
         <div class="panel panel-default project-basic-info">
             <div class="panel-heading">
@@ -24,7 +42,7 @@
                         <span class="title">{{ Client_Name }}:</span> {{ info_dict.project.first_name }} {{ info_dict.project.last_name }}
                         <br>
                         <span class="title">{{ Contracted_With }}:</span>
-                            {{ info_dict.project.bus_name }}
+                        {{ info_dict.project.bus_name }}
                         <br/>
                         <span class="title">{{ Project_Type }}:</span> {{ info_dict.project.get_project_type_display }}
                     </div>
