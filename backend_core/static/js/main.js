@@ -10,10 +10,10 @@ jQuery(document).ready(function ($) {
     $('#primary-menu').click(function () {
         if ($('.mobile-dropdown-group').hasClass('hide')) {
             $('.mobile-dropdown-group').removeClass('hide');
-            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()+80)) ;
+            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()+120)) ;
         } else {
             $('.mobile-dropdown-group').addClass('hide');
-            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()-80)) ;
+            $('#main-nav ul.nav.navbar-nav').css('height',($('#main-nav ul.nav.navbar-nav').height()-120)) ;
         }
     });
 
