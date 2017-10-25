@@ -18,21 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: architects/templates/architect/architect.html:85
-#: contractors/templates/contractor/contractor.html:84
-#: designers/templates/designer/designer.html:51
+#: architects/templates/architect/architect.html:81
+#: contractors/templates/contractor/contractor.html:81
+#: designers/templates/designer/designer.html:47
 msgid "Edit page?"
 msgstr "編輯頁面?"
 
-#: architects/templates/architect/architect.html:120
-#: contractors/templates/contractor/contractor.html:123
-#: designers/templates/designer/designer.html:99
+#: architects/templates/architect/architect.html:117
+#: contractors/templates/contractor/contractor.html:121
+#: designers/templates/designer/designer.html:96
 msgid "Project Photo Upload"
 msgstr "上傳項目照片"
 
-#: architects/templates/architect/architect.html:122
-#: contractors/templates/contractor/contractor.html:125
-#: designers/templates/designer/designer.html:101
+#: architects/templates/architect/architect.html:119
+#: contractors/templates/contractor/contractor.html:123
+#: designers/templates/designer/designer.html:98
 msgid "Background Image Upload"
 msgstr "上傳主頁背景圖案"
 
@@ -92,10 +92,6 @@ msgstr "網頁開發人員"
 msgid "Full Stack Data Scientist Intern"
 msgstr "全棧數據科學家實習"
 
-#: contractors/templates/contractor/contractor.html:118
-msgid "Contract Us"
-msgstr "與我們簽訂合約"
-
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
 #: templates/base.html:37
 msgid "Project Photos"
@@ -119,29 +115,29 @@ msgstr ""
 "我們會向您分享更多關於該商家的信息和數據。"
 
 #: dashboard/templates/dashboard/dashboard.html:16
-#: dashboard/templates/dashboard/dashboard.html:62
+#: dashboard/templates/dashboard/dashboard.html:60
 msgid "’s Account Settings"
 msgstr "的賬戶設置"
 
-#: dashboard/templates/dashboard/dashboard.html:31 templates/base.html:81
+#: dashboard/templates/dashboard/dashboard.html:29 templates/base.html:81
 msgid "Profile"
 msgstr "檔案"
 
-#: dashboard/templates/dashboard/dashboard.html:98
+#: dashboard/templates/dashboard/dashboard.html:97
 msgid "Hello, Welcome to Hoome!"
 msgstr "您好，歡迎來到Hoome!"
 
-#: dashboard/templates/dashboard/dashboard.html:100
+#: dashboard/templates/dashboard/dashboard.html:99
 msgid ""
 "It's Your Personal Dashboard. You could set up you account\n"
 "                                by clicking left buttons"
 msgstr "這是您的個人用戶面板。您可以通過點擊左邊按鈕來設置您的賬戶。"
 
-#: dashboard/templates/dashboard/dashboard.html:134
+#: dashboard/templates/dashboard/dashboard.html:133
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除選中的郵箱嗎？"
 
-#: designers/templates/designer/designer.html:62
+#: designers/templates/designer/designer.html:58
 msgid ""
 "Hoome Score is caculated by how many years it is in the\n"
 "                                            industry,\n"
@@ -172,11 +168,11 @@ msgstr ""
 "關有效證件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我"
 "們，我們會向您分享更多關於該商家的信息和數據。"
 
-#: home/templates/home/home.html:114
+#: home/templates/home/home.html:156
 msgid "Find excellent professionals"
 msgstr "篩選優秀的裝修團隊"
 
-#: home/templates/home/home.html:193
+#: home/templates/home/home.html:242
 msgid "Database in California State"
 msgstr "加州數據庫"
 
@@ -222,7 +218,7 @@ msgstr "項目工期"
 
 #: review/forms.py:15 templates/base.html:95
 #: users/templates/account/email.html:73 users/templates/account/login.html:151
-#: users/templates/account/signup.html:188
+#: users/templates/account/signup.html:186
 msgid "Email"
 msgstr "Email地址"
 
@@ -234,99 +230,99 @@ msgstr "項目地址"
 msgid "Is Anonymous?"
 msgstr "匿名用戶"
 
-#: search/templates/search_bar/search_bar.html:8
+#: search/templates/search_bar/search_bar.html:9
 msgid "Find Professionals"
 msgstr "尋找裝修專業人士或承包商"
 
-#: search/templates/search_bar/search_bar.html:11
-#: search/templates/search_bar/search_bar.html:50
+#: search/templates/search_bar/search_bar.html:12
+#: search/templates/search_bar/search_bar.html:51
 msgid "General Contractor"
 msgstr "總承包商"
 
-#: search/templates/search_bar/search_bar.html:14
-#: search/templates/search_bar/search_bar.html:130 templates/base.html:98
+#: search/templates/search_bar/search_bar.html:15
+#: search/templates/search_bar/search_bar.html:131 templates/base.html:98
 msgid "Architect"
 msgstr "建築師"
 
-#: search/templates/search_bar/search_bar.html:16
-#: search/templates/search_bar/search_bar.html:111 templates/base.html:99
+#: search/templates/search_bar/search_bar.html:17
+#: search/templates/search_bar/search_bar.html:112 templates/base.html:99
 msgid "Designer"
 msgstr "設計師"
 
-#: search/templates/search_bar/search_bar.html:18
-#: search/templates/search_bar/search_bar.html:136
+#: search/templates/search_bar/search_bar.html:19
+#: search/templates/search_bar/search_bar.html:137
 msgid "Meister"
 msgstr "守藝人"
 
-#: search/templates/search_bar/search_bar.html:26
+#: search/templates/search_bar/search_bar.html:27
 msgid "Zipcode or City"
 msgstr "請輸入郵政編碼或者城市名稱"
 
-#: search/templates/search_bar/search_bar.html:29
+#: search/templates/search_bar/search_bar.html:30
 msgid "Current Location"
 msgstr "當前位置"
 
-#: search/templates/search_bar/search_bar.html:46 templates/base.html:97
+#: search/templates/search_bar/search_bar.html:47 templates/base.html:97
 msgid "Contractor"
 msgstr "承包商"
 
-#: search/templates/search_bar/search_bar.html:53
+#: search/templates/search_bar/search_bar.html:54
 msgid "Carpentry Contractor"
 msgstr "木工承包商"
 
-#: search/templates/search_bar/search_bar.html:56
+#: search/templates/search_bar/search_bar.html:57
 msgid "Concrete Contractor"
 msgstr "混凝土承包商"
 
-#: search/templates/search_bar/search_bar.html:59
+#: search/templates/search_bar/search_bar.html:60
 msgid "Doors, Gates and Activating Devices"
 msgstr "門和啟動裝置承包商"
 
-#: search/templates/search_bar/search_bar.html:62
+#: search/templates/search_bar/search_bar.html:63
 msgid "Drywall Contractor"
 msgstr "石膏板承包商"
 
-#: search/templates/search_bar/search_bar.html:65
+#: search/templates/search_bar/search_bar.html:66
 msgid "Electrical Contractor"
 msgstr "電工承包商"
 
-#: search/templates/search_bar/search_bar.html:68
+#: search/templates/search_bar/search_bar.html:69
 msgid "Fencing Contractor"
 msgstr "圍欄承包商"
 
-#: search/templates/search_bar/search_bar.html:70
+#: search/templates/search_bar/search_bar.html:71
 msgid "HVAC"
 msgstr "空調通風承包商"
 
-#: search/templates/search_bar/search_bar.html:73
+#: search/templates/search_bar/search_bar.html:74
 msgid "Kitchen & Bath Contractor"
 msgstr "廚房衛浴承包商"
 
-#: search/templates/search_bar/search_bar.html:76
+#: search/templates/search_bar/search_bar.html:77
 msgid "Landscaping Contractor"
 msgstr "景觀園藝承包商"
 
-#: search/templates/search_bar/search_bar.html:79
+#: search/templates/search_bar/search_bar.html:80
 msgid "Painting And Decorating Contractor"
 msgstr "油漆承包商"
 
-#: search/templates/search_bar/search_bar.html:82
+#: search/templates/search_bar/search_bar.html:83
 msgid "Plumbing Contractor"
 msgstr "水管道承包商"
 
-#: search/templates/search_bar/search_bar.html:85
+#: search/templates/search_bar/search_bar.html:86
 msgid "Roofing"
 msgstr "屋頂承包商"
 
-#: search/templates/search_bar/search_bar.html:88
+#: search/templates/search_bar/search_bar.html:89
 msgid "Sheet Metal Contractor"
 msgstr "金屬板承包商"
 
-#: search/templates/search_bar/search_bar.html:91
+#: search/templates/search_bar/search_bar.html:92
 msgid "Swimming Pool Contractor"
 msgstr "泳池承包商"
 
-#: search/templates/search_list/search_list.html:96
+#: search/templates/search_list/search_list.html:97
 msgid "No professional match your condition"
 msgstr "沒有商家符合您的要求"
 
@@ -562,7 +558,7 @@ msgid "Lawsuits"
 msgstr "訴訟次數"
 
 #: templates/base.html:91 users/templates/account/login.html:154
-#: users/templates/account/signup.html:207
+#: users/templates/account/signup.html:205
 msgid "Password"
 msgstr "密碼"
 
@@ -590,7 +586,7 @@ msgstr "賬戶設置"
 msgid "Rank"
 msgstr "評分區間"
 
-#: templates/base.html:102 templates/base.html:125
+#: templates/base.html:102
 msgid "Project Overview"
 msgstr "項目總覽"
 
@@ -658,7 +654,7 @@ msgstr "時間"
 msgid "Amount"
 msgstr "賬戶"
 
-#: templates/base.html:123 transactions/forms.py:23
+#: templates/base.html:123
 msgid "Updated At"
 msgstr "上傳日期"
 
@@ -666,16 +662,19 @@ msgstr "上傳日期"
 msgid "Project Created"
 msgstr "項目創建於"
 
-#: templates/base.html:246 users/templates/account/login.html:167
+#: templates/base.html:256 users/templates/account/login.html:167
 msgid "Sign In"
 msgstr "登入"
 
-#: transactions/forms.py:19 transactions/forms.py:61
+#: transactions/forms.py:19 transactions/forms.py:62
 msgid "Created Date"
 msgstr "創建日期"
 
+#: transactions/forms.py:23
+msgid "Updated Date"
+msgstr "上傳日期"
 
-#: transactions/forms.py:28 transactions/forms.py:66
+#: transactions/forms.py:28 transactions/forms.py:67
 msgid "Transaction Status"
 msgstr "交易狀態"
 
@@ -806,27 +805,27 @@ msgid "Sign in with"
 msgstr "第三方登入："
 
 #: users/templates/account/login.html:134
-#: users/templates/account/signup.html:165
+#: users/templates/account/signup.html:164
 msgid "If you have not created an account yet, then please"
 msgstr "如果妳還沒有創建用戶，請"
 
 #: users/templates/account/login.html:135
-#: users/templates/account/signup.html:166
+#: users/templates/account/signup.html:165
 msgid "sign up"
 msgstr "註冊"
 
 #: users/templates/account/login.html:135
-#: users/templates/account/signup.html:166
+#: users/templates/account/signup.html:165
 msgid "first."
 msgstr "先"
 
 #: users/templates/account/login.html:139
-#: users/templates/account/signup.html:170
+#: users/templates/account/signup.html:168
 msgid "OR"
 msgstr "或"
 
 #: users/templates/account/login.html:151
-#: users/templates/account/signup.html:194
+#: users/templates/account/signup.html:192
 msgid "Username"
 msgstr "用戶名"
 
@@ -843,7 +842,7 @@ msgid "New to Hoome?"
 msgstr "第壹次使用Hoome?"
 
 #: users/templates/account/login.html:171
-#: users/templates/account/signup.html:212
+#: users/templates/account/signup.html:210
 msgid "Sign Up"
 msgstr "註冊"
 
@@ -865,12 +864,12 @@ msgid "By signing up, you agree to Hoome’s "
 msgstr "在Hoome註冊表示您已經同意了"
 
 #: users/templates/account/signup.html:124
-#: users/templates/account/signup.html:203
+#: users/templates/account/signup.html:201
 msgid "Consumer"
 msgstr "顧客"
 
 #: users/templates/account/signup.html:127
-#: users/templates/account/signup.html:202
+#: users/templates/account/signup.html:200
 msgid "Professional"
 msgstr "專業"
 
@@ -879,21 +878,21 @@ msgstr "專業"
 msgid "Sign up with"
 msgstr "第三方註冊："
 
-#: users/templates/account/signup.html:209
+#: users/templates/account/signup.html:207
 msgid "Password (again)"
 msgstr "再壹次輸入密碼"
 
-#: users/templates/account/signup.html:215
+#: users/templates/account/signup.html:213
 msgid "Already on Hoome?"
 msgstr "已經擁有Hoome賬號了？"
 
-#: users/templates/account/signup.html:216
+#: users/templates/account/signup.html:214
 msgid "Log in"
 msgstr "登入"
 
 #: users/templates/link/professional_homepage_link.html:2
-msgid "Professional Homepage"
-msgstr "商家頁面"
+msgid "Professional Info"
+msgstr "專業人士信息"
 
 #: users/templates/professional_profile/professional_profile.html:67
 msgid "Save Changes"
@@ -926,6 +925,12 @@ msgstr "郵政編碼"
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:151
 msgid "Next"
 msgstr "下壹步"
+
+#~ msgid "Contract Us"
+#~ msgstr "與我們簽訂合約"
+
+#~ msgid "Professional Homepage"
+#~ msgstr "商家頁面"
 
 #~ msgid ""
 #~ "\n"

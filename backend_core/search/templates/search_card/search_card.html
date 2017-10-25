@@ -11,8 +11,9 @@
             </a>
         </h5>
     </div>
-{{ Type }}: {{ professional.type }}
+
     {{ License_num }}: {{ professional.lic_num }} </br>
+    {{ Lic_Type }}: {{ professional.type }}</div>
     <!--TODO: validate to_list tag-->
     {% if professional.type != 'DESIGNER' %}
         <span class="mb-1">{{ License_Status }}: </span>
