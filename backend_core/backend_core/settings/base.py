@@ -27,6 +27,7 @@ SECRET_KEY = ')m##(8z_3^sv@-s-4=0&dkcf(2d1^_afw_5$61e@e%oz*4a1!%'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'hoome-dev1.juic4tcbnm.us-west-2.elasticbeanstalk.com/',
     'hoome.us-west-2.elasticbeanstalk.com',
     'localhost',
     '0.0.0.0',
