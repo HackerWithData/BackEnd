@@ -21,13 +21,10 @@
                             <ul class="account-setting-list">
                                 <li class="account-setting-list-item">
                                     <a class="link is-active"
-                                       href="
-
-
-
-
-
-                                               {% if request.user.role == "CONSUMER" %}{% url 'account_consumer_profile' %}{% else %}{% url 'account_professional_profile' %}{% endif %}">
+                                       href="{% if request.user.role == "CONSUMER" %}
+                                            {% url 'account_consumer_profile' %}{% else %}
+                                            {% url 'account_professional_profile' %}
+                                            {% endif %}">
                                         <div class="link">
                                             <span>{% trans 'Profile' %}</span>
                                         </div>
@@ -47,13 +44,13 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li class="account-setting-list-item">
-                                    <a class="link" href="{% url 'display_project_overview' %}">
-                                        <div class="link">
-                                            <span class="">{{ Project_Overview }}</span>
-                                        </div>
-                                    </a>
-                                </li>
+{#                                <li class="account-setting-list-item">#}
+{#                                    <a class="link" href="{% url 'display_project_overview' %}">#}
+{#                                        <div class="link">#}
+{#                                            <span class="">{{ Project_Overview }}</span>#}
+{#                                        </div>#}
+{#                                    </a>#}
+{#                                </li>#}
                             </ul>
                         </div>
                     </div>
