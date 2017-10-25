@@ -12,6 +12,9 @@ import datetime
 from django.conf import settings
 from django.contrib import messages
 from decorators import check_recaptcha
+from django.views.generic import TemplateView
+from django.utils.decorators import method_decorator
+
 
 # Create your views here.
 @login_required
@@ -148,20 +151,55 @@ def display_project_overview(request):
     return render(request, template_name, {'info_dict': info_dict})
 
 
-@login_required
-def display_project_detail(request, project_id):
+@method_decorator(login_required, name='dispatch')
+class ProjectDetail(TemplateView):
     template_name = 'projects/project_detail.html'
-    project = Project.objects.get(project_id=project_id)
-    project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
-    project_photos = ProjectPhoto.objects.filter(project=project)
-    transactions = project.transactions.all().order_by('-updated_at')
-    # print(transactions)
-    if request.user == project.user:
-        professional = project.content_type.get_object_for_this_type(pk=project.object_id)
-        info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
-                     'project_photos': project_photos, 'transactions': transactions,
-                     'content_type': str(project.content_type)}
 
-        return render(request, template_name, {'info_dict': info_dict})
-    else:
-        return HttpResponseNotFound("Page Not Found")
+    def get(self, request, project_id):
+        project = Project.objects.get(project_id=project_id)
+        project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
+        project_photos = ProjectPhoto.objects.filter(project=project)
+        transactions = project.transactions.all().order_by('-updated_at')
+        # print(transactions)
+        flag = False
+        if request.user.role == "CONSUMER":
+            if request.user == project.user:
+                flag = True
+                professional = project.content_type.get_object_for_this_type(pk=project.object_id)
+        elif request.user.role == "PROFESSIONAL":
+            professional = request.user.professional_profiles.first().professional
+            ct = ContentType.objects.get(model=professional.type.lower())
+            lic_num = ct.get_object_for_this_type(lic_num=professional.lic_num)
+            if ct == project.content_type and lic_num == project.object_id:
+                flag = True
+
+        if flag:
+            info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
+                         'project_photos': project_photos, 'transactions': transactions,
+                         'content_type': str(project.content_type)}
+
+            return render(request, self.template_name, {'info_dict': info_dict})
+        else:
+            return HttpResponseNotFound("Page Not Found")
+
+    def post(self, request, project_id):
+
+        if request.POST.get('request-money'):
+            project = Project.objects.get(project_id=project_id)
+            project.project_status = "P"
+            project.project_action = "Request for Payment to move on"
+            project.save()
+
+            messages.success(request, 'Request Success')
+            return redirect(request.path)
+        else:
+            messages.warning(request, 'Request Failed')
+        # if flag:
+        #     info_dict = {'project': project, 'professional': professional,
+        #                  'project_attachments': project_attachments,
+        #                  'project_photos': project_photos, 'transactions': transactions,
+        #                  'content_type': str(project.content_type)}
+        #     raise messages("Request Sucess")
+        #     return render(request, self.template_name, {'info_dict': info_dict})
+        # else:
+        #     return HttpResponseNotFound("Page Not Found")

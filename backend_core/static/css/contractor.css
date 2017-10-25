@@ -394,15 +394,6 @@ h1 {
     width: calc(33% - 1px);
 }
 
-.white-popup-block {
-    background: #FFF;
-    padding: 20px 30px;
-    text-align: left;
-    max-width: 650px;
-    margin: 80px auto;
-    margin-top: 100px;
-    position: relative;
-}
 
 #readmore {
     font-weight: bold;
