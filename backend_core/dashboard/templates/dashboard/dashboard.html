@@ -4,6 +4,8 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,9 +24,10 @@
                                 <li class="account-setting-list-item">
                                     <a class="link is-active"
                                        href="{% if request.user.role == "CONSUMER" %}
-                                            {% url 'account_consumer_profile' %}{% else %}
-                                            {% url 'account_professional_profile' %}
-                                            {% endif %}">
+                                                {% url 'account_consumer_profile' %}
+                                                {% else %}
+                                                {% url 'account_professional_profile' %}
+                                                {% endif %}">
                                         <div class="link">
                                             <span>{% trans 'Profile' %}</span>
                                         </div>

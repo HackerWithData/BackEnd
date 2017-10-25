@@ -43,6 +43,6 @@ def render_pay_now_button(context, project_id):
     h = HMAC.new(key=settings.FORTE_CONFIG['secure_trans_key'], msg=secret, digestmod=MD5)
     # h.update(settings.FORTE_CONFIG['secure_trans_key'])
     ret['signature'] = h.hexdigest()
-    print ret['signature']
+    # print ret['signature']
     ret['project_id'] = project_id
     return ret

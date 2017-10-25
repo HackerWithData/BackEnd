@@ -18,7 +18,7 @@
 <script>
     $(function () {
         $('.forte-checkout-button').click(function (event) {
-            console.log($('.forte-checkout-button').attr('total_amount'));
+{#            console.log($('.forte-checkout-button').attr('total_amount'));#}
             const amount = $('.forte-checkout-button').attr('total_amount');
             const transactionKey = $('.forte-checkout-button').attr('{{ order_number }}');
             const projectId = $('.forte-checkout-button').attr('{{ project_id }}');
