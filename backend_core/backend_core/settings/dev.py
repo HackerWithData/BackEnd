@@ -12,7 +12,7 @@ STATICFILES_DIRS = (
 #media file
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
@@ -49,6 +49,8 @@ DATABASES = {
 #         }
 #     }
 # }
+
+
 
 # TODO: During development only, change SMTP email service properties in prod setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

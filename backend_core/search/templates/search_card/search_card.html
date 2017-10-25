@@ -1,5 +1,6 @@
 {% load search_extras %}
-<div id="searchListCard{{ professional.lic_num }}" class="list-group-item list-group-item-action flex-column align-items-start">
+<div id="searchListCard{{ professional.lic_num }}"
+     class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
         {# TODO: make sure the counter is correct#}
         <h5 class="mb-1">
@@ -10,28 +11,33 @@
             </a>
         </h5>
     </div>
-        {{ License_num }}: {{ professional.lic_num }} </br>
-        <!--TODO: validate to_list tag-->
-            <span class="mb-1">{{ License_Status }}: </span>
+{{ Type }}: {{ professional.type }}
+    {{ License_num }}: {{ professional.lic_num }} </br>
+    <!--TODO: validate to_list tag-->
+    {% if professional.type != 'DESIGNER' %}
+        <span class="mb-1">{{ License_Status }}: </span>
+
         {% if professional.lic_status == "Expired" or professional.lic_status == "Cancelled" or professional.lic_status == "Canceled" or professional.lic_status == "Revoked" or professional.lic_status == "Under Suspension" or professional.lic_status == "Inactive" or professional.lic_status == "Inactive and Under Suspension" %}
-            <span class="red"> {{professional.lic_status }}</span>
+            <span class="red"> {{ professional.lic_status }}</span>
         {% else %}
-            <span> {{professional.lic_status }}</span>
+            <span> {{ professional.lic_status }}</span>
         {% endif %}
         </br>
-        {% if professional.type == 'CONTRACTOR' %}
-            {% if professional.score %}
-                {% if professional.lic_status != "Expired" and professional.lic_status != "Cancelled" and professional.lic_status != "Canceled" and professional.lic_status != "Revoked" and professional.lic_status != "Under Suspension" and professional.lic_status != "Inactive" and professional.lic_status != "Inactive and Under Suspension" %}
-                    {{ Score }}:  {{ professional.score }} </br>
-                {% endif %}
+    {% endif %}
+    {% if professional.type == 'CONTRACTOR' %}
+        {% if professional.score %}
+            {% if professional.lic_status != "Expired" and professional.lic_status != "Cancelled" and professional.lic_status != "Canceled" and professional.lic_status != "Revoked" and professional.lic_status != "Under Suspension" and professional.lic_status != "Inactive" and professional.lic_status != "Inactive and Under Suspension" %}
+                {{ Score }}:  {{ professional.score }} </br>
             {% endif %}
-            {{ Address }}: {{ professional.street_address }} {{ professional.csp }} </br>
-        {% elif professional.type == 'DESIGNER' %}
-            {{ Address }}: {{ professional.address }} </br>
-            {{ professional.city }},{{ professional.state }} {{ professional.pos_code }} </br>
-        {% elif professional.type == 'Architect' %}
-            {{ Address }}: {{ professional.street_address }} </br>
-            {{ professional.city }},{{ professional.state }}{{ professional.pos_code }} </br>
-{#            TODO: Add meister#}
         {% endif %}
+        {{ Address }}: {{ professional.street_address }} {{ professional.csp }} </br>
+    {% elif professional.type == 'DESIGNER' %}
+
+        {{ Address }}: {% if  professional.street_address %}{{ professional.street_address }} </br>{%  endif %}
+        {{ professional.city }},{{ professional.state }} {{ professional.pos_code }} </br>
+    {% elif professional.type == 'Architect' %}
+        {{ Address }}: {{ professional.street_address }} </br>
+        {{ professional.city }},{{ professional.state }}{{ professional.pos_code }} </br>
+        {#            TODO: Add meister#}
+    {% endif %}
 </div>

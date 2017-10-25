@@ -25,6 +25,7 @@ def retrieve_professional_link(context):
 @register.simple_tag(takes_context=True)
 def is_professional(context):
     user = context['request'].user
+    print user.role.upper() == 'PROFESSIONAL'
     return user.role.upper() == 'PROFESSIONAL'
 
 

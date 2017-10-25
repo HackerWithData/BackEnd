@@ -106,7 +106,7 @@
 {% trans "Last Name" as Last_Name %}
 {% trans "First Name" as First_Name %}
 {% trans "Client Name" as Client_Name %}
-{% trans "Bussiness Name" as Bus_Name %}
+{% trans "Business Name" as Bus_Name %}
 {% trans "Contracted With" as Contracted_With %}
 {% trans "Start Date" as Start_Date %}
 {% trans "End Date" as Project_Enddate %}
@@ -184,19 +184,17 @@
                                                         {{ Account_Settings }}
                                                     </a>
                                                 </li>
+                                                {% is_professional as show_professional_link %}
+                                                {% is_sign_up_completed as sign_up_complete %}
+                                                {% if show_professional_link and sign_up_complete %}
+                                                <li class="dropdown-menu-items">
+                                                    <span class="dropdown-menu-icon-container">
+                                                        <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
+                                                    </span>
+                                                    {% retrieve_professional_link %}
+                                                </li>
+                                                {% endif %}
                                             </ul>
-                                            {% is_professional as show_professional_link %}
-                                            {% is_sign_up_completed as sign_up_complete %}
-                                            {% if show_professional_link and is_sign_up_completed %}
-                                                <ul class="dropdown-menu-group-list">
-                                                    <li class="dropdown-menu-items">
-                                                        <span class="dropdown-menu-icon-container">
-                                                            <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
-                                                        </span>
-                                                        {% retrieve_professional_link %}
-                                                    </li>
-                                                </ul>
-                                            {% endif %}
                                             <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
                                                     <form class="dropdown-item" method="post"
@@ -221,19 +219,22 @@
                                     <div class="mobile-dropdown-group hide">
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
-                                                <span><img src="{% static 'image/icon/settings-icon.svg' %}"></span><a class="dropdown-item"
-                                                   href="{% url 'show_dashboard' %}">{{ Account_Settings }}</a></li>
+                                                <span>
+                                                    <img class="dropdown-menu-icon" src="{% static 'image/icon/settings-icon.svg' %}">
+                                                </span>
+                                                <a class="dropdown-item" href="{% url 'show_dashboard' %}">
+                                                    {{ Account_Settings }}
+                                                </a>
+                                            </li>
+                                            {% if show_professional_link and sign_up_complete %}
+                                            <li class="dropdown-menu-items">
+                                                <span class="dropdown-menu-icon-container">
+                                                    <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
+                                                </span>
+                                                {% retrieve_professional_link %}
+                                            </li>
+                                            {% endif %}
                                         </ul>
-                                        {% if show_professional_link and is_sign_up_completed %}
-                                            <ul class="dropdown-menu-group-list">
-                                                <li class="dropdown-menu-items">
-                                                    <span class="dropdown-menu-icon-container">
-                                                        <img class="dropdown-menu-icon" src="{% static 'image/icon/overview-icon.svg' %}">
-                                                    </span>
-                                                    {% retrieve_professional_link %}
-                                                </li>
-                                            </ul>
-                                        {% endif %}
                                         <ul class="dropdown-menu-group-list">
                                             <li class="dropdown-menu-items">
                                                 <form class="dropdown-item" method="post"
