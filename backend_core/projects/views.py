@@ -144,9 +144,8 @@ def display_project_overview(request):
         info_dict = {'projects': projects}
     elif request.user.role == 'PROFESSIONAL':
         professional = request.user.professional_profiles.first().professional
-        projects = Project.objects.filter(
-            conternt_type=professional.type.lower(),
-            object_id=int(professional.professional.lic_num)).order_by('-project_id')
+        projects = Project.objects.filter(content_type=ContentType.objects.get(model=professional.type.lower()),
+                                          object_id=int(professional.lic_num)).order_by('-project_id')
         info_dict = {'projects': projects, 'professional': professional}
     return render(request, template_name, {'info_dict': info_dict})
 

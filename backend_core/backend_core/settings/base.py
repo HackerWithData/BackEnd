@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.contrib.messages import constants as messages
 """
 Django settings for backend_core project.
 
@@ -264,3 +264,12 @@ LOCALE_PATHS = (
 )
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdWazUUAAAAANWO1-wzqu7GII4QGp084y-2_qjq'
+
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

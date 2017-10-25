@@ -6,7 +6,7 @@
 {% block dashboard_content %}
     {% if messages %}
         {% for message in messages %}
-            <div{% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible"{% endif %} role="alert">
+            <div{% if message.tags %} class="alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
