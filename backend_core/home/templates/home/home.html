@@ -181,6 +181,10 @@
         elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
         if (jQuery(window).width() < 768) {
             elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
+        } else if (jQuery(window).width() >= 1170) {
+            elem2.style.height = '680px';
+        } else {
+            elem2.style.height = '500px';
         }
         $(window).resize(function () {
             var elem = document.getElementById('search-bar');
@@ -188,6 +192,10 @@
             elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
             if (jQuery(window).width() < 768) {
                 elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
+            } else if (jQuery(window).width() >= 1170) {
+                elem2.style.height = '680px';
+            } else {
+                elem2.style.height = '500px';
             }
         });
     </script>
