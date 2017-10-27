@@ -6,7 +6,7 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">
+    {#    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">#}
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <style>
         .input-license-number-container input, .input-company-info-container input, .input-address-container input {
@@ -17,6 +17,39 @@
             display: none;
         }
     </style>
+{% endblock %}
+
+{% block nav %}
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#main-nav">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {#                    TODO: need to check mobile view show a line#}
+                    <a href="/" class="navbar-brand scroll-top">
+                        <span class="logo cursive">Hoome</span>
+                    </a>
+                </div>
+                <!--/.navbar-header-->
+                <div id="main-nav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/" class="scroll-top">{{ Home }}</a></li>
+                        {#                        TODO: need to change data-id from blog to other#}
+                        {#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
+                    </ul>
+                </div>
+                <!--/.navbar-collapse-->
+            </nav>
+            <!--/.navbar-->
+        </div>
+        <!--/.container-->
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -148,7 +181,8 @@
             {#                </button>#}
             {#            </div>#}
             <div style="width:100%;">
-                <button type="submit" id="next" class="btn btn-hoome" style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
+                <button type="submit" id="next" class="btn btn-hoome"
+                        style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
             </div>
 
         </form>
