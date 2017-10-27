@@ -5,18 +5,6 @@
 {#style#}
 
 {% block metainfo %}
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    <style>
-        #masthead {
-            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
-            background-size: cover;
-        }
-
-
-    </style>
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
@@ -30,6 +18,20 @@
             }
         });
     </script>
+
+    {{ info_dict.overview_form.media }}
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <style>
+        #masthead {
+            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
+            background-size: cover;
+        }
+
+
+    </style>
 
 {% endblock %}
 
@@ -112,8 +114,8 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-{#                        <a href="{% url 'create_project' 'contractor' info_dict.contractor.lic_num %}"#}
-{#                           class="btn btn-db">{% trans 'Contract Us' %}</a>#}
+                        {#                        <a href="{% url 'create_project' 'contractor' info_dict.contractor.lic_num %}"#}
+                        {#                           class="btn btn-db">{% trans 'Contract Us' %}</a>#}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
                         {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
                             <div class='hide' id="edit-btn">
@@ -231,10 +233,10 @@
             popup.classList.toggle("show");
         }
 
-{#        function popUp2() {#}
-{#            var popup = document.getElementById("Rank-explaination");#}
-{#            popup.classList.toggle("show");#}
-{#        }#}
+        {#        function popUp2() {#}
+        {#            var popup = document.getElementById("Rank-explaination");#}
+        {#            popup.classList.toggle("show");#}
+        {#        }#}
 
         {#        function photoSlider() {#}
         {#            $(".project-detail").slick({#}
@@ -302,8 +304,20 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
+                    $('#edit_overview').removeClass('hide');
+                    $('#overview-wrapper').removeClass('text');
+                    $('#overview-wrapper').removeClass('height');
+                    $('#display_overview').addClass('hide');
+                    $('#peek').addClass('hide');
+
                 } else {
                     $('#edit-btn').addClass('hide');
+                    $('#edit_overview').addClass('hide');
+                    $('#display_overview').removeClass('hide');
+                    $('#overview-wrapper').addClass('text');
+                    $('#overview-wrapper').addClass('height');
+                    $('#peek').removeClass('hide');
+
                 }
             })
 

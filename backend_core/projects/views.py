@@ -182,7 +182,6 @@ class ProjectDetail(TemplateView):
             return HttpResponseNotFound("Page Not Found")
 
     def post(self, request, project_id):
-
         if request.POST.get('request-money'):
             project = Project.objects.get(project_id=project_id)
             project.project_status = "P"
@@ -193,6 +192,7 @@ class ProjectDetail(TemplateView):
             return redirect(request.path)
         else:
             messages.warning(request, 'Request Failed')
+            return redirect(request.path)
         # if flag:
         #     info_dict = {'project': project, 'professional': professional,
         #                  'project_attachments': project_attachments,

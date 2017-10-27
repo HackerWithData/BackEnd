@@ -22,7 +22,7 @@ from users.utils import CONSUMER
 from django.conf import settings
 
 
-
+#This Function is deprecated now. So take care.
 def submit_review(request, o_id):
     template_name = r'review/submit_review_contractor.html'
 

@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 #from django.conf import settings
 from django.db import models
 #from star_ratings.models import Rating
-from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from tinymce import models as tinymce_models
 # Create your models here.
 
 
@@ -107,3 +109,10 @@ class Complaint_Overall(models.Model):
     citation = models.IntegerField(null=True, blank=False)
     arbitration = models.IntegerField(null=True, blank=False)
     complaint = models.IntegerField(null=True, blank=False)
+
+
+class Overview(models.Model):
+    overview = tinymce_models.HTMLField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')

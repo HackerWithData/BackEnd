@@ -394,7 +394,6 @@ h1 {
     width: calc(33% - 1px);
 }
 
-
 #readmore {
     font-weight: bold;
 
@@ -610,7 +609,7 @@ h1 {
     }
 
     #summary {
-        width: auto;
+        width: 100%;
     }
 
     #BasicInfo {
@@ -642,4 +641,8 @@ h1 {
         color: #000000;
 
     }
+}
+
+#overview-wrapper {
+    font-size: 15px;
 }

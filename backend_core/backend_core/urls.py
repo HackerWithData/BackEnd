@@ -53,7 +53,7 @@ urlpatterns = [
 
     # project
     url(r'project/', include('projects.urls')),
-
+    url(r'^tinymce/', include('tinymce.urls')),
     # transaction
     url(r'^transactions/', include('transactions.urls')),
 
@@ -63,7 +63,6 @@ urlpatterns = [
     # url(r'^reviews/', include('review.urls')),
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
-
 
 ]
 if settings.DEBUG:
