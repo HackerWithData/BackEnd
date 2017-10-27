@@ -1,4 +1,7 @@
 {% load search_extras %}
+{% load i18n %}
+{% trans "License #" as License_num %}
+{% trans "License Type" as License_Type %}
 <div id="searchListCard{{ professional.lic_num }}"
      class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
@@ -10,10 +13,9 @@
                 {{ professional.lic_name }}
             </a>
         </h5>
-    </div>
 
     {{ License_num }}: {{ professional.lic_num }} </br>
-    {{ Lic_Type }}: {{ professional.type }}</div>
+    {{ License_Type }}: {{ professional.type }}</div>
     <!--TODO: validate to_list tag-->
     {% if professional.type != 'DESIGNER' %}
         <span class="mb-1">{{ License_Status }}: </span>
