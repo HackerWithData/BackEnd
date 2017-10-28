@@ -69,7 +69,7 @@ def sign_up_complete_info(request, **kwargs):
 class DashboardAfterPasswordChangeView(PasswordChangeView):
     @property
     def success_url(self):
-        return reverse_lazy('edit_success')
+        return '/'
 
 
 @method_decorator(login_required, name='dispatch')
@@ -165,7 +165,7 @@ class ConsumerProfileView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save(request)
-            return render(request, 'edit_success/edit_success.html')
+            return render(request.path)
 
         return render(request, self.template_name, {'form': form})
 
@@ -204,6 +204,6 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
-            return render(request, 'edit_success/edit_success.html')
+            return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})
