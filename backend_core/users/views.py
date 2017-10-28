@@ -14,7 +14,7 @@ from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
 from allauth.account.utils import perform_login
 from allauth.utils import get_user_model
-
+from django.contrib import messages
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
 from models import ConsumerProfile, ProfessionalProfile
@@ -22,7 +22,7 @@ from user_helpers import (retrieve_professional_info,
                           get_professional_corresponding_object_by_type_and_lic,
                           get_professional_user)
 from utils import *
-
+from django.utils.translation import ugettext_lazy as _
 import json
 
 
@@ -74,7 +74,7 @@ class DashboardAfterPasswordChangeView(PasswordChangeView):
 
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileAfterSignupView(View):
-
+    #TODO: add a logic, if there is no change, there is no need to save.
     form_class = ConsumerInfoFillUpForm
     template_name = 'consumer_profile_after_signup/consumer_profile_after_signup.html'
     initial = {
@@ -93,7 +93,7 @@ class ConsumerProfileAfterSignupView(View):
         if form.is_valid():
             form.save(request)
             # TODO: change redirect to consumer dashboard after implemented
-            return redirect('home_index')
+            return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})
 
@@ -110,7 +110,7 @@ class ProfessionalProfileAfterSignupView(View):
         if request.is_ajax():
             data_to_send = retrieve_professional_info(request)
             if not data_to_send:
-                raise Http404("Lic number does not exist")
+                raise Http404(_("Lic number does not exist"))
             return HttpResponse(json.dumps(data_to_send), content_type="application/json")
         else:
             form = self.form_class(initial=self.initial)
@@ -165,7 +165,8 @@ class ConsumerProfileView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save(request)
-            return render(request.path)
+            messages.success(request, _("Your Profile updated."))
+            return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})
 
@@ -204,6 +205,8 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
+
+            messages.success(request, _("Your Profile updated."))
             return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})

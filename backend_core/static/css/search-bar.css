@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+.search-categories .search-category ul.dropdown-menu {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
 .search-categories li {
     display: inline-block;
     text-align: center;
@@ -50,7 +55,6 @@ ul.dropdown-menu {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
-
 
 
 #searchForm .form-row {
