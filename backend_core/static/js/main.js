@@ -11,9 +11,6 @@ jQuery(document).ready(function ($) {
         $(".dashboard-content .alert").slideUp(500);
     });
 
-    // $(".alert-base.alert").fadeTo(2000, 500).slideUp(500, function () {
-    //     $(".alert-base.alert").slideUp(500);
-    // });
 
     $('#primary-menu').click(function () {
         if ($('.mobile-dropdown-group').hasClass('hide')) {
@@ -51,34 +48,6 @@ jQuery(document).ready(function ($) {
     });
 
 
-    $(".b1").click(function () {
-        $(".pop").fadeIn(300);
-
-    });
-
-    $(".b2").click(function () {
-        $(".pop2").fadeIn(300);
-
-    });
-
-    $(".b3").click(function () {
-        $(".pop3").fadeIn(300);
-
-    });
-
-    $(".pop > span, .pop").click(function () {
-        $(".pop").fadeOut(300);
-    });
-
-    $(".pop2 > span, .pop2").click(function () {
-        $(".pop2").fadeOut(300);
-    });
-
-    $(".pop3 > span, .pop3").click(function () {
-        $(".pop3").fadeOut(300);
-    });
-
-
     $(window).on("scroll", function () {
         if ($(window).scrollTop() > 100) {
             $(".header").addClass("active");
@@ -96,4 +65,24 @@ jQuery(document).ready(function ($) {
         transitionSpeed: 400
     });
 
+
 });
+
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = document.cookie.length;
+            }
+            return decodeURI(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}
+
+function searchTargetTypeSuccess(data, textStatus, jqXHR) {
+    $('#contractor-search-results').html(data)
+}
