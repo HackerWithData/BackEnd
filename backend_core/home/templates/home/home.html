@@ -3,8 +3,6 @@
 {% load i18n %}
 {% block metainfo %}
     <meta name="description" content="">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="{% static 'css/hero-slider.css' %}">
     <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
@@ -19,46 +17,6 @@
             {% endwith %}
         {% endfor %}
 
-        {#        .cd-hero-slider li:nth-of-type(1) {#}
-        {#            background-image: url("{% static 'image/background-pic/home-gradient-4.png' %}"), url("{% static 'image/background-pic/bg_set/slider_1.jpg' %}");#}
-        {#            background-position: center;#}
-        {#        }#}
-
-        {#        .first-service .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/mag-black.svg' %}");#}
-        {#            height: 50px;#}
-        {#            width: 50px;#}
-        {#            display: inline-block;#}
-        {#            background-size: contain;#}
-        {#        }#}
-
-        {#        .first-service:hover .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/mag-white.svg' %}");#}
-        {#        }#}
-        {##}
-        {#        .second-service .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/manage-black.svg' %}");#}
-        {#            height: 50px;#}
-        {#            width: 50px;#}
-        {#            display: inline-block;#}
-        {#            background-size: contain;#}
-        {#        }#}
-        {##}
-        {#        .second-service:hover .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/manage-white.svg' %}");#}
-        {#        }#}
-        {##}
-        {#        .third-service .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/host-black.svg' %}");#}
-        {#            height: 50px;#}
-        {#            width: 50px;#}
-        {#            display: inline-block;#}
-        {#            background-size: contain;#}
-        {#        }#}
-        {##}
-        {#        .third-service:hover .icon {#}
-        {#            background-image: url("{% static 'image/background-pic/host-white.svg' %}");#}
-        {#        }#}
         @media (min-width: 768px) {
             #contractor-icon {
                 background-image: url("{% static 'image/search-category-icon/contractor-white.svg' %}");
@@ -186,61 +144,10 @@
         } else {
             elem2.style.height = '500px';
         }
-        $(window).resize(function () {
-            var elem = document.getElementById('search-bar');
-            var target = document.getElementById('target-position');
-            elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
-            if (jQuery(window).width() < 768) {
-                elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
-            } else if (jQuery(window).width() >= 1170) {
-                elem2.style.height = '680px';
-            } else {
-                elem2.style.height = '500px';
-            }
-        });
+
+
     </script>
-    {#    <div id="about" class="page-section">#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {#                <div class="col-md-12">#}
-    {#                    <div class="section-heading">#}
-    {#                        <h4>{% blocktrans %}What We Do{% endblocktrans %}</h4>#}
-    {#                        <div class="line-dec"></div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="row">#}
-    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-    {#                    <div class="service-item first-service">#}
-    {#                        <div class="icon"></div>#}
-    {##}
-    {#                        <h4>{% blocktrans %}Data Analysis{% endblocktrans %}</h4>#}
-    {#                        <p>{% blocktrans %}Using big data analysis to rate 215606 California licensed#}
-    {#                            contractors.{% endblocktrans %}</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-    {#                    <div class="service-item second-service">#}
-    {#                        <div class="icon">#}
-    {#                        </div>#}
-    {#                        <h4>{% blocktrans %}Project Management{% endblocktrans %}</h4>#}
-    {#                        <p>{% blocktrans %}Real-time monitor and manage the project Create new industry#}
-    {#                            standard{% endblocktrans %}</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <div class="col-md-4 col-sm-4 col-xs-12">#}
-    {#                                        TODO: Change the height dynamiclly#}
-    {#                    <div class="service-item third-service">#}
-    {#                        <div class="icon">#}
-    {#                        </div>#}
-    {#                        <h4>{% blocktrans %}Payment Guarantee{% endblocktrans %}</h4>#}
-    {#                        <p>{% blocktrans %} Save payment in our platform to ensure safety on#}
-    {#                            both sides{% endblocktrans %}</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
+
 
     <div id="fun-facts">
         <div class="container">
@@ -322,7 +229,7 @@
 
 
 {% block javascript %}
-    <script src="{% static 'js/plugins.js' %}"></script>
+{#    <script src="{% static 'js/plugins.js' %}"></script>#}
     <script type="text/javascript">
         $(document).ready(function () {
             // navigation click actions
@@ -361,5 +268,17 @@
                 }
             };
         }
+        $(window).resize(function () {
+            var elem = document.getElementById('search-bar');
+            var target = document.getElementById('target-position');
+            elem.style.top = (cumulativeOffset(target).top + $('#target-position').height() + 10).toString() + 'px';
+            if (jQuery(window).width() < 768) {
+                elem2.style.height = (cumulativeOffset(target).top + $('#target-position').height() + 10 + $('#search-bar').height()).toString() + 'px';
+            } else if (jQuery(window).width() >= 1170) {
+                elem2.style.height = '680px';
+            } else {
+                elem2.style.height = '500px';
+            }
+        });
     </script>
 {% endblock %}
