@@ -191,6 +191,7 @@ class ProjectDetail(TemplateView):
             messages.success(request, 'Request Success')
             return redirect(request.path)
         else:
+            #TODO: The logic here is wierd need to change
             messages.warning(request, 'Request Failed')
             return redirect(request.path)
         # if flag:

@@ -17,7 +17,6 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/jdenticon-1.7.2.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/NavBar.css' %}">
-
     {% block metainfo %}
     {% endblock %}
 </head>
@@ -120,28 +119,19 @@
 
 <!--nav bar start-->
 {% block body %}
-{#    <style>#}
-{#    .alert-base{#}
-{#        width:100%;#}
-{#        position:absolute;#}
-{#        top: 0;#}
-{#        z-index: 9999999;#}
-{#    }#}
-{#    </style>#}
-
 {#    TODO: Take care the message#}
-{#    {% block message %}#}
-{#        {% if messages %}#}
-{#            {% for message in messages %}#}
-{#                <div{% if message.tags %} class="alert-base alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">#}
-{#                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-{#                        <span aria-hidden="true">&times;</span>#}
-{#                    </button>#}
-{#                    {{ message }}</div>#}
-{#            {% endfor %}#}
-{#        {% endif %}#}
+    {% block message %}
+        {% if messages %}
+            {% for message in messages %}
+                <div{% if message.tags %} class="alert-base alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}</div>
+            {% endfor %}
+        {% endif %}
         {#        TODO: change the color of pop out menu#}
-{#    {% endblock %}#}
+    {% endblock %}
     {% block nav %}
         <div class="header">
             <div class="container">
