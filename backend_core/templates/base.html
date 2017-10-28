@@ -119,11 +119,12 @@
 
 <!--nav bar start-->
 {% block body %}
-{#    TODO: Take care the message#}
+    {#    TODO: Take care the message#}
     {% block message %}
         {% if messages %}
             {% for message in messages %}
-                <div{% if message.tags %} class="alert-base alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">
+                <div{% if message.tags %} class="alert-base alert {{ message.tags }} alert-dismissible"{% endif %}
+                                          role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -197,11 +198,13 @@
                                                     {% is_sign_up_completed as sign_up_complete %}
                                                     {% if show_professional_link and sign_up_complete %}
                                                         <li class="dropdown-menu-items">
-                                                    <span class="dropdown-menu-icon-container">
-                                                        <img class="dropdown-menu-icon"
-                                                             src="{% static 'image/icon/overview-icon.svg' %}">
-                                                    </span>
-                                                            {% retrieve_professional_link %}
+                                                            <span class="dropdown-menu-icon-container">
+                                                                <img class="dropdown-menu-icon"
+                                                                     src="{% static 'image/icon/overview-icon.svg' %}">
+                                                            </span>
+
+{#                                                            {% retrieve_professional_link %}#}
+
                                                         </li>
                                                     {% endif %}
                                                 </ul>
@@ -243,7 +246,7 @@
                                                     <img class="dropdown-menu-icon"
                                                          src="{% static 'image/icon/overview-icon.svg' %}">
                                                 </span>
-                                                        {% retrieve_professional_link %}
+{#                                                        {% retrieve_professional_link %}#}
                                                     </li>
                                                 {% endif %}
                                             </ul>

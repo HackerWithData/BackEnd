@@ -258,7 +258,7 @@ class ConsumerProfileEditForm(ConsumerInfoFillUpForm):
         user.first_name = clean_first_name
         user.last_name = clean_last_name
         user.save()
-        profile = ConsumerProfile.consumer_profiles.first()
+        profile = user.consumer_profiles.first()
         profile.gender = clean_gender
         profile.zipcode = clean_zipcode
         profile.save()
