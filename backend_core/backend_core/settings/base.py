@@ -277,10 +277,9 @@ MESSAGE_TAGS = {
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'modern',
-    'plugins': 'paste,search,replace',
+    'plugins': 'paste searchreplace autosave',
     'width': '100%',
     'height': 288,
-
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
 }
@@ -288,3 +287,5 @@ TINYMCE_DEFAULT_CONFIG = {
 # 'autoresize_max_height': 350,
 TINYMCE_COMPRESSOR = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'var/hoome/')
+# TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')
