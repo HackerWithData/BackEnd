@@ -80,6 +80,8 @@ def submit_review(request, o_id):
             pass
         # TODO: redirect the sucess url and add bootstrap messages: success
         return redirect(request.path)
+    else:
+        return redirect(request.path)
 
 
 def edit_overview(request, o_id):
@@ -93,14 +95,14 @@ def edit_overview(request, o_id):
             model_type = 'designer'
         elif 'architect' in request.path:
             model_type = 'architect'
-        overview = Overview(content_type=ContentType.objects.get(model=model_type), object_id=o_id,
-                            overview=overview_form.cleaned_data['overview'])
+        overview, status = Overview.objects.get_or_create(content_type=ContentType.objects.get(model=model_type), object_id=o_id)
+        #if status==False:
+        overview.overview = overview_form.cleaned_data['overview']
         overview.save()
         messages.success(request, 'Request Success')
-        return redirect(request.path)
     else:
         messages.warning(request, 'Request Failed')
-        return redirect(request.path)
+
 
 
 
@@ -209,8 +211,12 @@ class ContractorDetail(View):
     def post(self, request, contractor_id):
         if request.POST.get('review'):
             submit_review(request, contractor_id)
+            return redirect(request.path)
         elif request.POST.get('overview'):
             edit_overview(request, contractor_id)
+            return redirect(request.path)
+        else:
+            return HttpResponseNotFound("Error Pages!")
 
 
 
