@@ -5,6 +5,8 @@
 {#style#}
 
 {% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
@@ -20,8 +22,7 @@
     </script>
 
     {{ info_dict.overview_form.media }}
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <style>

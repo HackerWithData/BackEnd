@@ -282,6 +282,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'height': 288,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
+    'elementpath': False
 }
 # 'autoresize_min_height': 300,
 # 'autoresize_max_height': 350,
