@@ -70,7 +70,7 @@
                             <div class="popup-gallery">
                                 {% for pic in  info_dict.project_photos %}
                                     <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                        <img class="lazyload" data-src="{{ pic.img.url }}">
+                                        <img src="{{ pic.img.url }}">
                                     </a>
                                     {#    style="height:50%;width:50%"#}
                                 {% endfor %}
@@ -155,7 +155,3 @@
         </div>
     {% endif %}
 </div>
-
-<script>
-    $("img.lazyload").lazyload();
-</script>

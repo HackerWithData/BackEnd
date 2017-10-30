@@ -10,7 +10,6 @@ from users.models import User
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
-from contractors.models import Contractor
 from review.models import Review
 from hscore.models import Hscore
 from photos.models import Photo, BackgroundPhoto
