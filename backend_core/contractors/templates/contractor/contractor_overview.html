@@ -86,28 +86,6 @@
                     {#                        </div>#}
                 </div>
                 <div class="panel-body">
-                    {#                        <div class="project-carousel">#}
-                    {#                            <div class="project-strip">#}
-                    {#                                {% for image in info_dict.project_photos %}#}
-                    {#                                    <div class="project">#}
-                    {#                                        <img class='' src="{{ image.img.url }}">#}
-                    {#                                    </div>#}
-                    {#                                {% endfor %}#}
-                    {#                            </div>#}
-                    {#                            <div class="project-screen">#}
-                    {#                                <div class="project-detail">#}
-                    {#                                    {% for image in info_dict.project_photos %}#}
-                    {#                                        <div class="project">#}
-                    {#                                            <img class='' src="{{ image.img.url }}">#}
-                    {#                                        </div>#}
-                    {#                                    {% endfor %}#}
-                    {#                                </div>#}
-                    {#                                <div class="screen-frame">#}
-                    {##}
-                    {#                                </div>#}
-                    {#                            </div>#}
-                    {##}
-                    {#                        </div>#}
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
                             <a href="{{ pic.img.url }}" title="{{ pic.title }}">

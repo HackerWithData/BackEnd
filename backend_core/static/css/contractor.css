@@ -24,7 +24,7 @@ body {
 /*min-height: 80%;*/
 /*}*/
 
-#masthead, .footer, #contractor-content {
+#masthead, .footer, #contractor-content, #designer-content, #architect-content {
     box-sizing: border-box;
     width: auto;
 }
@@ -507,9 +507,6 @@ h1 {
 
 @media (min-width: 768px) {
 
-    /*#contractor-content {*/
-    /*margin: 0 5%;*/
-    /*}*/
     #masthead .container {
         /*width:auto;*/
         margin: 0 10%;
@@ -540,7 +537,7 @@ h1 {
 }
 
 @media (max-width: 767px) {
-    #contractor-content {
+    #contractor-content, #architect-content, #designer-content {
         margin: 0px 5%;
         padding: 0px 20px;
     }
@@ -623,10 +620,6 @@ h1 {
         padding-right: 0px;
     }
 
-    .bus-name {
-        font-size: 56px;
-    }
-
     .header.active #main-nav .navbar-nav > li > a {
         color: #000000;
     }
@@ -643,6 +636,12 @@ h1 {
     .popup-gallery a img {
         height: 200px;
         width: calc(100%);
+    }
+}
+
+@media (max-width: 1024px) {
+    .bus-name {
+        font-size: 56px;
     }
 }
 

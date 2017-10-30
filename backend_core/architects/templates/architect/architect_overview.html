@@ -74,19 +74,14 @@
                     {#                        </div>#}
                 </div>
                 <div class="panel-body">
-
-                    <div>
-                        <div class="popup-gallery">
-                            {% for pic in  info_dict.project_photos %}
-                                <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                    <img src="{{ pic.img.url }}">
-                                </a>
-                                {#    style="height:50%;width:50%"#}
-                            {% endfor %}
-                        </div>
-
+                    <div class="popup-gallery">
+                        {% for pic in  info_dict.project_photos %}
+                            <a href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                <img src="{{ pic.img.url }}">
+                            </a>
+                            {#    style="height:50%;width:50%"#}
+                        {% endfor %}
                     </div>
-
                 </div>
             </div>
         </div>
@@ -138,7 +133,6 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-
                                     <hr>
                                 </div>
                                 <div class="user-rating">
