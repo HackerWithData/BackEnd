@@ -218,8 +218,6 @@ class ContractorDetail(View):
             return HttpResponseNotFound("Error Pages!")
 
 
-
-
 def update_accept_review(request):
     review = Review.objects.get(contractor=request.contractor)
     review.review_status = 'A'

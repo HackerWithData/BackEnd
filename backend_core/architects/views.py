@@ -2,12 +2,10 @@
 from __future__ import unicode_literals
 # Create your views here.
 from django.http import HttpResponseNotFound
-from django.shortcuts import render,redirect
-from users.models import User
+from django.shortcuts import render, redirect
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
-from django.contrib.auth.hashers import make_password
 from review.models import Review
 from contractors.models import Overview
 from photos.models import Photo
@@ -19,7 +17,6 @@ import datetime
 from django.utils.translation import ugettext as _
 from contractors.views import submit_review, edit_overview
 from django.views import View
-from professionals.models import Professional
 from django.contrib import messages
 from contractors.forms import OverviewForm
 # Create your views here.
@@ -94,7 +91,6 @@ class ArchitectDetail(View):
         except:
             pass
 
-
         if request.user.is_anonymous():
             p_lic_num = None
         else:
@@ -118,7 +114,6 @@ class ArchitectDetail(View):
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='architect'),
                                             object_id=o_id).overview
         except Overview.DoesNotExist:
-            # The score of {score} ranks in the top {rank} %% of {full_state_name} licensed contractors.
             overview = _("""{bus_name} is an architect from {city}. The company holds a license number according to {data_source}. 
                 The License is verified as active when we checked last time. If you would like to know {bus_name} more, 
                 please contact us and we will share more information about this architect to you.
