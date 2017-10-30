@@ -2,11 +2,15 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{#style#}
-
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <style>
+        #masthead {
+            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
+            background-size: cover;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
@@ -24,51 +28,11 @@
     {{ info_dict.overview_form.media }}
 
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+{#    #TODO: what's this?#}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    <style>
-        #masthead {
-            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
-            background-size: cover;
-        }
 
-
-    </style>
 
 {% endblock %}
-
-
-{#header#}
-{#{% block nav %}#}
-{#  TODO: change the color of pop out menu #}
-{#    <header class="navbar navbar-bright navbar-fixed-top" role="banner">#}
-{#        <div class="container">#}
-{#            <div class="navbar-header">#}
-{#                <a href="/" class="navbar-brand">#}
-{#                    <h1 class="logo cursive">#}
-{#                        Hoome#}
-{#                    </h1>#}
-{#                </a>#}
-{#                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">#}
-{#                    <span class="sr-only">Toggle navigation</span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                </button>#}
-{##}
-{#            </div>#}
-{#            <nav class="collapse navbar-collapse" role="navigation">#}
-{#                <ul class="nav navbar-nav">#}
-{#                    <li><a href="/">Find your address</a></li>#}
-{#                    <li><a href="/">Projects</a></li>#}
-{#                    <li><a href="{% url 'login' %}">User Sign In</a></li>#}
-{#                    <li><a href="#">Contractor Sign In</a></li>#}
-{#                </ul>#}
-{#            </nav>#}
-{#        </div>#}
-{#    </header>#}
-{#{% endblock %}#}
-
-
 
 {% block header %}
     <div id="masthead">
@@ -76,7 +40,6 @@
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
                     <span class="bus-name">{{ info_dict.contractor.lic_name }}</span>
-
                     {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
@@ -154,28 +117,18 @@
                             <a class="nav-link" id="review-tab">{{ Review }}</a>
                         </li>
                     {% endif %}
-
                 </ul>
             </div>
-
-            <div class="" id="">
-                <div id="pro-content">
-                    {% include "contractor/contractor_overview.html" %}
-                </div>
+            <div id="pro-content">
+                {% include "contractor/contractor_overview.html" %}
             </div>
         </div>
     </div>
-    </div>
 
-    {##}
-    {#    <div class="review-submission" style="display:none;background-color: white">#}
+
     <form id="review-submission" action="" method="post" enctype="multipart/form-data"
           class="mfp-hide white-popup-block">
-
-        {#{{  info_dict.user_rating_form }}#}
-
         {% for field in info_dict.user_rating_form %}
-
             <div class="rating-name">
                 {% if field.label == 'Efficiency' %}
                     {{ Efficiency }} :
@@ -202,10 +155,7 @@
         {% csrf_token %}
         <input type="submit" value="{{ Submit }}">
     </form>
-    {#    </div>#}
 {% endblock %}
-
-
 
 {% block javascript %}
 
@@ -239,25 +189,6 @@
         {#            popup.classList.toggle("show");#}
         {#        }#}
 
-        {#        function photoSlider() {#}
-        {#            $(".project-detail").slick({#}
-        {#                slidesToShow: 1,#}
-        {#                arrows: false,#}
-        {#                asNavFor: '.project-strip',#}
-        {#                autoplay: true,#}
-        {#                autoplaySpeed: 3000#}
-        {#            });#}
-        {#            $(".project-strip").slick({#}
-        {#                slidesToShow: 3,#}
-        {#                slidesToScroll: 1,#}
-        {#                arrows: false,#}
-        {#                asNavFor: '.project-detail',#}
-        {#                dots: false,#}
-        {#                infinite: true,#}
-        {#                centerMode: true,#}
-        {#                focusOnSelect: true,#}
-        {#            });#}
-        {#        }#}
 
         function projectPhotosListener() {
             if (b) {
@@ -295,7 +226,6 @@
                     .done(function (data) {
                         c = data;
                         $('#pro-content').html(c);
-
                     });
             }
         }
@@ -318,9 +248,8 @@
                     $('#overview-wrapper').addClass('text');
                     $('#overview-wrapper').addClass('height');
                     $('#peek').removeClass('hide');
-
                 }
-            })
+            });
 
             $('#readmore').click(function () {
                 readMore();
@@ -345,7 +274,6 @@
                     }
                 }
             });
-
 
             $('#photo .popup-gallery').magnificPopup({
                 delegate: 'a',
@@ -427,7 +355,7 @@
             $('#review a.viewmore').click(function () {
                 reviewListener();
             });
-        })
-        ;
+        });
     </script>
+
 {% endblock %}

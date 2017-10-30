@@ -25,13 +25,6 @@ from django.conf import settings
 #This Function is deprecated now. So take care.
 def submit_review(request, o_id):
     template_name = r'review/submit_review_contractor.html'
-
-    # contractor = Contractor.objects.get(lic_num=contractor_id)
-    # try:
-    #     bgimage = UserFile.objects.get(userName=contractor.bus_name).uploadFile
-    # except:
-    #     bgimage = None
-
     if request.method == "POST":
 
         user_rating_form = UserRatingForm(request.POST)
@@ -80,7 +73,7 @@ def submit_review(request, o_id):
                     instance.save()
             else:
                 pass
-            return render(request, 'disk/uploadsuccess.html')
+            return redirect(request.path)
 
     # other situation
     user_rating_form = UserRatingForm()
@@ -94,8 +87,6 @@ def submit_review(request, o_id):
                                           'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
 
     info_dict = {'review_form': review_form, "user_rating_form": user_rating_form, }
-    # "contractor": contractor,
-    # "bgimage": bgimage
     return render(request, template_name, {"info_dict": info_dict})
 
 

@@ -47,12 +47,12 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
 
     # overview
-    url(r'contractor/', include('contractors.urls')),
-    url(r'architect/', include('architects.urls')),
-    url(r'designer/', include('designers.urls')),
+    url(r'^contractor/', include('contractors.urls')),
+    url(r'^architect/', include('architects.urls')),
+    url(r'^designer/', include('designers.urls')),
 
     # project
-    url(r'project/', include('projects.urls')),
+    url(r'^project/', include('projects.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     # transaction
     url(r'^transactions/', include('transactions.urls')),

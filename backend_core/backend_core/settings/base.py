@@ -278,7 +278,7 @@ MESSAGE_TAGS = {
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'modern',
     'plugins': 'paste searchreplace autosave',
-    'width': '100%',
+    'width': 'auto',
     'height': 288,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
