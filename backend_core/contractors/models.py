@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 #from django.conf import settings
 from django.db import models
 #from star_ratings.models import Rating
-from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from tinymce import models as tinymce_models
 # Create your models here.
 
 
@@ -67,6 +69,7 @@ class WorkerCompensationHistory(models.Model):
     insur_effective_date = models.DateField(blank=True, null=True)
     insur_cancellation_date = models.DateField(blank=True, null=True)
 
+
 #TODO: name last name?
 class Personnel(models.Model):
     contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
@@ -78,10 +81,11 @@ class Personnel(models.Model):
     deassociation_date = models.DateField()
     lic_type = models.CharField(max_length=63)
 
+
 #TODO: match with person with Personnel table Need to reset db . had a problem in FK
 class LicenseRelation(models.Model):
     name = models.CharField(max_length=63)
-    #Do not use the reference below because it will requite name_id which is necessary in this case
+    #Do not use the reference below because it will requite name_id which is not necessary in this case
     #name = models.ForeignKey(Personnel, on_delete=models.CASCADE)
     contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING, related_name='contractor')
     related_contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING, related_name='related_contractor')
@@ -89,9 +93,10 @@ class LicenseRelation(models.Model):
     class Meta:
         unique_together = ('name', 'contractor', 'related_contractor')
 
+
 class Complaint(models.Model):
     lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
-    complaint_type = models.CharField(max_length=255,null=False, blank=False)
+    complaint_type = models.CharField(max_length=255, null=False, blank=False)
     complain_num = models.CharField(max_length=255)
     time = models.DateField()
     result = models.CharField(max_length=255)
@@ -101,9 +106,17 @@ class Complaint(models.Model):
     code_detail = models.CharField(max_length=255)
     doc_link = models.CharField(max_length=255)
 
+
 class Complaint_Overall(models.Model):
     lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
     case = models.IntegerField(null=True, blank=False)
     citation = models.IntegerField(null=True, blank=False)
     arbitration = models.IntegerField(null=True, blank=False)
     complaint = models.IntegerField(null=True, blank=False)
+
+
+class Overview(models.Model):
+    overview = tinymce_models.HTMLField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')

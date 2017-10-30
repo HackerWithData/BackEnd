@@ -20,7 +20,7 @@ class Architect(models.Model):
     county = models.CharField(max_length=63)
     state = models.CharField(max_length=63)
     country = models.CharField(max_length=63)
-    zip = models.CharField(max_length=25)
+    pos_code = models.CharField(max_length=25)
     actions = models.CharField(max_length=63)
 
     def __iter__(self):

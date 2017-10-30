@@ -6,25 +6,25 @@ body {
     box-sizing: border-box;
 }
 
-#architect-content {
-    margin: 5px;
-    padding: 0 5%;
-    min-height: 80%;
-}
+/*#architect-content {*/
+/*margin: 5px;*/
+/*padding: 0 5%;*/
+/*min-height: 80%;*/
+/*}*/
 
-#contractor-content {
-    margin: 5px;
-    padding: 0 5%;
-    min-height: 80%;
-}
+/*#contractor-content {*/
+/*margin: 5px;*/
+/*padding: 0 5%;*/
+/*min-height: 80%;*/
+/*}*/
 
-#designer-content {
-    margin: 5px;
-    padding: 0 5%;
-    min-height: 80%;
-}
+/*#designer-content {*/
+/*margin: 5px;*/
+/*padding: 0 5%;*/
+/*min-height: 80%;*/
+/*}*/
 
-#masthead, .footer, #contractor-content {
+#masthead, .footer, #contractor-content, #designer-content, #architect-content {
     box-sizing: border-box;
     width: auto;
 }
@@ -214,7 +214,11 @@ h1 {
 /*main tables to do*/
 #summary {
     padding-left: 0px;
+    padding-right: 0px;
     padding-bottom: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 #BasicInfo {
@@ -258,11 +262,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-#pro-content .container {
-    margin: 0px;
-    padding: 0px;
-}
-
 /*photos*/
 #photo {
     height: auto;
@@ -282,24 +281,6 @@ h1 {
 
 #photo .panel-body {
     padding: 0px;
-}
-
-@media (max-width: 480px) {
-    #photo {
-        /*TODO:height*/
-        /*height: 250px;*/
-        margin-bottom: 50px;
-    }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-
-    #photo {
-        /*TODO:*/
-        /*height: 290px;*/
-        margin-bottom: 50px;
-    }
-
 }
 
 .user-review {
@@ -391,9 +372,9 @@ h1 {
 
 .popup-gallery img {
     height: 200px;
-    width: calc(33% - 1px);
+    padding-right: 9px;
+    width: calc(33% - 3px);
 }
-
 
 #readmore {
     font-weight: bold;
@@ -526,10 +507,6 @@ h1 {
 
 @media (min-width: 768px) {
 
-    #contractor-content {
-        margin: 0 5%;
-    }
-
     #masthead .container {
         /*width:auto;*/
         margin: 0 10%;
@@ -544,6 +521,10 @@ h1 {
         margin-left: 0px;
         min-width: 120px;
     }
+
+    #pro-content .row {
+        margin: 0px;
+    }
 }
 
 .hide {
@@ -556,6 +537,21 @@ h1 {
 }
 
 @media (max-width: 767px) {
+    #contractor-content, #architect-content, #designer-content {
+        margin: 0px 5%;
+        padding: 0px 20px;
+    }
+
+    #pro-content .row {
+        margin: 0px 0;
+    }
+
+    #photo {
+        /*TODO:*/
+        /*height: 290px;*/
+        margin-bottom: 50px;
+    }
+
     .container {
         margin: 0px;
         padding: 0px;
@@ -606,25 +602,15 @@ h1 {
     }
 
     #BasicInfo {
-        width: 100%;
-    }
-
-    #summary {
-        width: auto;
-    }
-
-    #BasicInfo {
         padding-left: 0px;
     }
 
     #Review {
         padding-left: 0px;
         padding-right: 0px;
-        /*padding: auto 0px;*/
     }
 
     #photo {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
         /*position: relative;*/
@@ -634,12 +620,31 @@ h1 {
         padding-right: 0px;
     }
 
+    .header.active #main-nav .navbar-nav > li > a {
+        color: #000000;
+    }
+
+    .popup-gallery a img {
+        height: 150px;
+        width: calc(50% - 5px);
+    }
+
+}
+
+/*480 or 479*/
+@media (max-width: 479px) {
+    .popup-gallery a img {
+        height: 200px;
+        width: calc(100%);
+    }
+}
+
+@media (max-width: 1024px) {
     .bus-name {
         font-size: 56px;
     }
+}
 
-    .header.active #main-nav .navbar-nav > li > a {
-        color: #000000;
-
-    }
+#overview-wrapper {
+    font-size: 15px;
 }

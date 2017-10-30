@@ -17,7 +17,7 @@ class ReviewForm(forms.Form):
 
     is_anonymous = forms.BooleanField(label=_('Is Anonymous?'), required=False)
 
-        #'project_date':forms.DateInput(format="%Y-%m-%d")
+    #'project_date':forms.DateInput(format="%Y-%m-%d")
 
 # class ReviewForm(forms.ModelForm):
 #     model = Review

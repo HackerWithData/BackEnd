@@ -6,19 +6,11 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
     <style>
         #masthead {
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
             background-size: cover;
         }
-
     </style>
     <script>
         $(document).ready(function () {
@@ -33,6 +25,10 @@
             }
         });
     </script>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
+    {{ info_dict.overview_form.media }}
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% endblock %}
 
 {% block header %}
@@ -50,23 +46,23 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.designer.csp }}</li>
-                            {% if  info_dict.score %}
-                                <li id="score-popup" class='popup' onmouseover="popUp()" onclick="popUp()">
-                                    {{ Score }}: {{ info_dict.score }}
-                                    <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>
-                                    <div id="Score-explaination" class="popuptext">
-                                        <h2>{{ Score }}</h2>
-                                        <p>{% blocktrans %}Hoome Score is caculated by how many years it is in the
-                                            industry,
-                                            suspension history,
-                                            complaints and other many factors. Now we calculate the Hoome Score by
-                                            number of
-                                            work experience, suspension
-                                            history, complaints. Later the score will evolve with more
-                                            factors. {% endblocktrans %}</p>
-                                    </div>
-                                </li>
-                            {% endif %}
+                            {#                            {% if  info_dict.score %}#}
+                            {#                                <li id="score-popup" class='popup' onmouseover="popUp()" onclick="popUp()">#}
+                            {#                                    {{ Score }}: {{ info_dict.score }}#}
+                            {#                                    <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>#}
+                            {#                                    <div id="Score-explaination" class="popuptext">#}
+                            {#                                        <h2>{{ Score }}</h2>#}
+                            {#                                        <p>{% blocktrans %}Hoome Score is caculated by how many years it is in the#}
+                            {#                                            industry,#}
+                            {#                                            suspension history,#}
+                            {#                                            complaints and other many factors. Now we calculate the Hoome Score by#}
+                            {#                                            number of#}
+                            {#                                            work experience, suspension#}
+                            {#                                            history, complaints. Later the score will evolve with more#}
+                            {#                                            factors. {% endblocktrans %}</p>#}
+                            {#                                    </div>#}
+                            {#                                </li>#}
+                            {#                            {% endif %}#}
                             <li>{{ Phone }}: {{ info_dict.designer.phone }}</li>
                             <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
                                 {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
@@ -89,9 +85,9 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-{#                        <a href="{% url 'create_project' 'designer' info_dict.designer.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
+                        {#                        <a href="{% url 'create_project' 'designer' info_dict.designer.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
+                        {% if info_dict.p_lic_num == info_dict.designer.lic_num %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
@@ -100,7 +96,6 @@
                             </div>
                         {% endif %}
                     </div>
-
                 </div>
             </div>
         </div>
@@ -129,22 +124,16 @@
                     {% endif %}
                 </ul>
             </div>
-
-            <div class="" id="">
-                <div id="pro-content">
-                    {% include "designer/designer_overview.html" %}
-                </div>
+            <div id="pro-content">
+                {% include "designer/designer_overview.html" %}
             </div>
         </div>
     </div>
-    </div>
+
 
     <form id="review-submission" action="" method="post" enctype="multipart/form-data"
           class="mfp-hide white-popup-block">
-
-
         {% for field in info_dict.user_rating_form %}
-
             <div class="rating-name">
                 {% if field.label == 'Efficiency' %}
                     {{ Efficiency }} :
@@ -170,10 +159,7 @@
         {% csrf_token %}
         <input type="submit" value="{{ Submit }}">
     </form>
-    {#    </div>#}
 {% endblock %}
-
-
 
 {% block javascript %}
 
@@ -197,10 +183,10 @@
         }
 
         // When the user clicks on <div>, open the popup
-        function popUp() {
-            var popup = document.getElementById("Score-explaination");
-            popup.classList.toggle("show");
-        }
+{#        function popUp() {#}
+{#            var popup = document.getElementById("Score-explaination");#}
+{#            popup.classList.toggle("show");#}
+{#        }#}
 
         function projectPhotosListener() {
             if (b) {
@@ -238,7 +224,6 @@
                     .done(function (data) {
                         c = data;
                         $('#pro-content').html(c);
-
                     });
             }
         }
@@ -248,16 +233,28 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
+                    $('#edit_overview').removeClass('hide');
+                    $('#overview-wrapper').removeClass('text');
+                    $('#overview-wrapper').removeClass('height');
+                    $('#display_overview').addClass('hide');
+                    $('#peek').addClass('hide');
+
                 } else {
                     $('#edit-btn').addClass('hide');
+                    $('#edit_overview').addClass('hide');
+                    $('#display_overview').removeClass('hide');
+                    $('#overview-wrapper').addClass('text');
+                    $('#overview-wrapper').addClass('height');
+                    $('#peek').removeClass('hide');
                 }
-            })
+            });
+
             $('#readmore').click(function () {
                 readMore();
             });
-            $("#Score-explaination").css({
-                'width': ($(".head-info").width() + 'px')
-            });
+{#            $("#Score-explaination").css({#}
+{#                'width': ($(".head-info").width() + 'px')#}
+{#            });#}
             $('.popup-with-form').magnificPopup({
                 type: 'inline',
                 preloader: true,
@@ -275,7 +272,6 @@
                     }
                 }
             });
-
 
             $('#photo .popup-gallery').magnificPopup({
                 delegate: 'a',
@@ -358,7 +354,6 @@
             $('#review a.viewmore').click(function () {
                 reviewListener();
             });
-        })
-        ;
+        });
     </script>
 {% endblock %}

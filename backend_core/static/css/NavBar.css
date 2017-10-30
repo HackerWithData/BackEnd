@@ -543,3 +543,15 @@
     margin-top: 100px;
     position: relative;
 }
+
+.alert-base {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 9999999;
+}
+
+.header-gap > .row {
+    margin-left: 0;
+    margin-right: 0;
+}
