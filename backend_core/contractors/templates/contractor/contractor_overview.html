@@ -1,10 +1,20 @@
 {% load i18n %}
-<div class="container">
+<div class="row">
     <!--summary-->
     <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
-        <div class="">
-            <div class="text height" style="font-size:20px;">
-                {{ info_dict.overview }}
+        <div id='overview-wrapper' class="text height">
+            {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
+                <div id="edit_overview" class="hide">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ info_dict.overview_form.overview }}
+                        {% csrf_token %}
+                        <br/>
+                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>
+                    </form>
+                </div>
+            {% endif %}
+            <div id="display_overview">
+                {{ info_dict.overview|safe }}
             </div>
         </div>
         <div id="peek" class="link">
@@ -63,51 +73,26 @@
     </div>
 </div>
 
-<div class="container">
-    {#    <div class="row">#}
-{#        TODO: add ajax to show more photos#}
+<div class="row">
+    {#        TODO: add ajax to show more photos#}
     {% if info_dict.project_photos %}
-        <div>
-            <!--photo-->
-            <div id="photo" class="col-12 col-md-8 col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span>{{ Photo }}</span>
-                        {#                        <div class="pull-right">#}
-                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
-                        {#                        </div>#}
-                    </div>
-                    <div class="panel-body">
-                        {#                        <div class="project-carousel">#}
-                        {#                            <div class="project-strip">#}
-                        {#                                {% for image in info_dict.project_photos %}#}
-                        {#                                    <div class="project">#}
-                        {#                                        <img class='' src="{{ image.img.url }}">#}
-                        {#                                    </div>#}
-                        {#                                {% endfor %}#}
-                        {#                            </div>#}
-                        {#                            <div class="project-screen">#}
-                        {#                                <div class="project-detail">#}
-                        {#                                    {% for image in info_dict.project_photos %}#}
-                        {#                                        <div class="project">#}
-                        {#                                            <img class='' src="{{ image.img.url }}">#}
-                        {#                                        </div>#}
-                        {#                                    {% endfor %}#}
-                        {#                                </div>#}
-                        {#                                <div class="screen-frame">#}
-                        {##}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {##}
-                        {#                        </div>#}
-                            <div class="popup-gallery">
-                                {% for pic in  info_dict.project_photos %}
-                                    <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                        <img src="{{ pic.img.url }}">
-                                    </a>
-                                    {#    style="height:50%;width:50%"#}
-                                {% endfor %}
-                            </div>
+        <!--photo-->
+        <div id="photo" class="col-12 col-md-8 col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>{{ Photo }}</span>
+                    {#                        <div class="pull-right">#}
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                    {#                        </div>#}
+                </div>
+                <div class="panel-body">
+                    <div class="popup-gallery">
+                        {% for pic in  info_dict.project_photos %}
+                            <a href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                <img src="{{ pic.img.url }}">
+                            </a>
+                            {#    style="height:50%;width:50%"#}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -116,14 +101,12 @@
 
     {% if info_dict.review %}
         <!--basic information-->
-{#        TODO: add ajax to show more photos#}
+        {#        TODO: add ajax to show more photos#}
         <div id="Review" class="col-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>{{ Review }}</span>
-                    {#                    <div class="">#}
                     <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
-                    {#                    </div>#}
                 </div>
                 <div class="panel-body">
                     <div class="review-row">
@@ -162,11 +145,10 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-
                                     <hr>
                                 </div>
                                 <div class="user-rating">
-                                   {% for r in rv.userrating_set.all %}
+                                    {% for r in rv.userrating_set.all %}
                                         {% if r.get_rating_type_display == 'Efficiency' %}
                                             {{ Efficiency }} : {{ r.rating_score }}
                                         {% elif r.get_rating_type_display == 'Quality' %}
