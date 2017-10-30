@@ -6,20 +6,19 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <style>
+   <style>
         #masthead {
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
             background-size: cover;
         }
-
     </style>
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
     {{ info_dict.overview_form.media }}
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
             if (curHeight >= 350) {
-
                 $('#readmore').show();
             }
             else {
@@ -71,7 +70,7 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-                        {#                        <a href="{% url 'create_project' 'architect' info_dict.architect.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
+{#                        <a href="{% url 'create_project' 'architect' info_dict.architect.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
                         {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
                             <div class='hide' id="edit-btn">

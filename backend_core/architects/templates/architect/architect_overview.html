@@ -52,7 +52,7 @@
                     <tr>
                         <td class="rname">{{ Address }}:</td>
                         <td>{{ info_dict.architect.street_address }} <br/>
-                            {{ info_dict.architect.city }},{{ info_dict.architect.state }},{{ info_dict.architect.zip }}
+                            {{ info_dict.architect.city }},{{ info_dict.architect.state }},{{ info_dict.architect.postal_code }}
                         </td>
                     </tr>
                 </table>
@@ -89,7 +89,7 @@
 
     {% if info_dict.review %}
         <!--basic information-->
-        {#        TODO: add ajax to show more photos#}
+{#        TODO: add ajax to show more photos#}
         <div id="Review" class="col-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -155,3 +155,7 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+    $("img.lazyload").lazyload();
+</script>

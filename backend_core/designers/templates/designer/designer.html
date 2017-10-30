@@ -12,7 +12,6 @@
             background-size: cover;
         }
     </style>
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
@@ -25,8 +24,9 @@
                 $('#peek').removeClass('link');
             }
         });
-
     </script>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
     {{ info_dict.overview_form.media }}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% endblock %}

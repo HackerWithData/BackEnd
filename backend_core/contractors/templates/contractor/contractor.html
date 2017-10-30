@@ -24,9 +24,8 @@
             }
         });
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
     {{ info_dict.overview_form.media }}
-
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
 {#    #TODO: what's this?#}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
@@ -357,5 +356,4 @@
             });
         });
     </script>
-
 {% endblock %}
