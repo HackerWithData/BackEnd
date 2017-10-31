@@ -33,7 +33,6 @@ def submit_review(request, o_id):
     #     bgimage = None
 
     if request.method == "POST":
-
         user_rating_form = UserRatingForm(request.POST)
         # sign_up_form = SignUpForm2(request.POST)
         review_form = ReviewForm(request.POST)
@@ -96,7 +95,7 @@ def submit_review(request, o_id):
     info_dict = {'review_form': review_form, "user_rating_form": user_rating_form, }
     # "contractor": contractor,
     # "bgimage": bgimage
-    return render(request, template_name, {"info_dict": info_dict})
+    return render(request, template_name, {'review_form': review_form, "user_rating_form": user_rating_form, })
 
 
 def display_review(request, o_id):

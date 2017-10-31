@@ -170,9 +170,7 @@
           class="mfp-hide white-popup-block">
 
         {#{{  info_dict.user_rating_form }}#}
-
         {% for field in info_dict.user_rating_form %}
-
             <div class="rating-name">
                 {% if field.label == 'Efficiency' %}
                     {{ Efficiency }} :
@@ -192,7 +190,15 @@
             <br>
         {% endfor %}
 
-        {{ info_dict.review_form.as_p }}
+{#        {{ info_dict.review_form.as_p }}#}
+        {% for field in info_dict.review_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                <div style=color:red> {{ field.errors }}</div>
+            </p>
+         {% endfor %}
+
         <br>
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>

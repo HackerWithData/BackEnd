@@ -31,7 +31,6 @@ def getStateFullName(state):
 def display_contractor(request, contractor_id):
     o_id = contractor_id
     if request.method == "POST":
-
         user_rating_form = UserRatingForm(request.POST)
         # sign_up_form = SignUpForm2(request.POST)
         review_form = ReviewForm(request.POST)
@@ -81,15 +80,15 @@ def display_contractor(request, contractor_id):
                 pass
             return render(request, 'disk/uploadsuccess.html')
 
-    # other situation
-    user_rating_form = UserRatingForm()
-    if request.user.is_authenticated:
-        review_form = ReviewForm(initial={'first_name': request.user.first_name,
-                                          'last_name': request.user.last_name,
-                                          'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
-    else:
-        review_form = ReviewForm(initial={
-            'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+    else:        # other situation
+        user_rating_form = UserRatingForm()
+        if request.user.is_authenticated:
+            review_form = ReviewForm(initial={'first_name': request.user.first_name,
+                                              'last_name': request.user.last_name,
+                                              'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+        else:
+            review_form = ReviewForm(initial={
+                'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
 
     # contractor info
     contractor = Contractor.objects.get(lic_num=contractor_id)
@@ -219,7 +218,7 @@ def display_contractor(request, contractor_id):
                  "score": hscore.score, 'bond_history': bh, "wc_history": wh, "lic_type": lic_type, 'review': review,
                  "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
                  "user_rating_form": user_rating_form, "complaint": complaint, "length": length,'p_lic_num': p_lic_num,'rank':letter_grade}
-
+    print review_form
     return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
 
