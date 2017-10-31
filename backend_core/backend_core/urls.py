@@ -60,7 +60,7 @@ urlpatterns = [
     # url(r'^settings/password/$', userviews.password, name='password'),
     # url(r'^upload/',include('disk.urls')),
     # url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
-    url(r'^reviews/', include('review.urls')),
+    # url(r'^reviews/', include('review.urls')),
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
 
