@@ -22,11 +22,10 @@ from users.utils import CONSUMER
 from django.conf import settings
 
 
-#This Function is deprecated now. So take care.
+
 def submit_review(request, o_id):
     template_name = r'review/submit_review_contractor.html'
     if request.method == "POST":
-
         user_rating_form = UserRatingForm(request.POST)
         # sign_up_form = SignUpForm2(request.POST)
         review_form = ReviewForm(request.POST)
@@ -88,7 +87,6 @@ def submit_review(request, o_id):
 
     info_dict = {'review_form': review_form, "user_rating_form": user_rating_form, }
     return render(request, template_name, {"info_dict": info_dict})
-
 
 def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
