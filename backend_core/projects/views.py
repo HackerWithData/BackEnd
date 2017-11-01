@@ -14,7 +14,7 @@ from django.contrib import messages
 from decorators import check_recaptcha
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
-
+from django.utils.translation import ugettext_lazy as _
 
 # Create your views here.
 @login_required
@@ -133,7 +133,7 @@ def create_project(request, professional_type, lic_id):
         info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound("Sorry. Pages Not Found")
+        return HttpResponseNotFound(_("Sorry. Pages Not Found"))
 
 
 @login_required
@@ -179,21 +179,25 @@ class ProjectDetail(TemplateView):
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
-            return HttpResponseNotFound("Page Not Found")
+            return HttpResponseNotFound(_("Page Not Found"))
 
     def post(self, request, project_id):
-
         if request.POST.get('request-money'):
             project = Project.objects.get(project_id=project_id)
             project.project_status = "P"
             project.project_action = "Request for Payment to move on"
             project.save()
 
-            messages.success(request, 'Request Success')
+            messages.success(request, _('Request Success'))
             return redirect(request.path)
         else:
             #TODO: The logic here is wierd need to change
+<<<<<<< HEAD
             messages.warning(request, 'Request Failed')
+=======
+            messages.warning(request, _('Request Failed'))
+            return redirect(request.path)
+>>>>>>> 9509046a2a943e0695f236532d995e3b7724814a
         # if flag:
         #     info_dict = {'project': project, 'professional': professional,
         #                  'project_attachments': project_attachments,
