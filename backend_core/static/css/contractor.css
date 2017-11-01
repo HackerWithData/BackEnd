@@ -239,7 +239,6 @@ h1 {
 
 #BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
     color: white;
-    background-image: none;
     /*#TODO: COLOR WARNING*/
     background-color: #6892D5;
 }
@@ -434,9 +433,7 @@ h1 {
     bottom: 100%;
     left: 10%;
     margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent;
+    border : 5px solid transparent;
     border-bottom-color: #555;
 }
 

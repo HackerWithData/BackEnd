@@ -72,12 +72,9 @@
 /* search bar location*/
 .search-bar {
     background-color: rgb(245, 245, 245);
-    margin-top: 100px;
     padding-top: 100px;
     box-sizing: border-box;
     position: relative;
-    /*top:290px;*/
-    /*left: 0;*/
     width: 80%;
     margin: 0 10%;
 }
@@ -286,8 +283,5 @@
     margin-left: -5px;
     border-width: 8px;
     border-style: solid;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: #ffffff;
+    border-color: transparent transparent #ffffff transparent;
 }
