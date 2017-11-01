@@ -140,6 +140,30 @@ h1 {
     float: right;
 }
 
+/* css for overall rating */
+
+.overallrating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.overallrating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.overallrating > label {
+    color: #ddd;
+    float: right;
+}
+
+.overallrating > span.yellow + label {
+    color: #FFD700 ;!important
+}
+
 /***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label, /* show gold star when clicked */
