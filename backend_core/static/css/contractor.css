@@ -142,7 +142,7 @@ h1 {
 
 /* css for overall rating */
 
-.overallrating > label:before {
+.ratings_rating > label:before {
     margin: 5px;
     font-size: 1.25em;
     font-family: FontAwesome;
@@ -150,17 +150,17 @@ h1 {
     content: "\f005";
 }
 
-.overallrating > .half:before {
+.ratings_rating > .half:before {
     content: "\f089";
     position: absolute;
 }
 
-.overallrating > label {
+.ratings_rating > label {
     color: #ddd;
     float: right;
 }
 
-.overallrating > span.yellow + label {
+.ratings_rating > span.yellow + label {
     color: #FFD700 ;!important
 }
 

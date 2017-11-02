@@ -108,9 +108,8 @@
                         </ul>
                         <ul>
                             <li>
-                                <div class="overallrating">
-                                    {{ Overall_Rating }}:
-                                        {% for radio in info_dict.ratings.stars %}
+                                <div class="ratings_rating">{{ Overall_Rating }}:
+                                    {% for radio in info_dict.ratings.stars %}
                                         {% if radio <= info_dict.ratings.overall %}
                                             <span class="yellow" id="star-{{ radio }}"></span>
                                             <label for="star-{{ radio }}"></label>
