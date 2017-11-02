@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from review.views import submit_review, display_review
+from views import submit_review, display_review
 
 
 urlpatterns = [url(r'^$', display_review, name='review'),

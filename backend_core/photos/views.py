@@ -21,9 +21,6 @@ class BasicUploadView(View):
 
     def post(self, request):
         form = PhotoForm(self.request.POST, self.request.FILES)
-        # print('test1')
-        # print(vars(form))
-        # print(form.errors)
 
         if form.is_valid():
             f = form.save(commit=False)
@@ -81,6 +78,7 @@ def background_photo_upload(request, o_id):
     else:
         return HttpResponseNotFound('No Pages Found.')
 
+#this funtion is deprecated
 def FileFieldUpload(request):
     template_name = 'photos/upload_multiple_files.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
@@ -98,24 +96,3 @@ def FileFieldUpload(request):
     form = FileFieldForm()
 
     return render(request, template_name, {"form": form})
-
-#
-# def FileFieldUpload(request):
-#     #form_class = FileFieldForm
-#     template_name = 'photos/upload_multiple_files.html'  # Replace with your template.
-#     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().
-#
-#     if request.method == "POST":
-#         #form_class = self.get_form_class()
-#         #form = self.get_form(form_class)
-#         files = request.FILES.getlist('myfiles')
-#         #if form.is_valid():
-#         print(files)
-#         for f in files:
-#             print(f)
-#             instance = FileField.objects.create(img = f, title=f.name)
-#             instance.save()
-#         return render(request, success_url)
-#         #else:
-#         #    return self.form_invalid(form)
-#     return render(request, template_name)
