@@ -136,7 +136,7 @@
 
 .header .navbar {
     margin: 0;
-    border: none;
+    border: none;contractors_bondcompany
 }
 
 .navbar-inverse .navbar-toggle {
@@ -551,4 +551,7 @@
 .header-gap > .row {
     margin-left: 0;
     margin-right: 0;
+}
+ul.errorlist {
+    list-style-type: none;
 }
