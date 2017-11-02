@@ -67,7 +67,7 @@ class ArchitectDetail(View):
         RATING_STAR_MAX = 10
         contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='architect'), object_id=o_id).order_by('ratings_average')
         ratings = {}
-        ratings['stars'] = range(RATING_STAR_MAX)
+        ratings['stars'] = range(RATING_STAR_MAX, 0, -1)
 
         # TODO:NEED TO CHANGE HERE
         ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
