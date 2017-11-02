@@ -13,14 +13,14 @@ class Architect(models.Model):
     #TODO: Consider to delete lic_type. may not be necesaary
     lic_type = models.CharField(max_length=10)
     lic_status = models.CharField(max_length=63)
-    issue_date = models.DateField(null=True, blank=True)
-    expire_date = models.DateField(null=True, blank=True)
+    lic_issue_date = models.DateField(null=True, blank=True)
+    Lic_expire_date = models.DateField(null=True, blank=True)
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=63)
     county = models.CharField(max_length=63)
     state = models.CharField(max_length=63)
     country = models.CharField(max_length=63)
-    zip = models.CharField(max_length=25)
+    pos_code = models.CharField(max_length=25)
     actions = models.CharField(max_length=63)
 
     def __iter__(self):

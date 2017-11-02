@@ -6,24 +6,19 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <style>
+   <style>
         #masthead {
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
-            background-size:cover;
+            background-size: cover;
         }
-
     </style>
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
+    {{ info_dict.overview_form.media }}
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
             if (curHeight >= 350) {
-
                 $('#readmore').show();
             }
             else {
@@ -35,45 +30,12 @@
 {% endblock %}
 
 
-
-{#header#}
-{#{% block nav %}#}
-{#  TODO: change the color of pop out menu #}
-{#    <header class="navbar navbar-bright navbar-fixed-top" role="banner">#}
-{#        <div class="container">#}
-{#            <div class="navbar-header">#}
-{#                <a href="/" class="navbar-brand">#}
-{#                    <h1 class="logo cursive">#}
-{#                        Hoome#}
-{#                    </h1>#}
-{#                </a>#}
-{#                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">#}
-{#                    <span class="sr-only">Toggle navigation</span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                </button>#}
-{##}
-{#            </div>#}
-{#            <nav class="collapse navbar-collapse" role="navigation">#}
-{#                <ul class="nav navbar-nav">#}
-{#                    <li><a href="/">Find your address</a></li>#}
-{#                    <li><a href="/">Projects</a></li>#}
-{#                    <li><a href="{% url 'login' %}">User Sign In</a></li>#}
-{#                    <li><a href="#">Contractor Sign In</a></li>#}
-{#                </ul>#}
-{#            </nav>#}
-{#        </div>#}
-{#    </header>#}
-{#{% endblock %}#}
-
 {% block header %}
     <div id="masthead">
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
                     <span class="bus-name">{{ info_dict.architect.lic_name }}</span>
-
                     {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
@@ -110,7 +72,7 @@
                     <div class="bus-btn">
 {#                        <a href="{% url 'create_project' 'architect' info_dict.architect.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
+                        {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
@@ -149,21 +111,14 @@
                     {% endif %}
                 </ul>
             </div>
-
-            <div class="" id="">
-                <div id="pro-content">
-                    {% include "architect/architect_overview.html" %}
-                </div>
+            <div id="pro-content">
+                {% include "architect/architect_overview.html" %}
             </div>
         </div>
-    </div>
     </div>
 
     <form id="review-submission" action="" method="post" enctype="multipart/form-data"
           class="mfp-hide white-popup-block">
-
-        {#{{  info_dict.user_rating_form }}#}
-
         {% for field in info_dict.user_rating_form %}
 
             <div class="rating-name">
@@ -261,7 +216,6 @@
                     .done(function (data) {
                         c = data;
                         $('#pro-content').html(c);
-
                     });
             }
         }
@@ -271,17 +225,29 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
+                    $('#edit_overview').removeClass('hide');
+                    $('#overview-wrapper').removeClass('text');
+                    $('#overview-wrapper').removeClass('height');
+                    $('#display_overview').addClass('hide');
+                    $('#peek').addClass('hide');
+
                 } else {
                     $('#edit-btn').addClass('hide');
+                    $('#edit_overview').addClass('hide');
+                    $('#display_overview').removeClass('hide');
+                    $('#overview-wrapper').addClass('text');
+                    $('#overview-wrapper').addClass('height');
+                    $('#peek').removeClass('hide');
+
                 }
             })
 
             $('#readmore').click(function () {
                 readMore();
             });
-            $("#Score-explaination").css({
-                'width': ($(".head-info").width() + 'px')
-            });
+{#            $("#Score-explaination").css({#}
+{#                'width': ($(".head-info").width() + 'px')#}
+{#            });#}
             $('.popup-with-form').magnificPopup({
                 type: 'inline',
                 preloader: true,

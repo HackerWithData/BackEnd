@@ -29,7 +29,6 @@
         }
 
         .signup-container {
-            margin-top: 114px;
             max-width: 300px;
             margin: auto
         }
@@ -183,14 +182,16 @@
                             {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
                             <br/>
                             <p><input type="email" name="email" required=""
+                                      autofocus="autofocus"
                                       placeholder="{% trans 'Email' %}"
                                       id="id_email">
                             </p>
-                            <p><input type="text" name="username" maxlength="150"
+                            <p><input type="hidden" name="username" maxlength="150"
                                       minlength="1"
-                                      autofocus="autofocus" required=""
+                                      required=""
                                       placeholder="{% trans 'Username' %}"
-                                      id="id_username"></p>
+                                      id="id_username">
+                            </p>
                             <div class="hide role-selection">
                                 <label for="id_role">Role:</label>
                                 <select class='full-width'
@@ -240,6 +241,16 @@ $(function () {
         $(this).siblings().removeClass('active');
         $(this).addClass('active');
         console.log($('.role-selection').find('select').val());
+    })
+
+    $('#id_email').focusout(function () {
+        //Use regular expression to check if the email address is valid
+        //Regular expression from http://www.jb51.net/article/110949.htm
+        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        var emailaddr = $('#id_email').val();
+        if(reg.test(emailaddr)){
+            $('#id_username').val(emailaddr.split('@')[0]);
+        }
     })
 })
 </script>

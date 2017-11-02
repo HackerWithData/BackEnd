@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.messages import constants as messages
+
 """
 Django settings for backend_core project.
 
@@ -50,6 +51,7 @@ PREREQ_APPS = [
     'django.contrib.staticfiles',
     'haystack',
     'storages',
+    'tinymce',
     # 'django_scss',
 ]
 
@@ -71,7 +73,6 @@ WEB_APPS = [
     'contractors',
     'home',
     'users',
-    'disk',
     'photos',
     'review',
     'ratings',
@@ -85,6 +86,7 @@ WEB_APPS = [
     "hscore",
     'projects',
     'transactions',
+    'overviews'
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
@@ -265,7 +267,6 @@ LOCALE_PATHS = (
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdWazUUAAAAANWO1-wzqu7GII4QGp084y-2_qjq'
 
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
@@ -273,3 +274,19 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'modern',
+    'plugins': 'paste searchreplace autosave',
+    'width': 'auto',
+    'height': 288,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+    'elementpath': False
+}
+# 'autoresize_min_height': 300,
+# 'autoresize_max_height': 350,
+TINYMCE_COMPRESSOR = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'var/hoome/')
+# TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')

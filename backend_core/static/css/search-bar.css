@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+.search-categories .search-category ul.dropdown-menu {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
 .search-categories li {
     display: inline-block;
     text-align: center;
@@ -33,24 +38,13 @@
 }
 
 .dropdown-suggestion {
-    margin-right: 0px;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-
+    margin: 0px;
 }
 
 ul.dropdown-menu {
-    margin-right: 0px;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    margin-top: -1px;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    margin: -1px 0px 0px 0px;
+    border-radius:0px 0px 3px 3px;
 }
-
 
 
 #searchForm .form-row {
@@ -218,10 +212,7 @@ ul.dropdown-menu {
     margin-left: -5px;
     border-width: 8px;
     border-style: solid;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: #ffffff;
+    border-color: transparent transparent #ffffff transparent;
 }
 
 /* Remove the blue glow in the form inputs */

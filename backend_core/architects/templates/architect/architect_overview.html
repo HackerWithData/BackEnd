@@ -1,9 +1,19 @@
-<div class="container">
+<div class="row">
     <!--summary-->
     <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
-        <div class="">
-            <div class="text height" style="font-size:20px;">
-                {{ info_dict.overview }}
+        <div id='overview-wrapper' class="text height">
+            {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
+                <div id="edit_overview" class="hide">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ info_dict.overview_form.overview }}
+                        {% csrf_token %}
+                        <br/>
+                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>
+                    </form>
+                </div>
+            {% endif %}
+            <div id="display_overview">
+                {{ info_dict.overview|safe }}
             </div>
         </div>
         <div id="peek" class="link">
@@ -31,9 +41,9 @@
 
                     <tr>
                         <td class="rname">{{ Issued_Date }}:</td>
-                        <td>{{ info_dict.architect.issue_date }}</td>
+                        <td>{{ info_dict.architect.lic_issue_date }}</td>
                     </tr>
-                    {% if info_dict.architect.expire_date %}
+                    {% if info_dict.architect.lic_expire_date %}
                         <tr>
                             <td class="rname">{{ Expiration_Date }}:</td>
                             <td>{{ info_dict.architect.expire_date }}</td>
@@ -42,7 +52,8 @@
                     <tr>
                         <td class="rname">{{ Address }}:</td>
                         <td>{{ info_dict.architect.street_address }} <br/>
-                            {{ info_dict.architect.city}},{{ info_dict.architect.state}},{{ info_dict.architect.zip}}</td>
+                            {{ info_dict.architect.city }},{{ info_dict.architect.state }},{{ info_dict.architect.postal_code }}
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -50,34 +61,26 @@
     </div>
 </div>
 
-<div class="container">
-    {#    <div class="row">#}
-{#        TODO: add ajax to show more photos#}
+<div class="row">
+    {#        TODO: add ajax to show more photos#}
     {% if info_dict.project_photos %}
-        <div>
-            <!--photo-->
-            <div id="photo" class="col-12 col-md-8 col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span>{{ Photo }}</span>
-                        {#                        <div class="pull-right">#}
-                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
-                        {#                        </div>#}
-                    </div>
-                    <div class="panel-body">
-
-                        <div>
-                            <div class="popup-gallery">
-                                {% for pic in  info_dict.project_photos %}
-                                    <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                        <img src="{{ pic.img.url }}">
-                                    </a>
-                                    {#    style="height:50%;width:50%"#}
-                                {% endfor %}
-                            </div>
-
-                        </div>
-
+        <!--photo-->
+        <div id="photo" class="col-12 col-md-8 col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>{{ Photo }}</span>
+                    {#                        <div class="pull-right">#}
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                    {#                        </div>#}
+                </div>
+                <div class="panel-body">
+                    <div class="popup-gallery">
+                        {% for pic in  info_dict.project_photos %}
+                            <a href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                <img src="{{ pic.img.url }}">
+                            </a>
+                            {#    style="height:50%;width:50%"#}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -91,9 +94,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>{{ Review }}</span>
-                    {#                    <div class="">#}
                     <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
-                    {#                    </div>#}
                 </div>
                 <div class="panel-body">
                     <div class="review-row">
@@ -132,11 +133,10 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-
                                     <hr>
                                 </div>
                                 <div class="user-rating">
-                                   {% for r in rv.userrating_set.all %}
+                                    {% for r in rv.userrating_set.all %}
                                         {% if r.get_rating_type_display == 'Efficiency' %}
                                             {{ Efficiency }} : {{ r.rating_score }}
                                         {% elif r.get_rating_type_display == 'Quality' %}
@@ -155,3 +155,7 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+    $("img.lazyload").lazyload();
+</script>
