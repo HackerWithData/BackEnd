@@ -71,9 +71,9 @@
                             </li>
                             <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
                         </ul>
-                        <ul>
+                        <ul style="list-style-type:None;">
                             <li>
-                                <div class="ratings_rating">{{ Overall_Rating }}:
+                                <div class="ratings_rating"><span id="overall-rating">{{ Overall_Rating }}:</span>
                                     {% for radio in info_dict.ratings.stars %}
                                         {% if radio <= info_dict.ratings.overall %}
                                             <span class="yellow" id="star-{{ radio }}"></span>
