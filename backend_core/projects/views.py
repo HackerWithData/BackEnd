@@ -98,7 +98,7 @@ def create_project(request, professional_type, lic_id):
                                   project_description=project_form.cleaned_data['project_description'],
                                   # project_status=project_form.cleaned_data['project_status']
                                   )
-                # TODO:need to consider extrem scenario
+                # TODO:need to consider extreme scenario
                 project.save()
                 # attachment
                 files = request.FILES.getlist('project_attachment')
@@ -159,7 +159,6 @@ class ProjectDetail(TemplateView):
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
-        # print(transactions)
         flag = False
         if request.user.role == "CONSUMER":
             if request.user == project.user:
@@ -187,19 +186,9 @@ class ProjectDetail(TemplateView):
             project.project_status = "P"
             project.project_action = "Request for Payment to move on"
             project.save()
-
             messages.success(request, _('Request Success'))
             return redirect(request.path)
         else:
             #TODO: The logic here is wierd need to change
             messages.warning(request, _('Request Failed'))
             return redirect(request.path)
-        # if flag:
-        #     info_dict = {'project': project, 'professional': professional,
-        #                  'project_attachments': project_attachments,
-        #                  'project_photos': project_photos, 'transactions': transactions,
-        #                  'content_type': str(project.content_type)}
-        #     raise messages("Request Sucess")
-        #     return render(request, self.template_name, {'info_dict': info_dict})
-        # else:
-        #     return HttpResponseNotFound("Page Not Found")

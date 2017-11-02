@@ -6,7 +6,6 @@ from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
 from review.models import Review
-from contractors.models import Overview
 from photos.models import Photo
 from django.contrib.contenttypes.models import ContentType
 from photos.models import BackgroundPhoto
@@ -14,19 +13,15 @@ from photos.forms import PhotoForm
 from models import Designer
 import datetime
 from django.utils.translation import ugettext as _
-from contractors.views import submit_review, edit_overview
+from contractors.views import submit_review
 from django.views import View
 from django.contrib import messages
-from contractors.forms import OverviewForm
-
-
+from overviews.models import Overview
+from overviews.forms import OverviewForm
+from overviews.views import edit_overview
+from contractors.utils import convert_hscore_to_rank, get_state_full_name, avg_rating
 # Create your views here.
 
-
-
-def getStateFullName(state):
-    FullName = "California"
-    return FullName
 
 
 # TODO: add a overview database
@@ -53,7 +48,7 @@ class DesignerDetail(View):
         score = None
         rank = None
 
-        full_state_name = getStateFullName(designer.state)
+        full_state_name = get_state_full_name(designer.state)
         # preferred_project_type = 'house remodel'
         # if preferred_project_type:
         #     specialization = 'with many year experiences in ' + preferred_project_type
@@ -74,20 +69,8 @@ class DesignerDetail(View):
         ratings = {}
         ratings['stars'] = range(RATING_STAR_MAX)
 
-        def avg_rating(rt):
-            s = 0
-            l = 0
-            if review:
-                for r in review:
-                    rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type == rt]
-                    s += sum(rate_list)
-                    l += len(rate_list)
-                return s * 1.0 / l
-            else:
-                return 0
-
         # TODO:NEED TO CHANGE HERE
-        ratings['overall'] = (avg_rating('Q') + avg_rating('E') + avg_rating('L')) / 3
+        ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
         try:
             ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
                                contractor_ratings]
@@ -129,7 +112,7 @@ class DesignerDetail(View):
         info_dict = {"designer": designer, "bg_image": bgimage, "overview": overview,
                      "score": score, "lic_type": lic_type, 'review': review,
                      "ratings": ratings, 'project_photos': project_photos, 'review_form': review_form,
-                     "user_rating_form": user_rating_form,'overview_form':overview_form, 'p_lic_num': p_lic_num}
+                     "user_rating_form": user_rating_form, 'overview_form': overview_form, 'p_lic_num': p_lic_num}
         return render(request, 'designer/designer.html', {"info_dict": info_dict})
 
 
