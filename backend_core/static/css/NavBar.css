@@ -131,8 +131,7 @@
 }
 
 .navbar-inverse {
-    background-image: none;
-    background-color: transparent;
+    background: transparent;
 }
 
 .header .navbar {
@@ -157,8 +156,7 @@
     margin-top: 15px !important;
     margin-right: 15px;
     margin-bottom: 8px;
-    background-color: transparent;
-    background-image: none;
+    background: transparent;
     border: 1px solid transparent;
     border-radius: 4px;
 }
@@ -539,8 +537,7 @@
     padding: 20px 30px;
     text-align: left;
     max-width: 650px;
-    margin: 80px auto;
-    margin-top: 100px;
+    margin: 100px auto;
     position: relative;
 }
 
