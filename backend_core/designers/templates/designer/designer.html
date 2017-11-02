@@ -75,20 +75,21 @@
                             {#                                </li>#}
                             {#                            {% endif %}#}
                             <li>{{ Phone }}: {{ info_dict.designer.phone }}</li>
-                            <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
-                                {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
-                                {#                                <div class="star-ratings-css">#}
-                                {#                                    <div class="star-ratings-css-top" style="width:100%">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                    <div class="star-ratings-css-bottom">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+                        </ul>
+                        <ul style="list-style-type:None;">
+                            <li>
+                                <div class="ratings_rating">
+                                    <span>{{ Overall_Rating }}:</span>
+                                    {% for radio in info_dict.ratings.stars %}
+                                        {% if radio <= info_dict.ratings.overall %}
+                                            <span class="yellow" id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% else %}
+                                            <span id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </li>
                         </ul>
                     </div>
