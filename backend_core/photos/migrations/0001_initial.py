@@ -31,6 +31,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('img', models.ImageField(upload_to='photos/photos/%Y/%m/%d')),
+                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
                 ('title', models.CharField(blank=True, max_length=255)),
                 ('object_id', models.PositiveIntegerField()),
                 ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
