@@ -7,7 +7,8 @@ import requests
 DEBUG = False
 
 # Configuring a SMTP Email Service
-ADMINS = [('Bug', 'service@hoome.io')]
+ADMINS = [('Bug', 'service@hoome.io'),
+          ("admin1","jeremyzheng@hoome.io")]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

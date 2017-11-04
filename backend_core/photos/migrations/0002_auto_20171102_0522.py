@@ -14,12 +14,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='filefield',
-            name='uploaded_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
-            preserve_default=False,
-        ),
         migrations.AlterUniqueTogether(
             name='filefield',
             unique_together=set([('content_type', 'object_id')]),
