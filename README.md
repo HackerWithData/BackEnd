@@ -57,6 +57,12 @@ dependencies are installed in environment
     . env/bin/activate
 ```
 
+## Setup database
+```
+    make migrate
+    make test_data
+```
+
 ## Install new packages, Skip if no new packages need to be installed
 ```
     pip install [package]
