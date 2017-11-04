@@ -132,6 +132,9 @@ class ContractorDetail(View):
                                               object_id=contractor_id)
         if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
             length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+        # test issue, won't happen in prod
+        elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+            length = 0
         else:
             length = int(datetime.date.today().year - contractor.lic_issue_date.year)
 
