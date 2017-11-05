@@ -192,12 +192,9 @@ class ProjectDetail(TemplateView):
             return redirect(request.path)
         else:
             #TODO: The logic here is wierd need to change
-<<<<<<< HEAD
             messages.warning(request, 'Request Failed')
-=======
             messages.warning(request, _('Request Failed'))
             return redirect(request.path)
->>>>>>> 9509046a2a943e0695f236532d995e3b7724814a
         # if flag:
         #     info_dict = {'project': project, 'professional': professional,
         #                  'project_attachments': project_attachments,
