@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 # Create your views here.
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from review.forms import ReviewForm
 from ratings.forms import UserRatingForm
@@ -34,7 +34,7 @@ class ArchitectDetail(View):
             edit_overview(request, o_id)
             return redirect(request.path)
         else:
-            return HttpResponseNotFound(_("Error Pages!"))
+            raise Http404(_("Error Pages!"))
 
     def get(self, request, o_id):
         # architect info
@@ -124,7 +124,7 @@ def display_project_photos(request, o_id):
         info_dict = {'project_photos': project_photos, 'architect': architect}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))
 
 
 # %% TODO: change function to accept all instance like architects or designers
@@ -157,4 +157,4 @@ def upload_project_photos(request, o_id):
         info_dict = {'form': form}
         return render(request, template_name, info_dict)
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))

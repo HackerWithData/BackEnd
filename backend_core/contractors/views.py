@@ -5,7 +5,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.views import View
@@ -200,7 +200,7 @@ class ContractorDetail(View):
             edit_overview(request, contractor_id)
             return redirect(request.path)
         else:
-            return HttpResponseNotFound(_("Error Pages!"))
+            raise Http404(_("Error Pages!"))
 
 
 def update_accept_review(request):
@@ -224,7 +224,7 @@ def display_project_photos(request, contractor_id):
         info_dict = {'project_photos': project_photos}  # , 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))
 
 
 def upload_project_photos(request, contractor_id):
@@ -258,4 +258,4 @@ def upload_project_photos(request, contractor_id):
         info_dict = {'form': form}
         return render(request, template_name, info_dict)
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))

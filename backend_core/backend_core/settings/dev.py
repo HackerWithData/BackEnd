@@ -59,22 +59,22 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Debug toolbar tools
-DEV_APPS = [
-    'debug_toolbar',
-]
+# DEV_APPS = [
+#     'debug_toolbar',
+# ]
 
-INSTALLED_APPS.extend(DEV_APPS)
-
-MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# INSTALLED_APPS.extend(DEV_APPS)
+#
+# MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-def show_toolbar(request):
-    return True
+# def show_toolbar(request):
+#     return True
 
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}
+# DEBUG_TOOLBAR_CONFIG = {
+#     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+# }
 
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 

@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 import datetime
 import pytz
 import os
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render,redirect
 
 # Create your views here.
@@ -76,7 +76,7 @@ def background_photo_upload(request, o_id):
             form = BackgroundPhotoForm()
         return render(request, template_name, {'form': form})
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404('No Pages Found.')
 
 #this funtion is deprecated
 def FileFieldUpload(request):
