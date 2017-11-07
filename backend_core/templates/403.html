@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="container">
+        <h1>{% trans 'Permission Denied' %}</h1>
+        <p>{% blocktrans%}You don't have the permission to do the following actions. {% endblocktrans %}</p>
+    </div>
+{% endblock %}

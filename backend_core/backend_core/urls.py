@@ -24,6 +24,13 @@ from photos import views as photoview
 from django.views.i18n import javascript_catalog
 from django.contrib.auth.views import logout
 from django.conf import settings
+from django.conf.urls import handler404, handler500
+
+
+handler400 = 'home.views.bad_request'
+handler403 = 'home.views.permission_denied'
+handler404 = 'home.views.page_not_found'
+handler500 = 'home.views.server_error'
 
 js_info_dict = {
     'packages': ('contractors.package',),

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="container">
+        <h1>{% trans 'Server Error' %}</h1>
+        <p>{% blocktrans%}Server in maintenance. Please try later.{% endblocktrans %}</p>
+    </div>
+{% endblock %}
