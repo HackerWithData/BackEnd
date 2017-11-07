@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-07 05:19+0000\n"
+"POT-Creation-Date: 2017-11-07 07:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,24 +24,25 @@ msgstr ""
 msgid "Edit page?"
 msgstr "編輯頁面?"
 
-#: architects/templates/architect/architect.html:78
-#: contractors/templates/contractor/contractor.html:86
-#: designers/templates/designer/designer.html:93
+#: architects/templates/architect/architect.html:92
+#: contractors/templates/contractor/contractor.html:100
+#: designers/templates/designer/designer.html:94
 msgid "Project Photo Upload"
 msgstr "上傳項目照片"
 
-#: architects/templates/architect/architect.html:80
-#: contractors/templates/contractor/contractor.html:88
-#: designers/templates/designer/designer.html:95
+#: architects/templates/architect/architect.html:94
+#: contractors/templates/contractor/contractor.html:102
+#: designers/templates/designer/designer.html:96
 msgid "Background Image Upload"
 msgstr "上傳主頁背景圖案"
 
-#: architects/views.py:37 contractors/views.py:200
+#: architects/views.py:37 contractors/views.py:203
 msgid "Error Pages!"
 msgstr "錯誤頁面"
 
 # python-brace-format
 #: architects/views.py:103
+#, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
@@ -55,8 +56,8 @@ msgstr ""
 "件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我們，我們"
 "會向您分享更多關於該商家的信息和數據。"
 
-#: architects/views.py:127 architects/views.py:160 contractors/views.py:224
-#: contractors/views.py:258
+#: architects/views.py:127 architects/views.py:160 contractors/views.py:227
+#: contractors/views.py:261
 msgid "No Pages Found."
 msgstr "找不到網頁"
 
@@ -105,7 +106,7 @@ msgstr "全棧數據科學家實習"
 msgid "Project Photos"
 msgstr "項目照片"
 
-#: contractors/views.py:175
+#: contractors/views.py:178
 msgid ""
 "{lic_name} is a contractor company located in {csp} . The company holds a "
 "license number \n"
@@ -146,6 +147,7 @@ msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除選中的郵箱嗎？"
 
 #: designers/views.py:103
+#, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
@@ -337,9 +339,10 @@ msgstr "證件號碼"
 msgid "License Type"
 msgstr "證件類型"
 
-#: search/templates/search_list/search_list.html:97
-msgid "No professional match your condition"
-msgstr "沒有商家符合您的要求"
+#: search/templates/search_list/search_list.html:98
+msgid ""
+"No professional match your condition. Please try another way to search again."
+msgstr "沒有商家符合您的要求。請嘗試其他格式來搜索。"
 
 #: templates/400.html:5
 msgid "Bad Request"
@@ -347,7 +350,7 @@ msgstr "錯誤請求"
 
 #: templates/400.html:6
 msgid "Hoome cannot understand your request, Please try again. "
-msgstr ""
+msgstr "服務器無法理解您的請求，請再試壹次。"
 
 #: templates/403.html:5
 msgid "Permission Denied"
@@ -418,7 +421,7 @@ msgid "License Status"
 msgstr "證件狀態"
 
 #: templates/base.html:39
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:258
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:256
 msgid "License Number"
 msgstr "證件號碼"
 
@@ -427,7 +430,7 @@ msgid "Entity"
 msgstr "實體"
 
 #: templates/base.html:41
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:266
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:264
 msgid "Entity Type"
 msgstr "實體類型"
 
@@ -468,7 +471,7 @@ msgid "Read less"
 msgstr "閱讀更少"
 
 #: templates/base.html:54
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:265
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:263
 msgid "Company Name"
 msgstr "公司名字"
 
@@ -559,12 +562,12 @@ msgid "Postal Code"
 msgstr "郵編"
 
 #: templates/base.html:77
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:282
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:280
 msgid "State"
 msgstr "州"
 
 #: templates/base.html:78
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:281
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:279
 msgid "Street"
 msgstr "街道"
 
@@ -698,7 +701,7 @@ msgid "Project Created"
 msgstr "項目創建於"
 
 #: templates/base.html:273 users/templates/account/login.html:162
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:158
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:156
 msgid "Sign In"
 msgstr "登入"
 
@@ -819,25 +822,25 @@ msgstr "添加郵箱地址"
 
 #: users/templates/account/email_confirm.html:13
 #, python-format
-#msgid ""
-#"Please confirm that\n"
-#"                <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
-#"address for user %(user_display)s\n"
-#"                ."
-#msgstr "請確認%(email)是%(user_display)的郵箱。"
+msgid ""
+"Please confirm that\n"
+"                %(email)s is an e-mail address for user %(user_display)s\n"
+"                ."
+msgstr "請確認%(email)s是%(user_display)s的郵箱。"
 
 #: users/templates/account/email_confirm.html:19
 msgid "Confirm"
 msgstr "確認"
 
 #: users/templates/account/email_confirm.html:23
-#, python-format
-#msgid ""
-#"This e-mail confirmation link expired or is invalid. Please\n"
-#"                <a href=\"%(email_url)s\">issue a new e-mail confirmation "
-#"request</a>."
-#msgstr "該確認鏈接已經失效。%(email_url)請重新要求新的郵件確認 "
-#""
+msgid "This e-mail confirmation link expired or is invalid."
+msgstr "該確認鏈接已經失效。"
+
+#: users/templates/account/email_confirm.html:24
+msgid ""
+"Please issue a new e-mail confirmation\n"
+"                    request."
+msgstr "請重新要求新的郵件確認"
 
 #: users/templates/account/login.html:93
 msgid "Log In to Hoome"
@@ -961,31 +964,31 @@ msgstr "專業人士信息"
 msgid "Save Changes"
 msgstr "保存修改"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:196
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:194
 msgid "Choose License Type"
 msgstr "請選擇證件類型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:255
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:253
 msgid "Find Your License In Our Database"
 msgstr "請輸入您的證件號碼與我們數據庫的證件匹配"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:262
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:260
 msgid "Enter Or Modify Your Company Name and Entity Type"
 msgstr "請輸入公司的名字和實體類型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:271
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:269
 msgid "Enter Or Modify Your Company Category"
 msgstr "請選擇公司的類型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:278
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:276
 msgid "Enter Or Modify Your Company Address"
 msgstr "請輸入您公司的地址"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:283
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:281
 msgid "Zipcode"
 msgstr "郵政編碼"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:298
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:297
 msgid "Next"
 msgstr "下壹步"
 

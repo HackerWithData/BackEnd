@@ -54,7 +54,7 @@
     </div>
     <div id="search-list" class="container">
         <div class="row">
-            {% if professionals.count > 0 %}
+            {% if page_query_set.object_list|length > 0 %}
                 <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <div class="list-group">
                         {% for professional in professionals %}
@@ -91,12 +91,13 @@
                         <div class="map" id="googleMap" style="width:100%;height:100%;"></div>
                     </div>
                 </div>
-            {% else %}
-                </div>
-                <!--TODO: change to nearby zipcode in render-->
-                <p>{% trans 'No professional match your condition' %}</p>
-            {% endif %}
 
+            {% else %}
+                <!--TODO: change to nearby zipcode in render-->
+                {{ professionals.count }}
+                <p>{% trans 'No professional match your condition. Please try another way to search again.' %}</p>
+            {% endif %}
+        </div>
     </div>
     <script>
         var map;
