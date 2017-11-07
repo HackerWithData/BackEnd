@@ -21,6 +21,7 @@ from views import (
     ConsumerProfileAfterSignupView,
     ConsumerProfileView,
     ProfessionalProfileView,
+    login,
 )
 
 urlpatterns = [
@@ -30,4 +31,5 @@ urlpatterns = [
     url(r'^password/change/$', DashboardAfterPasswordChangeView.as_view(), name='account_change_password'),
     url(r'^consumer_profile/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
     url(r'^professional_profile/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
+    url(r'^login/', login.as_view(), name='login'),
 ]

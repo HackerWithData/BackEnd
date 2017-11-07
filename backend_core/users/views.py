@@ -14,6 +14,7 @@ from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView
 from allauth.account.utils import perform_login
 from allauth.utils import get_user_model
+from allauth.account.views import LoginView
 from django.contrib import messages
 from professionals.models import Professional, ProfessionalType
 from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
@@ -56,6 +57,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
 @login_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
+        if 'success_url' in request.session:
+            return redirect(request.session['success_url'])
+        else:
+            return redirect('/')
         # return redirect('account_consumer_profile_after_signup')
         return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
@@ -210,3 +215,23 @@ class ProfessionalProfileView(View):
             return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})
+
+class login(LoginView):
+
+    def dispatch(self, request, *args, **kwargs):
+        if 'HTTP_REFERER' in request.META:
+            if not 'accounts/' in request.META['HTTP_REFERER']:
+                request.session['success_url'] = request.META['HTTP_REFERER']
+        else:
+            request.session['success_url'] = '/'
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        if 'success_url' in self.request.session:
+            success_url = self.request.session['success_url']
+        else:
+            success_url = '/'
+        try:
+            return form.login(self.request, redirect_url=success_url)
+        except ImmediateHttpResponse as e:
+            return e.response
