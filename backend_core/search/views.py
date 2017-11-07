@@ -53,6 +53,7 @@ def search_new(request):
     else:
         return redirect('home_index')
 
+
     return render(request, 'search_list/search_list.html', {
         'professionals': page_query_set,
         'professionals_json': json.dumps(page_query_set.object_list, default=json_serial) if query_set else None,
