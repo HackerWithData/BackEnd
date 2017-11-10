@@ -13,6 +13,11 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# test data
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures'),
+)
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
@@ -21,7 +26,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-#
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -42,7 +47,7 @@ DATABASES = {
 #         'NAME': 'ebdb',
 #         'USER': 'hoome',
 #         'PASSWORD': 'hoome2017',
-#         'HOST': 'aa16jc2aqeekij9.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+#         'HOST': 'aapdhi001fps2q.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
 #         'PORT': '3306',
 #         'OPTIONS': {
 #             'init_command': "SET sql_mode='STRICT_TRANS_TABLES', default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci"
@@ -50,29 +55,26 @@ DATABASES = {
 #     }
 # }
 
-
-
 # TODO: During development only, change SMTP email service properties in prod setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
 # Debug toolbar tools
-DEV_APPS = [
-    'debug_toolbar',
-]
+# DEV_APPS = [
+#     'debug_toolbar',
+# ]
 
-INSTALLED_APPS.extend(DEV_APPS)
-
-MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# INSTALLED_APPS.extend(DEV_APPS)
+#
+# MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-def show_toolbar(request):
-    return True
+# def show_toolbar(request):
+#     return True
 
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}
+# DEBUG_TOOLBAR_CONFIG = {
+#     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+# }
 
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 

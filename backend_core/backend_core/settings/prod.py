@@ -7,7 +7,8 @@ import requests
 DEBUG = False
 
 # Configuring a SMTP Email Service
-ADMINS = [('Bug', 'service@hoome.io')]
+ADMINS = [('Bug', 'service@hoome.io'),
+          ("admin1", "jeremyzheng@hoome.io")]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -24,34 +25,47 @@ EMAIL_HOST_PASSWORD = 'CZT!2017'
 
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-            }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ebdb',
+        'USER': 'hoome',
+        'PASSWORD': 'hoome2017',
+        'HOST': 'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'hoome_local',
-            'USER': 'root',
-            'PASSWORD': 'password',
-            'HOST': 'localhost',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-            }
-        }
-    }
+}
+# if 'RDS_DB_NAME' in os.environ:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': os.environ['RDS_DB_NAME'],
+#             'USER': os.environ['RDS_USERNAME'],
+#             'PASSWORD': os.environ['RDS_PASSWORD'],
+#             'HOST': os.environ['RDS_HOSTNAME'],
+#             'PORT': os.environ['RDS_PORT'],
+#             'OPTIONS': {
+#                 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+#             }
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'hoome_local',
+#             'USER': 'root',
+#             'PASSWORD': 'password',
+#             'HOST': 'localhost',
+#             'PORT': '3306',
+#             'OPTIONS': {
+#                 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+#             }
+#         }
+#     }
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (

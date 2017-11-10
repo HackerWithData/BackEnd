@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-25 10:55+0000\n"
+"POT-Creation-Date: 2017-11-07 07:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: architects/templates/architect/architect.html:81
-#: contractors/templates/contractor/contractor.html:81
-#: designers/templates/designer/designer.html:47
+#: architects/templates/architect/architect.html:43
+#: contractors/templates/contractor/contractor.html:46
+#: designers/templates/designer/designer.html:44
 msgid "Edit page?"
 msgstr "编辑页面?"
 
-#: architects/templates/architect/architect.html:117
-#: contractors/templates/contractor/contractor.html:121
-#: designers/templates/designer/designer.html:96
+#: architects/templates/architect/architect.html:92
+#: contractors/templates/contractor/contractor.html:100
+#: designers/templates/designer/designer.html:94
 msgid "Project Photo Upload"
 msgstr "上传项目照片"
 
-#: architects/templates/architect/architect.html:119
-#: contractors/templates/contractor/contractor.html:123
-#: designers/templates/designer/designer.html:98
+#: architects/templates/architect/architect.html:94
+#: contractors/templates/contractor/contractor.html:102
+#: designers/templates/designer/designer.html:96
 msgid "Background Image Upload"
 msgstr "上传主页背景图案"
 
+#: architects/views.py:37 contractors/views.py:203
+msgid "Error Pages!"
+msgstr "错误页面"
+
 # python-brace-format
-#: architects/views.py:129
+#: architects/views.py:103
 #, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
-"            The License is verified as active when we checked last time. If "
-"you would like to know {bus_name} more, \n"
-"            please contact us and we will share more information about this "
-"architect to you.\n"
-"            "
+"                The License is verified as active when we checked last time. "
+"If you would like to know {bus_name} more, \n"
+"                please contact us and we will share more information about "
+"this architect to you.\n"
+"                "
 msgstr ""
 "{bus_name} 是一位来自{city} 建筑师。根据{data_source}，该建筑师持有相关有效证"
 "件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们"
 "会向您分享更多关于该商家的信息和数据。"
+
+#: architects/views.py:127 architects/views.py:160 contractors/views.py:227
+#: contractors/views.py:261
+msgid "No Pages Found."
+msgstr "找不到网页"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -93,88 +102,80 @@ msgid "Full Stack Data Scientist Intern"
 msgstr "全栈数据科学家实习"
 
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
-#: templates/base.html:37
+#: templates/base.html:31
 msgid "Project Photos"
 msgstr "项目照片"
 
-#: contractors/views.py:132
+#: contractors/views.py:178
 msgid ""
-"{lic_name} is a contractor company located in {csp} . \n"
-"    The company holds a license number according to {data_source}. According "
-"to real-time data analysis, this licensed contractor's hoome score is "
-"{score} and is rated as {rank}.\n"
-"    The License is verified as active when we checked last time. If you "
-"would like to know {lic_name} more, \n"
-"    please contact us and we will share more information and data about this "
-"contractor to you.\n"
-"    "
+"{lic_name} is a contractor company located in {csp} . The company holds a "
+"license number \n"
+"            according to {data_source}. According to real-time data "
+"analysis, this licensed contractor's hoome score \n"
+"            is {score} and is rated as {rank}. The License is verified as "
+"active when we checked last time. If you would\n"
+"             like to know {lic_name} more, please contact us and we will "
+"share more information and data about this\n"
+"              contractor to you."
 msgstr ""
 "{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
 "{score}， 评定区间为{rank}。如果您需要了解{bus_name}更多的资讯，请联系我们，"
 "我们会向您分享更多关于该商家的信息和数据。"
 
-#: dashboard/templates/dashboard/dashboard.html:16
-#: dashboard/templates/dashboard/dashboard.html:60
+#: dashboard/templates/dashboard/dashboard.html:22
+#: dashboard/templates/dashboard/dashboard.html:67
 msgid "’s Account Settings"
 msgstr "的账户设置"
 
-#: dashboard/templates/dashboard/dashboard.html:29 templates/base.html:81
+#: dashboard/templates/dashboard/dashboard.html:36 templates/base.html:75
 msgid "Profile"
 msgstr "档案"
 
-#: dashboard/templates/dashboard/dashboard.html:97
+#: dashboard/templates/dashboard/dashboard.html:114
 msgid "Hello, Welcome to Hoome!"
 msgstr "您好，欢迎来到Hoome!"
 
-#: dashboard/templates/dashboard/dashboard.html:99
+#: dashboard/templates/dashboard/dashboard.html:116
 msgid ""
 "It's Your Personal Dashboard. You could set up you account\n"
 "                                by clicking left buttons"
 msgstr "这是您的个人用户面板。您可以通过点击左边按钮来设置您的账户。"
 
-#: dashboard/templates/dashboard/dashboard.html:133
+#: dashboard/templates/dashboard/dashboard.html:150
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
-#: designers/templates/designer/designer.html:58
-msgid ""
-"Hoome Score is caculated by how many years it is in the\n"
-"                                            industry,\n"
-"                                            suspension history,\n"
-"                                            complaints and other many "
-"factors. Now we calculate the Hoome Score by\n"
-"                                            number of\n"
-"                                            work experience, suspension\n"
-"                                            history, complaints. Later the "
-"score will evolve with more\n"
-"                                            factors. "
-msgstr ""
-"Hoome评分是通过计算工作年限，执照吊销记录，投诉记录和其他因素得出。现在Hoome"
-"评分囊括了工作年限，执照吊销记录和投诉记录。 后期该评分会添加更多考量因素。"
-
-#: designers/views.py:129
+#: designers/views.py:103
 #, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
-"            The License is verified as active when we checked last time. If "
-"you would like to know {bus_name} more, \n"
-"            please contact us and we will share more information about this "
-"designer to you.\n"
-"            "
+"                The License is verified as active when we checked last time. "
+"If you would like to know {bus_name} more, \n"
+"                please contact us and we will share more information about "
+"this designer to you.\n"
+"                "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
 "关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
 "们，我们会向您分享更多关于该商家的信息和数据。"
 
-#: home/templates/home/home.html:156
+#: home/templates/home/home.html:112
 msgid "Find excellent professionals"
 msgstr "筛选优秀的装修团队"
 
-#: home/templates/home/home.html:242
+#: home/templates/home/home.html:153
 msgid "Database in California State"
 msgstr "加州数据库"
+
+#: overviews/views.py:27 projects/views.py:189
+msgid "Request Success"
+msgstr "请求成功"
+
+#: overviews/views.py:29 projects/views.py:193
+msgid "Request Failed"
+msgstr "请求失败"
 
 #: photos/templates/photos/background_photo_upload.html:18
 msgid "Background Images"
@@ -184,15 +185,23 @@ msgstr "背景图案"
 msgid "Create"
 msgstr "创建"
 
-#: review/forms.py:5
+#: projects/views.py:136
+msgid "Sorry. Pages Not Found"
+msgstr "找不到网页"
+
+#: projects/views.py:181 templates/404.html:5
+msgid "Page Not Found"
+msgstr "找不到网页"
+
+#: review/forms.py:6
 msgid "Comments"
 msgstr "评论"
 
-#: review/forms.py:7 templates/base.html:107
+#: review/forms.py:7 templates/base.html:101
 msgid "First Name"
 msgstr "名"
 
-#: review/forms.py:8 templates/base.html:106
+#: review/forms.py:8 templates/base.html:100
 msgid "Last Name"
 msgstr "姓"
 
@@ -200,7 +209,7 @@ msgstr "姓"
 msgid "Project Date"
 msgstr "施工起始时间"
 
-#: review/forms.py:10 templates/base.html:57
+#: review/forms.py:10 templates/base.html:51
 msgid "Project Type"
 msgstr "项目类型"
 
@@ -208,25 +217,25 @@ msgstr "项目类型"
 msgid "Project Zipcode"
 msgstr "项目所在邮政编码"
 
-#: review/forms.py:12 templates/base.html:56
+#: review/forms.py:12 templates/base.html:50
 msgid "Project Cost"
 msgstr "项目开销"
 
-#: review/forms.py:13 templates/base.html:58
+#: review/forms.py:13 templates/base.html:52
 msgid "Project Duration"
 msgstr "项目工期"
 
-#: review/forms.py:15 templates/base.html:95
-#: users/templates/account/email.html:73 users/templates/account/login.html:151
+#: review/forms.py:14 templates/base.html:89
+#: users/templates/account/email.html:73 users/templates/account/login.html:146
 #: users/templates/account/signup.html:186
 msgid "Email"
 msgstr "Email地址"
 
-#: review/forms.py:16
+#: review/forms.py:15
 msgid "Project Address"
 msgstr "项目地址"
 
-#: review/forms.py:18
+#: review/forms.py:16
 msgid "Is Anonymous?"
 msgstr "匿名用户"
 
@@ -240,12 +249,12 @@ msgid "General Contractor"
 msgstr "总承包商"
 
 #: search/templates/search_bar/search_bar.html:15
-#: search/templates/search_bar/search_bar.html:131 templates/base.html:98
+#: search/templates/search_bar/search_bar.html:131 templates/base.html:92
 msgid "Architect"
 msgstr "建筑师"
 
 #: search/templates/search_bar/search_bar.html:17
-#: search/templates/search_bar/search_bar.html:112 templates/base.html:99
+#: search/templates/search_bar/search_bar.html:112 templates/base.html:93
 msgid "Designer"
 msgstr "设计师"
 
@@ -262,7 +271,7 @@ msgstr "请输入邮政编码或者城市名称"
 msgid "Current Location"
 msgstr "当前位置"
 
-#: search/templates/search_bar/search_bar.html:47 templates/base.html:97
+#: search/templates/search_bar/search_bar.html:47 templates/base.html:91
 msgid "Contractor"
 msgstr "承包商"
 
@@ -322,347 +331,377 @@ msgstr "金属板承包商"
 msgid "Swimming Pool Contractor"
 msgstr "泳池承包商"
 
-#: search/templates/search_list/search_list.html:97
-msgid "No professional match your condition"
-msgstr "没有商家符合您的要求"
-
-#: templates/base.html:30
-msgid "Account"
-msgstr "账户"
-
-#: templates/base.html:31
-msgid "Dashboard"
-msgstr "用户面板"
-
-#: templates/base.html:32
-msgid "Log out"
-msgstr "登出"
-
-#: templates/base.html:33
-msgid "Hoome Score"
-msgstr "Hoome 评分"
-
-#: templates/base.html:34
-msgid "Phone"
-msgstr "电话"
-
-#: templates/base.html:35
-msgid "Overall Rating"
-msgstr "总体用户评分"
-
-#: templates/base.html:36
-msgid "Overview"
-msgstr "总览"
-
-#: templates/base.html:38
-msgid "Review us"
-msgstr "评价我们"
-
-#: templates/base.html:39
-msgid "Review"
-msgstr "评价"
-
-#: templates/base.html:40
-msgid "Read more"
-msgstr "阅读更多"
-
-#: templates/base.html:41
-msgid "Business Information"
-msgstr "商家资讯"
-
-#: templates/base.html:42
+#: search/templates/search_card/search_card.html:3 templates/base.html:36
 msgid "License #"
 msgstr "证件号码"
 
-#: templates/base.html:43
-msgid "License Status"
-msgstr "证件状态"
-
-#: templates/base.html:44
+#: search/templates/search_card/search_card.html:4 templates/base.html:38
 msgid "License Type"
 msgstr "证件类型"
 
-#: templates/base.html:45
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:111
+#: search/templates/search_list/search_list.html:98
+msgid ""
+"No professional match your condition. Please try another way to search again."
+msgstr "没有商家符合您的要求。请尝试其他格式来搜索。"
+
+#: templates/400.html:5
+msgid "Bad Request"
+msgstr "错误请求"
+
+#: templates/400.html:6
+msgid "Hoome cannot understand your request, Please try again. "
+msgstr "服务器无法理解您的请求，请再试一次。"
+
+#: templates/403.html:5
+msgid "Permission Denied"
+msgstr "没有权限"
+
+#: templates/403.html:6
+msgid "You don't have the permission to do the following actions. "
+msgstr "您没有权限进行以下操作"
+
+#: templates/404.html:6
+msgid "Hoome cannot find the page per your request, Please try again. "
+msgstr "Hoome根据您的请求找不到对应的页面。请重试"
+
+#: templates/500.html:5
+msgid "Server Error"
+msgstr "服务器错误"
+
+#: templates/500.html:6
+msgid "Server in maintenance. Please try later."
+msgstr "服务器正在施工中，请重试"
+
+#: templates/base.html:24
+msgid "Account"
+msgstr "账户"
+
+#: templates/base.html:25
+msgid "Dashboard"
+msgstr "用户面板"
+
+#: templates/base.html:26
+msgid "Log out"
+msgstr "登出"
+
+#: templates/base.html:27
+msgid "Hoome Score"
+msgstr "Hoome 评分"
+
+#: templates/base.html:28
+msgid "Phone"
+msgstr "电话"
+
+#: templates/base.html:29
+msgid "Overall Rating"
+msgstr "总体用户评分"
+
+#: templates/base.html:30
+msgid "Overview"
+msgstr "总览"
+
+#: templates/base.html:32
+msgid "Review us"
+msgstr "评价我们"
+
+#: templates/base.html:33
+msgid "Review"
+msgstr "评价"
+
+#: templates/base.html:34
+msgid "Read more"
+msgstr "阅读更多"
+
+#: templates/base.html:35
+msgid "Business Information"
+msgstr "商家资讯"
+
+#: templates/base.html:37
+msgid "License Status"
+msgstr "证件状态"
+
+#: templates/base.html:39
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:256
 msgid "License Number"
 msgstr "证件号码"
 
-#: templates/base.html:46
+#: templates/base.html:40
 msgid "Entity"
 msgstr "实体"
 
-#: templates/base.html:47
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:119
+#: templates/base.html:41
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:264
 msgid "Entity Type"
 msgstr "实体类型"
 
-#: templates/base.html:48
+#: templates/base.html:42
 msgid "Issued Date"
 msgstr "发布日期"
 
-#: templates/base.html:49
+#: templates/base.html:43
 msgid "Expiration Date"
 msgstr "失效日期"
 
-#: templates/base.html:50
+#: templates/base.html:44
 msgid "Bonded"
 msgstr "担保公司"
 
-#: templates/base.html:51
+#: templates/base.html:45
 msgid "Issued"
 msgstr "保险公司"
 
-#: templates/base.html:52
+#: templates/base.html:46
 msgid "Address"
 msgstr "地址"
 
-#: templates/base.html:53 templates/base.html:117
+#: templates/base.html:47 templates/base.html:111
 msgid "Photo"
 msgstr "照片"
 
-#: templates/base.html:54
+#: templates/base.html:48
 msgid "View More"
 msgstr "浏览更多"
 
-#: templates/base.html:55
+#: templates/base.html:49
 msgid "Anonymous User"
 msgstr "匿名用户"
 
-#: templates/base.html:59
+#: templates/base.html:53
 msgid "Read less"
 msgstr "阅读更少"
 
-#: templates/base.html:60
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:118
+#: templates/base.html:54
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:263
 msgid "Company Name"
 msgstr "公司名字"
 
-#: templates/base.html:61
+#: templates/base.html:55
 msgid "State Designer Num"
 msgstr "本州设计师证件号"
 
-#: templates/base.html:62
+#: templates/base.html:56
 msgid "Contractor Licence Num"
 msgstr "本州承包商证件号"
 
-#: templates/base.html:63
+#: templates/base.html:57
 msgid "Mobile"
 msgstr "手机"
 
-#: templates/base.html:64
+#: templates/base.html:58
 msgid "Fax"
 msgstr "传真"
 
-#: templates/base.html:65
+#: templates/base.html:59
 #: users/templates/consumer_profile/consumer_profile.html:12
 #: users/templates/consumer_profile_after_signup/consumer_profile_after_signup.html:16
 msgid "Submit"
 msgstr "提交"
 
-#: templates/base.html:66
+#: templates/base.html:60
 msgid "Contact"
 msgstr "联系"
 
-#: templates/base.html:67
+#: templates/base.html:61
 msgid "Career"
 msgstr "工作"
 
-#: templates/base.html:68
+#: templates/base.html:62
 msgid "Privacy"
 msgstr "隐私"
 
-#: templates/base.html:69
+#: templates/base.html:63
 msgid "Contact Us"
 msgstr "联系我们"
 
-#: templates/base.html:70
+#: templates/base.html:64
 msgid "Home"
 msgstr "首页"
 
-#: templates/base.html:71
+#: templates/base.html:65
 msgid "Excellent Architects"
 msgstr "优秀的建筑师"
 
-#: templates/base.html:72
+#: templates/base.html:66
 msgid "NCIQ certificated Designers"
 msgstr "NCIQ 认证设计师"
 
-#: templates/base.html:73
+#: templates/base.html:67
 msgid "Active Contractors"
 msgstr "活跃的承包商"
 
-#: templates/base.html:74
+#: templates/base.html:68
 msgid "Start Search"
 msgstr "开始搜索"
 
-#: templates/base.html:75
+#: templates/base.html:69
 msgid "previous"
 msgstr "上一页"
 
-#: templates/base.html:76
+#: templates/base.html:70
 msgid "next"
 msgstr "下一页"
 
-#: templates/base.html:77
+#: templates/base.html:71
 msgid "Efficiency"
 msgstr "项目效率"
 
-#: templates/base.html:78
+#: templates/base.html:72
 msgid "Quality"
 msgstr "项目质量"
 
-#: templates/base.html:79
+#: templates/base.html:73
 msgid "Length"
 msgstr "工期"
 
-#: templates/base.html:80
+#: templates/base.html:74
 msgid "Name"
 msgstr "公司名字"
 
-#: templates/base.html:82
+#: templates/base.html:76
 msgid "Postal Code"
 msgstr "邮编"
 
-#: templates/base.html:83
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:135
+#: templates/base.html:77
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:280
 msgid "State"
 msgstr "州"
 
-#: templates/base.html:84
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:134
+#: templates/base.html:78
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:279
 msgid "Street"
 msgstr "街道"
 
-#: templates/base.html:85
+#: templates/base.html:79
 msgid "Professional Category"
 msgstr "专业分类"
 
-#: templates/base.html:86
+#: templates/base.html:80
 msgid "Professional Sub-Category"
 msgstr "专业子分类"
 
-#: templates/base.html:87
+#: templates/base.html:81
 msgid "Arbitrations"
 msgstr "仲裁次数"
 
-#: templates/base.html:88
+#: templates/base.html:82
 msgid "Cases"
 msgstr "案件次数"
 
-#: templates/base.html:89
+#: templates/base.html:83
 msgid "Citations"
 msgstr "传票次数"
 
-#: templates/base.html:90
+#: templates/base.html:84
 msgid "Lawsuits"
 msgstr "诉讼次数"
 
-#: templates/base.html:91 users/templates/account/login.html:154
-#: users/templates/account/signup.html:205
+#: templates/base.html:85 users/templates/account/login.html:149
+#: users/templates/account/signup.html:206
 msgid "Password"
 msgstr "密码"
 
-#: templates/base.html:92
+#: templates/base.html:86
 msgid "New"
 msgstr "新"
 
-#: templates/base.html:93
+#: templates/base.html:87
 msgid "New Password"
 msgstr "新的密码"
 
-#: templates/base.html:94
+#: templates/base.html:88
 msgid "Current Password"
 msgstr "当前密码"
 
-#: templates/base.html:96
+#: templates/base.html:90
 msgid "Years in Industry"
 msgstr "工作年限"
 
-#: templates/base.html:100
+#: templates/base.html:94
 msgid "Account Settings"
 msgstr "账户设置"
 
-#: templates/base.html:101
+#: templates/base.html:95
 msgid "Rank"
 msgstr "评分区间"
 
-#: templates/base.html:102
+#: templates/base.html:96
 msgid "Project Overview"
 msgstr "项目总览"
 
-#: templates/base.html:103
+#: templates/base.html:97
 msgid "Project Detail"
 msgstr "项目细节"
 
-#: templates/base.html:104
+#: templates/base.html:98
 msgid "Basic Information"
 msgstr "商家资讯"
 
-#: templates/base.html:105
+#: templates/base.html:99
 msgid "Project Name"
 msgstr "项目名称"
 
-#: templates/base.html:108
+#: templates/base.html:102
 msgid "Client Name"
 msgstr "客户姓名"
 
-#: templates/base.html:109
+#: templates/base.html:103
 msgid "Business Name"
 msgstr "商家姓名"
 
-#: templates/base.html:110
+#: templates/base.html:104
 msgid "Contracted With"
 msgstr "承包商"
 
-#: templates/base.html:111
+#: templates/base.html:105
 msgid "Start Date"
 msgstr "施工起始时间"
 
-#: templates/base.html:112
+#: templates/base.html:106
 msgid "End Date"
 msgstr "发布日期"
 
-#: templates/base.html:113
+#: templates/base.html:107
 msgid "Description"
 msgstr "描述"
 
-#: templates/base.html:114 templates/base.html:122
+#: templates/base.html:108 templates/base.html:116
 msgid "Status"
 msgstr "州"
 
-#: templates/base.html:115
+#: templates/base.html:109
 msgid "Action"
 msgstr "具体操作"
 
-#: templates/base.html:116
+#: templates/base.html:110
 msgid "Attachment"
 msgstr "附件"
 
-#: templates/base.html:118
+#: templates/base.html:112
 msgid "Transaction History"
 msgstr "交易记录"
 
-#: templates/base.html:119
+#: templates/base.html:113
 msgid "Type"
 msgstr "类型"
 
-#: templates/base.html:120
+#: templates/base.html:114
 msgid "Time"
 msgstr "时间"
 
-#: templates/base.html:121 transactions/forms.py:15
+#: templates/base.html:115 transactions/forms.py:15
 msgid "Amount"
 msgstr "账户"
 
-#: templates/base.html:123
+#: templates/base.html:117
 msgid "Updated At"
 msgstr "上传日期"
 
-#: templates/base.html:124
+#: templates/base.html:118
 msgid "Project Created"
 msgstr "项目创建于"
 
-#: templates/base.html:256 users/templates/account/login.html:167
+#: templates/base.html:273 users/templates/account/login.html:162
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:156
 msgid "Sign In"
 msgstr "登入"
 
@@ -776,73 +815,100 @@ msgstr "邮箱地址"
 msgid "Add E-mail"
 msgstr "添加Email"
 
-#: users/templates/account/login.html:98
+#: users/templates/account/email_confirm.html:6
+#: users/templates/account/email_confirm.html:9
+msgid "Confirm E-mail Address"
+msgstr "添加邮箱地址"
+
+#: users/templates/account/email_confirm.html:13
+#, python-format
+msgid ""
+"Please confirm that\n"
+"                %(email)s is an e-mail address for user %(user_display)s\n"
+"                ."
+msgstr "请确认%(email)s是%(user_display)s的邮箱。"
+
+#: users/templates/account/email_confirm.html:19
+msgid "Confirm"
+msgstr "确认"
+
+#: users/templates/account/email_confirm.html:23
+msgid "This e-mail confirmation link expired or is invalid."
+msgstr "该确认链接已经失效。"
+
+#: users/templates/account/email_confirm.html:24
+msgid ""
+"Please issue a new e-mail confirmation\n"
+"                    request."
+msgstr "请重新要求新的邮件确认"
+
+#: users/templates/account/login.html:93
 msgid "Log In to Hoome"
 msgstr "登入Hoome"
 
-#: users/templates/account/login.html:99
+#: users/templates/account/login.html:94
 msgid "By logging in, you agree to Hoome’s "
 msgstr "登入Hoome表示您已经同意Hoome的"
 
-#: users/templates/account/login.html:100
-#: users/templates/account/signup.html:118
+#: users/templates/account/login.html:95
+#: users/templates/account/signup.html:117
 msgid "Terms of Service"
 msgstr "服务条款"
 
-#: users/templates/account/login.html:100
-#: users/templates/account/signup.html:118
+#: users/templates/account/login.html:95
+#: users/templates/account/signup.html:117
 msgid "and"
 msgstr "和"
 
-#: users/templates/account/login.html:101
-#: users/templates/account/signup.html:119
+#: users/templates/account/login.html:96
+#: users/templates/account/signup.html:118
 msgid "Privacy Policy"
 msgstr "隐私条款"
 
-#: users/templates/account/login.html:115
-#: users/templates/account/login.html:125
+#: users/templates/account/login.html:110
+#: users/templates/account/login.html:120
 msgid "Sign in with"
 msgstr "第三方登入："
 
-#: users/templates/account/login.html:134
-#: users/templates/account/signup.html:164
+#: users/templates/account/login.html:129
+#: users/templates/account/signup.html:163
 msgid "If you have not created an account yet, then please"
 msgstr "如果你还没有创建用户，请"
 
-#: users/templates/account/login.html:135
-#: users/templates/account/signup.html:165
+#: users/templates/account/login.html:130
+#: users/templates/account/signup.html:164
 msgid "sign up"
 msgstr "注册"
 
-#: users/templates/account/login.html:135
-#: users/templates/account/signup.html:165
+#: users/templates/account/login.html:130
+#: users/templates/account/signup.html:164
 msgid "first."
 msgstr "先"
 
-#: users/templates/account/login.html:139
-#: users/templates/account/signup.html:168
+#: users/templates/account/login.html:134
+#: users/templates/account/signup.html:167
 msgid "OR"
 msgstr "或"
 
-#: users/templates/account/login.html:151
+#: users/templates/account/login.html:146
 #: users/templates/account/signup.html:192
 msgid "Username"
 msgstr "用户名"
 
-#: users/templates/account/login.html:151
+#: users/templates/account/login.html:146
 msgid "or"
 msgstr "或"
 
-#: users/templates/account/login.html:163
+#: users/templates/account/login.html:158
 msgid "Forgot Password?"
 msgstr "忘记密码"
 
-#: users/templates/account/login.html:170
+#: users/templates/account/login.html:165
 msgid "New to Hoome?"
 msgstr "第一次使用Hoome?"
 
-#: users/templates/account/login.html:171
-#: users/templates/account/signup.html:210
+#: users/templates/account/login.html:166
+#: users/templates/account/signup.html:211
 msgid "Sign Up"
 msgstr "注册"
 
@@ -855,38 +921,38 @@ msgstr "再一次输入新密码"
 msgid "Change Password"
 msgstr "修改密码"
 
-#: users/templates/account/signup.html:116
+#: users/templates/account/signup.html:115
 msgid "Sign Up for Hoome"
 msgstr "在Hoome注册"
 
-#: users/templates/account/signup.html:117
+#: users/templates/account/signup.html:116
 msgid "By signing up, you agree to Hoome’s "
 msgstr "在Hoome注册表示您已经同意了"
 
-#: users/templates/account/signup.html:124
-#: users/templates/account/signup.html:201
+#: users/templates/account/signup.html:123
+#: users/templates/account/signup.html:202
 msgid "Consumer"
 msgstr "顾客"
 
-#: users/templates/account/signup.html:127
-#: users/templates/account/signup.html:200
+#: users/templates/account/signup.html:126
+#: users/templates/account/signup.html:201
 msgid "Professional"
 msgstr "专业"
 
-#: users/templates/account/signup.html:144
-#: users/templates/account/signup.html:155
+#: users/templates/account/signup.html:143
+#: users/templates/account/signup.html:154
 msgid "Sign up with"
 msgstr "第三方注册："
 
-#: users/templates/account/signup.html:207
+#: users/templates/account/signup.html:208
 msgid "Password (again)"
 msgstr "再一次输入密码"
 
-#: users/templates/account/signup.html:213
+#: users/templates/account/signup.html:214
 msgid "Already on Hoome?"
 msgstr "已经拥有Hoome账号了？"
 
-#: users/templates/account/signup.html:214
+#: users/templates/account/signup.html:215
 msgid "Log in"
 msgstr "登入"
 
@@ -898,33 +964,57 @@ msgstr "专业人士信息"
 msgid "Save Changes"
 msgstr "保存修改"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:49
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:194
 msgid "Choose License Type"
 msgstr "请选择证件类型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:108
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:253
 msgid "Find Your License In Our Database"
 msgstr "请输入您的证件号码与我们数据库的证件匹配"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:115
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:260
 msgid "Enter Or Modify Your Company Name and Entity Type"
 msgstr "请输入公司的名字和实体类型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:124
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:269
 msgid "Enter Or Modify Your Company Category"
 msgstr "请选择公司的类型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:131
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:276
 msgid "Enter Or Modify Your Company Address"
 msgstr "请输入您公司的地址"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:136
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:281
 msgid "Zipcode"
 msgstr "邮政编码"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:151
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:297
 msgid "Next"
 msgstr "下一步"
+
+#: users/views.py:113
+msgid "Lic number does not exist"
+msgstr "证件号码不存在"
+
+#: users/views.py:168 users/views.py:209
+msgid "Your Profile updated."
+msgstr "您的档案已更新"
+
+#~ msgid ""
+#~ "Hoome Score is caculated by how many years it is in the\n"
+#~ "                                            industry,\n"
+#~ "                                            suspension history,\n"
+#~ "                                            complaints and other many "
+#~ "factors. Now we calculate the Hoome Score by\n"
+#~ "                                            number of\n"
+#~ "                                            work experience, suspension\n"
+#~ "                                            history, complaints. Later "
+#~ "the score will evolve with more\n"
+#~ "                                            factors. "
+#~ msgstr ""
+#~ "Hoome评分是通过计算工作年限，执照吊销记录，投诉记录和其他因素得出。现在"
+#~ "Hoome评分囊括了工作年限，执照吊销记录和投诉记录。 后期该评分会添加更多考量"
+#~ "因素。"
 
 #~ msgid "Contract Us"
 #~ msgstr "与我们签订合约"

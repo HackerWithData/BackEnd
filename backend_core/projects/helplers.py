@@ -4,6 +4,7 @@ register = template.Library()
 
 
 # In Test. Not Ready for use
+# TODO: what's the point? find the name of object. It seems rare to use.
 @register.filter
 def get_object_name_for_this_content_type(obj):
     if not obj:

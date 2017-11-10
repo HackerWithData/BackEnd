@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block metainfo %}
+    <style>.header {
+        background-color: #6892D5;
+    }
+
+    .header .navbar {
+        color: #ffffff;
+    }
+
+    .header .navbar .logo.cursive {
+        color: #ffffff;
+        background-color: inherit;
+    }
+
+    .header.active {
+        background-color: #6892D5;
+    }
+
+    .header.active .navbar .logo.cursive {
+        color: #ffffff;
+    }
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="container header-gap">
+        <h1>{% trans 'Permission Denied' %}</h1>
+        <p>{% blocktrans %}You don't have the permission to do the following actions. {% endblocktrans %}</p>
+    </div>
+{% endblock %}

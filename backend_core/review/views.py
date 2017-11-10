@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.views import View
-from django.conf import settings
-# from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from users.models import User
 from forms import ReviewForm
@@ -12,20 +10,18 @@ from models import Review
 from django.contrib.auth.hashers import make_password
 from contractors.models import Contractor
 from django.contrib.contenttypes.models import ContentType
-from disk.models import UserFile, ProjectImage
 from photos.models import Photo
 import datetime
-
-from django.http import HttpResponseNotFound
-# Create your views here.
 from users.utils import CONSUMER
 from django.conf import settings
-
+from django.http import HttpResponseNotFound, Http404
+# Create your views here.
 
 
 def submit_review(request, o_id):
-    template_name = r'review/submit_review_contractor.html'
+    template_name = r'review/submit_review.html'
     if request.method == "POST":
+
         user_rating_form = UserRatingForm(request.POST)
         # sign_up_form = SignUpForm2(request.POST)
         review_form = ReviewForm(request.POST)
@@ -88,9 +84,10 @@ def submit_review(request, o_id):
     info_dict = {'review_form': review_form, "user_rating_form": user_rating_form, }
     return render(request, template_name, {"info_dict": info_dict})
 
+
 def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
-        template_name = r'contractor/contractor_review.html'
+        template_name = r'review/display_review.html'
         if 'contractor' in request.path:
             model_type = 'contractor'
         elif 'designer' in request.path:
@@ -99,9 +96,8 @@ def display_review(request, o_id):
             model_type = 'architect'
         review = Review.objects.filter(content_type=ContentType.objects.get(model=model_type), object_id=o_id,
                                        review_status='A')
-
         # other situation
         info_dict = {"review": review}
         return render(request, template_name, {"info_dict": info_dict})
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404('No Pages Found.')

@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponseNotFound
-from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _
+
+import datetime
+from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
-from models import Contractor, BondHistory, WorkerCompensationHistory, Complaint_Overall, Overview
-from users.models import User
-from review.forms import ReviewForm
+from django.http import HttpResponseNotFound, Http404
+from django.shortcuts import render, redirect
+from django.utils.translation import ugettext as _
+from django.views import View
+from hscore.models import Hscore
+from photos.forms import PhotoForm
+from photos.models import Photo, BackgroundPhoto
+from professionals.models import Professional
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
+from review.forms import ReviewForm
 from review.models import Review
-from hscore.models import Hscore
-from photos.models import Photo, BackgroundPhoto
-from photos.forms import PhotoForm
-from professionals.models import Professional
-from .utils import convert_hscore_to_rank, get_state_full_name, avg_rating
-from forms import OverviewForm
-import datetime
-from django.views import View
-from django.contrib import messages
+from users.models import User
+from overviews.forms import OverviewForm
+from overviews.models import Overview
+from overviews.views import edit_overview
+from models import Contractor, BondHistory, WorkerCompensationHistory, ComplaintOverall
+from utils import convert_hscore_to_rank, get_state_full_name, avg_rating
+
 
 # Create your views here.
 class Complaint1:
@@ -83,28 +87,6 @@ def submit_review(request, o_id):
         return redirect(request.path)
 
 
-def edit_overview(request, o_id):
-    overview_form = OverviewForm(request.POST)
-    # TODO: assign a random password
-    if overview_form.is_valid():
-        # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
-        if 'contractor' in request.path:
-            model_type = 'contractor'
-        elif 'designer' in request.path:
-            model_type = 'designer'
-        elif 'architect' in request.path:
-            model_type = 'architect'
-        overview, status = Overview.objects.get_or_create(content_type=ContentType.objects.get(model=model_type), object_id=o_id)
-        #if status==False:
-        overview.overview = overview_form.cleaned_data['overview']
-        overview.save()
-        messages.success(request, 'Request Success')
-    else:
-        messages.warning(request, 'Request Failed')
-
-
-
-
 class ContractorDetail(View):
     def get(self, request, contractor_id):
         # contractor info
@@ -137,7 +119,7 @@ class ContractorDetail(View):
         contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                                    object_id=contractor_id).order_by('ratings_average')
         ratings = {}
-        ratings['stars'] = range(RATING_STAR_MAX)
+        ratings['stars'] = range(RATING_STAR_MAX, 0, -1)
         # TODO:NEED TO CHANGE HERE
         ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
         try:
@@ -150,12 +132,15 @@ class ContractorDetail(View):
                                               object_id=contractor_id)
         if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
             length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+        # test issue, won't happen in prod
+        elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+            length = 0
         else:
             length = int(datetime.date.today().year - contractor.lic_issue_date.year)
 
         try:
-            complaint = Complaint_Overall.objects.get(lic_num=contractor_id)
-        except Complaint_Overall.DoesNotExist:
+            complaint = ComplaintOverall.objects.get(lic_num=contractor_id)
+        except ComplaintOverall.DoesNotExist:
             complaint = Complaint1
             complaint.case = 0
             complaint.citation = 0
@@ -215,7 +200,7 @@ class ContractorDetail(View):
             edit_overview(request, contractor_id)
             return redirect(request.path)
         else:
-            return HttpResponseNotFound("Error Pages!")
+            raise Http404(_("Error Pages!"))
 
 
 def update_accept_review(request):
@@ -239,7 +224,7 @@ def display_project_photos(request, contractor_id):
         info_dict = {'project_photos': project_photos}  # , 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404(_('No Pages Found.'))
 
 
 def upload_project_photos(request, contractor_id):
@@ -273,4 +258,4 @@ def upload_project_photos(request, contractor_id):
         info_dict = {'form': form}
         return render(request, template_name, info_dict)
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404(_('No Pages Found.'))

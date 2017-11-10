@@ -28,11 +28,17 @@ SECRET_KEY = ')m##(8z_3^sv@-s-4=0&dkcf(2d1^_afw_5$61e@e%oz*4a1!%'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '52.38.54.17',
+    '52.88.186.98',
+    '*',
+    'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
     'hoome-dev1.juic4tcbnm.us-west-2.elasticbeanstalk.com',
     'hoome.us-west-2.elasticbeanstalk.com',
+    'hoomeloadbalancer-720620192.us-west-2.elb.amazonaws.com',
     'localhost',
     '0.0.0.0',
     '127.0.0.1',
+    '50.112.222.173',
     '52.27.223.231',
     '54.148.14.191',
     'ec2-54-148-14-191.us-west-2.compute.amazonaws.com',
@@ -73,7 +79,6 @@ WEB_APPS = [
     'contractors',
     'home',
     'users',
-    'disk',
     'photos',
     'review',
     'ratings',
@@ -87,6 +92,7 @@ WEB_APPS = [
     "hscore",
     'projects',
     'transactions',
+    'overviews'
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
