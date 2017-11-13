@@ -30,18 +30,12 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '52.38.54.17',
     '52.88.186.98',
-    '*',
     'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
-    'hoome-dev1.juic4tcbnm.us-west-2.elasticbeanstalk.com',
-    'hoome.us-west-2.elasticbeanstalk.com',
-    'hoomeloadbalancer-720620192.us-west-2.elb.amazonaws.com',
+    'SSLLoadBalancer-2138526934.us-west-2.elb.amazonaws.com',
     'localhost',
     '0.0.0.0',
     '127.0.0.1',
-    '50.112.222.173',
-    '52.27.223.231',
-    '54.148.14.191',
-    'ec2-54-148-14-191.us-west-2.compute.amazonaws.com',
+    '.hoome.io',
     'hoome.io',
     'www.hoome.io',
 ]
@@ -98,6 +92,7 @@ WEB_APPS = [
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -295,5 +290,5 @@ TINYMCE_DEFAULT_CONFIG = {
 # 'autoresize_max_height': 350,
 TINYMCE_COMPRESSOR = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'var/hoome/')
-# TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')

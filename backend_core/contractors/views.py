@@ -152,7 +152,7 @@ class ContractorDetail(View):
         else:
             try:
                 p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
-            except Professional.DoesNotExist:
+            except:
                 p_lic_num = None
 
         # other situation

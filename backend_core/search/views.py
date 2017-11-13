@@ -26,7 +26,6 @@ def search_new(request):
         else:
             raise UnexpectedRequest("Error: Unexpected request type for new search ajax request")
         return HttpResponse("Ok")
-
     elif request.method == 'GET':
         # TODO: set default value
         if request.GET['type'].upper() == 'NAMEORLIC':
@@ -52,7 +51,6 @@ def search_new(request):
 
     else:
         return redirect('home_index')
-
 
     return render(request, 'search_list/search_list.html', {
         'professionals': page_query_set,
