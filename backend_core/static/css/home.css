@@ -194,8 +194,7 @@ p {
 }
 
 .navbar-inverse {
-    background-image: none;
-    background-color: transparent;
+    background: transparent;
 }
 
 .header .navbar {
@@ -220,8 +219,7 @@ p {
     margin-top: 15px !important;
     margin-right: 15px;
     margin-bottom: 8px;
-    background-color: transparent;
-    background-image: none;
+    background: transparent;
     border: 1px solid transparent;
     border-radius: 4px;
 }
@@ -358,7 +356,6 @@ footer, footer * {
 
     .navbar-nav {
         padding: 0px;
-        margin-top: 0px;
         margin-top: 0px;
     }
 
@@ -694,19 +691,10 @@ Single slide style
 
 -------------------------------- */
 .cd-hero-slider li {
-  background-position: center center;
+  background: center center no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
 }
-/*.cd-hero-slider li:first-of-type {*/
-  /*background-image: url('');*/
-/*}*/
-/*.cd-hero-slider li:nth-of-type(2) {*/
-  /*background-image: url(r'C:\Users\jianyuan\PycharmProjects\site\backend_core\media\background-pic/slide_02.jpg');*/
-/*}*/
-/*.cd-hero-slider li:nth-of-type(3) {*/
-  /*background-image: url(r'C:\Users\jianyuan\PycharmProjects\site\backend_core\media\background-pic/slide_03.jpg');*/
-/*}*/
+
 .cd-hero-slider .cd-full-width,
 .cd-hero-slider .cd-half-width {
   position: absolute;

@@ -207,15 +207,7 @@ Single slide style
   background-size: cover;
   background-repeat: no-repeat;
 }
-/*.cd-hero-slider li:first-of-type {*/
-  /*background-image: url('');*/
-/*}*/
-/*.cd-hero-slider li:nth-of-type(2) {*/
-  /*background-image: url(r'C:\Users\jianyuan\PycharmProjects\site\backend_core\media\background-pic/slide_02.jpg');*/
-/*}*/
-/*.cd-hero-slider li:nth-of-type(3) {*/
-  /*background-image: url(r'C:\Users\jianyuan\PycharmProjects\site\backend_core\media\background-pic/slide_03.jpg');*/
-/*}*/
+
 .cd-hero-slider .cd-full-width,
 .cd-hero-slider .cd-half-width {
   position: absolute;

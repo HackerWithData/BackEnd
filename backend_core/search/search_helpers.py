@@ -6,7 +6,7 @@ from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from professionals.models import Professional, ProfessionalType
-from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES
 from contractors.utils import convert_hscore_to_rank
 
 
@@ -44,7 +44,12 @@ def search_by_name_or_lic(request):
         qs_prof_by_name = Professional.objects.filter(name=str(name_or_lic))
         qs_prof_by_lic = Professional.objects.filter(lic_num=name_or_lic)
         prof_qs = list(qs_prof_by_lic) + list(qs_prof_by_name)
-    # name search
+    # elif search_target in [i[0] for i in PROFESSIONAL_CHOICES]:
+    #     prof_qs = Professional.objects.filter(type=search_target)
+    # # name search
+    # elif search_target in [i[0] for i in PROFESSIONAL_SUBTYPE_CHOICES]:
+    #     prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
+    #                                           professional_type__subtype=search_target)
     else:
         prof_qs = Professional.objects.filter(name__icontains=search_target)
     # no result found
@@ -60,7 +65,6 @@ def search_by_zipcode(request):
     search_type = request.GET['type'].upper()
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
-
     # type search
     prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
 

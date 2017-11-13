@@ -3,7 +3,6 @@ DELETE FROM django_migrations where app = 'contracotrs';
 /*Drop Table django_migrations;
 
  */
-
 /*SELECT * FROM django_migrations limit 1;
  */
 

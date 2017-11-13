@@ -1,12 +1,12 @@
 from models import Photo, BackgroundPhoto
 from django import forms
 
+
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('img',)
         widgets = {'img': forms.ClearableFileInput(attrs={'multiple': True})}
-
 
 
 class BackgroundPhotoForm(forms.ModelForm):
@@ -18,8 +18,3 @@ class BackgroundPhotoForm(forms.ModelForm):
 class FileFieldForm(forms.Form):
     img = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     fields = ('img', )
-    #
-    # widgets = {
-    #     'object_id': forms.HiddenInput(),
-    #     'content_type': forms.HiddenInput(),
-    # }

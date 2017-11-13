@@ -6,16 +6,6 @@
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
-<<<<<<< HEAD
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>#}
-    <!-- Add the slick-theme.css if you want default styling -->
-    {#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>#}
-    {#    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>#}
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
-=======
->>>>>>> 9509046a2a943e0695f236532d995e3b7724814a
     <style>
         #masthead {
             background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
@@ -34,7 +24,6 @@
                 $('#peek').removeClass('link');
             }
         });
-
     </script>
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
@@ -75,20 +64,21 @@
                             {#                                </li>#}
                             {#                            {% endif %}#}
                             <li>{{ Phone }}: {{ info_dict.designer.phone }}</li>
-                            <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
-                                {#                            {% for key,value in info_dict.ratings.overall %} {{ key }} {% endfor %}#}
-                                {#                                <div class="star-ratings-css">#}
-                                {#                                    <div class="star-ratings-css-top" style="width:100%">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                    <div class="star-ratings-css-bottom">#}
-                                {#                                        {% for i in info_dict.ratings.stars %}#}
-                                {#                                            <span>★</span>#}
-                                {#                                        {% endfor %}#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+                        </ul>
+                        <ul style="list-style-type:None;">
+                            <li>
+                                <div class="ratings_rating">
+                                    <span>{{ Overall_Rating }}:</span>
+                                    {% for radio in info_dict.ratings.stars %}
+                                        {% if radio <= info_dict.ratings.overall %}
+                                            <span class="yellow" id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% else %}
+                                            <span id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -168,7 +158,7 @@
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>
         {% csrf_token %}
-        <input type="submit" value="{{ Submit }}">
+        <input type="submit" class="btn btn-hoome" value="{{ Submit }}">
     </form>
 {% endblock %}
 
@@ -244,18 +234,18 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
-                    $('#edit_overview').removeClass('hide');
-                    $('#overview-wrapper').removeClass('text');
-                    $('#overview-wrapper').removeClass('height');
-                    $('#display_overview').addClass('hide');
+{#                    $('#edit_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').removeClass('text');#}
+{#                    $('#overview-wrapper').removeClass('height');#}
+{#                    $('#display_overview').addClass('hide');#}
                     $('#peek').addClass('hide');
 
                 } else {
                     $('#edit-btn').addClass('hide');
-                    $('#edit_overview').addClass('hide');
-                    $('#display_overview').removeClass('hide');
-                    $('#overview-wrapper').addClass('text');
-                    $('#overview-wrapper').addClass('height');
+{#                    $('#edit_overview').addClass('hide');#}
+{#                    $('#display_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').addClass('text');#}
+{#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
                 }
             });

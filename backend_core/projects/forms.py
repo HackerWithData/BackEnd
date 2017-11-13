@@ -9,6 +9,7 @@ class ProjectAttachmentForm(forms.ModelForm):
         fields = ('attachment_type', 'project_attachment')
         widgets = {'project_attachment': forms.ClearableFileInput(attrs={'multiple': True})}
 
+
 class ProjectPhotoForm(forms.ModelForm):
     class Meta:
         model = ProjectPhoto
@@ -18,11 +19,11 @@ class ProjectPhotoForm(forms.ModelForm):
 
 class ProjectForm(forms.Form):
     REMODEL = "R"
-    NEWBUILT = "N"
+    NEW_BUILT = "N"
     PROJECT_TYPE = (
         ("", '-----'),
         (REMODEL, __('REMODEL')),
-        (NEWBUILT, __("NEW BUILT HOUSE")),
+        (NEW_BUILT, __("NEW BUILT HOUSE")),
     )
     # TODO: need a google address autocompeletion/correction
     project_name = forms.CharField(label=__('Project Name'), max_length=100)

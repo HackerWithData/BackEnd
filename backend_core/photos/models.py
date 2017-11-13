@@ -9,11 +9,11 @@ class Photo(models.Model):
     img = models.ImageField(upload_to='photos/photos/%Y/%m/%d')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255, blank=True)
-
     #generic relation
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+
 
 
 class BackgroundPhoto(models.Model):
@@ -31,14 +31,10 @@ class BackgroundPhoto(models.Model):
 
 class FileField(models.Model):
     img = models.ImageField(upload_to='photos/photos/%Y/%m/%d')
-    #uploaded_at = models.DateTimeField(auto_now_add=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255, blank=True)
-
     #generic relation
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-
-    #class Meta:
-    #    unique_together = ['content_type', "object_id"]
 

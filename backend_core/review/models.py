@@ -10,6 +10,8 @@ from photos.models import Photo
 from django.conf import settings
 
 # Create your models here.
+
+
 class Review(models.Model):
     PENDING = 'P'
     ACCEPTED = 'A'
@@ -37,9 +39,9 @@ class Review(models.Model):
     is_anonymous = models.BooleanField(max_length=3, choices=STATE_CHOICES, default=False)
     review_status = models.CharField(max_length=1, choices=REVIEW_STATUS, default=ACCEPTED)
     review_date = models.DateTimeField(default=timezone.now)
-
     #photo
     photo = GenericRelation(Photo)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
     object_id = models.PositiveIntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
+

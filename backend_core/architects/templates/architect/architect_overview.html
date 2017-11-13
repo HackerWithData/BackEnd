@@ -2,16 +2,16 @@
     <!--summary-->
     <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
         <div id='overview-wrapper' class="text height">
-            {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
-                <div id="edit_overview" class="hide">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {{ info_dict.overview_form.overview }}
-                        {% csrf_token %}
-                        <br/>
-                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>
-                    </form>
-                </div>
-            {% endif %}
+{#            {% if info_dict.p_lic_num == info_dict.architect.lic_num %}#}
+{#                <div id="edit_overview" class="hide">#}
+{#                    <form action="" method="post" enctype="multipart/form-data">#}
+{#                        {{ info_dict.overview_form.overview }}#}
+{#                        {% csrf_token %}#}
+{#                        <br/>#}
+{#                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>#}
+{#                    </form>#}
+{#                </div>#}
+{#            {% endif %}#}
             <div id="display_overview">
                 {{ info_dict.overview|safe }}
             </div>
@@ -41,9 +41,9 @@
 
                     <tr>
                         <td class="rname">{{ Issued_Date }}:</td>
-                        <td>{{ info_dict.architect.issue_date }}</td>
+                        <td>{{ info_dict.architect.lic_issue_date }}</td>
                     </tr>
-                    {% if info_dict.architect.expire_date %}
+                    {% if info_dict.architect.lic_expire_date %}
                         <tr>
                             <td class="rname">{{ Expiration_Date }}:</td>
                             <td>{{ info_dict.architect.expire_date }}</td>

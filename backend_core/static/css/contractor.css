@@ -140,6 +140,30 @@ h1 {
     float: right;
 }
 
+/* css for overall rating */
+
+.ratings_rating > label:before {
+    margin: 0px 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.ratings_rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.ratings_rating > label {
+    color: #ddd;
+    float: right;
+}
+
+.ratings_rating > span.yellow + label {
+    color: #FFD700 ;!important
+}
+
 /***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label, /* show gold star when clicked */
@@ -156,7 +180,9 @@ h1 {
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
 }
-
+.rating > span.yellow + label{
+    color: #FFD700;!important
+}
 /*********************** masthead **********************/
 
 #masthead {
@@ -239,7 +265,6 @@ h1 {
 
 #BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
     color: white;
-    background-image: none;
     /*#TODO: COLOR WARNING*/
     background-color: #6892D5;
 }
@@ -434,9 +459,7 @@ h1 {
     bottom: 100%;
     left: 10%;
     margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent;
+    border : 5px solid transparent;
     border-bottom-color: #555;
 }
 

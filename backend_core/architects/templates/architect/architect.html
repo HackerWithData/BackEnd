@@ -63,7 +63,21 @@
                             {% if info_dict.architect.phone %}
                                 <li>{{ Phone }}: {{ info_dict.architect.phone }}</li>
                             {% endif %}
-                            <li>{{ Overall_Rating }}: {{ info_dict.ratings.overall }}
+                        </ul>
+                        <ul style="list-style-type:None;">
+                            <li>
+                                <div class="ratings_rating">
+                                    <span>{{ Overall_Rating }}:</span>
+                                    {% for radio in info_dict.ratings.stars %}
+                                        {% if radio <= info_dict.ratings.overall %}
+                                            <span class="yellow" id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% else %}
+                                            <span id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -120,7 +134,6 @@
     <form id="review-submission" action="" method="post" enctype="multipart/form-data"
           class="mfp-hide white-popup-block">
         {% for field in info_dict.user_rating_form %}
-
             <div class="rating-name">
                 {% if field.label == 'Efficiency' %}
                     {{ Efficiency }} :
@@ -144,7 +157,7 @@
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>
         {% csrf_token %}
-        <input type="submit" value="{{ Submit }}">
+        <input type="submit" class='btn btn-hoome' value="{{ Submit }}">
     </form>
     {#    </div>#}
 {% endblock %}
@@ -225,18 +238,18 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
-                    $('#edit_overview').removeClass('hide');
-                    $('#overview-wrapper').removeClass('text');
-                    $('#overview-wrapper').removeClass('height');
-                    $('#display_overview').addClass('hide');
+{#                    $('#edit_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').removeClass('text');#}
+{#                    $('#overview-wrapper').removeClass('height');#}
+{#                    $('#display_overview').addClass('hide');#}
                     $('#peek').addClass('hide');
 
                 } else {
                     $('#edit-btn').addClass('hide');
-                    $('#edit_overview').addClass('hide');
-                    $('#display_overview').removeClass('hide');
-                    $('#overview-wrapper').addClass('text');
-                    $('#overview-wrapper').addClass('height');
+{#                    $('#edit_overview').addClass('hide');#}
+{#                    $('#display_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').addClass('text');#}
+{#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
 
                 }

@@ -25,14 +25,18 @@ def retrieve_professional_link(context):
 @register.simple_tag(takes_context=True)
 def is_professional(context):
     user = context['request'].user
-    print user.role.upper() == 'PROFESSIONAL'
     return user.role.upper() == 'PROFESSIONAL'
 
 
 @register.simple_tag(takes_context=True)
 def is_sign_up_completed(context):
     user = context['request'].user
-    print not (user.professional_profiles is None)
-    return not (user.professional_profiles is None)
+    professional_profile = user.professional_profiles.first()
+    if not professional_profile:
+        return False
+    professional = professional_profile.professional
+    if not professional:
+        return False
+    return True
 
 
