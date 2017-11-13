@@ -92,7 +92,6 @@ WEB_APPS = [
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
