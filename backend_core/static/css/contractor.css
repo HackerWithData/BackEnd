@@ -180,7 +180,9 @@ h1 {
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
 }
-
+.rating > span.yellow + label{
+    color: #FFD700;!important
+}
 /*********************** masthead **********************/
 
 #masthead {
