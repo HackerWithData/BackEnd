@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, reverse
 from forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm
 from models import Project, ProjectPhoto, ProjectAttachment
@@ -133,7 +133,7 @@ def create_project(request, professional_type, lic_id):
         info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound(_("Sorry. Pages Not Found"))
+        raise Http404(_("Sorry. Pages Not Found"))
 
 
 @login_required
@@ -178,7 +178,7 @@ class ProjectDetail(TemplateView):
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
-            return HttpResponseNotFound(_("Page Not Found"))
+            raise Http404(_("Page Not Found"))
 
     def post(self, request, project_id):
         if request.POST.get('request-money'):

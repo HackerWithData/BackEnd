@@ -10,9 +10,11 @@ from django.contrib.contenttypes.models import ContentType
 import datetime
 import pytz
 import os
-from django.http import HttpResponseNotFound
-from django.shortcuts import render,redirect
-
+from django.http import HttpResponseNotFound, Http404
+from django.shortcuts import render, redirect
+from django.conf import settings
+import boto
+from boto.s3.key import Key
 # Create your views here.
 class BasicUploadView(View):
     def get(self, request):
@@ -61,22 +63,28 @@ def background_photo_upload(request, o_id):
             if form.is_valid():
                 bp, nonexist = BackgroundPhoto.objects.get_or_create(content_type=ContentType.objects.get(model=model_type),
                                                                     object_id=o_id)
-
                 if not nonexist:
                     old_pic_path = bp.img.file.name
-                    os.remove(old_pic_path)
-
                 bp.img = form.cleaned_data.get('img')
                 bp.title = form.cleaned_data.get('img').name
                 bp.uploaded_at = datetime.datetime.now(pytz.timezone('UTC'))
                 bp.save()
-
+                if not nonexist:
+                    if hasattr(settings, 'AWS_ACCESS_KEY_ID'):
+                        s3conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
+                                                 settings.AWS_SECRET_ACCESS_KEY)
+                        bucket = s3conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+                        k = Key(bucket)
+                        k.key = str(old_pic_path)
+                        k.delete()
+                    else:
+                        os.remove(old_pic_path)
                 return redirect(success_url)
         else:
             form = BackgroundPhotoForm()
         return render(request, template_name, {'form': form})
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404('No Pages Found.')
 
 #this funtion is deprecated
 def FileFieldUpload(request):

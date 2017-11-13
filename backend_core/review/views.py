@@ -14,7 +14,7 @@ from photos.models import Photo
 import datetime
 from users.utils import CONSUMER
 from django.conf import settings
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 # Create your views here.
 
 
@@ -100,4 +100,4 @@ def display_review(request, o_id):
         info_dict = {"review": review}
         return render(request, template_name, {"info_dict": info_dict})
     else:
-        return HttpResponseNotFound('No Pages Found.')
+        raise Http404('No Pages Found.')

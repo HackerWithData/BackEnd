@@ -5,7 +5,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.views import View
@@ -132,6 +132,9 @@ class ContractorDetail(View):
                                               object_id=contractor_id)
         if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
             length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+        # test issue, won't happen in prod
+        elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+            length = 0
         else:
             length = int(datetime.date.today().year - contractor.lic_issue_date.year)
 
@@ -149,7 +152,7 @@ class ContractorDetail(View):
         else:
             try:
                 p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
-            except Professional.DoesNotExist:
+            except:
                 p_lic_num = None
 
         # other situation
@@ -197,7 +200,7 @@ class ContractorDetail(View):
             edit_overview(request, contractor_id)
             return redirect(request.path)
         else:
-            return HttpResponseNotFound(_("Error Pages!"))
+            raise Http404(_("Error Pages!"))
 
 
 def update_accept_review(request):
@@ -221,7 +224,7 @@ def display_project_photos(request, contractor_id):
         info_dict = {'project_photos': project_photos}  # , 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))
 
 
 def upload_project_photos(request, contractor_id):
@@ -255,4 +258,4 @@ def upload_project_photos(request, contractor_id):
         info_dict = {'form': form}
         return render(request, template_name, info_dict)
     else:
-        return HttpResponseNotFound(_('No Pages Found.'))
+        raise Http404(_('No Pages Found.'))

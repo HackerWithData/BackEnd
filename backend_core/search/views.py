@@ -26,7 +26,6 @@ def search_new(request):
         else:
             raise UnexpectedRequest("Error: Unexpected request type for new search ajax request")
         return HttpResponse("Ok")
-
     elif request.method == 'GET':
         # TODO: set default value
         if request.GET['type'].upper() == 'NAMEORLIC':

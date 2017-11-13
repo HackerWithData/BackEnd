@@ -158,7 +158,7 @@
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>
         {% csrf_token %}
-        <input type="submit" value="{{ Submit }}">
+        <input type="submit" class='btn btn-hoome' value="{{ Submit }}">
     </form>
     {#    </div>#}
 {% endblock %}
@@ -239,18 +239,18 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
-                    $('#edit_overview').removeClass('hide');
-                    $('#overview-wrapper').removeClass('text');
-                    $('#overview-wrapper').removeClass('height');
-                    $('#display_overview').addClass('hide');
+{#                    $('#edit_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').removeClass('text');#}
+{#                    $('#overview-wrapper').removeClass('height');#}
+{#                    $('#display_overview').addClass('hide');#}
                     $('#peek').addClass('hide');
 
                 } else {
                     $('#edit-btn').addClass('hide');
-                    $('#edit_overview').addClass('hide');
-                    $('#display_overview').removeClass('hide');
-                    $('#overview-wrapper').addClass('text');
-                    $('#overview-wrapper').addClass('height');
+{#                    $('#edit_overview').addClass('hide');#}
+{#                    $('#display_overview').removeClass('hide');#}
+{#                    $('#overview-wrapper').addClass('text');#}
+{#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
 
                 }
