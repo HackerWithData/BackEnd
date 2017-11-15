@@ -28,20 +28,20 @@ def render_pay_now_button(context, project_id):
     :type: dict
     """
     ret = settings.FORTE_CONFIG.copy()
-
+    del ret['secure_trans_key']
     ret['total_amount'] = ''
     ret['order_number'] = generate_transaction_number(project_id=project_id)
     ret['utc_time'] = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     # no customer_token and paymehtod_token
     # string eg.   api_login_id | method | version_number | total_amount | utc_time | order_number | customer_token | paymethod_token
-    secret = b"%s|%s|%s|%s|%d|%s||" % (ret['api_login_id'],
+    secret = "%s|%s|%s|%s|%d|%s||" % (ret['api_login_id'],
                                        ret['method'],
                                        ret['version_number'],
                                        ret['total_amount'],
                                        ret['utc_time'],
                                        ret['order_number'])
     h = HMAC.new(key=settings.FORTE_CONFIG['secure_trans_key'], msg=secret, digestmod=MD5)
-    del ret['secure_trans_key']
+
     # h.update(settings.FORTE_CONFIG['secure_trans_key'])
     ret['signature'] = h.hexdigest()
     # print ret['signature']
