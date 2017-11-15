@@ -86,7 +86,10 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-                        {#                        <a href="{% url 'create_project' 'designer' info_dict.designer.lic_num %}" class="btn btn-db">{% trans 'Contract Us' %}</a>#}
+                        {% if request.user.role == "CONSUMER" %}
+                            <a href="{% url 'create_project' 'designer' info_dict.designer.lic_num %}"
+                               class="btn btn-db">{% trans 'Contract Us' %}</a>
+                        {% endif %}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
                         {% if info_dict.p_lic_num == info_dict.designer.lic_num %}
                             <div class='hide' id="edit-btn">
@@ -184,10 +187,10 @@
         }
 
         // When the user clicks on <div>, open the popup
-{#        function popUp() {#}
-{#            var popup = document.getElementById("Score-explaination");#}
-{#            popup.classList.toggle("show");#}
-{#        }#}
+        {#        function popUp() {#}
+        {#            var popup = document.getElementById("Score-explaination");#}
+        {#            popup.classList.toggle("show");#}
+        {#        }#}
 
         function projectPhotosListener() {
             if (b) {
@@ -234,18 +237,18 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
-{#                    $('#edit_overview').removeClass('hide');#}
-{#                    $('#overview-wrapper').removeClass('text');#}
-{#                    $('#overview-wrapper').removeClass('height');#}
-{#                    $('#display_overview').addClass('hide');#}
+                    {#                    $('#edit_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').removeClass('text');#}
+                    {#                    $('#overview-wrapper').removeClass('height');#}
+                    {#                    $('#display_overview').addClass('hide');#}
                     $('#peek').addClass('hide');
 
                 } else {
                     $('#edit-btn').addClass('hide');
-{#                    $('#edit_overview').addClass('hide');#}
-{#                    $('#display_overview').removeClass('hide');#}
-{#                    $('#overview-wrapper').addClass('text');#}
-{#                    $('#overview-wrapper').addClass('height');#}
+                    {#                    $('#edit_overview').addClass('hide');#}
+                    {#                    $('#display_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').addClass('text');#}
+                    {#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
                 }
             });
@@ -253,9 +256,9 @@
             $('#readmore').click(function () {
                 readMore();
             });
-{#            $("#Score-explaination").css({#}
-{#                'width': ($(".head-info").width() + 'px')#}
-{#            });#}
+            {#            $("#Score-explaination").css({#}
+            {#                'width': ($(".head-info").width() + 'px')#}
+            {#            });#}
             $('.popup-with-form').magnificPopup({
                 type: 'inline',
                 preloader: true,

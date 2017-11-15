@@ -258,3 +258,6 @@ html, body {
 .project-overview .title {
     font-size: 0.75em;
 }
+.project-overview .lead {
+    min-height: 360px;
+}

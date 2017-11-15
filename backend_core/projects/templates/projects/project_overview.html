@@ -4,54 +4,70 @@
 
 
 {% block dashboard_content %}
-    <div class="project-overview">
-        <div class="page-header">
-            <h1>{{ Project_Overview }}</h1>
-        </div>
-        {% for project in info_dict.projects %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <div class=""><span class="title">{{ Project_Created }}</span></div>
-                            <div class=""><span class="value">{{ project.start_date }}</span></div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class=""><span class="title">{{ Contracted_With }}</span></div>
-                            {% if request.user.role == "CONSUMER" %}
-                                <div class=""><span class="value">{{ project.bus_name }}</span></div>
-                            {% elif request.user.role == "PROFESSIONAL" %}
-                                <div class="">
-                                    <span class="value">{{ project.first_name }} {{ project.last_name }}</span>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="col-xs-4">
-                            <a href="{% url 'display_project_detail' project.project_id %}">{{ Project_Detail }}</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-5 col-md-6">
-                            <div class=""><span class="title">{{ Project_Status }}</span></div>
-                            <div class=""><span class="value">{{ project.get_project_status_display }}</span></div>
-                            {% if project.project_action %}
-                                <br/>
-                                <div class=""><span class="title">{{ Project_Action }}</span></div>
-                                <div class=""><span class="value">{{ project.project_action }}</span></div>
-                            {% endif %}
+    <div class="project-overview">
+        {% if info_dict.projects %}
+            <div class="page-header">
+                <h1>{{ Project_Overview }}</h1>
+            </div>
+
+            {% for project in info_dict.projects %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class=""><span class="title">{{ Project_Created }}</span></div>
+                                <div class=""><span class="value">{{ project.start_date }}</span></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class=""><span class="title">{{ Contracted_With }}</span></div>
+                                {% if request.user.role == "CONSUMER" %}
+                                    <div class=""><span class="value">{{ project.bus_name }}</span></div>
+                                {% elif request.user.role == "PROFESSIONAL" %}
+                                    <div class="">
+                                        <span class="value">{{ project.first_name }} {{ project.last_name }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="{% url 'display_project_detail' project.project_id %}">{{ Project_Detail }}</a>
+                            </div>
                         </div>
-                        <div class="col-xs-8 col-sm-7 col-md-6 Address">
-                            <span class="title">{{ Address }}:</span><br/>
-                            {{ project.street_address }}{{ project.street_address2 }}<br/>
-                            {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-5 col-md-6">
+                                <div class=""><span class="title">{{ Project_Status }}</span></div>
+                                <div class=""><span class="value">{{ project.get_project_status_display }}</span></div>
+                                {% if project.project_action %}
+                                    <br/>
+                                    <div class=""><span class="title">{{ Project_Action }}</span></div>
+                                    <div class=""><span class="value">{{ project.project_action }}</span></div>
+                                {% endif %}
+                            </div>
+                            <div class="col-xs-8 col-sm-7 col-md-6 Address">
+                                <span class="title">{{ Address }}:</span><br/>
+                                {{ project.street_address }}{{ project.street_address2 }}<br/>
+                                {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                            </div>
                         </div>
                     </div>
                 </div>
+            {% endfor %}
+
+        {% else %}
+
+            <div class="jumbotron">
+                <h1 class="display-3">{{ Project_Overview }}</h1>
+                <br/>
+                <br/>
+                <p class="lead">
+                    {% blocktrans %}You don't have any projects right now. Please go to professional
+                        page
+                        and contract with someone you like.{% endblocktrans %}</p>
             </div>
-        {% endfor %}
-</div>
+        {% endif %}
+    </div>
 
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-07 07:29+0000\n"
+"POT-Creation-Date: 2017-11-15 08:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,13 +25,13 @@ msgid "Edit page?"
 msgstr "編輯頁面?"
 
 #: architects/templates/architect/architect.html:92
-#: contractors/templates/contractor/contractor.html:100
+#: contractors/templates/contractor/contractor.html:102
 #: designers/templates/designer/designer.html:94
 msgid "Project Photo Upload"
 msgstr "上傳項目照片"
 
 #: architects/templates/architect/architect.html:94
-#: contractors/templates/contractor/contractor.html:102
+#: contractors/templates/contractor/contractor.html:104
 #: designers/templates/designer/designer.html:96
 msgid "Background Image Upload"
 msgstr "上傳主頁背景圖案"
@@ -59,7 +59,7 @@ msgstr ""
 #: architects/views.py:127 architects/views.py:160 contractors/views.py:227
 #: contractors/views.py:261
 msgid "No Pages Found."
-msgstr "找不到網頁"
+msgstr "找不到該網頁。"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -101,6 +101,10 @@ msgstr "網頁開發人員"
 msgid "Full Stack Data Scientist Intern"
 msgstr "全棧數據科學家實習"
 
+#: contractors/templates/contractor/contractor.html:96
+msgid "Contract Us"
+msgstr "與我們簽訂合約"
+
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
 #: templates/base.html:31
 msgid "Project Photos"
@@ -139,7 +143,7 @@ msgstr "您好，歡迎來到Hoome!"
 #: dashboard/templates/dashboard/dashboard.html:116
 msgid ""
 "It's Your Personal Dashboard. You could set up you account\n"
-"                                by clicking left buttons"
+"                                by clicking left buttons."
 msgstr "這是您的個人用戶面板。您可以通過點擊左邊按鈕來設置您的賬戶。"
 
 #: dashboard/templates/dashboard/dashboard.html:150
@@ -169,11 +173,11 @@ msgstr "篩選優秀的裝修團隊"
 msgid "Database in California State"
 msgstr "加州數據庫"
 
-#: overviews/views.py:27 projects/views.py:189
+#: overviews/views.py:27 projects/views.py:190
 msgid "Request Success"
 msgstr "請求成功"
 
-#: overviews/views.py:29 projects/views.py:193
+#: overviews/views.py:29 projects/views.py:194
 msgid "Request Failed"
 msgstr "請求失敗"
 
@@ -185,57 +189,76 @@ msgstr "背景圖案"
 msgid "Create"
 msgstr "創建"
 
-#: projects/views.py:136
-msgid "Sorry. Pages Not Found"
-msgstr "找不到網頁"
+#: projects/templates/projects/project_overview.html:66
+msgid ""
+"You don't have any projects right now. Please go to professional\n"
+"                        page\n"
+"                        and contract with someone you like."
+msgstr "您目前沒有任何項目。請到您相中的承包商頁面中締結合約。"
 
-#: projects/views.py:181 templates/404.html:5
+#: projects/views.py:136
+msgid "Please Log in first."
+msgstr "請先登入您的賬戶"
+
+#: projects/views.py:182 templates/404.html:29
 msgid "Page Not Found"
 msgstr "找不到網頁"
 
-#: review/forms.py:6
+#: review/forms.py:35
+msgid "zipcode format should be xxxxx or xxxxx-xxxx"
+msgstr "郵政編碼格式應該為xxxxx 或者 xxxxx-xxxx"
+
+#: review/forms.py:40
+msgid "cannot be a negative number"
+msgstr "不能為負數"
+
+#: review/forms.py:46
+msgid "invalid email address"
+msgstr "無效郵箱地址"
+
+#: review/forms.py:50
 msgid "Comments"
 msgstr "評論"
 
-#: review/forms.py:7 templates/base.html:101
+#: review/forms.py:51 templates/base.html:101
 msgid "First Name"
 msgstr "名"
 
-#: review/forms.py:8 templates/base.html:100
+#: review/forms.py:52 templates/base.html:100
 msgid "Last Name"
 msgstr "姓"
 
-#: review/forms.py:9
+#: review/forms.py:53
 msgid "Project Date"
 msgstr "施工起始時間"
 
-#: review/forms.py:10 templates/base.html:51
+#: review/forms.py:54 templates/base.html:51
 msgid "Project Type"
 msgstr "項目類型"
 
-#: review/forms.py:11
+#: review/forms.py:55
 msgid "Project Zipcode"
 msgstr "項目所在郵政編碼"
 
-#: review/forms.py:12 templates/base.html:50
+#: review/forms.py:56 templates/base.html:50
 msgid "Project Cost"
 msgstr "項目開銷"
 
-#: review/forms.py:13 templates/base.html:52
+#: review/forms.py:57 templates/base.html:52
 msgid "Project Duration"
 msgstr "項目工期"
 
-#: review/forms.py:14 templates/base.html:89
+#: review/forms.py:59 templates/base.html:89
 #: users/templates/account/email.html:73 users/templates/account/login.html:146
 #: users/templates/account/signup.html:186
 msgid "Email"
 msgstr "Email地址"
 
-#: review/forms.py:15
+#: review/forms.py:60
 msgid "Project Address"
 msgstr "項目地址"
 
-#: review/forms.py:16
+#: review/forms.py:62
 msgid "Is Anonymous?"
 msgstr "匿名用戶"
 
@@ -344,31 +367,31 @@ msgid ""
 "No professional match your condition. Please try another way to search again."
 msgstr "沒有商家符合您的要求。請嘗試其他格式來搜索。"
 
-#: templates/400.html:5
+#: templates/400.html:29
 msgid "Bad Request"
 msgstr "錯誤請求"
 
-#: templates/400.html:6
+#: templates/400.html:30
 msgid "Hoome cannot understand your request, Please try again. "
 msgstr "服務器無法理解您的請求，請再試壹次。"
 
-#: templates/403.html:5
+#: templates/403.html:29
 msgid "Permission Denied"
 msgstr "沒有權限"
 
-#: templates/403.html:6
+#: templates/403.html:30
 msgid "You don't have the permission to do the following actions. "
 msgstr "您沒有權限進行以下操作"
 
-#: templates/404.html:6
+#: templates/404.html:30
 msgid "Hoome cannot find the page per your request, Please try again. "
 msgstr "Hoome根據您的請求找不到對應的頁面。請重試"
 
-#: templates/500.html:5
+#: templates/500.html:29
 msgid "Server Error"
 msgstr "服務器錯誤"
 
-#: templates/500.html:6
+#: templates/500.html:30
 msgid "Server in maintenance. Please try later."
 msgstr "服務器正在施工中，請重試"
 
@@ -688,7 +711,7 @@ msgstr "類型"
 msgid "Time"
 msgstr "時間"
 
-#: templates/base.html:115 transactions/forms.py:15
+#: templates/base.html:115 transactions/forms.py:14
 msgid "Amount"
 msgstr "賬戶"
 
@@ -705,35 +728,31 @@ msgstr "項目創建於"
 msgid "Sign In"
 msgstr "登入"
 
-#: transactions/forms.py:19 transactions/forms.py:62
-msgid "Created Date"
-msgstr "創建日期"
-
-#: transactions/forms.py:23
-msgid "Updated Date"
-msgstr "上傳日期"
-
-#: transactions/forms.py:28 transactions/forms.py:67
+#: transactions/forms.py:19 transactions/forms.py:43
 msgid "Transaction Status"
 msgstr "交易狀態"
 
-#: transactions/forms.py:33
+#: transactions/forms.py:24
 msgid "Transaction ID"
 msgstr "交易ID"
 
-#: transactions/models.py:18
+#: transactions/forms.py:38
+msgid "Created Date"
+msgstr "創建日期"
+
+#: transactions/models.py:17
 msgid "amount"
 msgstr "交易金額"
 
-#: transactions/models.py:23 transactions/models.py:64
+#: transactions/models.py:18 transactions/models.py:34
 msgid "created at"
 msgstr "創建於"
 
-#: transactions/models.py:28
+#: transactions/models.py:19
 msgid "updated at"
 msgstr "上傳於"
 
-#: transactions/models.py:35 transactions/models.py:70
+#: transactions/models.py:21 transactions/models.py:36
 msgid "transaction status"
 msgstr "交易狀態"
 
@@ -992,13 +1011,19 @@ msgstr "郵政編碼"
 msgid "Next"
 msgstr "下壹步"
 
-#: users/views.py:113
+#: users/views.py:118
 msgid "Lic number does not exist"
 msgstr "證件號碼不存在"
 
-#: users/views.py:168 users/views.py:209
+#: users/views.py:173 users/views.py:214
 msgid "Your Profile updated."
 msgstr "您的檔案已更新"
+
+#~ msgid "Sorry. Pages Not Found"
+#~ msgstr "找不到網頁"
+
+#~ msgid "Updated Date"
+#~ msgstr "上傳日期"
 
 #~ msgid ""
 #~ "Hoome Score is caculated by how many years it is in the\n"
@@ -1015,9 +1040,6 @@ msgstr "您的檔案已更新"
 #~ "Hoome評分是通過計算工作年限，執照吊銷記錄，投訴記錄和其他因素得出。現在"
 #~ "Hoome評分囊括了工作年限，執照吊銷記錄和投訴記錄。 後期該評分會添加更多考量"
 #~ "因素。"
-
-#~ msgid "Contract Us"
-#~ msgstr "與我們簽訂合約"
 
 #~ msgid "Professional Homepage"
 #~ msgstr "商家頁面"
