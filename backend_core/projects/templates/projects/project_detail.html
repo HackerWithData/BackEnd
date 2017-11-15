@@ -47,7 +47,7 @@
                             <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
                         {% endif %}
                         {#payment button#}
-                        {% if request.user.role == "CONSUMER" %}
+{#                        {% if request.user.role == "CONSUMER" %}#}
                             <div class="payment-wrapper">
                                 {% render_pay_now_button info_dict.project.project_id %}
                             </div>
@@ -66,7 +66,7 @@
                             {#            </button>#}
                             {#        </form>#}
                             {#                            </div>#}
-                        {% endif %}
+{#                        {% endif %}#}
 
                     </div>
                 </div>

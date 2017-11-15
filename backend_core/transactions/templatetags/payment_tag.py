@@ -5,8 +5,8 @@ from datetime import datetime
 
 from ..utils import generate_transaction_number
 
-register = template.Library()
 
+register = template.Library()
 
 @register.inclusion_tag('payment/pay_now_button.html', takes_context=True)
 def render_pay_now_button(context, project_id):

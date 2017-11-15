@@ -65,11 +65,11 @@ def upload_project_photo(request, project_id):
 @login_required
 @check_recaptcha
 def create_project(request, professional_type, lic_id):
-    if request.user.is_authenticated and request.user.role == "CONSUMER":
+    if request.user.is_authenticated:
         template_name = 'projects/create_project.html'  # Replace with your template.
         success_url = reverse('display_project_overview')
 
-        if request.method == "POST":
+        if request.method == "POST" and request.user.role == "CONSUMER":
             project_form = ProjectForm(request.POST, request.FILES)
             # project = Project.objects.get(project_id=project_id)
             if project_form.is_valid() and request.recaptcha_is_valid:
@@ -77,7 +77,7 @@ def create_project(request, professional_type, lic_id):
                 # consider another interface
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
-                professional = content_type.objects.get_object_for_this_type(pk=lic_id)
+                professional = content_type.get_object_for_this_type(pk=lic_id)
                 project = Project(user=request.user,
                                   project_name=project_form.cleaned_data['project_name'],
                                   first_name=project_form.cleaned_data['first_name'],
@@ -121,19 +121,20 @@ def create_project(request, professional_type, lic_id):
 
                 return redirect(success_url)
         # TODO: consider another interface
-        if request.user.is_authenticated:
-            project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name,
-                                                'start_date': datetime.datetime.today()})
-        else:
-            project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name,
-                                                'start_date': datetime.datetime.today()})
+        # if request.user.is_authenticated:
+        project_form = ProjectForm(initial={'first_name': request.user.first_name,
+                                            'last_name': request.user.last_name,
+                                            'start_date': datetime.datetime.today()})
+        # else:
+        #     project_form = ProjectForm(initial={'first_name': request.user.first_name,
+        #                                         'last_name': request.user.last_name,
+        #                                         'start_date': datetime.datetime.today()})
 
         info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        raise Http404(_("Sorry. Pages Not Found"))
+        messages.warning(request, _('Please Log in first.'))
+        raise redirect(request.path)
 
 
 @login_required
