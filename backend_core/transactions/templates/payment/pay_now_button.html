@@ -2,8 +2,6 @@
 {% trans 'Make a payment' as Pay %}
 {#<script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>#}
 <script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>
-<script type="text/javascript" src="http://crypto-js.googlecode.com/files/2.2.0-crypto-md5.js"></script>
-<script type="text/javascript" src="http://crypto-js.googlecode.com/files/2.2.0-hmac-min.js"></script>
 <button class="forte-checkout-button" id="payment-btn"
         api_login_id="{{ api_login_id }}"
         method="{{ method }}"
@@ -29,118 +27,94 @@
 
 <script>
 
-    $(function () {
 
-        $('#payment-btn').click(function (event) {
-            const amount = $('.forte-checkout-button').attr('total_amount');
-            const transactionKey = $('.forte-checkout-button').attr('order_number');
-            const formData = {
-                'amount': amount,
-                'transaction_key': transactionKey,
-                'project_id': {{ project_id }},
-                'created_at': {{ utc_time }}
-            };
-            $.ajax({
-                dataType: "json",
-                type: "POST",
-                beforeSend: function (request) {
-                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                },
-                url: "{% url 'transactions' %}",
-                data: JSON.stringify(formData),
-                contentType: "application/json"
-            })
+    function oncallback(e) {
+        var response = JSON.parse(e.data);
+        switch (response.event) {
+            case 'begin':
+                //call to forte checkout is successful
+                beginHandler(response);
+                break;
+            case 'success':
+                //transaction successful
+                //(optional) validate from response.signature that this message is coming from forte
+                //display a receipt
+                successHandler(response);
+                break;
+            case 'failure':
+                //handle failed transaction
+                failureHandler(response);
+                break;
+            case 'error':
+                //handle error transaction
+                errorHandler(response);
+                break;
+            case 'abort':
+                //handle abort transaction
+                abortHandler(response);
+                break;
+            case 'expired':
+                //handle expired transaction
+                expiredHandler(response);
+                break;
+        }
+    }
+
+    /*=========================================================================
+        {
+           "event":"begin",
+           "method":"sale",
+           "request_id":"1414edf7-2816-4968-ced2-b7d3e7156da7"
+        }
+    ==========================================================================*/
+    function beginHandler(response) {
+        console.log('begin');
+    }
+
+    /*=========================================================================
+        {
+           "event":"success",
+           "method":"sale",
+           "request_id":"9ea365d6-40d8-416f-ca3c-1aef43529213",
+           "response_code":"A01",
+           "version_number":"1.0",
+           "trace_number":"fb25a0c5-c5a5-4505-9c56-4297799aeb77",
+           "authorization_code": "123456",
+           "subtotal_amount":"50.00",
+           "service_fee_amount":"1.23",
+           "total_amount":"51.23",
+           "expire_month":"12",
+           "expire_year":"2020",
+           "signature":"c1d704c4711595f48e1552a9af9b8ada",
+           "utc_time": "635210889954381263",
+           "hash_method":"md5"
+        }
+    ==========================================================================*/
+    function successHandler(response) {
+        alert('Thank you for the order. The trace number is ' + response.trace_number);
+        const transactionKey = $('.forte-checkout-button').attr('order_number');
+        var event = response.event;
+        var total_amount = response.total_amount;
+        const formData = {
+            'status': event,
+            "amount": total_amount,
+            'transaction_key': transactionKey,
+        'project_id': {{ project_id }},
+            'created_at': {{ utc_time }}
+        };
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+            },
+            url: "{% url 'transactions' %}",
+            data: JSON.stringify(formData),
+            contentType: "application/json"
         })
 
-
-        function oncallback(e) {
-            var response = JSON.parse(e.data);
-            switch (response.event) {
-                case 'begin':
-                    //call to forte checkout is successful
-                    beginHandler(response);
-                    break;
-                case 'success':
-                    //transaction successful
-                    //(optional) validate from response.signature that this message is coming from forte
-                    //display a receipt
-                    successHandler(response);
-                    break;
-                case 'failure':
-                    //handle failed transaction
-                    failureHandler(response);
-                    break;
-                case 'error':
-                    //handle error transaction
-                    errorHandler(response);
-                    break;
-                case 'abort':
-                    //handle abort transaction
-                    abortHandler(response);
-                    break;
-                case 'expired':
-                    //handle expired transaction
-                    expiredHandler(response);
-                    break;
-            }
-        }
-
-        /*=========================================================================
-            {
-               "event":"begin",
-               "method":"sale",
-               "request_id":"1414edf7-2816-4968-ced2-b7d3e7156da7"
-            }
-        ==========================================================================*/
-        function beginHandler(response) {
-            console.log('begin');
-        }
-
-        /*=========================================================================
-            {
-               "event":"success",
-               "method":"sale",
-               "request_id":"9ea365d6-40d8-416f-ca3c-1aef43529213",
-               "response_code":"A01",
-               "version_number":"1.0",
-               "trace_number":"fb25a0c5-c5a5-4505-9c56-4297799aeb77",
-               "authorization_code": "123456",
-               "subtotal_amount":"50.00",
-               "service_fee_amount":"1.23",
-               "total_amount":"51.23",
-               "expire_month":"12",
-               "expire_year":"2020",
-               "signature":"c1d704c4711595f48e1552a9af9b8ada",
-               "utc_time": "635210889954381263",
-               "hash_method":"md5"
-            }
-        ==========================================================================*/
-        function successHandler(response) {
-            alert('thanks for your order. the trace number is ' + response.trace_number);
-
-            const transactionKey = $('.forte-checkout-button').attr('order_number');
-            var event = response.event;
-            var subtotal_amount = response.subtotal_amount;
-            const Data = {
-                'transaction_key': transactionKey,
-                'project_id': {{ project_id }},
-                'status': event,
-                "amount": subtotal_amount,
-            };
-            $.ajax({
-                dataType: "json",
-                type: "POST",
-                beforeSend: function (request) {
-                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                },
-                url: "{% url 'transactions' %}",
-                data: JSON.stringify(Data),
-                contentType: "application/json"
-            })
-        }
-
-
     }
+
 
     /*=========================================================================
         {

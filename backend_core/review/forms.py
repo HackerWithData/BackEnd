@@ -47,20 +47,30 @@ def email_validator(email):
 
 
 class ReviewForm(forms.Form):
+    # comments = forms.CharField(label=_('Comments'), widget=forms.Textarea)
+    # first_name = forms.CharField(label=_('First Name'), max_length=25, validators=[name_validator])
+    # last_name = forms.CharField(label=_('Last Name'), max_length=25, validators=[name_validator])
+    # project_date = forms.DateField(label=_('Project Date'), widget=forms.SelectDateWidget())
+    # project_type = forms.CharField(label=_('Project Type'), max_length=255)
+    # project_zipcode = forms.CharField(label=_('Project Zipcode'), max_length=20, validators=[zipcode_validator])
+    # project_cost = forms.IntegerField(label=_('Project Cost'), validators=[positive_int_validator])
+    # project_duration = forms.IntegerField(label=_('Project Duration'), validators=[positive_int_validator])
+    #
+    # email = forms.CharField(label=_('Email'), max_length=254, validators=[email_validator])
+    # project_address = forms.CharField(label=_('Project Address'), max_length=100)
+    #
+    # is_anonymous = forms.BooleanField(label=_('Is Anonymous?'), required=False)
     comments = forms.CharField(label=_('Comments'), widget=forms.Textarea)
-    first_name = forms.CharField(label=_('First Name'), max_length=25, validators=[name_validator])
-    last_name = forms.CharField(label=_('Last Name'), max_length=25, validators=[name_validator])
+    first_name = forms.CharField(label=_('First Name'), max_length=25)
+    last_name = forms.CharField(label=_('Last Name'), max_length=25)
     project_date = forms.DateField(label=_('Project Date'), widget=forms.SelectDateWidget())
     project_type = forms.CharField(label=_('Project Type'), max_length=255)
-    project_zipcode = forms.CharField(label=_('Project Zipcode'), max_length=20, validators=[zipcode_validator])
-    project_cost = forms.IntegerField(label=_('Project Cost'), validators=[positive_int_validator])
-    project_duration = forms.IntegerField(label=_('Project Duration'), validators=[positive_int_validator])
-
-    email = forms.CharField(label=_('Email'), max_length=254, validators=[email_validator])
+    project_zipcode = forms.CharField(label=_('Project Zipcode'), max_length=20)
+    project_cost = forms.IntegerField(label=_('Project Cost'))
+    project_duration = forms.IntegerField(label=_('Project Duration'))
+    email = forms.CharField(label=_('Email'), max_length=254)
     project_address = forms.CharField(label=_('Project Address'), max_length=100)
-
     is_anonymous = forms.BooleanField(label=_('Is Anonymous?'), required=False)
-
 
     #'project_date':forms.DateInput(format="%Y-%m-%d")
 

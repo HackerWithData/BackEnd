@@ -122,9 +122,9 @@ msgid ""
 "share more information and data about this\n"
 "              contractor to you."
 msgstr ""
-"{bus_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
+"{lic_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
-"{score}， 评定区间为{rank}。如果您需要了解{bus_name}更多的资讯，请联系我们，"
+"{score}， 评定区间为{rank}。如果您需要了解{lic_name}更多的资讯，请联系我们，"
 "我们会向您分享更多关于该商家的信息和数据。"
 
 #: dashboard/templates/dashboard/dashboard.html:22
