@@ -46,39 +46,21 @@ class TransactionsView(View):
             :return:
         """
         received_json_data = json.loads(request.body)
-        print(received_json_data)
-        if 'status' in received_json_data:
-            project = Project.objects.get(project_id=int(received_json_data['project_id']))
-            transaction = Transaction.objects.get(project=project,
-                                                  transaction_key=received_json_data['transaction_key'])
-            transaction.amount = float(received_json_data['amount'])
-            transaction.status = received_json_data['status'].upper()[0]
-            transaction.save()
-            transaction_history = TransactionHistory.objects.get(transaction=transaction)
-            transaction_history.status = transaction.status
-            transaction_history.save()
-        else:
-            # print(received_json_data)
-            # TODO: need to change this part
-
-
-            project = Project.objects.get(project_id=int(received_json_data['project_id']))
-            transaction, created = Transaction.objects.get_or_create(project=project,
-                                                     transaction_key=received_json_data['transaction_key'])
-            if created:
-                if received_json_data['amount'] == '':
-                    pass
-                else:
-                    transaction.amount = float(received_json_data['amount'])
-                transaction.created_at = datetime.utcfromtimestamp(received_json_data['created_at'])
-                transaction.save()
-
-                # insert a new transaction history with pending status as soon as a transaction created
-                transaction_history = TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
-                transaction_history.save()
-            else:
+        project = Project.objects.get(project_id=int(received_json_data['project_id']))
+        transaction, created= Transaction.objects.get_or_create(project=project,
+                                              transaction_key=received_json_data['transaction_key'])
+        if created:
+            if received_json_data['amount'] == '':
                 pass
-            # #fields
+            else:
+                transaction.amount = float(received_json_data['amount'])
+            transaction.created_at = datetime.utcfromtimestamp(received_json_data['created_at'])
+        transaction.status = received_json_data['status'].upper()[0]
+        transaction.save()
+
+        # insert a new transaction history with pending status as soon as a transaction created
+        transaction_history = TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
+        transaction_history.save()
         return HttpResponse(status=204)
 
 

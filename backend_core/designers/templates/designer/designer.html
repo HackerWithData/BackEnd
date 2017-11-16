@@ -161,7 +161,7 @@
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>
         {% csrf_token %}
-        <input type="submit" class="btn btn-hoome" value="{{ Submit }}">
+        <button type="submit" class='btn btn-hoome' name="review" value="review">{{ Submit }}</button>
     </form>
 {% endblock %}
 
