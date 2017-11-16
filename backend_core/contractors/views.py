@@ -38,6 +38,7 @@ def submit_review(request, o_id):
     user_rating_form = UserRatingForm(request.POST)
     review_form = ReviewForm(request.POST)
     # TODO: assign a random password
+    print(review_form.is_valid())
     if review_form.is_valid() and user_rating_form.is_valid():
         # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
 

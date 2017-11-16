@@ -56,10 +56,19 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Forte test account configure
 FORTE_CONFIG = {
-    'api_login_id': 'HPBuBdGvU',
-    'secure_trans_key': 'mPJHiA51HQS93X',
+    'api_login_id': 'qCt61J81jU',
+    'secure_trans_key': 'hv3TJ3BG5q4',
     'method': 'sale',
     'version_number': '1.0',
-    'allowed_methods': 'visa, mast, disc, amex, echeck',
+    'allowed_methods': 'echeck',
     'hash_method': 'md5',
+    'billing_company_name': 'hide',
 }
+# FORTE_CONFIG = {
+#     'api_login_id': 'KGlnk0720K',
+#     'secure_trans_key': '1alDL36k8jRB',
+#     'method': 'sale',
+#     'version_number': '1.0',
+#     'allowed_methods': 'echeck',
+#     'hash_method': 'md5',
+# }

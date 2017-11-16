@@ -27,7 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
     {{ info_dict.overview_form.media }}
     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-{#    #TODO: what's this?#}
+    {#    #TODO: what's this?#}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
 
@@ -91,8 +91,10 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-                        {#                        <a href="{% url 'create_project' 'contractor' info_dict.contractor.lic_num %}"#}
-                        {#                           class="btn btn-db">{% trans 'Contract Us' %}</a>#}
+                        {% if request.user.role == "CONSUMER" %}
+                            <a href="{% url 'create_project' 'contractor' info_dict.contractor.lic_num %}"
+                               class="btn btn-db">{% trans 'Contract Us' %}</a>
+                        {% endif %}
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
                         {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
                             <div class='hide' id="edit-btn">
@@ -161,20 +163,20 @@
             <br>
         {% endfor %}
 
-{#        {{ info_dict.review_form.as_p }}#}
+        {#        {{ info_dict.review_form.as_p }}#}
         {% for field in info_dict.review_form %}
             <p>
                 {{ field.label_tag }}
                 {{ field }}
-                <div style='color:red'> {{ field.errors }}</div>
+            <div style='color:red'> {{ field.errors }}</div>
             </p>
-         {% endfor %}
+        {% endfor %}
 
         <br>
         <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
         <br>
         {% csrf_token %}
-        <input type="submit" class='btn btn-hoome' value="{{ Submit }}">
+        <button type="submit" class='btn btn-hoome' name="review" value="review">{{ Submit }}</button>
     </form>
 {% endblock %}
 
@@ -256,18 +258,18 @@
             $("#edit").click(function () {
                 if ($("#edit").prop("checked") === true) {
                     $('#edit-btn').removeClass('hide');
-{#                    $('#edit_overview').removeClass('hide');#}
-{#                    $('#overview-wrapper').removeClass('text');#}
-{#                    $('#overview-wrapper').removeClass('height');#}
-{#                    $('#display_overview').addClass('hide');#}
+                    {#                    $('#edit_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').removeClass('text');#}
+                    {#                    $('#overview-wrapper').removeClass('height');#}
+                    {#                    $('#display_overview').addClass('hide');#}
                     $('#peek').addClass('hide');
 
                 } else {
                     $('#edit-btn').addClass('hide');
-{#                    $('#edit_overview').addClass('hide');#}
-{#                    $('#display_overview').removeClass('hide');#}
-{#                    $('#overview-wrapper').addClass('text');#}
-{#                    $('#overview-wrapper').addClass('height');#}
+                    {#                    $('#edit_overview').addClass('hide');#}
+                    {#                    $('#display_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').addClass('text');#}
+                    {#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
                 }
             });

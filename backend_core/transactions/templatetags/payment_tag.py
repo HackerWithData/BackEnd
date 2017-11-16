@@ -5,8 +5,8 @@ from datetime import datetime
 
 from ..utils import generate_transaction_number
 
-register = template.Library()
 
+register = template.Library()
 
 @register.inclusion_tag('payment/pay_now_button.html', takes_context=True)
 def render_pay_now_button(context, project_id):
@@ -40,7 +40,8 @@ def render_pay_now_button(context, project_id):
                                        ret['total_amount'],
                                        ret['utc_time'],
                                        ret['order_number'])
-    h = HMAC.new(key=settings.FORTE_CONFIG['secure_trans_key'], msg=secret, digestmod=MD5)
+    h = HMAC.new(key=str(settings.FORTE_CONFIG['secure_trans_key']), msg=str(secret), digestmod=MD5)
+
     # h.update(settings.FORTE_CONFIG['secure_trans_key'])
     ret['signature'] = h.hexdigest()
     # print ret['signature']

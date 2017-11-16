@@ -290,3 +290,13 @@ TINYMCE_COMPRESSOR = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')
+
+FORTE_CONFIG = {
+    'api_login_id': 'qCt61J81jU',
+    'secure_trans_key': 'hv3TJ3BG5q4',
+    'method': 'sale',
+    'version_number': '1.0',
+    'allowed_methods': 'echeck',
+    'hash_method': 'md5',
+    'billing_company_name': 'hide',
+}
