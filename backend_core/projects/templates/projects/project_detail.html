@@ -47,26 +47,26 @@
                             <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
                         {% endif %}
                         {#payment button#}
-{#                        {% if request.user.role == "CONSUMER" %}#}
-                            <div class="payment-wrapper">
-                                {% render_pay_now_button info_dict.project.project_id %}
-                            </div>
-                            {#                        {% elif request.user.role == "PROFESSIONAL" %}#}
-                            {#                            <div class="request-wrapper">#}
-                            {#                                <form id='request-money' action="" method="post" class="">#}
-                            {#                                    {% csrf_token %}#}
-                            {#                                    <button class="btn btn-hoome" type="submit" name="request-money"#}
-                            {#                                            value="request-money">Request#}
-                            {#                                    </button>#}
-                            {#                                </form>#}
-                            {#        <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>#}
-                            {#        <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">#}
-                            {#            {% csrf_token %}#}
-                            {#            <button class="btn btn-hoome" type="submit" name="request-money" value="request-money">Request#}
-                            {#            </button>#}
-                            {#        </form>#}
-                            {#                            </div>#}
-{#                        {% endif %}#}
+                        {#                        {% if request.user.role == "CONSUMER" %}#}
+                        <div class="payment-wrapper">
+                            {% render_pay_now_button info_dict.project.project_id %}
+                        </div>
+                        {#                        {% elif request.user.role == "PROFESSIONAL" %}#}
+                        {#                            <div class="request-wrapper">#}
+                        {#                                <form id='request-money' action="" method="post" class="">#}
+                        {#                                    {% csrf_token %}#}
+                        {#                                    <button class="btn btn-hoome" type="submit" name="request-money"#}
+                        {#                                            value="request-money">Request#}
+                        {#                                    </button>#}
+                        {#                                </form>#}
+                        {#        <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>#}
+                        {#        <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">#}
+                        {#            {% csrf_token %}#}
+                        {#            <button class="btn btn-hoome" type="submit" name="request-money" value="request-money">Request#}
+                        {#            </button>#}
+                        {#        </form>#}
+                        {#                            </div>#}
+                        {#                        {% endif %}#}
 
                     </div>
                 </div>
@@ -158,27 +158,27 @@
         {% endif %}
         {% if info_dict.transactions %}
             <div class="panel panel-default project-transactions">
-            <div class="panel-heading">
-                {{ Project_Transaction }}
+                <div class="panel-heading">
+                    {{ Project_Transaction }}
+                </div>
+                <div class="panel-body">
+                    <table>
+                        <tr>
+                            <th>{{ Amount }}</th>
+                            <th>{{ Status }}</th>
+                            <th>{{ Updated_At }}</th>
+                        </tr>
+                        {% for transaction in info_dict.transactions %}
+                            <tr>
+                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.get_status_display }}</td>
+                                <td>{{ transaction.updated_at }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <div class="panel-body">
-            <table>
-                <tr>
-                    <th>{{ Amount }}</th>
-                    <th>{{ Status }}</th>
-                    <th>{{ Updated_At }}</th>
-                </tr>
-                {% for transaction in info_dict.transactions %}
-                    <tr>
-                        <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.get_status_display }}</td>
-                        <td>{{ transaction.updated_at }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
         {% endif %}
-        </div>
-        </div>
     </div>
     {#        <a href="{% url 'display_project_detail' info_dict.project.project_id %}">detail</a>#}
     <script>
@@ -248,6 +248,5 @@
             });
         })
     </script>
-
 
 {% endblock %}

@@ -12,7 +12,6 @@ from django.views import View
 from hscore.models import Hscore
 from photos.forms import PhotoForm
 from photos.models import Photo, BackgroundPhoto
-from professionals.models import Professional
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating, Rating
 from review.forms import ReviewForm
@@ -23,7 +22,7 @@ from overviews.models import Overview
 from overviews.views import edit_overview
 from models import Contractor, BondHistory, WorkerCompensationHistory, ComplaintOverall
 from utils import convert_hscore_to_rank, get_state_full_name, avg_rating
-
+from professionals.utils import check_professional_type
 
 # Create your views here.
 class Complaint1:
@@ -38,7 +37,7 @@ def submit_review(request, o_id):
     user_rating_form = UserRatingForm(request.POST)
     review_form = ReviewForm(request.POST)
     # TODO: assign a random password
-    print(review_form.is_valid())
+    # TODO: validator doesn't work
     if review_form.is_valid() and user_rating_form.is_valid():
         # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
 
@@ -48,12 +47,7 @@ def submit_review(request, o_id):
                     first_name=review_form.cleaned_data['first_name'],
                     password=make_password("aaaaaaa"))
         user.save()
-        if 'contractor' in request.path:
-            model_type = 'contractor'
-        elif 'designer' in request.path:
-            model_type = 'designer'
-        elif 'architect' in request.path:
-            model_type = 'architect'
+        model_type = check_professional_type(request)
         review = Review(content_type=ContentType.objects.get(model=model_type),
                         object_id=o_id,
                         user=user,

@@ -1,0 +1,60 @@
+{% extends "dashboard/dashboard.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load payment_tag %}
+
+{% block dashboard_content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div{% if message.tags %} class="alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% if info_dict.transactions %}
+        <div class="panel panel-default project-transactions">
+            <div class="panel-heading">
+                {{ Payment }}
+            </div>
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <th>{{ Project }}</th>
+                        <th>{{ Amount }}</th>
+                        <th>{{ Status }}</th>
+                        <th>{{ Updated_At }}</th>
+                    </tr>
+                    {% for transaction in info_dict.transactions %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'display_project_detail' transaction.project_id %}">
+                                    {{ transaction.project_id }}
+                                </a>
+                            </td>
+                            {#                            {% if request.user.role == 'CONSUMER' %}#}
+                            {#                                <td><a href="{% url 'display_project_detail' 1 %}">{{  }}</a></td>#}
+                            {#                            {% elif request.user.role == 'PROFESSIONAL' %}#}
+                            {#                                <td><a href="{% url 'display_project_detail' 1 %}">{{ transaction.user }}</a></td>#}
+                            {#                            {% endif %}#}
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.get_status_display }}</td>
+                            <td>{{ transaction.updated_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="jumbotron">
+            <h1 class="display-3">{{ Project_Overview }}</h1>
+            <br/>
+            <br/>
+            <p class="lead">
+                {% blocktrans %}You don't have any payments right now.{% endblocktrans %}</p>
+        </div>
+    {% endif %}
+{% endblock %}
+

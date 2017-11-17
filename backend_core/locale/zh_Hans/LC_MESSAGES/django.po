@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-15 08:43+0000\n"
+"POT-Creation-Date: 2017-11-17 09:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,33 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: architects/templates/architect/architect.html:43
-#: contractors/templates/contractor/contractor.html:46
+#: contractors/templates/contractor/contractor.html:44
 #: designers/templates/designer/designer.html:44
+#: meisters/templates/meister/meister.html:47
 msgid "Edit page?"
 msgstr "编辑页面?"
 
-#: architects/templates/architect/architect.html:92
-#: contractors/templates/contractor/contractor.html:102
-#: designers/templates/designer/designer.html:94
+#: architects/templates/architect/architect.html:89
+#: contractors/templates/contractor/contractor.html:94
+#: designers/templates/designer/designer.html:91
+msgid "Contract Us"
+msgstr "与我们签订合约"
+
+#: architects/templates/architect/architect.html:95
+#: contractors/templates/contractor/contractor.html:100
+#: designers/templates/designer/designer.html:97
+#: meisters/templates/meister/meister.html:103
 msgid "Project Photo Upload"
 msgstr "上传项目照片"
 
-#: architects/templates/architect/architect.html:94
-#: contractors/templates/contractor/contractor.html:104
-#: designers/templates/designer/designer.html:96
+#: architects/templates/architect/architect.html:97
+#: contractors/templates/contractor/contractor.html:102
+#: designers/templates/designer/designer.html:99
+#: meisters/templates/meister/meister.html:105
 msgid "Background Image Upload"
 msgstr "上传主页背景图案"
 
-#: architects/views.py:37 contractors/views.py:203
+#: architects/views.py:37 contractors/views.py:198 meisters/views.py:96
 msgid "Error Pages!"
 msgstr "错误页面"
 
@@ -56,8 +65,8 @@ msgstr ""
 "件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们"
 "会向您分享更多关于该商家的信息和数据。"
 
-#: architects/views.py:127 architects/views.py:160 contractors/views.py:227
-#: contractors/views.py:261
+#: architects/views.py:127 architects/views.py:160 contractors/views.py:222
+#: contractors/views.py:256 meisters/views.py:122 meisters/views.py:155
 msgid "No Pages Found."
 msgstr "找不到该网页。"
 
@@ -101,16 +110,14 @@ msgstr "网页开发人员"
 msgid "Full Stack Data Scientist Intern"
 msgstr "全栈数据科学家实习"
 
-#: contractors/templates/contractor/contractor.html:96
-msgid "Contract Us"
-msgstr "与我们签订合约"
-
 #: contractors/templates/contractor/contractor_project_photos_upload.html:25
+#: meisters/templates/meister/meister_project_photos_upload.html:25
 #: templates/base.html:31
 msgid "Project Photos"
 msgstr "项目照片"
 
-#: contractors/views.py:178
+#: contractors/views.py:173
+#, python-brace-format
 msgid ""
 "{lic_name} is a contractor company located in {csp} . The company holds a "
 "license number \n"
@@ -128,7 +135,7 @@ msgstr ""
 "我们会向您分享更多关于该商家的信息和数据。"
 
 #: dashboard/templates/dashboard/dashboard.html:22
-#: dashboard/templates/dashboard/dashboard.html:67
+#: dashboard/templates/dashboard/dashboard.html:74
 msgid "’s Account Settings"
 msgstr "的账户设置"
 
@@ -136,17 +143,17 @@ msgstr "的账户设置"
 msgid "Profile"
 msgstr "档案"
 
-#: dashboard/templates/dashboard/dashboard.html:114
+#: dashboard/templates/dashboard/dashboard.html:128
 msgid "Hello, Welcome to Hoome!"
 msgstr "您好，欢迎来到Hoome!"
 
-#: dashboard/templates/dashboard/dashboard.html:116
+#: dashboard/templates/dashboard/dashboard.html:130
 msgid ""
 "It's Your Personal Dashboard. You could set up you account\n"
 "                                by clicking left buttons."
 msgstr "这是您的个人用户面板。您可以通过点击左边按钮来设置您的账户。"
 
-#: dashboard/templates/dashboard/dashboard.html:150
+#: dashboard/templates/dashboard/dashboard.html:164
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
@@ -173,11 +180,23 @@ msgstr "筛选优秀的装修团队"
 msgid "Database in California State"
 msgstr "加州数据库"
 
-#: overviews/views.py:27 projects/views.py:190
+#: meisters/views.py:77
+msgid ""
+"{lic_name} is a professional located in {full_state_name}. The professional "
+"is verified as \n"
+"            active when we checked last time. If you would like to know "
+"{lic_name} more, please contact us and we will \n"
+"            share more information and data about this meister to you."
+msgstr ""
+"{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
+"关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
+"们，我们会向您分享更多关于该商家的信息和数据。"
+
+#: overviews/views.py:21 projects/views.py:190
 msgid "Request Success"
 msgstr "请求成功"
 
-#: overviews/views.py:29 projects/views.py:194
+#: overviews/views.py:23 projects/views.py:194
 msgid "Request Failed"
 msgstr "请求失败"
 
@@ -216,49 +235,49 @@ msgstr "不能为负数"
 msgid "invalid email address"
 msgstr "无效邮箱地址"
 
-#: review/forms.py:50
+#: review/forms.py:63
 msgid "Comments"
 msgstr "评论"
 
-#: review/forms.py:51 templates/base.html:101
+#: review/forms.py:64 templates/base.html:101
 msgid "First Name"
 msgstr "名"
 
-#: review/forms.py:52 templates/base.html:100
+#: review/forms.py:65 templates/base.html:100
 msgid "Last Name"
 msgstr "姓"
 
-#: review/forms.py:53
+#: review/forms.py:66
 msgid "Project Date"
 msgstr "施工起始时间"
 
-#: review/forms.py:54 templates/base.html:51
+#: review/forms.py:67 templates/base.html:51
 msgid "Project Type"
 msgstr "项目类型"
 
-#: review/forms.py:55
+#: review/forms.py:68
 msgid "Project Zipcode"
 msgstr "项目所在邮政编码"
 
-#: review/forms.py:56 templates/base.html:50
+#: review/forms.py:69 templates/base.html:50
 msgid "Project Cost"
 msgstr "项目开销"
 
-#: review/forms.py:57 templates/base.html:52
+#: review/forms.py:70 templates/base.html:52
 msgid "Project Duration"
 msgstr "项目工期"
 
-#: review/forms.py:59 templates/base.html:89
+#: review/forms.py:71 templates/base.html:89
 #: users/templates/account/email.html:73 users/templates/account/login.html:146
 #: users/templates/account/signup.html:186
 msgid "Email"
 msgstr "Email地址"
 
-#: review/forms.py:60
+#: review/forms.py:72
 msgid "Project Address"
 msgstr "项目地址"
 
-#: review/forms.py:62
+#: review/forms.py:73
 msgid "Is Anonymous?"
 msgstr "匿名用户"
 
@@ -687,7 +706,7 @@ msgstr "发布日期"
 msgid "Description"
 msgstr "描述"
 
-#: templates/base.html:108 templates/base.html:116
+#: templates/base.html:108 templates/base.html:117
 msgid "Status"
 msgstr "州"
 
@@ -700,30 +719,44 @@ msgid "Attachment"
 msgstr "附件"
 
 #: templates/base.html:112
+msgid "Payment"
+msgstr "支付记录"
+
+#: templates/base.html:113
 msgid "Transaction History"
 msgstr "交易记录"
 
-#: templates/base.html:113
+#: templates/base.html:114
 msgid "Type"
 msgstr "类型"
 
-#: templates/base.html:114
+#: templates/base.html:115
 msgid "Time"
 msgstr "时间"
 
-#: templates/base.html:115 transactions/forms.py:14
+#: templates/base.html:116 transactions/forms.py:14
 msgid "Amount"
 msgstr "账户"
 
-#: templates/base.html:117
+#: templates/base.html:118
 msgid "Updated At"
 msgstr "上传日期"
 
-#: templates/base.html:118
+#: templates/base.html:119
 msgid "Project Created"
 msgstr "项目创建于"
 
-#: templates/base.html:273 users/templates/account/login.html:162
+#: templates/base.html:120
+#, fuzzy
+#| msgid "Make a payment"
+msgid "Make a contract"
+msgstr "支付"
+
+#: templates/base.html:121
+msgid "Project"
+msgstr "项目"
+
+#: templates/base.html:275 users/templates/account/login.html:162
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:156
 msgid "Sign In"
 msgstr "登入"
@@ -740,25 +773,29 @@ msgstr "交易ID"
 msgid "Created Date"
 msgstr "创建日期"
 
-#: transactions/models.py:17
+#: transactions/models.py:18
 msgid "amount"
 msgstr "交易金额"
 
-#: transactions/models.py:18 transactions/models.py:34
+#: transactions/models.py:19 transactions/models.py:38
 msgid "created at"
 msgstr "创建于"
 
-#: transactions/models.py:19
+#: transactions/models.py:20
 msgid "updated at"
 msgstr "上传于"
 
-#: transactions/models.py:21 transactions/models.py:36
+#: transactions/models.py:22 transactions/models.py:40
 msgid "transaction status"
 msgstr "交易状态"
 
 #: transactions/templates/payment/pay_now_button.html:2
 msgid "Make a payment"
 msgstr "支付"
+
+#: transactions/templates/transaction/transactions.html:56
+msgid "You don't have any payments right now."
+msgstr "您目前没有任何交易。"
 
 #: users/forms.py:33
 msgid "Must select a role"

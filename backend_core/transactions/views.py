@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .forms import TransactionForm, TransactionHistoryForm
-from .utils import *
+from forms import TransactionForm, TransactionHistoryForm
+from utils import *
 from projects.models import Project
-from .models import Transaction, TransactionHistory
+from models import Transaction, TransactionHistory
 import json
+from users.utils import CONSUMER, PROFESSIONAL
+from django.contrib.contenttypes.models import ContentType
 
 
 # Create your views here.
@@ -34,8 +36,17 @@ class TransactionsView(View):
             :param kwargs:
             :return:
         """
+        template_name = 'transaction/transactions.html'
 
-        return Http404
+        if request.user.role == CONSUMER:
+            transactions = Transaction.objects.filter(user=request.user)
+        elif request.user.role == PROFESSIONAL:
+            professional = request.user.professional_profiles.first().professional
+            transactions = Transaction.objects.filter(
+                content_type=ContentType.objects.get(model=professional.type.lower()),
+                object_id=int(professional.lic_num))
+        info_dict = {'transactions': transactions}
+        return render(request, template_name, {'info_dict': info_dict})
 
     def post(self, request, *args, **kwargs):
         """
@@ -47,8 +58,10 @@ class TransactionsView(View):
         """
         received_json_data = json.loads(request.body)
         project = Project.objects.get(project_id=int(received_json_data['project_id']))
-        transaction, created= Transaction.objects.get_or_create(project=project,
-                                              transaction_key=received_json_data['transaction_key'])
+        transaction, created = Transaction.objects.get_or_create(project=project, user=project.user,
+                                                                 content_type=project.content_type,
+                                                                 object_id=project.object_id,
+                                                                 transaction_key=received_json_data['transaction_key'])
         if created:
             if received_json_data['amount'] == '':
                 pass

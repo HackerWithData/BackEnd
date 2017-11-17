@@ -1,0 +1,139 @@
+{% load i18n %}
+<div class="row">
+    <!--summary-->
+    <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
+        <div id='overview-wrapper' class="text height">
+            {#            {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}#}
+            {#                <div id="edit_overview" class="hide">#}
+            {#                    <form action="" method="post" enctype="multipart/form-data">#}
+            {#                        {{ info_dict.overview_form.overview }}#}
+            {#                        {% csrf_token %}#}
+            {#                        <br/>#}
+            {#                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>#}
+            {#                    </form>#}
+            {#                </div>#}
+            {#            {% endif %}#}
+            <div id="display_overview">
+                {{ info_dict.overview|safe }}
+            </div>
+        </div>
+        <div id="peek" class="link">
+            <a id="readmore" class="btn btn-db" style="color:white"> <i class="fa fa-chevron-down "> </i></a>
+        </div>
+    </div>
+
+    <div id="BasicInfo" class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ Business_Information }}</div>
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td class="rname">{{ Address }}:</td>
+                        {#TODO: need to check none?                        #}
+                        <td>{{ info_dict.meister.street_address }} <br/>
+                            {{ info_dict.meister.county }}, {{ info_dict.meister.state }} {{ info_dict.meister.pos_code }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {#        TODO: add ajax to show more photos#}
+    {% if info_dict.project_photos %}
+        <!--photo-->
+        <div id="photo" class="col-12 col-md-8 col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>{{ Photo }}</span>
+                    {#                        <div class="pull-right">#}
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                    {#                        </div>#}
+                </div>
+                <div class="panel-body">
+                    <div class="popup-gallery">
+                        {% for pic in  info_dict.project_photos %}
+                            <a href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                <img src="{{ pic.img.url }}">
+                            </a>
+                            {#    style="height:50%;width:50%"#}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if info_dict.review %}
+        <!--basic information-->
+        {#        TODO: add ajax to show more photos#}
+        <div id="Review" class="col-12 col-md-4 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>{{ Review }}</span>
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                </div>
+                <div class="panel-body">
+                    <div class="review-row">
+                        {% for rv in info_dict.review %}
+                            <div class="user-review">
+                                <div class="main-spec">
+                                    {% if rv.is_anonymous == 1 %}
+                                        {{ Anonymous_User }}
+                                    {% else %}
+                                        {{ rv.user.first_name }}{{ rv.user.last_name }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_cost %}
+                                        {{ Project_Cost }}: {{ rv.project_cost }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_type %}
+                                        {{ Project_Type }}: {{ rv.project_type }}
+                                    {% endif %}
+                                    <br/>
+                                    {% if rv.project_duration %}
+                                        {{ Project_Duration }}: {{ rv.project_duration }}
+                                    {% endif %}
+                                    <br/>
+                                    <br/>
+                                    {{ rv.comments }}
+                                    <br/>
+
+                                    <div class="popup-gallery-{{ forloop.counter }}">
+                                        {% if rv.photo.all %}
+                                            {% for img in rv.photo.all %}
+                                                <a href="{{ img.img.url }}" title="{{ img.title }}">
+                                                    <img src="{{ img.img.url }}" title="{{ img.title }}"
+                                                         style="width:50px;height:50px;">
+                                                </a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="user-rating">
+                                    {% for r in rv.userrating_set.all %}
+                                        {% if r.get_rating_type_display == 'Efficiency' %}
+                                            {{ Efficiency }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Quality' %}
+                                            {{ Quality }} : {{ r.rating_score }}
+                                        {% elif r.get_rating_type_display == 'Length' %}
+                                            {{ Length }} : {{ r.rating_score }}
+                                        {% endif %}
+                                        <br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    $("img.lazyload").lazyload();
+</script>

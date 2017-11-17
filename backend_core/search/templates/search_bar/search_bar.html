@@ -108,7 +108,7 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="DESIGNER" target="DESIGNER">
+            <a href="#" class="search-category-title" type="Designer" target="Designer">
                 <div id="designer-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Designer' %}</span></a>
         </div>
     </li>
@@ -126,14 +126,14 @@
         <!--</ul>-->
         <!--</div>-->
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="ARCHITECT" target="ARCHITECT">
+            <a href="#" class="search-category-title" type="Architect" target="Architect">
                 <div id="architect-icon"></div>&nbsp;<span
                     class="search-category-word">{% trans 'Architect' %}</span></a>
         </div>
     </li>
     <li class="search-category">
         <div class="single-category-link">
-            <a href="#" class="search-category-title" type="Meister" target="MEISTER">
+            <a href="#" class="search-category-title" type="Meister" target="Meister">
                 <div id="meister-icon"></div>&nbsp;<span class="search-category-word">{% trans 'Meister' %}</span></a>
         </div>
     </li>
@@ -165,6 +165,7 @@
         {value: 'Doors, Gates and Activating Devices', data: {category: 'Contractor'}},
         {value: 'Designer', data: {category: 'Designer'}},
         {value: 'Architect', data: {category: 'Architect'}},
+        {value: 'Meister', data: {category: 'Meister'}},
     ];
 
     let userCoordinate;
@@ -175,7 +176,6 @@
     let categorySearchType;
     //    Professional Subtype
     let categorySearchTarget;
-
     let options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -211,10 +211,8 @@
 //        TODO: Add meister
         $('.suggestion-categories a').click(function (event) {
             event.preventDefault();
-            if (this.type !== 'Meister') {
-                $('#inlineFormInputSearchType').val(this.type);
-                $('#inlineFormInputSearchTargetType').val(this.target);
-            }
+            $('#inlineFormInputSearchType').val(this.type);
+            $('#inlineFormInputSearchTargetType').val(this.target);
         });
 
         $('#currentLocationDropdownItem').click(function () {
@@ -352,8 +350,8 @@
     }
 
     function categorySearch() {
-        if (categorySearchType === 'Meister')
-            return;
+{#        if (categorySearchType === 'Meister')#}
+{#            return;#}
         let data = {
             'type': categorySearchType,
             'target': categorySearchTarget,

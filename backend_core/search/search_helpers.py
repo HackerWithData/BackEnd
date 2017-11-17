@@ -5,8 +5,9 @@ from django.forms.models import model_to_dict
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
+from meisters.models import Meister
 from professionals.models import Professional, ProfessionalType
-from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES,MEISTER
 from contractors.utils import convert_hscore_to_rank
 
 
@@ -90,6 +91,11 @@ def retrieve_all_kind_professional(prof_qs):
             designer = Designer.objects.filter(lic_num=professional.lic_num).first()
             item = model_to_dict(designer).copy()
             item['type'] = DESIGNER
+        #TODO: need to take care this part.
+        elif professional.type.upper() == MEISTER:
+            meister = Meister.objects.filter(lic_num=professional.lic_num).first()
+            item = model_to_dict(meister).copy()
+            item['type'] = MEISTER
         else:
             raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
         ret_list.append(item)

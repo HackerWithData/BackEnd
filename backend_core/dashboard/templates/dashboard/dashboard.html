@@ -58,6 +58,13 @@
                                         </div>
                                     </a>
                                 </li>
+                                <li class="account-setting-list-item">
+                                    <a class="link" href="{% url 'transactions' %}">
+                                        <div class="link">
+                                            <span class="">{{ Project_Transaction }}</span>
+                                        </div>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -91,6 +98,13 @@
                                 <li class="account-setting-list-item">
                                     <a class="titled-nav_link" href="{% url 'display_project_overview' %}">
                                         <span class="titled-nav_link-label">{{ Project_Overview }}</span>
+                                    </a>
+                                </li>
+                                <li class="account-setting-list-item">
+                                    <a class="link" href="{% url 'transactions' %}">
+                                        <div class="link">
+                                            <span class="">{{ Payment }}</span>
+                                        </div>
                                     </a>
                                 </li>
                                 {#                                TODO : ADD Transsaction Interface#}

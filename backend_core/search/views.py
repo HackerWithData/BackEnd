@@ -8,8 +8,7 @@ from django.urls import reverse
 from django.core import serializers
 import json
 
-from contractors.models import Contractor
-from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR,MEISTER
 from search_helpers import (search_by_zipcode,
                             search_by_address_object_redirect_url,
                             search_by_name_or_lic)

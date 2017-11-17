@@ -214,8 +214,13 @@
         }
 
         function addProfessionalMarkers(professionalList) {
-            for (let i = 0; i < professionalList.length; i++) {
-                var address = `${professionalList[i]['street_address']}, ${professionalList[i]['csp']}`;
+            for (i = 0; i < professionalList.length; i++) {
+                if (professionalList[i].hasOwnProperty('csp')) {
+                    var address = `${professionalList[i]['street_address']}, ${professionalList[i]['csp']}`;
+                } else {
+                    var address = `${professionalList[i]['street_address']}, ${professionalList[i]['county']}, ${professionalList[i]['state']}, ${professionalList[i]['postal_code']}`;
+                }
+
                 geocoder.geocode({'address': address}, function (result, status) {
                     professionalGeocoderCallBack(result, status, professionalList[i], i);
                 });

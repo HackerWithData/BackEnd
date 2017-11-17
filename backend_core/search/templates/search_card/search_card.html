@@ -17,7 +17,7 @@
     {{ License_num }}: {{ professional.lic_num }} </br>
     {{ License_Type }}: {{ professional.type }}</div>
     <!--TODO: validate to_list tag-->
-    {% if professional.type != 'DESIGNER' %}
+    {% if professional.type != 'DESIGNER' and professional.type != 'MEISTER' %}
         <span class="mb-1">{{ License_Status }}: </span>
 
         {% if professional.lic_status == "Expired" or professional.lic_status == "Cancelled" or professional.lic_status == "Canceled" or professional.lic_status == "Revoked" or professional.lic_status == "Under Suspension" or professional.lic_status == "Inactive" or professional.lic_status == "Inactive and Under Suspension" %}
@@ -35,12 +35,12 @@
         {% endif %}
         {{ Address }}: {{ professional.street_address }} {{ professional.csp }} </br>
     {% elif professional.type == 'DESIGNER' %}
-
         {{ Address }}: {% if  professional.street_address %}{{ professional.street_address }} </br>{%  endif %}
         {{ professional.city }},{{ professional.state }} {{ professional.pos_code }} </br>
-    {% elif professional.type == 'Architect' %}
+    {% elif professional.type == 'ARCHITECT' %}
         {{ Address }}: {{ professional.street_address }} </br>
-        {{ professional.city }},{{ professional.state }}{{ professional.pos_code }} </br>
-        {#            TODO: Add meister#}
+        {{ professional.city }},{{ professional.state }} {{ professional.pos_code }} </br>
+    {% elif professional.type == 'MEISTER' %}
+        {{ Address }}: {{ professional.street_address }}, {{ professional.county }}, {{ professional.state }} {{ professional.pos_code }} </br>
     {% endif %}
 </div>

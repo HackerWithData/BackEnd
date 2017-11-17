@@ -1,0 +1,70 @@
+<div id="left-col" class="col-sm-12 col-md-6 col-lg-4" >
+    <!--basic information-->
+    <div id="BasicInfo" class="contractor-block" >
+            <h1>Basic Information</h1>
+            <hr>
+            <table >
+                <tr><td class="rname">License #: </td>
+                    <td>{{ info_dict.contractor.lic_num }}</td></tr>
+                <tr><td class="rname">License Status:</td>
+                    <td>{{ info_dict.contractor.lic_status }}</td></tr>
+                <tr><td class="rname">License Type:</td>
+                    <td>{% for item in info_dict.lic_type %}{{item}}<br> {%  endfor %}</td></tr>
+
+                <tr><td class="rname">Entity:</td>
+                    <td>{{ info_dict.contractor.entity }}</td></tr>
+                <tr><td class="rname">Issued Date:</td>
+                    <td>{{ info_dict.contractor.lic_issue_date }}</td></tr>
+                {% if info_dict.contractor.lic_expire_date %}
+                <tr><td class="rname">Expiration Date:</td>
+                    <td>{{ info_dict.contractor.lic_expire_date }}</td></tr>
+                {% endif %}
+                <tr><td class="rname">Bonded:</td>
+                    <td>{{ info_dict.bond_history.surety_company }}</td></tr>
+                <tr><td class="rname">Issued:</td>
+                    <td>{{ info_dict.wc_history.insur_company }}</td></tr>
+                <tr><td class="rname">Address:</td>
+                    <td>{{ info_dict.contractor.street_address }} <br />
+                    {{ info_dict.contractor.csp }}</td></tr>
+            </table>
+    </div>
+</div>
+{#    <ul class="nav nav-stacked" id="sidebar">#}
+{#        <li class="active"><a href="{{ request.path }}#Summary">Summary</a></li>#}
+{#            {% if info_dict.photo|length > 0 %}<li><a href="{{ request.path }}#photo">Photos</a></li>{%  endif %}#}
+    {#        <li><a href="{{ request.path }}#contractor">contractor</a></li>#}
+{#            <li><a href="{{ request.path }}#BasicInfo">Basic Information</a></li>#}
+{#            {% if info_dict.review|length > 0 %}<li><a href="{{ request.path }}#Review">Review</a></li>{%  endif %}#}
+    {#            <li class="dropdown">#}
+    {#            <a href="#" id="navbarDrop1" class="dropdown-toggle" data-toggle="dropdown">Java#}
+    {#            <b class="caret"></b>#}
+    {#            </a>#}
+    {#            <ul class="dropdown-menu" role="menu" aria-labelledby="navbarDrop1">#}
+    {#            <li><a href="{{ request.path }}#jmeter" tabindex="-1">jmeter</a></li>#}
+    {#            <li><a href="{{ request.path }}#ejb" tabindex="-1">ejb</a></li>#}
+    {#            <li class="divider">#}
+    {#            <li><a href="{{ request.path }}#spring" tabindex="-1">spring</a></li>#}
+    {#            </ul>#}
+    {#            </li>#}
+    {#                  <li>#}
+    {#                    <a href="#sec0">Section 0</a>#}
+    {#                  	<ul class="nav">#}
+    {#                      <li class=""><a href="#">- Sub 1</a></li>#}
+    {#                      <li class=""><a href="#">- Sub 2</a></li>#}
+    {#                    </ul>#}
+    {#                  </li>#}
+    {#                  <li>#}
+    {#                    <a href="#sec1">Section 1</a>#}
+    {#                    <ul class="nav">#}
+    {#                      <li class=""><a href="#">- Sub 1</a></li>#}
+    {#                      <li class=""><a href="#">- Sub 2</a></li>#}
+    {#                      <li class=""><a href="#">- Sub 3</a></li>#}
+    {#                    </ul>#}
+    {#                  </li>#}
+    {#                  <li><a href="#sec2">Section 2</a></li>#}
+    {#                  <li><a href="#sec3">Section 3</a></li>#}
+    {#                  <li><a href="#sec4">Section 4</a></li>#}
+    {#              	</ul>#}
+
+
+

@@ -14,6 +14,7 @@ from photos.models import Photo
 import datetime
 from users.utils import CONSUMER
 from django.conf import settings
+from professionals.utils import check_professional_type
 from django.http import HttpResponseNotFound, Http404
 # Create your views here.
 
@@ -28,19 +29,14 @@ def submit_review(request, o_id):
         # TODO: assign a random password
         if review_form.is_valid() and user_rating_form.is_valid():
             # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
-
+            #TODO: anyone could leave message and add recaptcha.
             user = User(email=review_form.cleaned_data['email'],
                         username=review_form.cleaned_data['email'],
                         last_name=review_form.cleaned_data['last_name'],
                         first_name=review_form.cleaned_data['first_name'],
                         password=make_password("aaaaaaa"))
             user.save()
-            if 'contractor' in request.path:
-                model_type = 'contractor'
-            elif 'designer' in request.path:
-                model_type = 'designer'
-            elif 'architect' in request.path:
-                model_type = 'architect'
+            model_type = check_professional_type(request)
             review = Review(content_type=ContentType.objects.get(model=model_type),
                             object_id=o_id,
                             user=user,
@@ -88,12 +84,7 @@ def submit_review(request, o_id):
 def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
         template_name = r'review/display_review.html'
-        if 'contractor' in request.path:
-            model_type = 'contractor'
-        elif 'designer' in request.path:
-            model_type = 'designer'
-        elif 'architect' in request.path:
-            model_type = 'architect'
+        model_type = check_professional_type(request)
         review = Review.objects.filter(content_type=ContentType.objects.get(model=model_type), object_id=o_id,
                                        review_status='A')
         # other situation

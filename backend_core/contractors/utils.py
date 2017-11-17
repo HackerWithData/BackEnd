@@ -22,7 +22,7 @@ def get_state_full_name(state):
     FullName = "California"
     return FullName
 
-
+#TODO: need to revise here
 def avg_rating(review, rt):
     s = 0
     l = 0

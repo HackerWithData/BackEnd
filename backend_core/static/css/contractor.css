@@ -24,7 +24,7 @@ body {
 /*min-height: 80%;*/
 /*}*/
 
-#masthead, .footer, #contractor-content, #designer-content, #architect-content {
+#masthead, .footer, #contractor-content, #designer-content, #architect-content, #meister-content {
     box-sizing: border-box;
     width: auto;
 }
@@ -491,7 +491,7 @@ h1 {
 }
 
 .bus-name {
-    font-size: 88px;
+    font-size: 66px;
     font-weight: 900;
 }
 
@@ -529,7 +529,9 @@ h1 {
 }
 
 @media (min-width: 768px) {
-
+    #contractor-content, #architect-content, #designer-content, #meister-content {
+        min-height: calc(100% - 300px);
+    }
     #masthead .container {
         /*width:auto;*/
         margin: 0 10%;
@@ -560,7 +562,7 @@ h1 {
 }
 
 @media (max-width: 767px) {
-    #contractor-content, #architect-content, #designer-content {
+    #contractor-content, #architect-content, #designer-content, #meister-content {
         margin: 0px 5%;
         padding: 0px 20px;
     }

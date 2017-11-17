@@ -1,0 +1,384 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <style>
+        #masthead {
+            background: url('{{ info_dict.bg_image.img.url }}') no-repeat center;
+            background-size: cover;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var curHeight = $('#Summary .text').height();
+            if (curHeight >= 350) {
+
+                $('#readmore').show();
+            }
+            else {
+                $('#readmore').hide();
+                $('#peek').removeClass('link');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
+    {{ info_dict.overview_form.media }}
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    {#    #TODO: what's this?#}
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+
+{% endblock %}
+
+{% block header %}
+    <div id="masthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-lg-9 head-info">
+                    <span class="bus-name">{{ info_dict.meister.lic_name }}</span>
+                    {#                    {TODO: need to change Here}#}
+                    {% if info_dict.p_lic_num == info_dict.meister.lic_num %}
+                        <label class="switch">
+                            <input id="edit" type="checkbox" class="off">
+                            <span class="slider round"></span>
+                        </label> {% trans 'Edit page?' %}
+                    {% endif %}
+                    <br/>
+                    <div class="horizontal-list">
+                        <ul style="list-style-type:None;">
+                            <li>{{ info_dict.meister.state }}</li>
+                            {#                            <li id="score-popup" class='popup' onmouseover="popUp1()" onclick="popUp1()">#}
+                            {#                                {{ Score }}: {{ info_dict.score }}#}
+                            {#                                <div id="Score-explaination" class="popuptext">#}
+                            {#                                    <ul>#}
+                            {#                                        <li>{{ Work_Year }}: {{ info_dict.length }}</li>#}
+                            {#                                        <li>{{ Arbitration }}: {{ info_dict.complaint.arbitration }}</li>#}
+                            {#                                        <li>{{ Citation }}: {{ info_dict.complaint.citation }}</li>#}
+                            {#                                        <li>{{ Case }}: {{ info_dict.complaint.case }}</li>#}
+                            {#                                        <li>{{ Lawsuit }}: {{ info_dict.complaint.complaint }}</li>#}
+                            {#                                    </ul>#}
+                            {#                                </div>#}
+                            {#                            </li>#}
+                            {#                            <li id="rank-popup">#}
+                            {#                           class='popup' onmouseover="popUp2()" onclick="popUp2()"#}
+                            {#                                {{ Rank }}: {{ info_dict.rank }}#}
+                            {#                                <div id="Rank-explaination" class="popuptext">{% blocktrans %}#}
+                            {#                                    In Hoome, Contractors could be classified into 6 categories: A+++,A++,A+,A,A-,Warning.#}
+                            {#                                    {% endblocktrans %}#}
+                            {#                                </div>#}
+                            {#                            </li>#}
+                            <li>{{ Phone }}: {{ info_dict.meister.phone }}</li>
+                        </ul>
+                        <ul style="list-style-type:None;">
+                            <li>
+                                <div class="ratings_rating">
+                                    <span>{{ Overall_Rating }}:</span>
+                                    {% for radio in info_dict.ratings.stars %}
+                                        {% if radio <= info_dict.ratings.overall %}
+                                            <span class="yellow" id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% else %}
+                                            <span id="star-{{ radio }}"></span>
+                                            <label for="star-{{ radio }}"></label>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 header-btn-wrapper">
+                    <div class="bus-btn">
+                        {% if request.user.role == "CONSUMER" %}
+                            <a href="{% url 'create_project' 'meister' info_dict.meister.lic_num %}"
+                               class="btn btn-db">{{ Make_Contract }}</a>
+                        {% endif %}
+                        <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
+                        {% if info_dict.p_lic_num == info_dict.meister.lic_num %}
+                            <div class='hide' id="edit-btn">
+                                <a href="{{ request.path }}project-photos/upload"
+                                   class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
+                                <a href="{{ request.path }}background-upload"
+                                   class='btn btn-hoome'>{% trans 'Background Image Upload' %}</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /cont -->
+
+{% endblock %}
+
+{% block content %}
+    <!-- Begin Body -->
+    <div id="meister-content">
+        <div class="container">
+            <div class='menu justify-content-center' id='pro-menu'>
+                <ul class='nav nav-pills'>
+                    <li class="nav-item">
+                        <a class="nav-link" id="overview-tab">{{ Overview }}</a>
+                    </li>
+                    {% if info_dict.project_photos %}
+                        <li class="nav-item">
+                            <a class="nav-link" id="projectphotos-tab">{{ Project_Photos }}</a>
+                        </li>
+                    {% endif %}
+                    {% if info_dict.review %}
+                        <li class="nav-item">
+                            <a class="nav-link" id="review-tab">{{ Review }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div id="pro-content">
+                {% include "meister/meister_overview.html" %}
+            </div>
+        </div>
+    </div>
+
+
+    <form id="review-submission" action="" method="post" enctype="multipart/form-data"
+          class="mfp-hide white-popup-block">
+        {% for field in info_dict.user_rating_form %}
+            <div class="rating-name">
+                {% if field.label == 'Efficiency' %}
+                    {{ Efficiency }} :
+                {% elif field.label == 'Quality' %}
+                    {{ Quality }} :
+                {% elif field.label == 'Length' %}
+                    {{ Length }} :
+                {% endif %}
+            </div>
+            <fieldset class="rating">
+                {% for radio in field %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                {% endfor %}
+            </fieldset>
+            <br>
+            <br>
+        {% endfor %}
+
+        {#        {{ info_dict.review_form.as_p }}#}
+        {% for field in info_dict.review_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+            <div style='color:red'> {{ field.errors }}</div>
+            </p>
+        {% endfor %}
+
+        <br>
+        <b>{{ Project_Photos }}: </b><input type="file" name="project photos" title="upload projects photos" multiple>
+        <br>
+        {% csrf_token %}
+        <button type="submit" class='btn btn-hoome' name="review" value="review">{{ Submit }}</button>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        var a = document.getElementById('pro-content').innerHTML;
+        var b;
+        var c;
+        {#        var d;#}
+
+        function readMore() {
+            var readmore = $('#readmore');
+            if (readmore.find('i.fa-chevron-down').length !== 0) {
+                readmore.html('<i class="fa fa-chevron-up"> </i>');
+                $('#peek').removeClass('link');
+            } else {
+                readmore.html('<i class="fa fa-chevron-down"> </i>');
+                $('#peek').addClass('link');
+            }
+            $('.height').toggleClass("heightAuto");
+            {#                $('#peek').addClass("nonlink");#}
+        }
+
+        // When the user clicks on <div>, open the popup
+        function popUp1() {
+            var popup = document.getElementById("Score-explaination");
+            popup.classList.toggle("show");
+        }
+
+        {#        function popUp2() {#}
+        {#            var popup = document.getElementById("Rank-explaination");#}
+        {#            popup.classList.toggle("show");#}
+        {#        }#}
+
+
+        function projectPhotosListener() {
+            if (b) {
+                $('#pro-content').html(b);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    url: '{% url 'meister_project_photos' info_dict.meister.lic_num %}',
+                    dataType: 'html',
+                })
+                    .done(function (data) {
+                        b = data;
+                        $('#pro-content').html(b);
+                    });
+            }
+        }
+
+        function reviewListener() {
+            if (c) {
+                $('#pro-content').html(c);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '{% url 'meister_review' info_dict.meister.lic_num %}',
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    dataType: 'html',
+                })
+                    .done(function (data) {
+                        c = data;
+                        $('#pro-content').html(c);
+                    });
+            }
+        }
+
+        {#        photoSlider();#}
+        $(document).ready(function () {
+            $("#edit").click(function () {
+                if ($("#edit").prop("checked") === true) {
+                    $('#edit-btn').removeClass('hide');
+                    {#                    $('#edit_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').removeClass('text');#}
+                    {#                    $('#overview-wrapper').removeClass('height');#}
+                    {#                    $('#display_overview').addClass('hide');#}
+                    $('#peek').addClass('hide');
+
+                } else {
+                    $('#edit-btn').addClass('hide');
+                    {#                    $('#edit_overview').addClass('hide');#}
+                    {#                    $('#display_overview').removeClass('hide');#}
+                    {#                    $('#overview-wrapper').addClass('text');#}
+                    {#                    $('#overview-wrapper').addClass('height');#}
+                    $('#peek').removeClass('hide');
+                }
+            });
+
+            $('#readmore').click(function () {
+                readMore();
+            });
+            {#            $("#Score-explaination").css({#}
+            {#                'width': ($(".head-info").width() + 'px')#}
+            {#            });#}
+            $('.popup-with-form').magnificPopup({
+                type: 'inline',
+                preloader: true,
+                focus: '#Efficiency',
+
+                // When elemened is focused, some mobile browsers in some cases zoom in
+                // It looks not nice, so we disable it:
+                callbacks: {
+                    beforeOpen: function () {
+                        if ($(window).width() < 700) {
+                            this.st.focus = false;
+                        } else {
+                            this.st.focus = '#Efficiency';
+                        }
+                    }
+                }
+            });
+
+            $('#photo .popup-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                fixedContentPos: true,
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function (item) {
+                        return item.el.attr('title');
+                        {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                    }
+                }
+            });
+
+            {% for rv in info_dict.review %}
+                $('#review .popup-gallery-{{ forloop.counter }}').magnificPopup({
+                    delegate: 'a',
+                    type: 'image',
+                    tLoading: 'Loading image #%curr%...',
+                    fixedContentPos: true,
+                    mainClass: 'mfp-img-mobile',
+                    gallery: {
+                        enabled: true,
+                        navigateByImgClick: true,
+                        preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                    },
+                    image: {
+                        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                        titleSrc: function (item) {
+                            return item.el.attr('title');
+                            {#                                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';#}
+                        }
+                    }
+                });
+            {% endfor %}
+
+            $('#overview-tab').click(function () {
+                document.getElementById('pro-content').innerHTML = a;
+                var curHeight = $('#Summary .text').height();
+                {#            TODO:DYNAMICLy CHANGE THE HEIGHT#}
+                if (curHeight >= 350) {
+                    $('#readmore').show();
+                }
+                else {
+                    $('#readmore').hide();
+                    $('#peek').removeClass('link');
+                }
+                $('#readmore').click(function () {
+                    readMore();
+                });
+
+                $('#photo a.viewmore').click(function () {
+                    projectPhotosListener();
+                });
+                $('#review a.viewmore').click(function () {
+                    reviewListener();
+                });
+            });
+
+            $('#projectphotos-tab').click(function () {
+                projectPhotosListener();
+            });
+
+            $('#photo a.viewmore').click(function () {
+                projectPhotosListener();
+            });
+
+            $('#review-tab').click(function () {
+                reviewListener();
+            });
+
+            $('#review a.viewmore').click(function () {
+                reviewListener();
+            });
+        });
+    </script>
+{% endblock %}

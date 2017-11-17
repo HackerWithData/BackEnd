@@ -70,8 +70,9 @@ urlpatterns = [
     # url(r'^reviews/', include('review.urls')),
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
-
+    url(r'^meister/', include('meisters.urls')),
 ]
+
 if settings.DEBUG:
     import debug_toolbar
 

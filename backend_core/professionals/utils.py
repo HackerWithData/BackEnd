@@ -3,11 +3,13 @@ from django.utils.translation import ugettext_lazy as __
 CONTRACTOR = 'CONTRACTOR'
 ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
-
+MEISTER = 'MEISTER'
+#TODO: take care
 PROFESSIONAL_CHOICES = (
     (CONTRACTOR, __('Contractor')),
     (ARCHITECT, __('Architect')),
     (DESIGNER, __('Designer')),
+    (MEISTER, __('Meister'))
 )
 
 # entity type
@@ -38,6 +40,7 @@ DC = 'Drywall Contractor'
 EC = 'Electrical Contractor'
 PDC = 'Painting And Decorating Contractor'
 SMC = 'Sheet Metal Contractor'
+ME = 'MEISTER'
 
 PROFESSIONAL_SUBTYPE_CHOICES = (
     (GC, __('General Contractor')),
@@ -55,5 +58,13 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
     (DC, __('Drywall Contractor')),
     (EC, __('Electrical Contractor')),
     (PDC, __('Painting And Decorating Contractor')),
-    (SMC, __('Sheet Metal Contractor'))
+    (SMC, __('Sheet Metal Contractor')),
+    (ME, __('MEISTER'))
 )
+
+
+def check_professional_type(request):
+    for i in [j[0] for j in PROFESSIONAL_CHOICES]:
+        if i in request.path:
+            model_type = i
+    return model_type

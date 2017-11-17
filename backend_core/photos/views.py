@@ -15,6 +15,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 import boto
 from boto.s3.key import Key
+from professionals.utils import check_professional_type
+
 # Create your views here.
 class BasicUploadView(View):
     def get(self, request):
@@ -52,12 +54,7 @@ def background_photo_upload(request, o_id):
         template_name = 'photos/background_photo_upload.html'
 
         if request.method == 'POST':
-            if 'contractor' in request.path:
-                model_type = 'contractor'
-            elif 'designer' in request.path:
-                model_type = 'designer'
-            elif 'architect' in request.path:
-                model_type = 'architect'
+            model_type = check_professional_type(request)
             success_url = "/"+model_type+"/"+o_id
             form = BackgroundPhotoForm(request.POST, request.FILES)
             if form.is_valid():
