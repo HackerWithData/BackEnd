@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-17 09:53+0000\n"
+"POT-Creation-Date: 2017-11-18 00:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,7 +168,7 @@ msgid ""
 "this designer to you.\n"
 "                "
 msgstr ""
-"{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
+"{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该设计师持有相"
 "关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
 "们，我们会向您分享更多关于该商家的信息和数据。"
 
@@ -181,6 +181,7 @@ msgid "Database in California State"
 msgstr "加州数据库"
 
 #: meisters/views.py:77
+#, python-brace-format
 msgid ""
 "{lic_name} is a professional located in {full_state_name}. The professional "
 "is verified as \n"
@@ -188,9 +189,9 @@ msgid ""
 "{lic_name} more, please contact us and we will \n"
 "            share more information and data about this meister to you."
 msgstr ""
-"{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该建筑师持有相"
-"关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
-"们，我们会向您分享更多关于该商家的信息和数据。"
+"{lic_name} 是一位基于{full_state_name}装修专业人士。该专业人士被Hoome认证有"
+"效。 如果您需要了解{lic_name}更多的资讯，请联系我们，我们会向您分享更多关于其"
+"的信息和数据。"
 
 #: overviews/views.py:21 projects/views.py:190
 msgid "Request Success"
@@ -301,7 +302,7 @@ msgid "Designer"
 msgstr "设计师"
 
 #: search/templates/search_bar/search_bar.html:19
-#: search/templates/search_bar/search_bar.html:137
+#: search/templates/search_bar/search_bar.html:137 templates/base.html:122
 msgid "Meister"
 msgstr "守艺人"
 
@@ -463,7 +464,7 @@ msgid "License Status"
 msgstr "证件状态"
 
 #: templates/base.html:39
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:256
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:292
 msgid "License Number"
 msgstr "证件号码"
 
@@ -472,7 +473,7 @@ msgid "Entity"
 msgstr "实体"
 
 #: templates/base.html:41
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:264
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:301
 msgid "Entity Type"
 msgstr "实体类型"
 
@@ -513,7 +514,6 @@ msgid "Read less"
 msgstr "阅读更少"
 
 #: templates/base.html:54
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:263
 msgid "Company Name"
 msgstr "公司名字"
 
@@ -604,12 +604,12 @@ msgid "Postal Code"
 msgstr "邮编"
 
 #: templates/base.html:77
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:280
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:318
 msgid "State"
 msgstr "州"
 
 #: templates/base.html:78
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:279
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:316
 msgid "Street"
 msgstr "街道"
 
@@ -747,17 +747,14 @@ msgid "Project Created"
 msgstr "项目创建于"
 
 #: templates/base.html:120
-#, fuzzy
-#| msgid "Make a payment"
 msgid "Make a contract"
-msgstr "支付"
+msgstr "签订合同"
 
 #: templates/base.html:121
 msgid "Project"
 msgstr "项目"
 
-#: templates/base.html:275 users/templates/account/login.html:162
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:156
+#: templates/base.html:276 users/templates/account/login.html:162
 msgid "Sign In"
 msgstr "登入"
 
@@ -797,23 +794,23 @@ msgstr "支付"
 msgid "You don't have any payments right now."
 msgstr "您目前没有任何交易。"
 
-#: users/forms.py:33
+#: users/forms.py:34
 msgid "Must select a role"
 msgstr "必须选定一个角色"
 
-#: users/forms.py:71 users/forms.py:176
+#: users/forms.py:72 users/forms.py:189
 msgid "Invalid zipcode"
 msgstr "无效的邮政编码"
 
-#: users/forms.py:77
+#: users/forms.py:78
 msgid "Must select a gender"
 msgstr "必须选定您的性别"
 
-#: users/forms.py:162
+#: users/forms.py:175
 msgid "Must select a professional type"
 msgstr "必须选择您的专业类别"
 
-#: users/forms.py:168
+#: users/forms.py:181
 msgid "Must select a entity type"
 msgstr "必须选择您的注册实体类型，比如：个体户还是公司"
 
@@ -1020,31 +1017,51 @@ msgstr "专业人士信息"
 msgid "Save Changes"
 msgstr "保存修改"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:194
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:213
 msgid "Choose License Type"
 msgstr "请选择证件类型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:253
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:214
+msgid "If you don't have license, please choose meister."
+msgstr "如果您没有证，请选择手艺人这个选项"
+
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:288
 msgid "Find Your License In Our Database"
 msgstr "请输入您的证件号码与我们数据库的证件匹配"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:260
-msgid "Enter Or Modify Your Company Name and Entity Type"
-msgstr "请输入公司的名字和实体类型"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:289
+msgid "If you don't have license, please skip this step."
+msgstr "如果您没有证，请跳过这一步"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:269
-msgid "Enter Or Modify Your Company Category"
-msgstr "请选择公司的类型"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:296
+msgid "Enter Or Modify Your Name, Company Name and Entity Type"
+msgstr "请输入您的名字, 公司的名字和实体类型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:276
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:299
+msgid "Your Name"
+msgstr "您的名字"
+
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:300
+msgid "Company Name(Optional)"
+msgstr "公司名字（可选填）"
+
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:306
+msgid "Enter Or Modify Your Service Category"
+msgstr "请选择您服务的类型"
+
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:313
 msgid "Enter Or Modify Your Company Address"
 msgstr "请输入您公司的地址"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:281
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:317
+msgid "County/City"
+msgstr "县/市"
+
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:319
 msgid "Zipcode"
 msgstr "邮政编码"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:297
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:335
 msgid "Next"
 msgstr "下一步"
 

@@ -46,13 +46,14 @@ class ProfessionalProfile(models.Model):
         related_name='professional_profiles',
         related_query_name='professional_profile'
     )
-
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.DO_NOTHING,
         related_name='professional_profiles',
         related_query_name='professional_profile'
     )
+    class Meta:
+        unique_together = ('user','professional')
 
 
 class ConsumerInterest(models.Model):

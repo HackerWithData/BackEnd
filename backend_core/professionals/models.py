@@ -20,6 +20,7 @@ class Professional(models.Model):
     state = models.CharField(max_length=63)
     lic_type = models.TextField(default='NO LIC TYPE')
     #TODO: need to change the name to pos_code later
+    county = models.CharField(max_length=63)
     postal_code = models.CharField(max_length=63, blank=True, null=True)
 
 

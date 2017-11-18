@@ -128,7 +128,7 @@ class ProfessionalProfileAfterSignupView(View):
             professional = get_professional_user(request.user)
             # reverse url name with professional type
             business_page_url = reverse(professional.type.lower(), args=[professional.lic_num])
-            print business_page_url
+            # print business_page_url
             return redirect(business_page_url)
 
         return render(request, self.template_name, {'form': form})

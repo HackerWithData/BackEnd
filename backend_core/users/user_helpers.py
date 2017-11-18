@@ -1,9 +1,10 @@
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
+from meisters.models import Meister
 from django.core.exceptions import ObjectDoesNotExist
 from professionals.models import Professional
-from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER
+from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER, MEISTER
 
 
 def get_professional_user(user):
@@ -50,6 +51,8 @@ def get_professional_and_professional_corresponding_object_by_user(user):
         ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
     elif prof_type == DESIGNER:
         ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    elif prof_type == MEISTER:
+        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional, ret_professional_object
