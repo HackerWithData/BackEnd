@@ -56,6 +56,7 @@ urlpatterns = [
     # overview
     url(r'^contractor/', include('contractors.urls')),
     url(r'^architect/', include('architects.urls')),
+    url(r'^architect/', include('architects.api.urls')),
     url(r'^designer/', include('designers.urls')),
 
     # project
