@@ -112,29 +112,6 @@
 <div class="row">
     {#        TODO: add ajax to show more photos#}
     {% if info_dict.project_photos %}
-<<<<<<< HEAD
-        <div>
-            <!--photo-->
-            <div id="photo" class="col-12 col-md-8 col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span>{{ Photo }}</span>
-                        {#                        <div class="pull-right">#}
-                        <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
-                        {#                        </div>#}
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <div class="popup-gallery">
-                                {% for pic in  info_dict.project_photos %}
-                                    <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                        <img class="lazyload" data-src="{{ pic.img.url }}">
-                                    </a>
-                                    {#    style="height:50%;width:50%"#}
-                                {% endfor %}
-                            </div>
-
-=======
         <!--photo-->
         <div id="photo" class="col-12 col-md-8 col-lg-8">
             <div class="panel panel-default">
@@ -153,7 +130,6 @@
                                 </a>
                                 {#    style="height:50%;width:50%"#}
                             {% endfor %}
->>>>>>> 9509046a2a943e0695f236532d995e3b7724814a
                         </div>
                     </div>
                 </div>

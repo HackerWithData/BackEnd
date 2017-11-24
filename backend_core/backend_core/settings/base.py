@@ -192,7 +192,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_FORMS = {'signup': 'users.forms.UserSignUpForm'}
 
 # auth and all allauth settings
-# LOGIN_REDIRECT_URL = 'home_index'
 LOGIN_REDIRECT_URL = 'home_index'
 LOGOUT_REDIRECT_URL = 'home_index'
 

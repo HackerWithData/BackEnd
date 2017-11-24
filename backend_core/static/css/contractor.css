@@ -142,6 +142,30 @@ h1 {
 
 /* css for overall rating */
 
+.ratings_rating > label:before {
+    margin: 0px 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.ratings_rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.ratings_rating > label {
+    color: #ddd;
+    float: right;
+}
+
+.ratings_rating > span.yellow + label {
+    color: #FFD700 ;!important
+}
+
+/* css for overall rating */
+
 .overallrating > label:before {
     margin: 5px;
     font-size: 1.25em;
@@ -180,7 +204,9 @@ h1 {
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
 }
-
+.rating > span.yellow + label{
+    color: #FFD700;!important
+}
 /*********************** masthead **********************/
 
 #masthead {
