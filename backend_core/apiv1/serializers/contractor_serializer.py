@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
-import re
 
 
 class ReviewSerializer(serializers.Serializer):
@@ -42,9 +41,9 @@ class ComplaintOverallSerializer(serializers.Serializer):
 
 class ContractorSerializer(serializers.Serializer):
     review = ReviewSerializer(many=True)
-    bond_history = BondHistorySerializer()
-    worker_compensation_history = WorkerCompensationHistorySerializer()
-    complaint = ComplaintOverallSerializer()
+    bond_history = BondHistorySerializer(many=True)
+    worker_compensation_history = WorkerCompensationHistorySerializer(many=True)
+    complaint = ComplaintOverallSerializer(many=True)
 
     lic_num = serializers.IntegerField(read_only=True)
     lic_type = serializers.CharField(read_only=True)
