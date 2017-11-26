@@ -88,7 +88,7 @@ WEB_APPS = [
     'projects',
     'transactions',
     'overviews',
-    'meisters'
+    'meisters',
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS

@@ -1,4 +1,4 @@
-from ..models import Overview
+from overviews.models import Overview
 from rest_framework.serializers import ModelSerializer
 
 
@@ -7,6 +7,4 @@ class OverviewSerializer(ModelSerializer):
         model = Overview
         fields = [
             'overview',
-            'content_type',
-            'object_id',
         ]

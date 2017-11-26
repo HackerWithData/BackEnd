@@ -56,7 +56,6 @@ urlpatterns = [
     # overview
     url(r'^contractor/', include('contractors.urls')),
     url(r'^architect/', include('architects.urls')),
-    url(r'^architect/', include('architects.api.urls')),
     url(r'^designer/', include('designers.urls')),
 
     # project
@@ -72,7 +71,7 @@ urlpatterns = [
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
     url(r'^meister/', include('meisters.urls')),
-    url(r'^apiv1/', include('apiv1.urls'))
+    url(r'^apiv1/', include('apiv1.urls', namespace='apiv1'))
 ]
 
 if settings.DEBUG:
