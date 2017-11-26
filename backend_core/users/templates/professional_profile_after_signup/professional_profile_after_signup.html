@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load users_tag %}
+
 {% load i18n %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">
+    {#    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">#}
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <style>
         .input-license-number-container input, .input-company-info-container input, .input-address-container input {
@@ -16,173 +16,156 @@
         .hide {
             display: none;
         }
-
-        @media (min-width: 768px) {
-            .sign-up-professional-img {
-                height: 200px;
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .sign-up-professional-img {
-                height: 50px;
-                width: 50px;
-            }
-
-            figcaption {
-                font-size: 10px;
-            }
-        }
-
     </style>
 {% endblock %}
-{#{% block nav %}#}
-{#    <div class="header">#}
-{#        <div class="container">#}
-{#            <nav class="navbar navbar-inverse" role="navigation">#}
-{#                <div class="navbar-header">#}
-{#                    <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse"#}
-{#                            data-target="#main-nav">#}
-{#                        <span class="sr-only">Toggle navigation</span>#}
-{#                        <span class="icon-bar"></span>#}
-{#                        <span class="icon-bar"></span>#}
-{#                        <span class="icon-bar"></span>#}
-{#                    </button>#}
-{#                    TODO: need to check mobile view show a line#}
-{#                    <a href="/" class="navbar-brand scroll-top">#}
-{#                        <span class="logo cursive">Hoome</span>#}
-{#                    </a>#}
-{#                </div>#}
-{#                <!--/.navbar-header-->#}
-{#                <div id="main-nav" class="collapse navbar-collapse">#}
-{#                    <ul class="nav navbar-nav">#}
-{#                        <li><a href="/" class="scroll-top">{{ Home }}</a></li>#}
-{#                        TODO: need to change data-id from blog to other#}
-{#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
-{#                        {% if user.is_authenticated %}#}
-{#                            <li>#}
-{#                                <div class="dropdown">#}
-{#                                    <a class="dropdown-toggle" id="dropdownMenuButton"#}
-{#                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                                        {{ Account }}#}
-{#                                        <span class="caret"></span>#}
-{#                                    </a>#}
-{#                                    <div class="dropdown-menu dropdown-menu-right"#}
-{#                                         aria-labelledby="dropdownMenuButton">#}
-{#                                        <div class="passport mobile-hide">#}
-{#                                            <div class="row">#}
-{#                                                <div class="user-image">#}
-{#                                                    {% if user.socialaccount_set.all.0.get_avatar_url %}#}
-{#                                                        <img class="avatar-image"#}
-{#                                                             src="{{ user.socialaccount_set.all.0.get_avatar_url }}">#}
-{#                                                    {% else %}#}
-{#                                                        <canvas class="" width=60 height=60#}
-{#                                                                data-jdenticon-value="{{ user.email }}"></canvas>#}
-{#                                                    {% endif %}#}
-{#                                                </div>#}
-{#                                                <div class="user-name">#}
-{#                                                    <span style="line-height:1em">{{ user.username }}</span>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div class="dropdown-menu-group">#}
-{#                                            <ul class="dropdown-menu-group-list">#}
-{#                                                <li class="dropdown-menu-items">#}
-{#                                                <span class="dropdown-menu-icon-container">#}
-{#                                                    <img class="dropdown-menu-icon"#}
-{#                                                         src="{% static 'image/icon/settings-icon.svg' %}">#}
-{#                                                </span>#}
-{#                                                    <a class="dropdown-item"#}
-{#                                                       href="{% url 'show_dashboard' %}">#}
-{#                                                        {{ Account_Settings }}#}
-{#                                                    </a>#}
-{#                                                </li>#}
-{#                                                {% is_professional as show_professional_link %}#}
-{#                                                {% is_sign_up_completed as sign_up_complete %}#}
-{#                                                {% if show_professional_link and sign_up_complete %}#}
-{#                                                    <li class="dropdown-menu-items">#}
-{#                                                        <span class="dropdown-menu-icon-container">#}
-{#                                                            <img class="dropdown-menu-icon"#}
-{#                                                                 src="{% static 'image/icon/overview-icon.svg' %}">#}
-{#                                                        </span>#}
+{% block nav %}
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#main-nav">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {#                    TODO: need to check mobile view show a line#}
+                    <a href="/" class="navbar-brand scroll-top">
+                        <span class="logo cursive">Hoome</span>
+                    </a>
+                </div>
+                <!--/.navbar-header-->
+                <div id="main-nav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/" class="scroll-top">{{ Home }}</a></li>
+                        {#                        TODO: need to change data-id from blog to other#}
+                        {#                        <li><a href="#" class="scroll-link" data-id="portfolio">Projects</a></li>#}
+                        {% if user.is_authenticated %}
+                            <li>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenuButton"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ Account }}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right"
+                                         aria-labelledby="dropdownMenuButton">
+                                        <div class="passport mobile-hide">
+                                            <div class="row">
+                                                <div class="user-image">
+                                                    {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                                        <img class="avatar-image"
+                                                             src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+                                                    {% else %}
+                                                        <canvas class="" width=60 height=60
+                                                                data-jdenticon-value="{{ user.email }}"></canvas>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="user-name">
+                                                    <span style="line-height:1em">{{ user.username }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-menu-group">
+                                            <ul class="dropdown-menu-group-list">
+                                                <li class="dropdown-menu-items">
+                                                <span class="dropdown-menu-icon-container">
+                                                    <img class="dropdown-menu-icon"
+                                                         src="{% static 'image/icon/settings-icon.svg' %}">
+                                                </span>
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'show_dashboard' %}">
+                                                        {{ Account_Settings }}
+                                                    </a>
+                                                </li>
+                                                {% is_professional as show_professional_link %}
+                                                {% is_sign_up_completed as sign_up_complete %}
+                                                {% if show_professional_link and sign_up_complete %}
+                                                    <li class="dropdown-menu-items">
+                                                        <span class="dropdown-menu-icon-container">
+                                                            <img class="dropdown-menu-icon"
+                                                                 src="{% static 'image/icon/overview-icon.svg' %}">
+                                                        </span>
+
+{#                                                            {% retrieve_professional_link %}#}
+
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                            <ul class="dropdown-menu-group-list">
+                                                <li class="dropdown-menu-items">
+                                                    <form class="dropdown-item" method="post"
+                                                          action="{% url 'account_logout' %}">
+                                                        {% csrf_token %}
+                                                        {% if redirect_field_value %}
+                                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                                   value="{{ redirect_field_value }}"/>
+                                                        {% endif %}
+                                                        <a class="logoutButton" href="#">{{ Logout }}</a>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mobile-dropdown">
+                                    <a id="primary-menu">
+                                        {{ Account }}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div class="mobile-dropdown-group hide">
+                                        <ul class="dropdown-menu-group-list">
+                                            <li class="dropdown-menu-items">
+                                            <span>
+                                                <img class="dropdown-menu-icon"
+                                                     src="{% static 'image/icon/settings-icon.svg' %}">
+                                            </span>
+                                                <a class="dropdown-item" href="{% url 'show_dashboard' %}">
+                                                    {{ Account_Settings }}
+                                                </a>
+                                            </li>
+                                            {% if show_professional_link and sign_up_complete %}
+                                                <li class="dropdown-menu-items">
+                                            <span class="dropdown-menu-icon-container">
+                                                <img class="dropdown-menu-icon"
+                                                     src="{% static 'image/icon/overview-icon.svg' %}">
+                                            </span>
 {#                                                        {% retrieve_professional_link %}#}
-{#                                                    </li>#}
-{#                                                {% endif %}#}
-{#                                            </ul>#}
-{#                                            <ul class="dropdown-menu-group-list">#}
-{#                                                <li class="dropdown-menu-items">#}
-{#                                                    <form class="dropdown-item" method="post"#}
-{#                                                          action="{% url 'account_logout' %}">#}
-{#                                                        {% csrf_token %}#}
-{#                                                        {% if redirect_field_value %}#}
-{#                                                            <input type="hidden" name="{{ redirect_field_name }}"#}
-{#                                                                   value="{{ redirect_field_value }}"/>#}
-{#                                                        {% endif %}#}
-{#                                                        <a class="logoutButton" href="#">{{ Logout }}</a>#}
-{#                                                    </form>#}
-{#                                                </li>#}
-{#                                            </ul>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="mobile-dropdown">#}
-{#                                    <a id="primary-menu">#}
-{#                                        {{ Account }}#}
-{#                                        <span class="caret"></span>#}
-{#                                    </a>#}
-{#                                    <div class="mobile-dropdown-group hide">#}
-{#                                        <ul class="dropdown-menu-group-list">#}
-{#                                            <li class="dropdown-menu-items">#}
-{#                                            <span>#}
-{#                                                <img class="dropdown-menu-icon"#}
-{#                                                     src="{% static 'image/icon/settings-icon.svg' %}">#}
-{#                                            </span>#}
-{#                                                <a class="dropdown-item" href="{% url 'show_dashboard' %}">#}
-{#                                                    {{ Account_Settings }}#}
-{#                                                </a>#}
-{#                                            </li>#}
-{#                                            {% if show_professional_link and sign_up_complete %}#}
-{#                                                <li class="dropdown-menu-items">#}
-{#                                            <span class="dropdown-menu-icon-container">#}
-{#                                                <img class="dropdown-menu-icon"#}
-{#                                                     src="{% static 'image/icon/overview-icon.svg' %}">#}
-{#                                            </span>#}
-{#                                                        {% retrieve_professional_link %}#}
-{#                                                </li>#}
-{#                                            {% endif %}#}
-{#                                        </ul>#}
-{#                                        <ul class="dropdown-menu-group-list">#}
-{#                                            <li class="dropdown-menu-items">#}
-{#                                                <form class="dropdown-item" method="post"#}
-{#                                                      action="{% url 'account_logout' %}">#}
-{#                                                    {% csrf_token %}#}
-{#                                                    {% if redirect_field_value %}#}
-{#                                                        <input type="hidden" name="{{ redirect_field_name }}"#}
-{#                                                               value="{{ redirect_field_value }}"/>#}
-{#                                                    {% endif %}#}
-{#                                                    <a class="logoutButton" href="#"><i#}
-{#                                                            class="fa fa-sign-out fa-2x"></i>&nbsp;&nbsp;{{ Logout }}#}
-{#                                                    </a>#}
-{#                                                </form>#}
-{#                                            </li>#}
-{#                                        </ul>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </li>#}
-{#                            <li><a href="{% url 'account_logout' %}" >Log Out</a></li>#}
-{#                        {% else %}#}
-{#                            <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>#}
-{#                        {% endif %}#}
-{#                    </ul>#}
-{#                </div>#}
-{#                <!--/.navbar-collapse-->#}
-{#            </nav>#}
-{#            <!--/.navbar-->#}
-{#        </div>#}
-{#        <!--/.container-->#}
-{#    </div>#}
-{#{% endblock %}#}
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                        <ul class="dropdown-menu-group-list">
+                                            <li class="dropdown-menu-items">
+                                                <form class="dropdown-item" method="post"
+                                                      action="{% url 'account_logout' %}">
+                                                    {% csrf_token %}
+                                                    {% if redirect_field_value %}
+                                                        <input type="hidden" name="{{ redirect_field_name }}"
+                                                               value="{{ redirect_field_value }}"/>
+                                                    {% endif %}
+                                                    <a class="logoutButton" href="#"><i
+                                                            class="fa fa-sign-out fa-2x"></i>&nbsp;&nbsp;{{ Logout }}
+                                                    </a>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            {#                            <li><a href="{% url 'account_logout' %}" >Log Out</a></li>#}
+                        {% else %}
+                            <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!--/.navbar-collapse-->
+            </nav>
+            <!--/.navbar-->
+        </div>
+        <!--/.container-->
+    </div>
+{% endblock %}
 {% block content %}
     <div class="container container-sign-up-professional-profile-form">
         <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post"
@@ -211,9 +194,8 @@
                 </div>
                 <div data-panel="one" id="stage-one">
                     <h4>{% trans "Choose License Type" %}</h4>
-                    <div>{% trans "If you don't have license, please choose meister." %} </div>
                     <ul id="id_professional_type" class="input-professional-type-container row">
-                        <li class="col-xs-3 col-sm-6 col-md-3">
+                        <li class="col-sm-12 col-md-4">
                             <label for="id_professional_type_0">
                                 <input type="radio"
                                        name="professional_type"
@@ -221,9 +203,10 @@
                                        required=""
                                        checked=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_0">
+                                       id="id_professional_type_0"
+                                >
                                 <figure>
-                                    <img class='sign-up-professional-img' alt="contractor"
+                                    <img alt="contractor"
                                          active="{% static 'image/sign-up-info-icon/contractor.png' %}"
                                          inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
                                          src="{% static 'image/sign-up-info-icon/contractor.png' %}">
@@ -231,16 +214,17 @@
                                 </figure>
                             </label>
                         </li>
-                        <li class="col-xs-3 col-sm-6 col-md-3">
+                        <li class="col-sm-12 col-md-4">
                             <label for="id_professional_type_1">
                                 <input type="radio"
                                        name="professional_type"
                                        value="ARCHITECT"
                                        required=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_1">
+                                       id="id_professional_type_1"
+                                >
                                 <figure>
-                                    <img class='sign-up-professional-img' alt="architect"
+                                    <img alt="architect"
                                          active="{% static 'image/sign-up-info-icon/architect.png' %}"
                                          inactive="{% static 'image/sign-up-info-icon/architect-inactive.png' %}"
                                          src="{% static 'image/sign-up-info-icon/architect-inactive.png' %}">
@@ -248,7 +232,7 @@
                                 </figure>
                             </label>
                         </li>
-                        <li class="col-xs-3 col-sm-6 col-md-3">
+                        <li class="col-sm-12 col-md-4">
                             <label for="id_professional_type_2">
                                 <input type="radio"
                                        name="professional_type"
@@ -257,7 +241,7 @@
                                        class="input-professional-type-container"
                                        id="id_professional_type_2">
                                 <figure>
-                                    <img class='sign-up-professional-img' alt="designer"
+                                    <img alt="designer"
                                          active="{% static 'image/sign-up-info-icon/designer.png' %}"
                                          inactive="{% static 'image/sign-up-info-icon/designer-inactive.png' %}"
                                          src="{% static 'image/sign-up-info-icon/designer-inactive.png' %}">
@@ -265,45 +249,26 @@
                                 </figure>
                             </label>
                         </li>
-                        <li class="col-xs-3 col-sm-6 col-md-3">
-                            <label for="id_professional_type_3">
-                                <input type="radio"
-                                       name="professional_type"
-                                       value="MEISTER"
-                                       required=""
-                                       class="input-professional-type-container"
-                                       id="id_professional_type_3">
-                                <figure>
-                                    <img class='sign-up-professional-img' alt="meister"
-                                         active="{% static 'image/sign-up-info-icon/meister.svg' %}"
-                                         inactive="{% static 'image/sign-up-info-icon/meister-inactive.svg' %}"
-                                         src="{% static 'image/sign-up-info-icon/meister-inactive.svg' %}">
-                                    <figcaption>{{ Meister }}</figcaption>
-                                </figure>
-                            </label>
-                        </li>
                     </ul>
                 </div>
                 <div data-panel="two" id="stage-two">
                     <h4>{% trans "Find Your License In Our Database" %}</h4>
-                    <div>{% trans "If you don't have license, please skip this step." %} </div>
                     <div class="input-license-number-container">
                         <div class="error-container"></div>
                         {% trans "License Number" %} : {{ form.license_num }}
                     </div>
                 </div>
                 <div data-panel="three" id="stage-three">
-                    <h4>{% trans "Enter Or Modify Your Name, Company Name and Entity Type" %}</h4>
+                    <h4>{% trans "Enter Or Modify Your Company Name and Entity Type" %}</h4>
                     <div class="input-company-info-container">
                         <div class="error-container"></div>
-                        {% trans "Your Name" %} : {{ form.personal_name }}
-                        {% trans "Company Name(Optional)" %} : {{ form.company_name }} </br></br>
+                        {% trans "Company Name" %} : {{ form.company_name }} </br></br>
                         {% trans "Entity Type" %} : {{ form.entity_type }}
                     </div>
                 </div>
                 <div data-panel="four" id="stage-four">
                     {#                    TODO: add validation rule none#}
-                    <h4>{% trans "Enter Or Modify Your Service Category" %}</h4>
+                    <h4>{% trans "Enter Or Modify Your Company Category" %}</h4>
                     <div class="input-professional-subtype-container">
                         <div class="error-container"></div>
                         {{ form.professional_subtype }}
@@ -314,7 +279,6 @@
                     <div class="input-address-container">
                         <div class="error-container"></div>
                         {% trans "Street" %}:{{ form.street }} </br></br>
-                        {% trans "County/City" %}:{{ form.county }} </br></br>
                         {% trans "State" %}:{{ form.state }} </br></br>
                         {% trans "Zipcode" %}:{{ form.zipcode }} </br>
                     </div>
@@ -331,8 +295,7 @@
             {#                </button>#}
             {#            </div>#}
             <div style="width:100%;">
-                <button type="submit" id="next" class="btn btn-hoome"
-                        style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
+                <button type="submit" id="next" class="btn btn-hoome" style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
             </div>
 
         </form>
@@ -353,14 +316,13 @@
                 entity_type: 'required',
                 professional_subtype: 'required',
                 street: 'required',
-                county: 'required',
                 state: 'required',
                 zipcode: {
                     required: true,
                     number: true
                 }
             };
-            {#            TODO: add a validation rule: consider postal code situation and check the status#}
+            {#            TODO: add a validation rule: consider postal code situation#}
             const messages = {
                 professional_type: "Please choose your field",
                 license_num: {
@@ -371,30 +333,13 @@
                 entity_type: "Please choose your company entity type",
                 professional_subtype: "Please choose your professional field",
                 street: "Please specify your company street",
-                county: "Please specify your company street",
                 state: "Please specify your company state",
                 zipcode: {
                     required: "Please specify your company postal code",
                     number: "Please enter correct postal code"
                 }
             };
-{#           const messages = {#}
-{#                professional_type: {% trans "Please choose your field" %},#}
-{#                license_num: {#}
-{#                    required: {% trans "We need your license number" %},#}
-{#                    number: {% trans "Your license number must be a number"  %}#}
-{#                },#}
-{#                personal_name: {% trans "Please specify your name"  %},#}
-{#                entity_type: {% trans "Please choose your company entity type"  %},#}
-{#                professional_subtype: {% trans "Please choose your professional field"  %},#}
-{#                street: {% trans "Please specify your company street"  %},#}
-{#                county: {% trans "Please specify your company street"  %},#}
-{#                state: {% trans "Please specify your company state"  %},#}
-{#                zipcode: {#}
-{#                    required: {% trans "Please specify your company postal code"  %},#}
-{#                    number: {% trans "Please enter correct postal code"  %}#}
-{#                }#}
-{#            };#}
+
             const stageValidator = $('#professionalProfileForm').validate({
                 rules: rules,
                 messages: messages,
@@ -414,35 +359,35 @@
                 var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
                 selectedIndex = selectedIndex + 1;
                 if (selectedIndex === 1) {
-                    {#                    console.log(stageValidator.form());#}
+                    console.log(stageValidator.form());
                     if (stageValidator.form()) {
                         event.preventDefault();
                         $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
                     }
                 } else if (selectedIndex === 2) {
-                    {#                    console.log(stageValidator.form());#}
+                    console.log(stageValidator.form());
                     if (stageValidator.form()) {
                         event.preventDefault();
                         $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
                     }
                 } else if (selectedIndex === 3) {
-                    {#                    console.log(stageValidator.form());#}
+                    console.log(stageValidator.form());
                     if (stageValidator.form()) {
                         event.preventDefault();
                         $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
                     }
                 } else if (selectedIndex === 4) {
-                    {#                    console.log(stageValidator.form());#}
+                    console.log(stageValidator.form());
                     if (stageValidator.form()) {
                         event.preventDefault();
                         $('.stages-radio-input').eq(selectedIndex).prop('checked', true);
                     }
                 } else if (!stageValidator.form()) {
-                    {#                    console.log("test");#}
+                    console.log("test");
                     event.preventDefault();
                     alert("Please complete form");
                 } else {
-                    {#                    console.log("sucess");#}
+                    console.log("sucess");
                     $('#next').submit();
                 }
             });
@@ -458,42 +403,39 @@
 
 //        TODO: async
             $('#id_license_num').keyup(function () {
-                if ($("input:radio[name='professional_type']:checked").val() != "Meister") {
-
-                    if (globalTimeout != null) {
-                        clearTimeout(globalTimeout);
-                    }
-                    globalTimeout = setTimeout(function () {
-                        globalTimeout = null;
-                        const dataToSend = {
-                            type: $("input:radio[name='professional_type']:checked").val(),
-                            lic: $('#id_license_num').val()
-                        };
-                        {#                    console.log(JSON.stringify(dataToSend));#}
-                        $.ajax({
-                            type: "GET",
-                            url: "{% url 'account_professional_profile_after_signup' %}",
-                            data: dataToSend,
-                            dataType: "json"
-                        }).done(function (data) {
-                            $('#id_company_name').val(data['name']);
-//                    set entity type field
-                            const entityType = data['entity_type'];
-                            $(`input[type=radio][value='${entityType}']`).prop('checked', true);
-                            $('#id_professional_subtype').val(data['subtype']);
-//                    set subtype field
-                            data['subtype'].forEach(function (subtype) {
-                                $(`input[type=checkbox][value='${subtype}']`).prop('checked', true);
-                            });
-                            $('#id_street').val(data['street_address']);
-                            $('#id_state').val(data['state']);
-                            $('#id_zipcode').val(data['postal_code']);
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            if (jqXHR !== 404)
-                                console.warn(`ERROR: ${textStatus}`);
-                        });
-                    }, 500)
+                if (globalTimeout != null) {
+                    clearTimeout(globalTimeout);
                 }
+                globalTimeout = setTimeout(function () {
+                    globalTimeout = null;
+                    const dataToSend = {
+                        type: $("input:radio[name='professional_type']:checked").val(),
+                        lic: $('#id_license_num').val()
+                    };
+                    console.log(JSON.stringify(dataToSend));
+                    $.ajax({
+                        type: "GET",
+                        url: "{% url 'account_professional_profile_after_signup' %}",
+                        data: dataToSend,
+                        dataType: "json"
+                    }).done(function (data) {
+                        $('#id_company_name').val(data['name']);
+//                    set entity type field
+                        const entityType = data['entity_type'];
+                        $(`input[type=radio][value='${entityType}']`).prop('checked', true);
+                        $('#id_professional_subtype').val(data['subtype']);
+//                    set subtype field
+                        data['subtype'].forEach(function (subtype) {
+                            $(`input[type=checkbox][value='${subtype}']`).prop('checked', true);
+                        });
+                        $('#id_street').val(data['street_address']);
+                        $('#id_state').val(data['state']);
+                        $('#id_zipcode').val(data['postal_code']);
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR !== 404)
+                            console.warn(`ERROR: ${textStatus}`);
+                    });
+                }, 500)
             });
         });
 
