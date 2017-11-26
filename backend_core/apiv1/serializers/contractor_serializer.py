@@ -41,9 +41,9 @@ class ComplaintOverallSerializer(serializers.Serializer):
 
 class ContractorSerializer(serializers.Serializer):
     review = ReviewSerializer(many=True)
-    bond_history = BondHistorySerializer(many=True)
-    worker_compensation_history = WorkerCompensationHistorySerializer(many=True)
-    complaint = ComplaintOverallSerializer(many=True)
+    bond_history = BondHistorySerializer()
+    worker_compensation_history = WorkerCompensationHistorySerializer()
+    complaint = ComplaintOverallSerializer()
 
     lic_num = serializers.IntegerField(read_only=True)
     lic_type = serializers.CharField(read_only=True)
