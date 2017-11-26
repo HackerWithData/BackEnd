@@ -52,6 +52,7 @@ PREREQ_APPS = [
     'haystack',
     'storages',
     'tinymce',
+    'rest_framework'
     # 'django_scss',
 ]
 
