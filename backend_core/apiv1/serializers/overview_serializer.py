@@ -7,4 +7,10 @@ class OverviewSerializer(ModelSerializer):
         model = Overview
         fields = [
             'overview',
+            'object_id',
+            'content_type',
+        ]
+        read_only_fields = [
+            'object_id',
+            'content_type',
         ]

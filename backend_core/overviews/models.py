@@ -7,6 +7,7 @@ from tinymce import models as tinymce_models
 
 # Create your models here.
 
+
 class Overview(models.Model):
     overview = tinymce_models.HTMLField()
     content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)

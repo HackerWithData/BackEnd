@@ -12,11 +12,3 @@ class ReviewDetail(CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
-    #
-    # def create(self, request, *args, **kwargs):
-    #     try:
-    #         lic_num = self.request.resolver_match.kwargs['pk']
-    #         architect = Architect.objects.get(lic_num=lic_num)
-    #     except:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST)
-    #     return super(ReviewCreateAPIView, self).create(request, *args, **kwargs)
