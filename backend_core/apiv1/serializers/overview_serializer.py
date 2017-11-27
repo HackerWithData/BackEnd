@@ -7,4 +7,6 @@ class OverviewSerializer(ModelSerializer):
         model = Overview
         fields = [
             'overview',
+            'object_id',
+            'content_type',
         ]

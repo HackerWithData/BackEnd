@@ -13,7 +13,6 @@ from overviews.models import Overview
 from ..serializers.contractor_serializer import ContractorSerializer
 
 
-
 class ContractorDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.

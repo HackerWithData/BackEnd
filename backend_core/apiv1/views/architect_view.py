@@ -12,7 +12,7 @@ class ArchitectDetail(RetrieveAPIView):
     serializer_class = ArchitectSeializer
 
     def get_object(self):
-        lic_num = self.request._request.resolver_match.kwargs['object_id']
+        lic_num = self.kwargs['object_id']
         try:
             return Architect.objects.get(pk=lic_num)
         except Architect.DoesNotExist:

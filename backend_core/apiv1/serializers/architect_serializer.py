@@ -9,14 +9,27 @@ from overviews.models import Overview
 from .overview_serializer import OverviewSerializer
 from review.models import Review
 from .review_serializer import ReviewSerializer
+from django.contrib.contenttypes.models import ContentType
+
+
+class AddOverview(HyperlinkedIdentityField):
+    def get_url(self, obj, view_name, request, format):
+        lookup_value = getattr(obj, self.lookup_field)
+        kwargs = {self.lookup_url_kwarg: lookup_value}
+        kwargs['object_id'] = kwargs.pop('pk')
+        kwargs['content_type'] = 'architects'
+        print "++++++++++"
+        print kwargs
+        return self.reverse(view_name, kwargs=kwargs, request=request, format=format)
 
 
 class ArchitectSeializer(ModelSerializer):
 
-    addoverview = HyperlinkedIdentityField(view_name='apiv1:overview_rest_api')
+    addoverview = AddOverview(view_name='apiv1:overview_rest_api')
     # addreview = HyperlinkedIdentityField(view_name='apiv1:review_rest_api', lookup_field='obj')
     reviews = SerializerMethodField()
     overviews = SerializerMethodField()
+
     class Meta:
         model = Architect
         fields = [
