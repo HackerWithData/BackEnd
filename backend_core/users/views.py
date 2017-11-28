@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.signals import pre_social_login
-from allauth.account.views import PasswordChangeView
+from allauth.account.views import PasswordChangeView, PasswordSetView
 from allauth.account.utils import perform_login
 from allauth.utils import get_user_model
 from allauth.account.views import LoginView
@@ -76,6 +76,12 @@ class DashboardAfterPasswordChangeView(PasswordChangeView):
     def success_url(self):
         return '/'
 
+
+@method_decorator(login_required, name='dispatch')
+class DashboardAfterPasswordSetView(PasswordSetView):
+    @property
+    def success_url(self):
+        return '/'
 
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileAfterSignupView(View):

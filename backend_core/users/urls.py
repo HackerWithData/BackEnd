@@ -17,6 +17,7 @@ from django.conf.urls import url
 from views import (
     sign_up_complete_info,
     DashboardAfterPasswordChangeView,
+    DashboardAfterPasswordSetView,
     ProfessionalProfileAfterSignupView,
     ConsumerProfileAfterSignupView,
     ConsumerProfileView,
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^signup/info/consumer/$', ConsumerProfileAfterSignupView.as_view(), name='account_consumer_profile_after_signup'),
     url(r'^signup/info/profession/$', ProfessionalProfileAfterSignupView.as_view(), name='account_professional_profile_after_signup'),
     url(r'^password/change/$', DashboardAfterPasswordChangeView.as_view(), name='account_change_password'),
+    url(r'^password/set/$', DashboardAfterPasswordSetView.as_view(), name='account_set_password'),
     url(r'^consumer_profile/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
     url(r'^professional_profile/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
     url(r'^login/', login.as_view(), name='login'),
