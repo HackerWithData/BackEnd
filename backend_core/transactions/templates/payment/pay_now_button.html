@@ -2,7 +2,12 @@
 {% trans 'Make a payment' as Pay %}
 {#<script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>#}
 <script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>
-<button class="forte-checkout-button" id="payment-btn"
+<style>
+    .fortebtn{
+       background-color: #6892D5
+    }
+</style>
+    <button class="forte-checkout-button btn btn-hoome" id="payment-btn"
         api_login_id="{{ api_login_id }}"
         method="{{ method }}"
         allowed_methods="{{ allowed_methods }}"

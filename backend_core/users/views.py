@@ -60,9 +60,9 @@ def sign_up_complete_info(request, **kwargs):
         if 'success_url' in request.session:
             return redirect(request.session['success_url'])
         else:
-            return redirect('/')
-        # return redirect('account_consumer_profile_after_signup')
-        return redirect('show_dashboard')
+            #return redirect('/')
+            # return redirect('account_consumer_profile_after_signup')
+            return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
         return redirect('account_professional_profile_after_signup')
     else:

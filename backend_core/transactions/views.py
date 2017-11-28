@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -13,7 +14,6 @@ from projects.models import Project
 from models import Transaction, TransactionHistory
 import json
 from users.utils import CONSUMER, PROFESSIONAL
-from django.contrib.contenttypes.models import ContentType
 
 
 # Create your views here.
@@ -167,3 +167,29 @@ class TransactionHistoriesView(View):
             :return:
         """
         pass
+
+
+@login_required
+def project_checkout(request):
+    template_name = 'transaction/checkout.html'
+
+    # TODO: Add status filter
+    projects = Project.objects.filter(user=request.user).order_by('-project_id')
+    info_dict = {'projects': projects}
+    if request.method == 'GET':
+        return render(request, template_name, {'info_dict': info_dict})
+    elif request.method == 'POST':
+        # try:
+        #     project = Project.objects.get(project=request.POST.get['project_id'])
+        #     return render(request, redirect_template_name, {'info_dict': info_dict})
+        # except:
+        #     messages.success(request, _("Your Profile updated."))
+        #     return render(request, template_name, {'info_dict': info_dict})
+        url = '/checkout/' + request.POST.get('project_id')
+        return redirect(url)
+
+def project_pay(request,project_id):
+    template_name = 'transaction/payment.html'
+    projects = Project.objects.get(pk=project_id)
+    info_dict = {'project': projects}
+    return render(request, template_name, {'info_dict': info_dict})

@@ -24,6 +24,7 @@ from photos import views as photoview
 from django.views.i18n import javascript_catalog
 from django.contrib.auth.views import logout
 from django.conf import settings
+from transactions.views import project_checkout, project_pay
 from django.conf.urls import handler404, handler500
 
 
@@ -44,6 +45,7 @@ urlpatterns = [
     # users.urls must place before allauth urls to override
     url(r'^accounts/', include('users.urls')),
     url(r'^accounts/', include('allauth.urls')),
+    #current page when log out
     url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 
     # dashboard
@@ -63,11 +65,8 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     # transaction
     url(r'^transactions/', include('transactions.urls')),
-
-    # url(r'^settings/password/$', userviews.password, name='password'),
-    # url(r'^upload/',include('disk.urls')),
-    # url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
-    # url(r'^reviews/', include('review.urls')),
+    url(r'^checkout$', project_checkout, name='checkout'),
+    url(r'^checkout/([0-9]{0,9})/$', project_pay, name='checkout'),
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
     url(r'^meister/', include('meisters.urls')),
