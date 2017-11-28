@@ -18,7 +18,8 @@ from .views import TransactionsView, TransactionView, TransactionHistoryView, Tr
 
 urlpatterns = [
     url(r'^$', TransactionsView.as_view(), name='transactions'),
-    url(r'^([0-9]{0,8})$', TransactionView.as_view(), name='transaction'),
-    url(r'^([0-9]{0,8})/histories/$', TransactionHistoriesView.as_view(), name='transaction_histories'),
-    url(r'^([0-9]{0,8})/histories/([0-9]{0,8})/$', TransactionHistoryView.as_view(), name='transaction_history'),
+    url(r'^(?P<transaction_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$', TransactionView.as_view(), name='transaction'),
+    url(r'^(?P<transaction_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/histories/$', TransactionHistoriesView.as_view(), name='transaction_histories'),
+    #TODO: need to change here
+    url(r'^(?P<transaction_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/histories/([0-9]{0,8})/$', TransactionHistoryView.as_view(), name='transaction_history'),
 ]

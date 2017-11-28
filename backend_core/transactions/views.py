@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
+
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
@@ -8,12 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from forms import TransactionForm, TransactionHistoryForm
-from utils import *
 from projects.models import Project
-from models import Transaction, TransactionHistory
-import json
+from projects.utils import get_a_uuid
 from users.utils import CONSUMER, PROFESSIONAL
+from .forms import TransactionForm, TransactionHistoryForm
+from .utils import *
+from .models import Transaction, TransactionHistory
 
 
 # Create your views here.
@@ -57,23 +59,34 @@ class TransactionsView(View):
             :return:
         """
         received_json_data = json.loads(request.body)
-        project = Project.objects.get(project_id=int(received_json_data['project_id']))
+
+        project = Project.objects.get(project_id=int(received_json_data['project_uuid']))
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user,
                                                                  content_type=project.content_type,
                                                                  object_id=project.object_id,
                                                                  transaction_key=received_json_data['transaction_key'])
+
+        #TODO: consider wheter ignore to use get_or_create since it will query 2 times. we sill need to change Person object after created.
+        # TODO: better to redesign here
         if created:
             if received_json_data['amount'] == '':
                 pass
             else:
                 transaction.amount = float(received_json_data['amount'])
             transaction.created_at = datetime.utcfromtimestamp(received_json_data['created_at'])
+
+            while flag:
+                try:
+                    uuid = get_a_uuid()
+                    Transaction.objects.get(transaction_uuid=uuid)
+                except Transaction.DoesNotExist:
+                    flag = False
+            transaction.transaction_uuid = uuid
         transaction.status = received_json_data['status'].upper()[0]
         transaction.save()
 
         # insert a new transaction history with pending status as soon as a transaction created
-        transaction_history = TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
-        transaction_history.save()
+        TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
         return HttpResponse(status=204)
 
 
@@ -188,8 +201,9 @@ def project_checkout(request):
         url = '/checkout/' + request.POST.get('project_id')
         return redirect(url)
 
-def project_pay(request,project_id):
+
+def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
-    projects = Project.objects.get(pk=project_id)
+    projects = Project.objects.get(project_uuid=project_uuid)
     info_dict = {'project': projects}
     return render(request, template_name, {'info_dict': info_dict})

@@ -54,7 +54,7 @@ class Project(models.Model):
     project_description = models.TextField()
     project_status = models.CharField(max_length=1, choices=PROJECT_STATUS, default=ONGOING)
     project_action = models.TextField(null=True, blank=True)
-    # Project_Action =
+    project_uuid = models.CharField(max_length=32, choices=PROJECT_STATUS, default='0')
 
     class Meta:
         unique_together = ('project_id', 'content_type', 'object_id', 'user')

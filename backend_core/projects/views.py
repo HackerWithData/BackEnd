@@ -1,37 +1,40 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import datetime
+
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, reverse
-from forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm
-from models import Project, ProjectPhoto, ProjectAttachment
-# from transactions.models import Transaction
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
-import datetime
 from django.conf import settings
 from django.contrib import messages
-from decorators import check_recaptcha
-from django.views.generic import TemplateView
+from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 
+from .decorators import check_recaptcha
+from .utils import get_a_uuid
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm
+from .models import Project, ProjectPhoto, ProjectAttachment
+
+
+# from transactions.models import Transaction
 # Create your views here.
 @login_required
-def upload_project_attachment(request, project_id):
+def upload_project_attachment(request, project_uuid):
     template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
-    success_url = reverse('display_project_overview')
+    success_url = reverse('display_project_overview') + project_uuid
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
-        project = Project.objects.get(project_id=project_id)
+        project = Project.objects.get(project_uuid=project_uuid)
         files = request.FILES.getlist('project_attachment')
         if form.is_valid():
             if len(files) > 0:
                 for f in files:
-                    instance = ProjectAttachment.objects.create(file=f, title=f.name, project=project,
-                                                                attachment_type=form.attachment_type)
-                    instance.save()
+                    ProjectAttachment.objects.create(file=f, title=f.name, project=project,
+                                                     attachment_type=form.attachment_type)
             else:
                 pass
             return redirect(success_url)
@@ -41,19 +44,18 @@ def upload_project_attachment(request, project_id):
 
 
 @login_required
-def upload_project_photo(request, project_id):
+def upload_project_photo(request, project_uuid):
     template_name = 'projects/upload_project_photo.html'  # Replace with your template.
-    success_url = reverse('display_project_overview')
+    success_url = reverse('display_project_overview') + project_uuid
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
-        project = Project.objects.get(project_id=project_id)
+        project = Project.objects.get(project_uuid=project_uuid)
         files = request.FILES.getlist('project_photo')
         if form.is_valid():
             if len(files) > 0:
                 for f in files:
-                    instance = ProjectAttachment.objects.create(file=f, title=f.name, project=project)
-                    instance.save()
+                    ProjectAttachment.objects.create(file=f, title=f.name, project=project)
             else:
                 pass
             return redirect(success_url)
@@ -73,11 +75,19 @@ def create_project(request, professional_type, lic_id):
             project_form = ProjectForm(request.POST, request.FILES)
             # project = Project.objects.get(project_id=project_id)
             if project_form.is_valid() and request.recaptcha_is_valid:
-
-                # consider another interface
+                # TODO: consider another interface
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
                 professional = content_type.get_object_for_this_type(pk=lic_id)
+
+                flag = True
+                while flag:
+                    try:
+                        uuid = get_a_uuid()
+                        Project.objects.get(project_uuid=uuid)
+                    except Project.DoesNotExist:
+                        flag = False
+                # TODO this step can be simplified to form.save()
                 project = Project(user=request.user,
                                   project_name=project_form.cleaned_data['project_name'],
                                   first_name=project_form.cleaned_data['first_name'],
@@ -97,25 +107,22 @@ def create_project(request, professional_type, lic_id):
                                   # end_date=project_form.cleaned_data['end_date'],
                                   project_description=project_form.cleaned_data['project_description'],
                                   # project_status=project_form.cleaned_data['project_status']
-                                  )
+                                  project_uuid=uuid)
                 # TODO:need to consider extreme scenario
                 project.save()
                 # attachment
                 files = request.FILES.getlist('project_attachment')
                 if len(files) > 0:
                     for f in files:
-                        instance = ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                                                    attachment_type=project_form.cleaned_data[
-                                                                        'attachment_type'])
-                        instance.save()
+                        ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
+                                                         attachment_type=project_form.cleaned_data['attachment_type'])
                 else:
                     pass
                 # photos
                 files = request.FILES.getlist('project_photo')
                 if len(files) > 0:
                     for f in files:
-                        instance = ProjectPhoto.objects.create(project_photo=f, title=f.name, project=project)
-                        instance.save()
+                        ProjectPhoto.objects.create(project_photo=f, title=f.name, project=project)
                 else:
                     pass
 
@@ -134,7 +141,7 @@ def create_project(request, professional_type, lic_id):
         return render(request, template_name, {'info_dict': info_dict})
     else:
         messages.warning(request, _('Please Log in first.'))
-        raise redirect(request.path)
+        return redirect(request.path)
 
 
 @login_required
@@ -152,7 +159,7 @@ def display_project_overview(request):
 
 
 @method_decorator(login_required, name='dispatch')
-class ProjectDetail(TemplateView):
+class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
     def get(self, request, project_id):
@@ -190,6 +197,6 @@ class ProjectDetail(TemplateView):
             messages.success(request, _('Request Success'))
             return redirect(request.path)
         else:
-            #TODO: The logic here is wierd need to change
+            # TODO: The logic here is wierd need to change
             messages.warning(request, _('Request Failed'))
             return redirect(request.path)
