@@ -33,7 +33,7 @@
                 {% for project in info_dict.projects %}
                     <tr>
                         <td>
-                            <input type="radio" name="project_id" id="radio-{{ forloop.counter }}" value="{{ project.project_id }}">
+                            <input type="radio" name="project_uuid" id="radio-{{ forloop.counter }}" value="{{ project.project_uuid }}">
                             <label for="radio-{{ forloop.counter }}">{{ project.project_name }}</label>
                         </td>
                         <td>{{ project.bus_name }}</td>

@@ -198,7 +198,7 @@ def project_checkout(request):
         # except:
         #     messages.success(request, _("Your Profile updated."))
         #     return render(request, template_name, {'info_dict': info_dict})
-        url = '/checkout/' + request.POST.get('project_id')
+        url = '/checkout/' + request.POST.get('project_uuid')
         return redirect(url)
 
 

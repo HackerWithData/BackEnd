@@ -162,8 +162,8 @@ def display_project_overview(request):
 class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
-    def get(self, request, project_id):
-        project = Project.objects.get(project_id=project_id)
+    def get(self, request, project_uuid):
+        project = Project.objects.get(project_uuid=project_uuid)
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
@@ -188,9 +188,9 @@ class ProjectDetail(View):
         else:
             raise Http404(_("Page Not Found"))
 
-    def post(self, request, project_id):
+    def post(self, request, project_uuid):
         if request.POST.get('request-money'):
-            project = Project.objects.get(project_id=project_id)
+            project = Project.objects.get(project_uuid=project_uuid)
             project.project_status = "P"
             project.project_action = "Request for Payment to move on"
             project.save()

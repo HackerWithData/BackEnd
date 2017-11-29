@@ -32,8 +32,8 @@
                     {% for transaction in info_dict.transactions %}
                         <tr>
                             <td>
-                                <a href="{% url 'display_project_detail' transaction.project_id %}">
-                                    {{ transaction.project_id }}
+                                <a href="{% url 'display_project_detail' transaction.project.project_uuid %}">
+                                    {{ transaction.project.project_name }}
                                 </a>
                             </td>
                             {#                            {% if request.user.role == 'CONSUMER' %}#}
