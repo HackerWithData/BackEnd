@@ -22,6 +22,7 @@ class Architect(models.Model):
     country = models.CharField(max_length=63)
     pos_code = models.CharField(max_length=25)
     actions = models.CharField(max_length=63)
+    architect_uuid = models.CharField(max_length=32, default='0')
 
     def __iter__(self):
         return self.__dict__.iteritems()

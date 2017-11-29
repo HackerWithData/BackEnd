@@ -6,7 +6,8 @@ from .views.overview_view import OverviewDetail
 
 urlpatterns = [
     url(r'^contractors/(?P<object_id>[0-9]+)/$', ContractorDetail.as_view(), name='contractor_rest_api'),
-    url(r'^architects/(?P<object_id>[0-9]+)/$', ArchitectDetail.as_view(), name='architect_rest_api'),
-    url(r'^(?P<content_type>architects)/(?P<object_id>[0-9]+)/review/$', ReviewDetail.as_view(), name='review_rest_api'),
-    url(r'^(?P<content_type>architects)/(?P<object_id>[0-9]+)/overview/$', OverviewDetail.as_view(), name='overview_rest_api'),
+    url(r'^architects/(?P<architect_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/$',
+        ArchitectDetail.as_view(), name='architect_rest_api_uuid'),
+    # url(r'^(?P<content_type>architects)/(?P<object_id>[0-9]+)/review/$', ReviewDetail.as_view(), name='review_rest_api'),
+    # url(r'^(?P<content_type>architects)/(?P<object_id>[0-9]+)/overview/$', OverviewDetail.as_view(), name='overview_rest_api'),
 ]
