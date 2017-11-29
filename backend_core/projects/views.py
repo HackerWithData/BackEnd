@@ -40,7 +40,7 @@ def upload_project_attachment(request, project_uuid):
             return redirect(success_url)
     form = ProjectAttachmentForm()
     info_dict = {'form': form}
-    return render(request, template_name, info_dict)
+    return render(request, template_name, {info_dict: 'info_dict'})
 
 
 @login_required
@@ -61,7 +61,7 @@ def upload_project_photo(request, project_uuid):
             return redirect(success_url)
     form = ProjectAttachmentForm()
     info_dict = {'form': form}
-    return render(request, template_name, info_dict)
+    return render(request, template_name, {info_dict: 'info_dict'})
 
 
 @login_required

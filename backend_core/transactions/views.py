@@ -112,6 +112,7 @@ class TransactionView(View):
         pass
 
     def post(self, request, *args, **kwargs):
+
         """
             not allowed method
             :param request:
@@ -120,7 +121,6 @@ class TransactionView(View):
             :return:
         """
         return HttpResponseNotAllowed
-
 
 @method_decorator(login_required, name='dispatch')
 class TransactionHistoryView(View):
