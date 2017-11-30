@@ -9,7 +9,6 @@ from ..utils import (
     get_reviews,
 )
 
-
 class ArchitectDetail(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -31,10 +30,17 @@ class ArchitectDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
-        architect_uuid = kwargs['architect_uuid']
-        architect = self.get_object(architect_uuid)
+        architect = self.get_object(kwargs['architect_uuid'])
         serializer = ArchitectSeializer(architect, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class ArchitectCreate(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = ArchitectSeializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+

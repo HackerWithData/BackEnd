@@ -14,5 +14,5 @@ class OverviewDetail(CreateAPIView):
     def perform_create(self, serializer):
         content_tpye = self.kwargs.pop('content_type', None)
         if content_tpye == 'architects':
-            self.kwargs['content_type'] = ContentType.objects.get_for_model(model=Architect)
+            self.kwargs['content_type'] = ContentType.objects.get_for_model(model=Architect, )
         serializer.save(**self.kwargs)

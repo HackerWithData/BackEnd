@@ -1,7 +1,8 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from architects.models import Architect
 from overviews.models import Overview
 from review.models import Review
+from ..utils import get_uuid
 
 
 class OverviewSerializer(ModelSerializer):
@@ -17,9 +18,8 @@ class ReviewSerializer(ModelSerializer):
 
 
 class ArchitectSeializer(ModelSerializer):
-
-    reviews = ReviewSerializer(many=True)
-    overviews = OverviewSerializer(many=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
+    overviews = OverviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Architect
@@ -44,7 +44,14 @@ class ArchitectSeializer(ModelSerializer):
         ]
         read_only_fields = (
             'architect_uuid',
-            'reviews',
-            'overviews',
         )
 
+    def create(self, validated_data):
+        validated_data['architect_uuid'] = get_uuid(model=self.Meta.model, uuid_field_name='architect_uuid')
+        return super(ArchitectSeializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        if validated_data['lic_num'] != getattr(instance, 'lic_num'):
+            raise Exception('license number cannot be changed')
+        else:
+            return super(ArchitectSeializer, self).update(instance, validated_data)
