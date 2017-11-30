@@ -4,12 +4,12 @@ from Crypto.Hash import HMAC, MD5
 from datetime import datetime
 
 from ..utils import generate_transaction_number
-
+from projects.models import Project
 
 register = template.Library()
 
 @register.inclusion_tag('payment/pay_now_button.html', takes_context=True)
-def render_pay_now_button(context, project_id):
+def render_pay_now_button(context, project_uuid):
     """
 
     :param context: context parameter, don't need to pass in manually
@@ -30,7 +30,8 @@ def render_pay_now_button(context, project_id):
     ret = settings.FORTE_CONFIG.copy()
     del ret['secure_trans_key']
     ret['total_amount'] = ''
-    ret['order_number'] = generate_transaction_number(project_id=project_id)
+    project_id = Project.objects.get(project_uuid=project_uuid).pk
+    ret['order_number'] = generate_transaction_number(project_id)
     ret['utc_time'] = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     # no customer_token and paymehtod_token
     # string eg.   api_login_id | method | version_number | total_amount | utc_time | order_number | customer_token | paymethod_token
@@ -45,5 +46,5 @@ def render_pay_now_button(context, project_id):
     # h.update(settings.FORTE_CONFIG['secure_trans_key'])
     ret['signature'] = h.hexdigest()
     # print ret['signature']
-    ret['project_id'] = project_id
+    ret['project_uuid'] = project_uuid
     return ret

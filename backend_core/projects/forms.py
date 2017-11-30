@@ -50,4 +50,8 @@ class ProjectForm(forms.Form):
     # lic_id = forms.CharField(label=__('Lic Id'))
 
 
+class MilestoneForm(forms.Form):
+    amount = forms.IntegerField(min_value=0, required=True)
+
+
 

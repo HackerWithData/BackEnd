@@ -14,12 +14,12 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 
 from .decorators import check_recaptcha
-from .utils import get_a_uuid
-from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm
-from .models import Project, ProjectPhoto, ProjectAttachment
+from .utils import get_a_uuid, WAITING, PENDING, PAYED_TO_CONTRACTOR
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm
+from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 
 
-# from transactions.models import Transaction
+# TODO: need to rewrite the architecture here.
 # Create your views here.
 @login_required
 def upload_project_attachment(request, project_uuid):
@@ -59,7 +59,7 @@ def upload_project_photo(request, project_uuid):
             else:
                 pass
             return redirect(success_url)
-    form = ProjectAttachmentForm()
+    form = ProjectPhotoForm()
     info_dict = {'form': form}
     return render(request, template_name, {info_dict: 'info_dict'})
 
@@ -83,8 +83,8 @@ def create_project(request, professional_type, lic_id):
                 flag = True
                 while flag:
                     try:
-                        uuid = get_a_uuid()
-                        Project.objects.get(project_uuid=uuid)
+                        project_uuid = get_a_uuid()
+                        Project.objects.get(project_uuid=project_uuid)
                     except Project.DoesNotExist:
                         flag = False
                 # TODO this step can be simplified to form.save()
@@ -106,8 +106,8 @@ def create_project(request, professional_type, lic_id):
                                   start_date=project_form.cleaned_data['start_date'],
                                   # end_date=project_form.cleaned_data['end_date'],
                                   project_description=project_form.cleaned_data['project_description'],
-                                  # project_status=project_form.cleaned_data['project_status']
-                                  project_uuid=uuid)
+                                  project_status=WAITING,
+                                  project_uuid=project_uuid)
                 # TODO:need to consider extreme scenario
                 project.save()
                 # attachment
@@ -127,6 +127,9 @@ def create_project(request, professional_type, lic_id):
                     pass
 
                 return redirect(success_url)
+        else:
+            # TODO: what if role != consumer
+            pass
         # TODO: consider another interface
         # if request.user.is_authenticated:
         project_form = ProjectForm(initial={'first_name': request.user.first_name,
@@ -163,10 +166,16 @@ class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
     def get(self, request, project_uuid):
+        initial = {
+            "amount": 0
+        }
+        milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(project_uuid=project_uuid)
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
+        milestones = Milestone.objects.filter(project=project).order_by('created_at')
+
         flag = False
         if request.user.role == "CONSUMER":
             if request.user == project.user:
@@ -182,6 +191,7 @@ class ProjectDetail(View):
         if flag:
             info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
                          'project_photos': project_photos, 'transactions': transactions,
+                         'milestone_form': milestone_form, 'milestones': milestones,
                          'content_type': str(project.content_type)}
 
             return render(request, self.template_name, {'info_dict': info_dict})
@@ -189,14 +199,62 @@ class ProjectDetail(View):
             raise Http404(_("Page Not Found"))
 
     def post(self, request, project_uuid):
-        if request.POST.get('request-money'):
-            project = Project.objects.get(project_uuid=project_uuid)
-            project.project_status = "P"
-            project.project_action = "Request for Payment to move on"
-            project.save()
-            messages.success(request, _('Request Success'))
-            return redirect(request.path)
-        else:
-            # TODO: The logic here is wierd need to change
-            messages.warning(request, _('Request Failed'))
-            return redirect(request.path)
+        if request.POST.get('create-milestone'):
+            milestone_form = MilestoneForm(request.POST)
+            print(milestone_form.is_valid())
+            if milestone_form.is_valid():
+
+                project = Project.objects.get(project_uuid=project_uuid)
+                flag = True
+                while flag:
+                    try:
+                        milestone_uuid = get_a_uuid()
+                        Milestone.objects.get(milestone_uuid=milestone_uuid)
+                    except Milestone.DoesNotExist:
+                        flag = False
+                milestone = Milestone(amount=milestone_form.cleaned_data['amount'], project=project,
+                                      milestone_uuid=milestone_uuid)
+                # TODO: need to add milestone status here
+                milestone.save()
+                project.project_status = PENDING
+                project.project_action = "."
+                project.save()
+                return redirect(request.path)
+
+        elif request.POST.get('request-money'):
+            try:
+                project = Project.objects.get(project_uuid=project_uuid)
+                project.project_status = PENDING
+                project.project_action = "Current Milestone is done."
+                # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
+                project.save()
+                messages.success(request, _('Success'))
+                return redirect(request.path)
+            except:
+                # TODO: The logic here is weird need to change
+                messages.warning(request, _('Failed'))
+                return redirect(request.path)
+
+        elif request.POST.get('release-money'):
+            try:
+                project = Project.objects.get(project_uuid=project_uuid)
+                project.project_status = PAYED_TO_CONTRACTOR
+                project.project_action = "Current Milestone is done."
+                # TODO: add some functions to send the money?
+                project.save()
+                messages.success(request, _('Success'))
+                return redirect(request.path)
+            except:
+                # TODO: The logic here is weird need to change
+                messages.warning(request, _('Failed'))
+                return redirect(request.path)
+
+#
+# @method_decorator(login_required, name='dispatch')
+# class Milestone(View):
+#
+#
+#     def get(self):
+#
+#     def post(self):
+#

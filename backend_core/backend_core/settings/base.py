@@ -301,3 +301,13 @@ FORTE_CONFIG = {
     'hash_method': 'md5',
     'billing_company_name': 'hide',
 }
+#
+# FORTE_CONFIG = {
+#     'api_login_id': 'Hr5xS5M5l0',
+#     'secure_trans_key': '6WM28dm2Mq',
+#     'method': 'sale',
+#     'version_number': '1.0',
+#     'allowed_methods': 'echeck',
+#     'hash_method': 'md5',
+#     'billing_company_name': 'hide',
+# }

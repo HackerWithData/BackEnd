@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from projects.models import Project
+from projects.models import Project, Milestone
 from .utils import *
 
 
@@ -23,11 +23,13 @@ class Transaction(models.Model):
     transaction_key = models.CharField(max_length=32, unique=True)
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING, related_name='transactions',
                                 related_query_name='transaction', verbose_name='project')
+    milestone = models.ForeignKey(Milestone, on_delete=models.DO_NOTHING, related_name='transactions',
+                                  related_query_name='transaction')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    transaction_uuid = models.CharField(max_length=32, default='0')
+    transaction_uuid = models.CharField(max_length=36, default='0')
 
 
 class TransactionHistory(models.Model):

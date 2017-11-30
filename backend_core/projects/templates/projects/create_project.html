@@ -7,7 +7,7 @@
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ info_dict.project_form.as_p }}
-
+        {#TODO: need to change the outlook of attachment type#}
         <br/>
         <script src='https://www.google.com/recaptcha/api.js'></script>
         <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>

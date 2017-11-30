@@ -65,6 +65,9 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
 
 def check_professional_type(request):
     for i in [j[0] for j in PROFESSIONAL_CHOICES]:
-        if i in request.path:
-            model_type = i
-    return model_type
+        if i.lower() in request.path:
+            model_type = i.lower()
+            return model_type
+            break
+        else:
+            pass

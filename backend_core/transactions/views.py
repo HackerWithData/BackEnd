@@ -16,9 +16,10 @@ from users.utils import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import *
 from .models import Transaction, TransactionHistory
-
+from projects.utils import (PAYED_TO_HOOME)
 
 # Create your views here.
+# TODO: Simplify this part
 @method_decorator(login_required, name='dispatch')
 class TransactionsView(View):
     form_class = TransactionForm
@@ -60,13 +61,13 @@ class TransactionsView(View):
         """
         received_json_data = json.loads(request.body)
 
-        project = Project.objects.get(project_id=int(received_json_data['project_uuid']))
+        project = Project.objects.get(project_uuid=int(received_json_data['project_uuid']))
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user,
                                                                  content_type=project.content_type,
                                                                  object_id=project.object_id,
                                                                  transaction_key=received_json_data['transaction_key'])
 
-        #TODO: consider wheter ignore to use get_or_create since it will query 2 times. we sill need to change Person object after created.
+        # TODO: consider wheter ignore to use get_or_create since it will query 2 times. we sill need to change Person object after created.
         # TODO: better to redesign here
         if created:
             if received_json_data['amount'] == '':
@@ -84,9 +85,13 @@ class TransactionsView(View):
             transaction.transaction_uuid = uuid
         transaction.status = received_json_data['status'].upper()[0]
         transaction.save()
-
+        # TODO: we can remove this link probably
+        if transaction.status == SUCCESS:
+            project.status = PAYED_TO_HOOME
+            project.save()
         # insert a new transaction history with pending status as soon as a transaction created
         TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
+        # TODO: should refresh the page. or refresh some part of html
         return HttpResponse(status=204)
 
 
