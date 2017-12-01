@@ -57,7 +57,7 @@ class ProjectPhoto(models.Model):
 
 class Milestone(models.Model):
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)
-    status = models.CharField(max_length=63)
+    status = models.CharField(max_length=63, choices=MILESTONE_STATUS, default=WAITING)
     amount = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     milestone_uuid = models.CharField(max_length=36, default='0')

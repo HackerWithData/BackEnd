@@ -38,13 +38,15 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-4 col-sm-5 col-md-6">
-                                <div class=""><span class="title">{{ Project_Status }}</span></div>
-                                <div class=""><span class="value">{{ project.project_status }}</span></div>
-                                {% if project.project_action %}
-                                    <br/>
-                                    <div class=""><span class="title">{{ Project_Action }}</span></div>
-                                    <div class=""><span class="value">{{ project.project_action }}</span></div>
-                                {% endif %}
+                                <div class=""><span class="title">{{ Project_Name }}</span></div>
+                                <div class=""><span class="value">{{ project.project_name }}</span></div>
+                                {#                                <div class=""><span class="title">{{ Project_Status }}</span></div>#}
+                                {#                                <div class=""><span class="value">{{ project.project_status }}</span></div>#}
+                                {#                                {% if project.project_action %}#}
+                                {#                                    <br/>#}
+                                {#                                    <div class=""><span class="title">{{ Project_Action }}</span></div>#}
+                                {#                                    <div class=""><span class="value">{{ project.project_action }}</span></div>#}
+                                {#                                {% endif %}#}
                             </div>
                             <div class="col-xs-8 col-sm-7 col-md-6 Address">
                                 <span class="title">{{ Address }}:</span><br/>

@@ -49,7 +49,7 @@
                             <li>{{ info_dict.contractor.csp }}</li>
                             <li id="score-popup" class='popup' onmouseover="popUp1()" onclick="popUp1()">
                                 {{ Score }}: {{ info_dict.score }}
-                                <div id="Score-explaination" class="popuptext">
+                                <div id="Score-explanation" class="popuptext">
                                     <ul>
                                         <li>{{ Work_Year }}: {{ info_dict.length }}</li>
                                         <li>{{ Arbitration }}: {{ info_dict.complaint.arbitration }}</li>
@@ -201,7 +201,7 @@
 
         // When the user clicks on <div>, open the popup
         function popUp1() {
-            var popup = document.getElementById("Score-explaination");
+            var popup = document.getElementById("Score-explanation");
             popup.classList.toggle("show");
         }
 

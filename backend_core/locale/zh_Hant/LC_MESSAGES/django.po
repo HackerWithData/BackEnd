@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-18 00:15+0000\n"
+"POT-Creation-Date: 2017-12-01 06:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,11 +193,11 @@ msgstr ""
 "效。 如果您需要了解{lic_name}更多的資訊，請聯系我們，我們會向您分享更多關於其"
 "的信息和數據。"
 
-#: overviews/views.py:21 projects/views.py:190
+#: overviews/views.py:21
 msgid "Request Success"
 msgstr "請求成功"
 
-#: overviews/views.py:23 projects/views.py:194
+#: overviews/views.py:23
 msgid "Request Failed"
 msgstr "請求失敗"
 
@@ -209,20 +209,17 @@ msgstr "背景圖案"
 msgid "Create"
 msgstr "創建"
 
-#: projects/templates/projects/project_overview.html:66
+#: projects/templates/projects/project_overview.html:68
 msgid ""
 "You don't have any projects right now. Please go to professional\n"
 "                        page\n"
 "                        and contract with someone you like."
 msgstr "您目前沒有任何項目。請到您相中的承包商頁面中締結合約。"
 
-#: projects/views.py:136
-msgid "Please Log in first."
-msgstr "請先登入您的賬戶"
-
-#: projects/views.py:182 templates/404.html:29
-msgid "Page Not Found"
-msgstr "找不到網頁"
+#: projects/templates/projects/upload_project_attachment.html:14
+#: projects/templates/projects/upload_project_photo.html:14
+msgid "Upload"
+msgstr ""
 
 #: review/forms.py:35
 msgid "zipcode format should be xxxxx or xxxxx-xxxx"
@@ -402,6 +399,10 @@ msgstr "沒有權限"
 #: templates/403.html:30
 msgid "You don't have the permission to do the following actions. "
 msgstr "您沒有權限進行以下操作"
+
+#: templates/404.html:29
+msgid "Page Not Found"
+msgstr "找不到網頁"
 
 #: templates/404.html:30
 msgid "Hoome cannot find the page per your request, Please try again. "
@@ -702,7 +703,7 @@ msgstr "施工起始時間"
 msgid "End Date"
 msgstr "發布日期"
 
-#: templates/base.html:107
+#: templates/base.html:107 templates/base.html:130
 msgid "Description"
 msgstr "描述"
 
@@ -754,7 +755,43 @@ msgstr "簽訂合同"
 msgid "Project"
 msgstr "項目"
 
-#: templates/base.html:276 users/templates/account/login.html:162
+#: templates/base.html:123
+msgid "Checkout"
+msgstr ""
+
+#: templates/base.html:124
+msgid "Milestone"
+msgstr ""
+
+#: templates/base.html:125
+#, fuzzy
+#| msgid "Make a payment"
+msgid "Release the Payment"
+msgstr "支付"
+
+#: templates/base.html:126
+#, fuzzy
+#| msgid "Request Failed"
+msgid "Request the Payment"
+msgstr "請求失敗"
+
+#: templates/base.html:127
+#, fuzzy
+#| msgid "Created Date"
+msgid "Create Milestone"
+msgstr "創建日期"
+
+#: templates/base.html:128
+msgid "Milestone #"
+msgstr ""
+
+#: templates/base.html:129
+#, fuzzy
+#| msgid "Action"
+msgid "Actions"
+msgstr "具體操作"
+
+#: templates/base.html:285 users/templates/account/login.html:162
 msgid "Sign In"
 msgstr "登入"
 
@@ -774,7 +811,7 @@ msgstr "創建日期"
 msgid "amount"
 msgstr "交易金額"
 
-#: transactions/models.py:19 transactions/models.py:38
+#: transactions/models.py:19 transactions/models.py:42
 msgid "created at"
 msgstr "創建於"
 
@@ -782,7 +819,7 @@ msgstr "創建於"
 msgid "updated at"
 msgstr "上傳於"
 
-#: transactions/models.py:22 transactions/models.py:40
+#: transactions/models.py:22 transactions/models.py:44
 msgid "transaction status"
 msgstr "交易狀態"
 
@@ -790,7 +827,19 @@ msgstr "交易狀態"
 msgid "Make a payment"
 msgstr "支付"
 
-#: transactions/templates/transaction/transactions.html:56
+#: transactions/templates/transaction/checkout.html:46
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:335
+msgid "Next"
+msgstr "下壹步"
+
+#: transactions/templates/transaction/checkout.html:74
+#: transactions/templates/transaction/payment.html:131
+msgid ""
+"You don't have any project to pay right now. Please create a new\n"
+"                project."
+msgstr ""
+
+#: transactions/templates/transaction/transactions.html:59
 msgid "You don't have any payments right now."
 msgstr "您目前沒有任何交易。"
 
@@ -1061,10 +1110,6 @@ msgstr "縣/市"
 msgid "Zipcode"
 msgstr "郵政編碼"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:335
-msgid "Next"
-msgstr "下壹步"
-
 #: users/views.py:118
 msgid "Lic number does not exist"
 msgstr "證件號碼不存在"
@@ -1072,6 +1117,9 @@ msgstr "證件號碼不存在"
 #: users/views.py:173 users/views.py:214
 msgid "Your Profile updated."
 msgstr "您的檔案已更新"
+
+#~ msgid "Please Log in first."
+#~ msgstr "請先登入您的賬戶"
 
 #~ msgid "Sorry. Pages Not Found"
 #~ msgstr "找不到網頁"

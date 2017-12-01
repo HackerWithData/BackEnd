@@ -122,11 +122,13 @@
 {% trans 'Meister' as Meister %}
 {% trans 'Checkout' as Checkout %}
 {% trans 'Milestone' as Milestone %}
-{% trans 'Release the Payment' as Release_Money %}
-{% trans 'Request the Payment' as Request_Money %}
+{% trans 'Release the Payment' as Release_Payment %}
+{% trans 'Request the Payment' as Request_Payment %}
 {% trans 'Create Milestone' as Create_Milestone %}
 {% trans 'Milestone #' as Milestone_Number  %}
 {% trans "Actions" as Action %}
+{% trans "Description" as Description %}
+
 <!--nav bar start-->
 {% block body %}
     {#    TODO: Take care the message#}
@@ -282,7 +284,7 @@
                             {% else %}
                                 <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                             {% endif %}
-                            <li><a href="{% url 'checkout' %}" >{{ Checkout }}</a></li>
+                            <li><a href="{% url 'display_project_overview' %}" >{{ Project }}</a></li>
                         </ul>
                     </div>
                     <!--/.navbar-collapse-->

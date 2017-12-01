@@ -11,12 +11,39 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as __
 
 from .decorators import check_recaptcha
-from .utils import get_a_uuid, WAITING, PENDING, PAYED_TO_CONTRACTOR
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
+from .utils import get_a_uuid, WAITING, PENDING, PAYED_TO_PROFESSIONAL, PAYMENT_REQUEST, PAYED_TO_HOOME
+from users.utils import CONSUMER, PROFESSIONAL
+
+
+def milestone_status_explanation(request, status):
+    """
+    explain each status of milestone
+    :param request:
+    :param status:
+    :return: the explanation of each milestone status
+    """
+    explanation = None
+    if status == WAITING:
+        if request.user.role == CONSUMER:
+            explanation = __("Waiting for homeowner make the payment.")
+        elif request.user.role == PROFESSIONAL:
+            explanation = __("Waiting for homeowner make the payment.")
+    elif status == PAYED_TO_HOOME:
+        if request.user.role == CONSUMER:
+            explanation = __("Hoome has recevied the payment and will hold for you.")
+        elif request.user.role == PROFESSIONAL:
+            explanation = __("Hoome has recevied the payment and please start to work.")
+    elif status == PAYED_TO_PROFESSIONAL:
+        if request.user.role == CONSUMER:
+            explanation = __("You have allowed Hoome release the payment.")
+        elif request.user.role == PROFESSIONAL:
+            explanation = __("Homeowner have released the payment for current milestone.")
+    return explanation
 
 
 # TODO: need to rewrite the architecture here.
@@ -143,7 +170,7 @@ def create_project(request, professional_type, lic_id):
         info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        messages.warning(request, _('Please Log in first.'))
+        messages.warning(request, __('Please Log in first.'))
         return redirect(request.path)
 
 
@@ -175,7 +202,9 @@ class ProjectDetail(View):
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
         milestones = Milestone.objects.filter(project=project).order_by('created_at')
-
+        if milestones.count > 0:
+            for milestone in milestones:
+                milestone.explanation = milestone_status_explanation(request, milestone.status)
         flag = False
         if request.user.role == "CONSUMER":
             if request.user == project.user:
@@ -184,8 +213,8 @@ class ProjectDetail(View):
         elif request.user.role == "PROFESSIONAL":
             professional = request.user.professional_profiles.first().professional
             ct = ContentType.objects.get(model=professional.type.lower())
-            lic_num = ct.get_object_for_this_type(lic_num=professional.lic_num)
-            if ct == project.content_type and lic_num == project.object_id:
+            lic_num = ct.get_object_for_this_type(lic_num=professional.lic_num).pk
+            if ct == project.content_type and int(lic_num) == project.object_id:
                 flag = True
 
         if flag:
@@ -196,12 +225,12 @@ class ProjectDetail(View):
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
-            raise Http404(_("Page Not Found"))
+            raise Http404(__("Page Not Found"))
 
     def post(self, request, project_uuid):
         if request.POST.get('create-milestone'):
             milestone_form = MilestoneForm(request.POST)
-            print(milestone_form.is_valid())
+            # print(milestone_form.is_valid())
             if milestone_form.is_valid():
 
                 project = Project.objects.get(project_uuid=project_uuid)
@@ -212,44 +241,44 @@ class ProjectDetail(View):
                         Milestone.objects.get(milestone_uuid=milestone_uuid)
                     except Milestone.DoesNotExist:
                         flag = False
-                milestone = Milestone(amount=milestone_form.cleaned_data['amount'], project=project,
-                                      milestone_uuid=milestone_uuid)
-                # TODO: need to add milestone status here
-                milestone.save()
-                project.project_status = PENDING
-                project.project_action = "."
-                project.save()
+                milestone = Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
+                                                     milestone_uuid=milestone_uuid)
+
+                # TODO: need to consider the project status more carefully
+                # project.project_status = PENDING
+                # project.project_action = "."
+                # project.save()
                 return redirect(request.path)
 
         elif request.POST.get('request-money'):
-            try:
-                project = Project.objects.get(project_uuid=project_uuid)
-                project.project_status = PENDING
-                project.project_action = "Current Milestone is done."
-                # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
-                project.save()
-                messages.success(request, _('Success'))
-                return redirect(request.path)
-            except:
-                # TODO: The logic here is weird need to change
-                messages.warning(request, _('Failed'))
-                return redirect(request.path)
+            print(request.POST)
+            print(request.POST.get('request-money'))
+
+            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('request-money'))
+            milestone.status = PAYMENT_REQUEST
+            milestone.save()
+            project = Project.objects.get(project_uuid=project_uuid)
+            project.project_action = "Request Money"
+            # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
+            project.save()
+            messages.success(request, __('Success'))
+            return redirect(request.path)
 
         elif request.POST.get('release-money'):
-            try:
-                project = Project.objects.get(project_uuid=project_uuid)
-                project.project_status = PAYED_TO_CONTRACTOR
-                project.project_action = "Current Milestone is done."
-                # TODO: add some functions to send the money?
-                project.save()
-                messages.success(request, _('Success'))
-                return redirect(request.path)
-            except:
-                # TODO: The logic here is weird need to change
-                messages.warning(request, _('Failed'))
-                return redirect(request.path)
+            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('release-money'))
+            milestone.status = PAYED_TO_PROFESSIONAL
+            milestone.save()
+            project = Project.objects.get(project_uuid=project_uuid)
+            project.project_action = "Release Money"
+            # TODO: add some functions to send the money?
+            project.save()
+            messages.success(request, __('Success'))
+            return redirect(request.path)
 
-#
+        else:  # TODO: The logic here is weird need to change
+            messages.warning(request, __('Failed'))
+            return redirect(request.path)  #
+
 # @method_decorator(login_required, name='dispatch')
 # class Milestone(View):
 #

@@ -46,65 +46,15 @@
                             <br/>
                             <span class="title">{{ Project_Enddate }}:</span> {{ info_dict.project.end_date }}
                         {% endif %}
-                        <br/>
-
-                        <span class="title">{{ Project_Status }}:</span> {{ Payment }}
-                        {% if info_dict.transactions|length == 0 %}1{% else %}
-                            {{ info_dict.transactions|length }}{% endif %} {{ info_dict.project.project_status }}
-
-                        {% if info_dict.project.project_action is not None %}
-                            <br/>
-                            <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}
-                        {% endif %}
-                        {#payment button#}
-
-                        {% if request.user.role == "CONSUMER" %}
-                            {% if info_dict.project.project_status == "PENDING" and info_dict.project.project_action == "Current Milestone is done." %}
-                                {#                            {% elif info_dict.projects.project_status == "PENDING" %}#}
-                                <div class="request-wrapper">
-                                    <form id='release-money' action="" method="post" class="">
-                                        {% csrf_token %}
-                                        <button class="btn btn-hoome" type="submit" name="release-money"
-                                                value="release-money">{{ Request_Money }}
-                                        </button>
-                                    </form>
-                                </div>
-                            {% elif info_dict.project.project_status == "Payed to Hoome" %}
-                                <div class="request-wrapper">
-                                    <form id='release-money' action="" method="post" class="">
-                                        {% csrf_token %}
-                                        <button class="btn btn-hoome" type="submit" name="release-money"
-                                                value="release-money">{{ Release_Money }}
-                                        </button>
-                                    </form>
-                                </div>
-                            {% else %}
-                                <div class="payment-wrapper">
-                                    {% render_pay_now_button info_dict.project.project_uuid %}
-                                </div>
-                            {% endif %}
-
-
-                        {% elif request.user.role == "PROFESSIONAL" %}
-                            {#                            pop out confimation?#}
-                            <div class="request-wrapper">
-                                <form id='request-money' action="" method="post" class="">
-                                    {% csrf_token %}
-                                    <button class="btn btn-hoome" type="submit" name="request-money"
-                                            value="request-money">Request
-                                    </button>
-                                </form>
-                                {#                                <a href='#request-money' class="btn btn-hoome popup-with-form">Request Money</a>#}
-                                {#                                <form id='request-money' action="" method="post" class="mfp-hide white-popup-block">#}
-                                {#                                    {% csrf_token %}#}
-                                {#                                    <button class="btn btn-hoome" type="submit" name="request-money"#}
-                                {#                                            value="request-money">#}
-                                {#                                        Request#}
-                                {#                                    </button>#}
-                                {#                                </form>#}
-                            </div>
-                        {% endif %}
-
+                        {#                    <br/>#}
+                        {#                        <span class="title">{{ Project_Status }}:</span> {{ Payment }}#}
+                        {#                        {% if info_dict.transactions|length == 0 %}1{% else %}#}
+                        {#                            {{ info_dict.transactions|length }}{% endif %} {{ info_dict.project.project_status }}#}
+                        {#TODO: add action detail#}
+                        {#                        {% if info_dict.project.project_action is not None %}#}
+                        {#                            <br/>#}
+                        {#                            <span class="title">{{ Project_Action }}:</span> {{ info_dict.project.project_action }}#}
+                        {#                        {% endif %}#}
                     </div>
                 </div>
                 <hr/>
@@ -133,31 +83,70 @@
         <div class="panel panel-default project-basic-info">
             <div class="panel-heading">
                 {{ Milestone }}
-                <a href="#create-milestone" class="popup-with-form btn btn-db">{{ Create_Milestone }}</a>
+                {% if request.user.role == 'CONSUMER' %}
+                    <a href="#create-milestone" class="popup-with-form btn btn-db">{{ Create_Milestone }}</a>
+                {% endif %}
             </div>
             <div class="panel-body">
+                {% if info_dict.milestones %}
+                    <table class="milestone-table">
+                        <thead>
+                        <tr>
+                            <th>{{ Milestone_Number }}</th>
+                            <th>{{ Amount }}</th>
+                            <th>{{ Status }}</th>
+                            <th>{{ Description }}</th>
+                            <th>{{ Action }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for milestone in info_dict.milestones %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ milestone.amount }}</td>
+                                <td>
+                                    {{ milestone.get_status_display }}&nbsp;
+{#                                    <i id="status-popup-{{ forloop.counter }}" class="fa fa-question-circle-o"></i>#}
+                                </td>
+                            <td>{{ milestone.explanation }}</td>
+                                <td>
+                                    {% if request.user.role == "CONSUMER" %}
+                                        {#                                    and info_dict.project.project_action == "Current Milestone is done."#}
+                                        {% if milestone.status == "PTH" or milestone.status == "M" %}
+                                            <div class="request-wrapper">
+                                                <form id='release-money' action="" method="post" class="">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-hoome" type="submit" name="release-money"
+                                                            value="{{ milestone.milestone_uuid }}">{{ Release_Payment }}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        {% elif milestone.status == "PTP" %}
+                                        {% else %}
+                                            <div class="payment-wrapper">
+                                                {% render_pay_now_button info_dict.project.project_uuid milestone.milestone_uuid %}
+                                            </div>
+                                        {% endif %}
+                                    {% elif request.user.role == "PROFESSIONAL" %}
+                                        {#                            TODO: pop out confimation?#}
+                                        {% if milestone.status == "PTH" %}
+                                            <div class="request-wrapper">
+                                                <form id='request-money' action="" method="post" class="">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-hoome" type="submit" name="request-money"
+                                                            value="{{ milestone.milestone_uuid }}">{{ Request_Payment }}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        {% endif %}
 
-                    <table style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>{{ Milestone_Number }}</th>
-                        <th>{{ Amount }}</th>
-                        <th>{{ Status }}</th>
-                        <th>{{ Action }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for milestone in info_dict.milestones %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ milestone.amount }}</td>
-                        <td>{{ milestone.status }}</td>
-                        <td>saocaozuo</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
                     </table>
-
+                {% endif %}
             </div>
         </div>
 
@@ -274,6 +263,12 @@
                 $('#peek').addClass('link');
             }
             $('.height').toggleClass("heightAuto");
+        }
+
+        function popUp(el) {
+            {#                                            console.log($(this).id);#}
+            var popup = document.getElementById(el);
+            popup.classList.toggle("show");
         }
 
         $(document).ready(function () {

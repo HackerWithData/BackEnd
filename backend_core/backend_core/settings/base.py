@@ -291,23 +291,24 @@ TINYMCE_COMPRESSOR = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 TINYMCE_JS_URL = STATIC_ROOT + ('tinymce/plugin')
-
-FORTE_CONFIG = {
-    'api_login_id': 'qCt61J81jU',
-    'secure_trans_key': 'hv3TJ3BG5q4',
-    'method': 'sale',
-    'version_number': '1.0',
-    'allowed_methods': 'echeck',
-    'hash_method': 'md5',
-    'billing_company_name': 'hide',
-}
-#
+# Live Version
 # FORTE_CONFIG = {
-#     'api_login_id': 'Hr5xS5M5l0',
-#     'secure_trans_key': '6WM28dm2Mq',
+#     'api_login_id': 'qCt61J81jU',
+#     'secure_trans_key': 'hv3TJ3BG5q4',
 #     'method': 'sale',
 #     'version_number': '1.0',
 #     'allowed_methods': 'echeck',
 #     'hash_method': 'md5',
 #     'billing_company_name': 'hide',
 # }
+
+# Demo Version
+FORTE_CONFIG = {
+    'api_login_id': 'k646PugCN1',
+    'secure_trans_key': 't6p68oMAR',
+    'method': 'sale',
+    'version_number': '1.0',
+    'allowed_methods': 'echeck',
+    'hash_method': 'md5',
+    'billing_company_name': 'hide',
+}

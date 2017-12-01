@@ -15,7 +15,7 @@ from projects.utils import get_a_uuid
 from users.utils import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import *
-from .models import Transaction, TransactionHistory
+from .models import Transaction, TransactionHistory, Milestone
 from projects.utils import (PAYED_TO_HOOME)
 
 # Create your views here.
@@ -61,8 +61,10 @@ class TransactionsView(View):
         """
         received_json_data = json.loads(request.body)
 
-        project = Project.objects.get(project_uuid=int(received_json_data['project_uuid']))
-        transaction, created = Transaction.objects.get_or_create(project=project, user=project.user,
+        project = Project.objects.get(project_uuid=received_json_data['project_uuid'])
+        milestone = Milestone.objects.get(milestone_uuid=received_json_data['milestone_uuid'])
+        # TODO: should change here because should save to the model at the time. change get or create to get and models()
+        transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
                                                                  content_type=project.content_type,
                                                                  object_id=project.object_id,
                                                                  transaction_key=received_json_data['transaction_key'])
@@ -75,7 +77,7 @@ class TransactionsView(View):
             else:
                 transaction.amount = float(received_json_data['amount'])
             transaction.created_at = datetime.utcfromtimestamp(received_json_data['created_at'])
-
+            flag = True
             while flag:
                 try:
                     uuid = get_a_uuid()
@@ -83,12 +85,13 @@ class TransactionsView(View):
                 except Transaction.DoesNotExist:
                     flag = False
             transaction.transaction_uuid = uuid
+
         transaction.status = received_json_data['status'].upper()[0]
         transaction.save()
-        # TODO: we can remove this link probably
+        # TODO: we can remove this conditional statement probably
         if transaction.status == SUCCESS:
-            project.status = PAYED_TO_HOOME
-            project.save()
+            milestone.status = PAYED_TO_HOOME
+            milestone.save()
         # insert a new transaction history with pending status as soon as a transaction created
         TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
         # TODO: should refresh the page. or refresh some part of html

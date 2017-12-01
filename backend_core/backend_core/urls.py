@@ -65,9 +65,10 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     # transaction
     url(r'^transactions/', include('transactions.urls')),
-    url(r'^checkout$', project_checkout, name='checkout'),
-    url(r'^checkout/(?P<project_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/$',
-        project_pay, name='checkout'),
+    # checkout deprecated
+    # url(r'^checkout$', project_checkout, name='checkout'),
+    # url(r'^checkout/(?P<project_uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/$',
+    #     project_pay, name='checkout'),
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
     url(r'^meister/', include('meisters.urls')),

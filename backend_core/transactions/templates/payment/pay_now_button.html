@@ -1,13 +1,13 @@
 {% load i18n %}
 {% trans 'Make a payment' as Pay %}
-{#<script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>#}
-<script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>
+<script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>
+{#<script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>#}
 <style>
     .fortebtn {
         background-color: #6892D5
     }
 </style>
-<button class="forte-checkout-button btn btn-hoome" id="payment-btn"
+<button class="forte-checkout-button btn btn-hoome" id="payment-btn-{{ milestone_uuid }}"
         api_login_id="{{ api_login_id }}"
         method="{{ method }}"
         allowed_methods="{{ allowed_methods }}"
@@ -86,7 +86,7 @@
     ==========================================================================*/
     function successHandler(response) {
         alert('Thank you for the order. The trace number is ' + response.trace_number);
-        const transactionKey = $('.forte-checkout-button').attr('order_number');
+        const transactionKey = $('#payment-btn-{{ milestone_uuid }}').attr('order_number');
         var event = response.event;
         var total_amount = response.total_amount;
         const formData = {
@@ -94,7 +94,8 @@
             "amount": total_amount,
             'transaction_key': transactionKey,
             'project_uuid': '{{ project_uuid }}',
-            'created_at': {{ utc_time }}
+            'created_at': {{ utc_time }},
+            'milestone_uuid': '{{ milestone_uuid }}'
         };
         $.ajax({
             dataType: "json",
@@ -104,8 +105,11 @@
             },
             url: "{% url 'transactions' %}",
             data: JSON.stringify(formData),
-            contentType: "application/json"
-        })
+            contentType: "application/json",
+
+        }).done(function () {
+            location.reload();
+        });
 
     }
 

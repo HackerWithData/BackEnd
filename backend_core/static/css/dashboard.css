@@ -258,6 +258,17 @@ html, body {
 .project-overview .title {
     font-size: 0.75em;
 }
+
 .project-overview .lead {
     min-height: 360px;
+}
+
+.milestone-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.milestone-table td {
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
