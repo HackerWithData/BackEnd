@@ -1,14 +1,27 @@
 from django.core.exceptions import ImproperlyConfigured
 from requests.exceptions import ConnectionError
-
 from base import *
 import requests
 
 DEBUG = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+ALLOWED_HOSTS = [
+    'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+    'SSLLoadBalancer-2138526934.us-west-2.elb.amazonaws.com',
+    '.hoome.io',
+    'hoome.io',
+    'www.hoome.io',
+]
+
+
 
 # Configuring a SMTP Email Service
 ADMINS = [('Bug', 'service@hoome.io'),
-          ("admin1","jeremyzheng@hoome.io")]
+          ("admin1", "jeremyzheng@hoome.io")]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -25,38 +38,52 @@ EMAIL_HOST_PASSWORD = 'CZT!2017'
 
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-            }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ebdb',
+        'USER': 'hoome',
+        'PASSWORD': 'hoome2017',
+        'HOST': 'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci,foreign_key_checks = 0;'
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'hoome_local',
-            'USER': 'root',
-            'PASSWORD': 'password',
-            'HOST': 'localhost',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
-            }
-        }
-    }
+}
+# if 'RDS_DB_NAME' in os.environ:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': os.environ['RDS_DB_NAME'],
+#             'USER': os.environ['RDS_USERNAME'],
+#             'PASSWORD': os.environ['RDS_PASSWORD'],
+#             'HOST': os.environ['RDS_HOSTNAME'],
+#             'PORT': os.environ['RDS_PORT'],
+#             'OPTIONS': {
+#                 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+#             }
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'hoome_local',
+#             'USER': 'root',
+#             'PASSWORD': 'password',
+#             'HOST': 'localhost',
+#             'PORT': '3306',
+#             'OPTIONS': {
+#                 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+#             }
+#         }
+#     }
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    '/home/ubuntu/sites/hoome.io/backend_core/static',
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
@@ -85,9 +112,10 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
 # you run `collectstatic`).
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'backend_core.settings.custom_storages.StaticStorage'
+# STATICFILES_STORAGE = 'backend_core.settings.custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'backend_core.settings.custom_storages.MediaStorage'
@@ -102,3 +130,10 @@ except ConnectionError:
     error_msg = "You can only run production settings on an AWS EC2 instance"
     raise ImproperlyConfigured(error_msg)
 # END ALLOWED_HOSTS
+LOCAL_IP = None
+try:
+    LOCAL_IP = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', timeout=0.01).text
+except requests.exceptions.RequestException:
+    pass
+if LOCAL_IP and not DEBUG:
+    ALLOWED_HOSTS.append(LOCAL_IP)
