@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-01 06:18+0000\n"
+"POT-Creation-Date: 2017-12-01 23:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apiv1/serializers/review_serializer.py:6 review/forms.py:63
+msgid "Comments"
+msgstr "評論"
+
+#: apiv1/serializers/review_serializer.py:9 review/forms.py:66
+msgid "Project Date"
+msgstr "施工起始時間"
+
+#: apiv1/serializers/review_serializer.py:10 review/forms.py:67
+#: templates/base.html:51
+msgid "Project Type"
+msgstr "項目類型"
+
+#: apiv1/serializers/review_serializer.py:11 review/forms.py:68
+msgid "Project Zipcode"
+msgstr "項目所在郵政編碼"
+
+#: apiv1/serializers/review_serializer.py:12 review/forms.py:69
+#: templates/base.html:50
+msgid "Project Cost"
+msgstr "項目開銷"
+
+#: apiv1/serializers/review_serializer.py:13 review/forms.py:70
+#: templates/base.html:52
+msgid "Project Duration"
+msgstr "項目工期"
+
+#: apiv1/serializers/review_serializer.py:15 review/forms.py:72
+msgid "Project Address"
+msgstr "項目地址"
+
+#: apiv1/serializers/review_serializer.py:16 review/forms.py:73
+msgid "Is Anonymous?"
+msgstr "匿名用戶"
 
 #: architects/templates/architect/architect.html:43
 #: contractors/templates/contractor/contractor.html:44
@@ -43,7 +78,7 @@ msgstr "上傳項目照片"
 #: designers/templates/designer/designer.html:99
 #: meisters/templates/meister/meister.html:105
 msgid "Background Image Upload"
-msgstr "上傳主頁背景圖案"
+msgstr "上傳背景圖案"
 
 #: architects/views.py:37 contractors/views.py:198 meisters/views.py:96
 msgid "Error Pages!"
@@ -219,7 +254,27 @@ msgstr "您目前沒有任何項目。請到您相中的承包商頁面中締結
 #: projects/templates/projects/upload_project_attachment.html:14
 #: projects/templates/projects/upload_project_photo.html:14
 msgid "Upload"
-msgstr ""
+msgstr "上傳"
+
+#: projects/views.py:33 projects/views.py:35
+msgid "Waiting for homeowner make the payment."
+msgstr "等待業主支付"
+
+#: projects/views.py:38
+msgid "Hoome has recevied the payment and will hold for you."
+msgstr "Hoome已經收到此款項並為您保存"
+
+#: projects/views.py:40
+msgid "Hoome has recevied the payment and please start to work."
+msgstr "Hoome已經收到此款項， 請開始施工"
+
+#: projects/views.py:43
+msgid "You have allowed Hoome release the payment."
+msgstr "您已經允許Hoome釋放這筆款項"
+
+#: projects/views.py:45
+msgid "Homeowner have released the payment for current milestone."
+msgstr "業主已經釋放現階段的款項給您"
 
 #: review/forms.py:35
 msgid "zipcode format should be xxxxx or xxxxx-xxxx"
@@ -233,10 +288,6 @@ msgstr "不能為負數"
 msgid "invalid email address"
 msgstr "無效郵箱地址"
 
-#: review/forms.py:63
-msgid "Comments"
-msgstr "評論"
-
 #: review/forms.py:64 templates/base.html:101
 msgid "First Name"
 msgstr "名"
@@ -245,39 +296,11 @@ msgstr "名"
 msgid "Last Name"
 msgstr "姓"
 
-#: review/forms.py:66
-msgid "Project Date"
-msgstr "施工起始時間"
-
-#: review/forms.py:67 templates/base.html:51
-msgid "Project Type"
-msgstr "項目類型"
-
-#: review/forms.py:68
-msgid "Project Zipcode"
-msgstr "項目所在郵政編碼"
-
-#: review/forms.py:69 templates/base.html:50
-msgid "Project Cost"
-msgstr "項目開銷"
-
-#: review/forms.py:70 templates/base.html:52
-msgid "Project Duration"
-msgstr "項目工期"
-
 #: review/forms.py:71 templates/base.html:89
 #: users/templates/account/email.html:73 users/templates/account/login.html:146
 #: users/templates/account/signup.html:186
 msgid "Email"
 msgstr "Email地址"
-
-#: review/forms.py:72
-msgid "Project Address"
-msgstr "項目地址"
-
-#: review/forms.py:73
-msgid "Is Anonymous?"
-msgstr "匿名用戶"
 
 #: search/templates/search_bar/search_bar.html:9
 msgid "Find Professionals"
@@ -465,7 +488,7 @@ msgid "License Status"
 msgstr "證件狀態"
 
 #: templates/base.html:39
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:292
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:258
 msgid "License Number"
 msgstr "證件號碼"
 
@@ -474,7 +497,7 @@ msgid "Entity"
 msgstr "實體"
 
 #: templates/base.html:41
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:301
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:266
 msgid "Entity Type"
 msgstr "實體類型"
 
@@ -515,6 +538,7 @@ msgid "Read less"
 msgstr "閱讀更少"
 
 #: templates/base.html:54
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:265
 msgid "Company Name"
 msgstr "公司名字"
 
@@ -605,12 +629,12 @@ msgid "Postal Code"
 msgstr "郵編"
 
 #: templates/base.html:77
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:318
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:282
 msgid "State"
 msgstr "州"
 
 #: templates/base.html:78
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:316
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:281
 msgid "Street"
 msgstr "街道"
 
@@ -693,7 +717,7 @@ msgstr "商家姓名"
 
 #: templates/base.html:104
 msgid "Contracted With"
-msgstr "承包商"
+msgstr "合同對象"
 
 #: templates/base.html:105
 msgid "Start Date"
@@ -757,41 +781,34 @@ msgstr "項目"
 
 #: templates/base.html:123
 msgid "Checkout"
-msgstr ""
+msgstr "支付"
 
 #: templates/base.html:124
 msgid "Milestone"
-msgstr ""
+msgstr "裏程碑"
 
 #: templates/base.html:125
-#, fuzzy
-#| msgid "Make a payment"
 msgid "Release the Payment"
-msgstr "支付"
+msgstr "釋放這筆錢款"
 
 #: templates/base.html:126
-#, fuzzy
-#| msgid "Request Failed"
 msgid "Request the Payment"
-msgstr "請求失敗"
+msgstr "請求這筆錢款"
 
 #: templates/base.html:127
-#, fuzzy
-#| msgid "Created Date"
 msgid "Create Milestone"
-msgstr "創建日期"
+msgstr "創建裏程碑"
 
 #: templates/base.html:128
 msgid "Milestone #"
-msgstr ""
+msgstr "裏程碑編號"
 
 #: templates/base.html:129
-#, fuzzy
-#| msgid "Action"
 msgid "Actions"
 msgstr "具體操作"
 
 #: templates/base.html:285 users/templates/account/login.html:162
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:158
 msgid "Sign In"
 msgstr "登入"
 
@@ -828,7 +845,7 @@ msgid "Make a payment"
 msgstr "支付"
 
 #: transactions/templates/transaction/checkout.html:46
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:335
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:298
 msgid "Next"
 msgstr "下壹步"
 
@@ -837,7 +854,7 @@ msgstr "下壹步"
 msgid ""
 "You don't have any project to pay right now. Please create a new\n"
 "                project."
-msgstr ""
+msgstr "目前您沒有任何項目。請先創建壹個項目"
 
 #: transactions/templates/transaction/transactions.html:59
 msgid "You don't have any payments right now."
@@ -1016,12 +1033,20 @@ msgstr "註冊"
 
 #: users/templates/account/password_change.html:23
 #: users/templates/account/password_change.html:26
+#: users/templates/account/password_set.html:18
+#: users/templates/account/password_set.html:21
 msgid "New Password (again)"
 msgstr "再壹次輸入新密碼"
 
 #: users/templates/account/password_change.html:28
 msgid "Change Password"
 msgstr "修改密碼"
+
+#: users/templates/account/password_set.html:23
+#, fuzzy
+#| msgid "New Password"
+msgid "Set Password"
+msgstr "新的密碼"
 
 #: users/templates/account/signup.html:115
 msgid "Sign Up for Hoome"
@@ -1066,57 +1091,55 @@ msgstr "專業人士信息"
 msgid "Save Changes"
 msgstr "保存修改"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:213
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:196
 msgid "Choose License Type"
 msgstr "請選擇證件類型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:214
-msgid "If you don't have license, please choose meister."
-msgstr "如果您沒有證，請選擇手藝人這個選項"
-
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:288
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:255
 msgid "Find Your License In Our Database"
 msgstr "請輸入您的證件號碼與我們數據庫的證件匹配"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:289
-msgid "If you don't have license, please skip this step."
-msgstr "如果您沒有證，請跳過這壹步"
-
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:296
-msgid "Enter Or Modify Your Name, Company Name and Entity Type"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:262
+msgid "Enter Or Modify Your Company Name and Entity Type"
 msgstr "請輸入您的名字, 公司的名字和實體類型"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:299
-msgid "Your Name"
-msgstr "您的名字"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:271
+msgid "Enter Or Modify Your Company Category"
+msgstr "請輸入您公司的類別"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:300
-msgid "Company Name(Optional)"
-msgstr "公司名字（可選填）"
-
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:306
-msgid "Enter Or Modify Your Service Category"
-msgstr "請選擇您服務的類型"
-
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:313
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:278
 msgid "Enter Or Modify Your Company Address"
 msgstr "請輸入您公司的地址"
 
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:317
-msgid "County/City"
-msgstr "縣/市"
-
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:319
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:283
 msgid "Zipcode"
 msgstr "郵政編碼"
 
-#: users/views.py:118
+#: users/views.py:124
 msgid "Lic number does not exist"
 msgstr "證件號碼不存在"
 
-#: users/views.py:173 users/views.py:214
+#: users/views.py:179 users/views.py:220
 msgid "Your Profile updated."
 msgstr "您的檔案已更新"
+
+#~ msgid "If you don't have license, please choose meister."
+#~ msgstr "如果您沒有證，請選擇手藝人這個選項"
+
+#~ msgid "If you don't have license, please skip this step."
+#~ msgstr "如果您沒有證，請跳過這壹步"
+
+#~ msgid "Your Name"
+#~ msgstr "您的名字"
+
+#~ msgid "Company Name(Optional)"
+#~ msgstr "公司名字（可選填）"
+
+#~ msgid "Enter Or Modify Your Service Category"
+#~ msgstr "請選擇您服務的類型"
+
+#~ msgid "County/City"
+#~ msgstr "縣/市"
 
 #~ msgid "Please Log in first."
 #~ msgstr "請先登入您的賬戶"

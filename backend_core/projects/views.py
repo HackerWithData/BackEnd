@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as __, ugettext as _
 
 from .decorators import check_recaptcha
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm
@@ -30,19 +30,19 @@ def milestone_status_explanation(request, status):
     explanation = None
     if status == WAITING:
         if request.user.role == CONSUMER:
-            explanation = __("Waiting for homeowner make the payment.")
+            explanation = _("Waiting for homeowner make the payment.")
         elif request.user.role == PROFESSIONAL:
-            explanation = __("Waiting for homeowner make the payment.")
+            explanation = _("Waiting for homeowner make the payment.")
     elif status == PAYED_TO_HOOME:
         if request.user.role == CONSUMER:
-            explanation = __("Hoome has recevied the payment and will hold for you.")
+            explanation = _("Hoome has recevied the payment and will hold for you.")
         elif request.user.role == PROFESSIONAL:
-            explanation = __("Hoome has recevied the payment and please start to work.")
+            explanation = _("Hoome has recevied the payment and please start to work.")
     elif status == PAYED_TO_PROFESSIONAL:
         if request.user.role == CONSUMER:
-            explanation = __("You have allowed Hoome release the payment.")
+            explanation = _("You have allowed Hoome release the payment.")
         elif request.user.role == PROFESSIONAL:
-            explanation = __("Homeowner have released the payment for current milestone.")
+            explanation = _("Homeowner have released the payment for current milestone.")
     return explanation
 
 
