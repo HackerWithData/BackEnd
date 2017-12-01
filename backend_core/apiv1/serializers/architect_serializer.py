@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer
 from architects.models import Architect
 from overviews.models import Overview
 from review.models import Review
@@ -51,7 +51,5 @@ class ArchitectSeializer(ModelSerializer):
         return super(ArchitectSeializer, self).create(validated_data)
 
     def update(self, instance, validated_data):
-        if validated_data['lic_num'] != getattr(instance, 'lic_num'):
-            raise Exception('license number cannot be changed')
-        else:
-            return super(ArchitectSeializer, self).update(instance, validated_data)
+        validated_data['lic_num'] = getattr(instance, 'lic_num')
+        return super(ArchitectSeializer, self).update(instance, validated_data)

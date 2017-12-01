@@ -1,5 +1,8 @@
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAdminUser,
+)
 from rest_framework.response import Response
 from rest_framework import status
 from architects.models import Architect
@@ -9,9 +12,19 @@ from ..utils import (
     get_reviews,
 )
 
+
 class ArchitectDetail(APIView):
 
-    permission_classes = [IsAuthenticated]
+    get_permission_classes = [IsAuthenticated]
+    post_permission_classes = [IsAdminUser]
+
+    def get_permissions(self):
+        safe_request_method = ("GET", "OPTIONS", "HEAD")
+        unsafe_request_method = ("PUT", "POST")
+        if self.request._request.method in safe_request_method:
+            return [permission() for permission in self.get_permission_classes]
+        if self.request._request.method in unsafe_request_method:
+            return [permission() for permission in self.post_permission_classes]
 
     def get_object(self, architect_uuid):
         try:
