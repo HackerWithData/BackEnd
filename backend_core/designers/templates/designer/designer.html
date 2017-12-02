@@ -253,6 +253,14 @@
                 }
             });
 
+            $("#edit-photo").click(function () {
+                if ($("#edit-photo").prop("checked") === true) {
+                    $('#edit-photo-btn').removeClass('hide');
+                } else {
+                    $('#edit-photo-btn').addClass('hide');
+                }
+            });
+
             $('#readmore').click(function () {
                 readMore();
             });
