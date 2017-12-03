@@ -78,20 +78,32 @@
     {% if info_dict.project_photos %}
         <!--photo-->
         <div id="photo" class="col-12 col-md-8 col-lg-8">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span>{{ Photo }}</span>
+                    <span class="col-md-7 vertical-center">{{ Photo }}</span>
                     {#                        <div class="pull-right">#}
-                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right vertical-center">{{ View_More }}</a>
                     {#                        </div>#}
+                    <label class="switch vertical-center">
+                        <input id="edit-photo" type="checkbox" class="off">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="vertical-center">{% trans 'Edit Photo' %}</span>
                 </div>
+
                 <div class="panel-body">
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
+                        <div style="text-align:center">
+                          <div style="margin: 1vh">
                             <a href="{{ pic.img.url }}" title="{{ pic.title }}">
                                 <img src="{{ pic.img.url }}">
                             </a>
-                            {#    style="height:50%;width:50%"#}
+                          </div>
+                            <button class="hide btn btn-danger edit-photo-btn" title="{{ pic.title }}">Remove X</button>
+                        </div>
+
+                        {#    style="height:50%;width:50%"#}
                         {% endfor %}
                     </div>
                 </div>
@@ -138,10 +150,12 @@
                                     <div class="popup-gallery-{{ forloop.counter }}">
                                         {% if rv.photo.all %}
                                             {% for img in rv.photo.all %}
+                                              <div>
                                                 <a href="{{ img.img.url }}" title="{{ img.title }}">
                                                     <img src="{{ img.img.url }}" title="{{ img.title }}"
                                                          style="width:50px;height:50px;">
                                                 </a>
+                                              </div>
                                             {% endfor %}
                                         {% endif %}
                                     </div>
@@ -170,4 +184,11 @@
 
 <script>
     $("img.lazyload").lazyload();
+    $("#edit-photo").click(function () {
+         if ($("#edit-photo").prop("checked") === true) {
+             $('.edit-photo-btn').removeClass('hide');
+         } else {
+             $('.edit-photo-btn').addClass('hide');
+         }
+    });
 </script>
