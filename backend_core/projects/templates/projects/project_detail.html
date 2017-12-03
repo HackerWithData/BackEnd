@@ -120,14 +120,14 @@
                                                 <form id='release-money' action="" method="post" class="">
                                                     {% csrf_token %}
                                                     <button class="btn btn-hoome" type="submit" name="release-money"
-                                                            value="{{ milestone.milestone_uuid }}">{{ Release_Payment }}
+                                                            value="{{ milestone.uuid }}">{{ Release_Payment }}
                                                     </button>
                                                 </form>
                                             </div>
                                         {% elif milestone.status == "PTP" %}
                                         {% else %}
                                             <div class="payment-wrapper">
-                                                {% render_pay_now_button info_dict.project.project_uuid milestone.milestone_uuid %}
+                                                {% render_pay_now_button info_dict.project.uuid milestone.uuid %}
                                             </div>
                                         {% endif %}
                                     {% elif request.user.role == "PROFESSIONAL" %}
@@ -137,7 +137,7 @@
                                                 <form id='request-money' action="" method="post" class="">
                                                     {% csrf_token %}
                                                     <button class="btn btn-hoome" type="submit" name="request-money"
-                                                            value="{{ milestone.milestone_uuid }}">{{ Request_Payment }}
+                                                            value="{{ milestone.uuid }}">{{ Request_Payment }}
                                                     </button>
                                                 </form>
                                             </div>

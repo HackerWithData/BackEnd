@@ -186,7 +186,7 @@ class ProjectDetail(View):
 
     def get(self, request, uuid):
         initial = {
-            "amount": 0
+            "amount": 2000
         }
         milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(uuid=uuid)
@@ -230,11 +230,11 @@ class ProjectDetail(View):
                 while flag:
                     try:
                         milestone_uuid = get_a_uuid()
-                        Milestone.objects.get(milestone_uuid=milestone_uuid)
+                        Milestone.objects.get(uuid=milestone_uuid)
                     except Milestone.DoesNotExist:
                         flag = False
                 milestone = Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
-                                                     milestone_uuid=milestone_uuid)
+                                                     uuid=milestone_uuid)
 
                 # TODO: need to consider the project status more carefully
                 # project.project_status = PENDING
@@ -246,7 +246,7 @@ class ProjectDetail(View):
             print(request.POST)
             print(request.POST.get('request-money'))
 
-            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('request-money'))
+            milestone = Milestone.objects.get(uuid=request.POST.get('request-money'))
             milestone.status = PAYMENT_REQUEST
             milestone.save()
             project = Project.objects.get(uuid=uuid)
@@ -257,7 +257,7 @@ class ProjectDetail(View):
             return redirect(request.path)
 
         elif request.POST.get('release-money'):
-            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('release-money'))
+            milestone = Milestone.objects.get(uuid=request.POST.get('release-money'))
             milestone.status = PAYED_TO_PROFESSIONAL
             milestone.save()
             project = Project.objects.get(uuid=uuid)
