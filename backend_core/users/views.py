@@ -222,9 +222,12 @@ class ProfessionalProfileView(View):
 
         return render(request, self.template_name, {'form': form})
 
+
 class login(LoginView):
     def dispatch(self, request, *args, **kwargs):
-        if 'HTTP_REFERER' in request.META:
+        if 'next' in request.GET:
+            request.session['success_url'] = request.GET['next']
+        elif 'HTTP_REFERER' in request.META:
             if not 'accounts/' in request.META['HTTP_REFERER']:
                 request.session['success_url'] = request.META['HTTP_REFERER']
         else:
