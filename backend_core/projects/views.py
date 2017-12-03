@@ -49,13 +49,13 @@ def milestone_status_explanation(request, status):
 # TODO: need to rewrite the architecture here.
 # Create your views here.
 @login_required
-def upload_project_attachment(request, project_uuid):
+def upload_project_attachment(request, uuid):
     template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
-    success_url = reverse('display_project_overview') + project_uuid
+    success_url = reverse('display_project_overview') + uuid
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
-        project = Project.objects.get(project_uuid=project_uuid)
+        project = Project.objects.get(uuid=uuid)
         files = request.FILES.getlist('project_attachment')
         if form.is_valid():
             if len(files) > 0:
@@ -71,13 +71,13 @@ def upload_project_attachment(request, project_uuid):
 
 
 @login_required
-def upload_project_photo(request, project_uuid):
+def upload_project_photo(request, uuid):
     template_name = 'projects/upload_project_photo.html'  # Replace with your template.
-    success_url = reverse('display_project_overview') + project_uuid
+    success_url = reverse('display_project_overview') + uuid
 
     if request.method == "POST":
         form = ProjectAttachmentForm(request.POST, request.FILES)
-        project = Project.objects.get(project_uuid=project_uuid)
+        project = Project.objects.get(uuid=uuid)
         files = request.FILES.getlist('project_photo')
         if form.is_valid():
             if len(files) > 0:
@@ -94,9 +94,8 @@ def upload_project_photo(request, project_uuid):
 @login_required
 @check_recaptcha
 def create_project(request, professional_type, lic_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.role == CONSUMER:
         template_name = 'projects/create_project.html'  # Replace with your template.
-        success_url = reverse('display_project_overview')
 
         if request.method == "POST" and request.user.role == "CONSUMER":
             project_form = ProjectForm(request.POST, request.FILES)
@@ -106,14 +105,7 @@ def create_project(request, professional_type, lic_id):
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
                 professional = content_type.get_object_for_this_type(pk=lic_id)
-
-                flag = True
-                while flag:
-                    try:
-                        project_uuid = get_a_uuid()
-                        Project.objects.get(project_uuid=project_uuid)
-                    except Project.DoesNotExist:
-                        flag = False
+                uuid = get_a_uuid(Project)
                 # TODO this step can be simplified to form.save()
                 project = Project(user=request.user,
                                   project_name=project_form.cleaned_data['project_name'],
@@ -134,7 +126,7 @@ def create_project(request, professional_type, lic_id):
                                   # end_date=project_form.cleaned_data['end_date'],
                                   project_description=project_form.cleaned_data['project_description'],
                                   project_status=WAITING,
-                                  project_uuid=project_uuid)
+                                  uuid=uuid)
                 # TODO:need to consider extreme scenario
                 project.save()
                 # attachment
@@ -152,7 +144,7 @@ def create_project(request, professional_type, lic_id):
                         ProjectPhoto.objects.create(project_photo=f, title=f.name, project=project)
                 else:
                     pass
-
+                success_url = reverse('display_project_overview') + project.uuid
                 return redirect(success_url)
         else:
             # TODO: what if role != consumer
@@ -170,7 +162,7 @@ def create_project(request, professional_type, lic_id):
         info_dict = {'project_form': project_form}
         return render(request, template_name, {'info_dict': info_dict})
     else:
-        messages.warning(request, __('Please Log in first.'))
+        messages.warning(request, __('Please Log in as Homeowner first.'))
         return redirect(request.path)
 
 
@@ -192,12 +184,12 @@ def display_project_overview(request):
 class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
-    def get(self, request, project_uuid):
+    def get(self, request, uuid):
         initial = {
             "amount": 0
         }
         milestone_form = MilestoneForm(initial=initial)
-        project = Project.objects.get(project_uuid=project_uuid)
+        project = Project.objects.get(uuid=uuid)
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
@@ -227,13 +219,13 @@ class ProjectDetail(View):
         else:
             raise Http404(__("Page Not Found"))
 
-    def post(self, request, project_uuid):
+    def post(self, request, uuid):
         if request.POST.get('create-milestone'):
             milestone_form = MilestoneForm(request.POST)
             # print(milestone_form.is_valid())
             if milestone_form.is_valid():
 
-                project = Project.objects.get(project_uuid=project_uuid)
+                project = Project.objects.get(uuid=uuid)
                 flag = True
                 while flag:
                     try:
@@ -257,7 +249,7 @@ class ProjectDetail(View):
             milestone = Milestone.objects.get(milestone_uuid=request.POST.get('request-money'))
             milestone.status = PAYMENT_REQUEST
             milestone.save()
-            project = Project.objects.get(project_uuid=project_uuid)
+            project = Project.objects.get(uuid=uuid)
             project.project_action = "Request Money"
             # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
             project.save()
@@ -268,7 +260,7 @@ class ProjectDetail(View):
             milestone = Milestone.objects.get(milestone_uuid=request.POST.get('release-money'))
             milestone.status = PAYED_TO_PROFESSIONAL
             milestone.save()
-            project = Project.objects.get(project_uuid=project_uuid)
+            project = Project.objects.get(uuid=uuid)
             project.project_action = "Release Money"
             # TODO: add some functions to send the money?
             project.save()

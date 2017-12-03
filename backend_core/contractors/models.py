@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-#from django.conf import settings
+
 from django.db import models
 
 # Create your models here.
@@ -22,6 +22,7 @@ class Contractor(models.Model):
     lic_status_add = models.TextField(blank=True, null=True)
     bus_info_add = models.TextField(blank=True, null=True)
     dba = models.CharField(max_length=255, blank=True, null=True)
+    uuid = models.CharField(max_length=36, default='0')
 
     def __iter__(self):
         return self.__dict__.iteritems()

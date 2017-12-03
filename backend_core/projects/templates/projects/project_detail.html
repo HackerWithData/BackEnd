@@ -82,9 +82,12 @@
         </div>
         <div class="panel panel-default project-basic-info">
             <div class="panel-heading">
-                {{ Milestone }}
+{#                <div class="panel-title">#}
+                    {{ Milestone }}
+{#                </div>#}
                 {% if request.user.role == 'CONSUMER' %}
-                    <a href="#create-milestone" class="popup-with-form btn btn-db">{{ Create_Milestone }}</a>
+                    <a href="#create-milestone"
+                       class="popup-with-form btn btn-hoome move-right">{{ Create_Milestone }}</a>
                 {% endif %}
             </div>
             <div class="panel-body">
@@ -106,9 +109,9 @@
                                 <td>{{ milestone.amount }}</td>
                                 <td>
                                     {{ milestone.get_status_display }}&nbsp;
-{#                                    <i id="status-popup-{{ forloop.counter }}" class="fa fa-question-circle-o"></i>#}
+                                    {#                                    <i id="status-popup-{{ forloop.counter }}" class="fa fa-question-circle-o"></i>#}
                                 </td>
-                            <td>{{ milestone.explanation }}</td>
+                                <td>{{ milestone.explanation }}</td>
                                 <td>
                                     {% if request.user.role == "CONSUMER" %}
                                         {#                                    and info_dict.project.project_action == "Current Milestone is done."#}

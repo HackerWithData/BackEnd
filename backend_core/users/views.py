@@ -17,7 +17,8 @@ from allauth.utils import get_user_model
 from allauth.account.views import LoginView
 from django.contrib import messages
 from professionals.models import Professional, ProfessionalType
-from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, ProfessionalProfileEditForm
+from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, \
+    ProfessionalProfileEditForm
 from models import ConsumerProfile, ProfessionalProfile
 from user_helpers import (retrieve_professional_info,
                           get_professional_corresponding_object_by_type_and_lic,
@@ -60,7 +61,7 @@ def sign_up_complete_info(request, **kwargs):
         if 'success_url' in request.session:
             return redirect(request.session['success_url'])
         else:
-            #return redirect('/')
+            # return redirect('/')
             # return redirect('account_consumer_profile_after_signup')
             return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
@@ -83,9 +84,10 @@ class DashboardAfterPasswordSetView(PasswordSetView):
     def success_url(self):
         return '/'
 
+
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileAfterSignupView(View):
-    #TODO: add a logic, if there is no change, there is no need to save.
+    # TODO: add a logic, if there is no change, there is no need to save.
     form_class = ConsumerInfoFillUpForm
     template_name = 'consumer_profile_after_signup/consumer_profile_after_signup.html'
     initial = {
@@ -111,7 +113,6 @@ class ConsumerProfileAfterSignupView(View):
 
 @method_decorator(login_required, name='dispatch')
 class ProfessionalProfileAfterSignupView(View):
-
     form_class = ProfessionalInfoFillUpForm
     template_name = 'professional_profile_after_signup/professional_profile_after_signup.html'
     # TODO
@@ -142,7 +143,6 @@ class ProfessionalProfileAfterSignupView(View):
 
 @method_decorator(login_required, name='dispatch')
 class ConsumerProfileView(View):
-
     form_class = ConsumerProfileEditForm
     # TODO: add template
     template_name = 'consumer_profile/consumer_profile.html'
@@ -184,7 +184,6 @@ class ConsumerProfileView(View):
 
 @method_decorator(login_required, name='dispatch')
 class ProfessionalProfileView(View):
-
     form_class = ProfessionalProfileEditForm
     # TODO: add template
     template_name = 'professional_profile/professional_profile.html'
@@ -204,7 +203,8 @@ class ProfessionalProfileView(View):
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
         self.initial['zipcode'] = professional.postal_code
-        professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type, lic=professional.lic_num)
+        professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
+                                                                                    lic=professional.lic_num)
         self.initial['street'] = professional_object.street_address
 
         form = self.form_class(initial=self.initial)
@@ -212,7 +212,7 @@ class ProfessionalProfileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        #print form.is_valid()
+        # print form.is_valid()
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
@@ -222,9 +222,12 @@ class ProfessionalProfileView(View):
 
         return render(request, self.template_name, {'form': form})
 
+
 class login(LoginView):
     def dispatch(self, request, *args, **kwargs):
-        if 'HTTP_REFERER' in request.META:
+        if 'next' in request.path:
+            pass
+        elif 'HTTP_REFERER' in request.META:
             if not 'accounts/' in request.META['HTTP_REFERER']:
                 request.session['success_url'] = request.META['HTTP_REFERER']
         else:
@@ -234,6 +237,8 @@ class login(LoginView):
     def form_valid(self, form):
         if 'success_url' in self.request.session:
             success_url = self.request.session['success_url']
+        elif 'next' in self.request.path:
+            pass
         else:
             success_url = '/'
         try:

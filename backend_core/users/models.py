@@ -52,6 +52,7 @@ class ProfessionalProfile(models.Model):
         related_name='professional_profiles',
         related_query_name='professional_profile'
     )
+
     class Meta:
         unique_together = ('user','professional')
 
