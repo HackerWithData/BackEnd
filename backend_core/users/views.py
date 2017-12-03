@@ -225,8 +225,9 @@ class ProfessionalProfileView(View):
 
 class login(LoginView):
     def dispatch(self, request, *args, **kwargs):
-        if 'next' in request.path:
-            pass
+        if 'next' in request.GET:
+            request.session['success_url'] = request.GET['next']
+
         elif 'HTTP_REFERER' in request.META:
             if not 'accounts/' in request.META['HTTP_REFERER']:
                 request.session['success_url'] = request.META['HTTP_REFERER']
