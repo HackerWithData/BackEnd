@@ -100,7 +100,7 @@
                                 <img src="{{ pic.img.url }}">
                             </a>
                           </div>
-                            <button class="hide btn btn-danger edit-photo-btn" title="{{ pic.title }}">Remove X</button>
+                            <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}" data-title="{{ pic.title }}">Remove X</button>
                         </div>
 
                         {#    style="height:50%;width:50%"#}
@@ -186,9 +186,17 @@
     $("img.lazyload").lazyload();
     $("#edit-photo").click(function () {
          if ($("#edit-photo").prop("checked") === true) {
-             $('.edit-photo-btn').removeClass('hide');
+             $('.delete-photo-btn').removeClass('hide');
          } else {
-             $('.edit-photo-btn').addClass('hide');
+             $('.delete-photo-btn').addClass('hide');
          }
     });
+    $(".delete-photo-btn").click(function(){
+      var id = $(this).data("id");
+      console.log(id);
+      $.post("contractor_delete_photo", {id: id}, function(data){
+        alert("Photo has been successfully deleted.");
+        console.log(data);
+      })
+    })
 </script>
