@@ -79,9 +79,7 @@
                                                         {{ Account_Settings }}
                                                     </a>
                                                 </li>
-                                                {% is_professional as show_professional_link %}
-                                                {% is_sign_up_completed as sign_up_complete %}
-                                                {% if show_professional_link and sign_up_complete %}
+                                                {% if is_professional and is_sign_up_completed %}
                                                     <li class="dropdown-menu-items">
                                                         <span class="dropdown-menu-icon-container">
                                                             <img class="dropdown-menu-icon"
@@ -221,8 +219,7 @@
                                        value="ARCHITECT"
                                        required=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_1"
-                                >
+                                       id="id_professional_type_1">
                                 <figure>
                                     <img alt="architect"
                                          active="{% static 'image/sign-up-info-icon/architect.png' %}"
@@ -262,6 +259,7 @@
                     <h4>{% trans "Enter Or Modify Your Company Name and Entity Type" %}</h4>
                     <div class="input-company-info-container">
                         <div class="error-container"></div>
+                        {% trans "Manager Name" %} : {{ form.personal_name }}  </br></br>
                         {% trans "Company Name" %} : {{ form.company_name }} </br></br>
                         {% trans "Entity Type" %} : {{ form.entity_type }}
                     </div>
@@ -280,7 +278,8 @@
                         <div class="error-container"></div>
                         {% trans "Street" %}:{{ form.street }} </br></br>
                         {% trans "State" %}:{{ form.state }} </br></br>
-                        {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                        {% trans "Zipcode" %}:{{ form.zipcode }} </br></br>
+                        {% trans "County" %}:{{ form.county }} </br>
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ class Transaction(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    transaction_uuid = models.CharField(max_length=36, default='0')
+    uuid = models.CharField(max_length=36, default='0')
 
 
 class TransactionHistory(models.Model):

@@ -26,15 +26,15 @@ class ArchitectDetail(APIView):
         if self.request._request.method in unsafe_request_method:
             return [permission() for permission in self.post_permission_classes]
 
-    def get_object(self, architect_uuid):
+    def get_object(self, uuid):
         try:
-            return Architect.objects.get(architect_uuid=architect_uuid)
+            return Architect.objects.get(uuid=uuid)
         except Architect.DoesNotExist:
             return None
 
     def get(self, request, *args, **kwargs):
-        architect_uuid = kwargs['architect_uuid']
-        architect = self.get_object(architect_uuid)
+        uuid = kwargs['uuid']
+        architect = self.get_object(uuid)
         if architect is None:
             return Response(status=status.HTTP_204_NO_CONTENT)
         architect.reviews = get_reviews(architect)
@@ -43,7 +43,7 @@ class ArchitectDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
-        architect = self.get_object(kwargs['architect_uuid'])
+        architect = self.get_object(kwargs['uuid'])
         serializer = ArchitectSeializer(architect, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

@@ -17,13 +17,14 @@ class ContractorDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
+
     def get_object(self, object_id):
         try:
             return Contractor.objects.get(pk=object_id)
         except Contractor.DoesNotExist:
             raise Http404
 
-    def get_background_image(self,model_name,object_id):
+    def get_background_image(self, model_name, object_id):
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model=model_name),
                                                   object_id=object_id)
@@ -31,7 +32,7 @@ class ContractorDetail(APIView):
             bgimage = None
         return bgimage
 
-    def get_overview(self,model_name,object_id):
+    def get_overview(self, model_name, object_id):
         try:
             overview = Overview.objects.get(content_type=ContentType.objects.get(model=model_name),
                                             object_id=object_id).overview
@@ -39,7 +40,7 @@ class ContractorDetail(APIView):
             overview = None
         return overview
 
-    def get_bond_history(self,object_id):
+    def get_bond_history(self, object_id):
         try:
             bond_history = BondHistory.objects.filter(contractor_id=object_id).order_by(
                 '-bond_effective_date').first()
@@ -47,7 +48,7 @@ class ContractorDetail(APIView):
             bond_history = None
         return bond_history
 
-    def get_bond_history(self,object_id):
+    def get_bond_history(self, object_id):
         try:
             bond_history = BondHistory.objects.filter(contractor_id=object_id).order_by(
                 '-bond_effective_date').first()
@@ -55,7 +56,7 @@ class ContractorDetail(APIView):
             bond_history = None
         return bond_history
 
-    def get_worker_compensation_history(self,object_id):
+    def get_worker_compensation_history(self, object_id):
         try:
             worker_compensation_history = WorkerCompensationHistory.objects.filter(
                 contractor_id=object_id).order_by('-insur_effective_date').first()
@@ -81,6 +82,7 @@ class ContractorDetail(APIView):
                     self.citation = 0
                     self.arbitration = 0
                     self.complaint = 0
+
             complaint = Complaint1
             complaint.case = 0
             complaint.citation = 0
@@ -88,15 +90,15 @@ class ContractorDetail(APIView):
             complaint.complaint = 0
         return complaint
 
-    def get_project_photos(self,model_name,object_id):
+    def get_project_photos(self, model_name, object_id):
         try:
             project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model=model_name),
-                                              object_id=object_id)
+                                                  object_id=object_id)
         except Photo.DoesNotExist:
             project_photos = None
         return project_photos
 
-    def calc_length(self,contractor):
+    def calc_length(self, contractor):
         if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
             length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
         # test issue, won't happen in prod
@@ -126,7 +128,6 @@ class ContractorDetail(APIView):
             contractor.complaint = self.get_compalint(object_id)
         contractor.project_photos = self.get_project_photos('contractor', object_id)
         contractor.length = self.calc_length(contractor)
-
 
         # if self.get_overview('contractor',contractor_id) is None:
         #     data_source = 'California Contractors State License Board'
@@ -184,9 +185,3 @@ class ContractorDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-

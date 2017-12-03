@@ -7,8 +7,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from .utils import *
 
+
 # Create your models here.
 # TODO: Consider cache ?? Interesting!
+
 class Project(models.Model):
     project_id = models.BigAutoField(primary_key=True)
     project_name = models.CharField(max_length=100)
@@ -34,10 +36,11 @@ class Project(models.Model):
     project_description = models.TextField()
     project_status = models.CharField(max_length=1,  default=WAITING) #choices=PROJECT_STATUS,
     project_action = models.TextField(null=True, blank=True)
-    project_uuid = models.CharField(max_length=36, default='0') #choices=PROJECT_STATUS,
+    uuid = models.CharField(max_length=36, default='0') #choices=PROJECT_STATUS,
 
     class Meta:
         unique_together = ('project_id', 'content_type', 'object_id', 'user')
+
 
 
 class ProjectAttachment(models.Model):

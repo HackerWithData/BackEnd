@@ -25,6 +25,7 @@ class Designer(models.Model):
     state = models.CharField(max_length=63, blank=True, null=True)
     pos_code = models.CharField(max_length=25, blank=True, null=True)
     country = models.CharField(max_length=63, blank=True, null=True)
+    uuid = models.CharField(max_length=36, default='0')
 
     def __iter__(self):
         return self.__dict__.iteritems()

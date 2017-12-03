@@ -1,5 +1,6 @@
 import uuid
 from django.utils.translation import ugettext_lazy as __
+from django.contrib.contenttypes.models import ContentType
 
 WAITING = "W"
 PAYED_TO_HOOME = "PTH"
@@ -28,8 +29,6 @@ MILESTONE_STATUS = (
 
 )
 
-
-
 PROJECT_STATUS = (
     (PENDING, __('PENDING')),
     (ACCEPTED, __('ACCEPTED')),
@@ -48,6 +47,29 @@ PROJECT_TYPE = (
 
 
 # get a UUID
-def get_a_uuid():
-    r_uuid = str(uuid.uuid4())
-    return r_uuid
+def get_a_uuid(*argv):
+    if len(argv) == 0:
+        r_uuid = str(uuid.uuid4())
+        return r_uuid
+    elif len(argv) == 1:
+        # in python 2.x TODO: need to add case in python 3.x
+        if isinstance(argv[0], basestring):
+            try:
+                model = ContentType.objects.get(model=argv[0])
+            except ContentType.DoesNotExist:
+                print("Does Not Exist!")
+        else:
+            try:
+                model = ContentType.objects.get_for_model(argv[0])
+            except ContentType.DoesNotExist:
+                print("Does Not Exist!")
+        flag = True
+        while flag:
+            try:
+                r_uuid = str(uuid.uuid4())
+                object = model.get_object_for_this_type(uuid=r_uuid)
+            except model.model_class().DoesNotExist:
+                flag = False
+        return r_uuid
+    else:
+        raise Exception('%d arguments given, which requires 1.' % (len(argv)))
