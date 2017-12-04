@@ -20,8 +20,6 @@ class User(AbstractUser):
         max_length=16
     )
 
-    hoome_id = models.CharField(max_length=32)
-
 
 class ConsumerProfile(models.Model):
 
@@ -70,8 +68,3 @@ class ConsumerInterest(models.Model):
     interest = models.CharField(
         max_length=32
     )
-
-
-class HoomeId(models.Model):
-    hoome_id = models.CharField(max_length=32)
-    status = models.CharField(max_length=8, choices=ID_STATUS)

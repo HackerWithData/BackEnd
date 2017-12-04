@@ -19,3 +19,7 @@ db.sqlite3
 !.elasticbeanstalk/*.global.yml
 /.elasticbeanstalk/
 
+/backend_core/media/photos/background/*.jpg
+/backend_core/media/photos/background/*.jpeg
+/backend_core/media/photos/photos/*.jpg
+/backend_core/media/photos/photos/*.jpeg

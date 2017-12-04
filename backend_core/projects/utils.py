@@ -26,6 +26,7 @@ MILESTONE_STATUS = (
     (PAYED_TO_PROFESSIONAL, __("Payed to Professional")),
     (DONE, __("Done")),
     (PAYMENT_REQUEST, __("Payment Request")),
+
 )
 
 PROJECT_STATUS = (
@@ -37,11 +38,11 @@ PROJECT_STATUS = (
 )
 
 REMODEL = "R"
-NEW_BUILT = "N"
+NEWBUILT = "N"
 PROJECT_TYPE = (
     ("", 'N/A'),
     (REMODEL, __('REMODEL')),
-    (NEW_BUILT, __("NEW BUILT HOUSE")),
+    (NEWBUILT, __("NEW BUILT HOUSE")),
 )
 
 

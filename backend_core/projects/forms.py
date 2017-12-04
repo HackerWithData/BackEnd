@@ -1,8 +1,6 @@
+from models import ProjectAttachment, ProjectPhoto
 from django import forms
 from django.utils.translation import ugettext_lazy as __
-
-from .models import ProjectAttachment, ProjectPhoto
-from .utils import PROJECT_TYPE
 
 
 class ProjectAttachmentForm(forms.ModelForm):
@@ -20,6 +18,13 @@ class ProjectPhotoForm(forms.ModelForm):
 
 
 class ProjectForm(forms.Form):
+    REMODEL = "R"
+    NEW_BUILT = "N"
+    PROJECT_TYPE = (
+        ("", '-----'),
+        (REMODEL, __('REMODEL')),
+        (NEW_BUILT, __("NEW BUILT HOUSE")),
+    )
     # TODO: need a google address autocompeletion/correction
     project_name = forms.CharField(label=__('Project Name'), max_length=100)
     first_name = forms.CharField(label=__('First Name'), max_length=64)
@@ -31,27 +36,22 @@ class ProjectForm(forms.Form):
     county = forms.CharField(label=__('County/City'), max_length=64)
     state = forms.CharField(label=__('State'), max_length=64)
     zipcode = forms.CharField(label=__('Zip Code'), max_length=10)
-    # country = forms.CharField(label=__('Country'), max_length=10)
-    # TODO: need to add a calender widget
+    #country = forms.CharField(label=__('Country'), max_length=10)
+    #TODO: need to add a calender widget
     start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget())
     # end_date = forms.DateField(label=__('End Date'), help_text="YYYY-MM-DD")
     project_description = forms.CharField(label=__('Project Description'), required=False, widget=forms.Textarea(
-        attrs={'placeholder': __('(Optional) Please briefly describe your project')}))
+                                          attrs={'placeholder': __('(Optional) Please briefly describe your project')}))
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)
-    project_attachment = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
-    project_photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    project_attachment = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)
+    project_photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)
     # project_status = forms.CharField(label=__('Project Status'),)
     # professional_type = forms.CharField(label=__('Project Type'))
     # lic_id = forms.CharField(label=__('Lic Id'))
 
 
-class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))
-
-
-# class ProjectFormAfterLogin(ProjectForm):
-#     professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))
-
-
 class MilestoneForm(forms.Form):
     amount = forms.IntegerField(min_value=0, required=True)
+
+
+

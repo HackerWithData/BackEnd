@@ -1,38 +1,24 @@
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.conf import settings
+
 import json
 import os
-
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as __
-
-from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 # role type
 PROFESSIONAL = 'PROFESSIONAL'
 CONSUMER = 'CONSUMER'
 ROLE_CHOICES = (
-    (PROFESSIONAL, __('Professional')),
-    (CONSUMER, __('Consumer')),
+    (PROFESSIONAL, 'Professional'),
+    (CONSUMER, 'Consumer'),
 )
 
 # gender type
 MALE = 'MALE'
 FEMALE = 'FEMALE'
 GENDER_CHOICES = (
-    (MALE, __('Male')),
-    (FEMALE, __('Female')),
+    (MALE, 'Male'),
+    (FEMALE, 'Female'),
 )
-
-HOLD = "H"
-SIGNED = "S"
-AVAILABLE = "A"
-BAD = 'B'
-ID_STATUS = (
-    (HOLD, __("Hold")),
-    (BAD, __("Bad")),
-    (SIGNED, __("Signed")),
-    (AVAILABLE, __("Available")),
-)
-
 
 # TODO: load static file into professional subtype
 def setup_professional_type():
