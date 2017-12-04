@@ -209,7 +209,7 @@ def project_checkout(request):
         url = '/checkout/' + request.POST.get('project_uuid')
         return redirect(url)
 
-
+#TODO: need to take care project_uuid here
 def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
     projects = Project.objects.get(uuid=project_uuid)

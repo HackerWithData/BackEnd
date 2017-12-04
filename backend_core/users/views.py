@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
 
+from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.shortcuts import render, redirect
@@ -8,24 +10,26 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.contrib import messages
+
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.views import PasswordChangeView, PasswordSetView
-from allauth.account.utils import perform_login
+from allauth.account.utils import perform_login, complete_signup
 from allauth.utils import get_user_model
-from allauth.account.views import LoginView
-from django.contrib import messages
+from allauth.account.views import LoginView, SignupView
+from allauth.account import app_settings
+
 from professionals.models import Professional, ProfessionalType
-from forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, \
+from .forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, \
     ProfessionalProfileEditForm
-from models import ConsumerProfile, ProfessionalProfile
-from user_helpers import (retrieve_professional_info,
-                          get_professional_corresponding_object_by_type_and_lic,
-                          get_professional_user)
-from utils import *
-from django.utils.translation import ugettext_lazy as _
-import json
+from .models import ConsumerProfile, ProfessionalProfile
+from .user_helpers import (retrieve_professional_info,
+                           get_professional_corresponding_object_by_type_and_lic,
+                           get_professional_user,
+                           generate_random_hoome_id)
+from .utils import *
 
 
 @receiver(user_signed_up)
@@ -223,11 +227,10 @@ class ProfessionalProfileView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class login(LoginView):
+class Login(LoginView):
     def dispatch(self, request, *args, **kwargs):
         if 'next' in request.GET:
             request.session['success_url'] = request.GET['next']
-
         elif 'HTTP_REFERER' in request.META:
             if not 'accounts/' in request.META['HTTP_REFERER']:
                 request.session['success_url'] = request.META['HTTP_REFERER']
@@ -244,5 +247,24 @@ class login(LoginView):
             success_url = '/'
         try:
             return form.login(self.request, redirect_url=success_url)
+        except ImmediateHttpResponse as e:
+            return e.response
+
+
+class Signup(SignupView):
+    def form_valid(self, form):
+        # By assigning the User to a property on the view, we allow subclasses
+        # of SignupView to access the newly created User instance
+        # print(self.request.POST)
+        # self.request.POST['hoome_id'] = generate_random_hoome_id()
+        # TODO: there is a better way to add hoome_id
+        self.user = form.save(self.request)
+        self.user.hoome_id = generate_random_hoome_id()
+        self.user.save()
+        try:
+            return complete_signup(
+                self.request, self.user,
+                app_settings.EMAIL_VERIFICATION,
+                self.get_success_url())
         except ImmediateHttpResponse as e:
             return e.response

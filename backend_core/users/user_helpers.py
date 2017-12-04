@@ -1,10 +1,18 @@
+from random import randint
+
+from django.db.models.aggregates import Count
+from django.core.exceptions import ObjectDoesNotExist
+
+from users.models import User
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from meisters.models import Meister
-from django.core.exceptions import ObjectDoesNotExist
 from professionals.models import Professional
 from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER, MEISTER
+from .models import HoomeId
+from .utils import AVAILABLE
+
 
 
 def get_professional_user(user):
@@ -12,6 +20,9 @@ def get_professional_user(user):
     professional = professional_profile.professional
     return professional
 
+def get_user_by_hoome_id(hoome_id):
+    user = User.objects.get(hoome_id=hoome_id)
+    return user
 
 def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
     if prof_type == CONTRACTOR:
@@ -97,3 +108,11 @@ def retrieve_professional_info(request):
 
 class UndefinedType(Exception):
     pass
+
+
+def generate_random_hoome_id():
+    #randint(10000000,99999999)
+    count = HoomeId.objects.filter(status=AVAILABLE).count()
+    random_index = randint(0, count - 1)
+    random_id = HoomeId.objects.filter(status=AVAILABLE)[random_index].hoome_id
+    return random_id
