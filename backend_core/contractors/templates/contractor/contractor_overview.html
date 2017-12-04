@@ -100,6 +100,7 @@
                                 <img src="{{ pic.img.url }}">
                             </a>
                           </div>
+                            {% csrf_token %}
                             <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}" data-title="{{ pic.title }}">Remove X</button>
                         </div>
 
@@ -192,11 +193,27 @@
          }
     });
     $(".delete-photo-btn").click(function(){
-      var id = $(this).data("id");
-      console.log(id);
-      $.post("contractor_delete_photo", {id: id}, function(data){
-        alert("Photo has been successfully deleted.");
-        console.log(data);
-      })
-    })
+     var id = $(this).data("id");
+     console.log(id);
+
+      $.ajax({
+           type: "POST",
+           beforeSend: function (request) {
+               request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+           },
+           url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
+           data: JSON.stringify({"id": id}),
+           dataType: "application/json",
+       }).done(function () {
+            alert("Photo has been successfully deleted.");
+            console.log(data);
+       });
+})
+    {#$(".delete-photo-btn").click(function(){#}
+    {#  var id = $(this).data("id");#}
+    {#  console.log(id);#}
+    {#  $.post("contractor_delete_photo", {id: id}, function(data){#}
+    {#    alert("Photo has been successfully deleted.");#}
+    {#    console.log(data);#}
+    {#  })#}
 </script>
