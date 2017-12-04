@@ -14,10 +14,11 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as __, ugettext as _
 
 from .decorators import check_recaptcha
-from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAYED_TO_PROFESSIONAL, PAYMENT_REQUEST, PAYED_TO_HOOME
 from users.utils import CONSUMER, PROFESSIONAL
+from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
 
 def milestone_status_explanation(request, status):
@@ -166,18 +167,117 @@ def create_project(request, professional_type, lic_id):
         return redirect(request.path)
 
 
+def save_project(request, project_form):
+    # TODO: consider another interface
+    # pro means the professional in Professional model
+    pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
+    content_type = ContentType.objects.get(model=pro.type.lower())
+    # here professional means a overall title.
+    professional = content_type.get_object_for_this_type(pk=pro.lic_num)
+    uuid = get_a_uuid(Project)
+    # TODO this step can be simplified to form.save()
+    project = Project(user=request.user,
+                      project_name=project_form.cleaned_data['project_name'],
+                      first_name=project_form.cleaned_data['first_name'],
+                      last_name=project_form.cleaned_data['last_name'],
+                      content_type=content_type,
+                      object_id=professional.lic_num,
+                      bus_name=professional.lic_name,
+                      project_type=project_form.cleaned_data['project_type'],
+                      street_address=project_form.cleaned_data['street_address'],
+                      street_address2=project_form.cleaned_data['street_address2'],
+                      county=project_form.cleaned_data['county'],
+                      state=project_form.cleaned_data['state'],
+                      zipcode=project_form.cleaned_data['zipcode'],
+                      # country=project_form.cleaned_data['country'],
+                      # cost=project_form.cleaned_data['project_cost'],
+                      start_date=project_form.cleaned_data['start_date'],
+                      # end_date=project_form.cleaned_data['end_date'],
+                      project_description=project_form.cleaned_data['project_description'],
+                      project_status=WAITING,
+                      uuid=uuid)
+    # TODO:need to consider extreme scenario
+    project.save()
+    return project
+
+
+def save_project_attachment(request, project, project_form):
+    files = request.FILES.getlist('project_attachment')
+    if len(files) > 0:
+        for f in files:
+            ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
+                                             attachment_type=project_form.cleaned_data['attachment_type'])
+    else:
+        pass
+
+
+def save_project_photo(request, project):
+    files = request.FILES.getlist('project_photo')
+    if len(files) > 0:
+        for f in files:
+            ProjectPhoto.objects.create(project_photo=f, title=f.name, project=project)
+    else:
+        pass
+
+
+@check_recaptcha
+def create_project_direct(request):
+    template_name = 'projects/project_direct_create.html'  # Replace with your template.
+    success_url = reverse('display_project_overview')
+    if request.method == "GET":
+        project_form = ProjectFormDirectCreate(initial={'start_date': datetime.datetime.today()})
+        info_dict = {'project_form': project_form}
+        return render(request, template_name, {'info_dict': info_dict})
+    elif request.method == "POST":
+        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
+        if request.user.is_authenticated:
+            # project = Project.objects.get(project_id=project_id)
+            if project_form.is_valid() and request.recaptcha_is_valid:
+                project = save_project(request, project_form)
+                save_project_attachment(request, project, project_form)
+                save_project_photo(request, project)
+                return redirect(success_url, {'project_form': project_form})
+            else:
+                info_dict = {'project_form': project_form}
+                return render(request, template_name, {'info_dict': info_dict})
+        else:
+            messages.warning(request, __('Please Log in first.'))
+            info_dict = {'project_form': project_form}
+            return render(request, template_name, {'info_dict': info_dict})
+
+
 @login_required
 def display_project_overview(request):
-    template_name = 'projects/project_overview.html'
-    if request.user.role == "CONSUMER":
-        projects = Project.objects.filter(user=request.user).order_by('-project_id')
-        info_dict = {'projects': projects}
-    elif request.user.role == 'PROFESSIONAL':
-        professional = request.user.professional_profiles.first().professional
-        projects = Project.objects.filter(content_type=ContentType.objects.get(model=professional.type.lower()),
-                                          object_id=int(professional.lic_num)).order_by('-project_id')
-        info_dict = {'projects': projects, 'professional': professional}
-    return render(request, template_name, {'info_dict': info_dict})
+    # print(vars(request))
+    if request.method == "GET":
+        template_name = 'projects/project_overview.html'
+        if request.user.role == "CONSUMER":
+            projects = Project.objects.filter(user=request.user).order_by('-project_id')
+            info_dict = {'projects': projects}
+        elif request.user.role == 'PROFESSIONAL':
+            professional = request.user.professional_profiles.first().professional
+            projects = Project.objects.filter(content_type=ContentType.objects.get(model=professional.type.lower()),
+                                              object_id=int(professional.lic_num)).order_by('-project_id')
+            info_dict = {'projects': projects, 'professional': professional}
+        return render(request, template_name, {'info_dict': info_dict})
+    elif request.mewthod == "POST":
+        template_name = 'projects/project_direct_create.html'  # Replace with your template.
+        success_url = reverse('display_project_overview')
+        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
+        if request.user.is_authenticated:
+            # project = Project.objects.get(project_id=project_id)
+            if project_form.is_valid() and request.recaptcha_is_valid:
+                project = save_project(request, project_form)
+                save_project_attachment(request, project, project_form)
+                save_project_photo(request, project)
+                return redirect(success_url, project_form)
+            else:
+                info_dict = {'project_form': project_form}
+                return render(request, template_name, {'info_dict': info_dict})
+        else:
+            messages.warning(request, __('Please Log in first.'))
+            info_dict = {'project_form': project_form}
+            return render(request, template_name, {'info_dict': info_dict})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -186,7 +286,7 @@ class ProjectDetail(View):
 
     def get(self, request, uuid):
         initial = {
-            "amount": 0
+            "amount": 2000
         }
         milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(uuid=uuid)
@@ -230,11 +330,11 @@ class ProjectDetail(View):
                 while flag:
                     try:
                         milestone_uuid = get_a_uuid()
-                        Milestone.objects.get(milestone_uuid=milestone_uuid)
+                        Milestone.objects.get(uuid=milestone_uuid)
                     except Milestone.DoesNotExist:
                         flag = False
                 milestone = Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
-                                                     milestone_uuid=milestone_uuid)
+                                                     uuid=milestone_uuid)
 
                 # TODO: need to consider the project status more carefully
                 # project.project_status = PENDING
@@ -246,7 +346,7 @@ class ProjectDetail(View):
             print(request.POST)
             print(request.POST.get('request-money'))
 
-            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('request-money'))
+            milestone = Milestone.objects.get(uuid=request.POST.get('request-money'))
             milestone.status = PAYMENT_REQUEST
             milestone.save()
             project = Project.objects.get(uuid=uuid)
@@ -257,7 +357,7 @@ class ProjectDetail(View):
             return redirect(request.path)
 
         elif request.POST.get('release-money'):
-            milestone = Milestone.objects.get(milestone_uuid=request.POST.get('release-money'))
+            milestone = Milestone.objects.get(uuid=request.POST.get('release-money'))
             milestone.status = PAYED_TO_PROFESSIONAL
             milestone.save()
             project = Project.objects.get(uuid=uuid)

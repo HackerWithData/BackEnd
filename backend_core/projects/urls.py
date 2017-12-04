@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from views import upload_project_attachment, upload_project_photo, \
-    create_project, display_project_overview, ProjectDetail
+    create_project, display_project_overview, ProjectDetail, create_project_direct
 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^attachment_upload/$', upload_project_attachment, name='upload_project_attachment'),
     url(r'^photo_upload/$', upload_project_photo, name='upload_project_photo'),
     # TODO: need to write a more secure link
+    url(r'^create/$', create_project_direct, name='create_project_direct'),
     url(r'^create/(.*?)/(.*?)/$', create_project, name='create_project'),
     # url(r'^success/$', views.edit_success, name='edit_success'),
 ]

@@ -29,10 +29,10 @@ def render_pay_now_button(context, project_uuid, milestone_uuid):
     """
     ret = settings.FORTE_CONFIG.copy()
     del ret['secure_trans_key']
-    project_id = Project.objects.get(project_uuid=project_uuid).pk
+    project_id = Project.objects.get(uuid=project_uuid).pk
     ret['project_uuid'] = project_uuid
     ret['milestone_uuid'] = milestone_uuid
-    ret['total_amount'] = Milestone.objects.get(milestone_uuid=milestone_uuid).amount
+    ret['total_amount'] = Milestone.objects.get(uuid=milestone_uuid).amount
     ret['order_number'] = generate_transaction_number(project_id)
     ret['utc_time'] = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     # no customer_token and paymehtod_token
