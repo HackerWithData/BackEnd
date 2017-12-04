@@ -25,6 +25,7 @@ from models import Contractor, BondHistory, WorkerCompensationHistory, Complaint
 from utils import convert_hscore_to_rank, get_state_full_name, avg_rating
 from professionals.utils import check_professional_type
 
+
 # Create your views here.
 class Complaint1:
     def __init__(self):
@@ -270,22 +271,21 @@ def delete_photo(request, contractor_id):
                 p_lic_num = None
         if p_lic_num == contractor_id:
             data = {}
-            for it in request.POST:
-                data.update(json.loads(it))
+
+            data.update(json.loads(request.body))
+            # print(data)
             photo_id = data.get('id', None)
             if photo_id is not None:
                 photo = Photo.objects.get(id=photo_id)
                 photo.delete()
                 response_data = {'success': 'photo is deleted successfully'}
+
                 return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
             else:
                 response_data = {'error': 'photo_id is empty'}
-                return HttpResponse(json.dumps(response_data), content_type='application/json')
+                return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
         else:
             response_data = {'error', 'deletion request is not from its owner'}
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponse(response_data, content_type='application/json', status=200)
     else:
         raise Http404
-
-
-

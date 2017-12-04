@@ -275,7 +275,7 @@ h1 {
 #BasicInfo .panel-heading, #photo .panel-heading, #review .panel-heading {
     color: white;
     /*#TODO: COLOR WARNING*/
-    /*background-color: #6892D5;*/
+    background-color: #6892D5;
 }
 
 #BasicInfo .panel-heading span, #photo .panel-heading span, #review .panel-heading span {
