@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 from .utils import *
 
@@ -21,7 +22,7 @@ class Project(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     # user.id how to get user id
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     # Project Type choice field
     project_type = models.CharField(max_length=5, choices=PROJECT_TYPE, default='', null=False, blank=True)
     street_address = models.TextField()
@@ -29,18 +30,18 @@ class Project(models.Model):
     county = models.CharField(max_length=64)
     state = models.CharField(max_length=64)
     zipcode = models.CharField(max_length=10)
-    #country = models.CharField(max_length=255)
+    # country = models.CharField(max_length=255)
     project_cost = models.IntegerField(default=0)
     start_date = models.DateField(auto_now_add=True)
-    end_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(auto_now_add=True)
     project_description = models.TextField()
-    project_status = models.CharField(max_length=1,  default=WAITING) #choices=PROJECT_STATUS,
+    project_status = models.CharField(max_length=1, default=WAITING)  # choices=PROJECT_STATUS,
     project_action = models.TextField(null=True, blank=True)
-    uuid = models.CharField(max_length=36, default='0') #choices=PROJECT_STATUS,
+    uuid = models.CharField(max_length=36, default='0')  # choices=PROJECT_STATUS,
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('project_id', 'content_type', 'object_id', 'user')
-
 
 
 class ProjectAttachment(models.Model):
@@ -64,4 +65,3 @@ class Milestone(models.Model):
     amount = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     uuid = models.CharField(max_length=36, default='0')
-

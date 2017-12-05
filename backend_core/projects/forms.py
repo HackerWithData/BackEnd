@@ -34,7 +34,7 @@ class ProjectForm(forms.Form):
     # country = forms.CharField(label=__('Country'), max_length=10)
     # TODO: need to add a calender widget
     start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget())
-    # end_date = forms.DateField(label=__('End Date'), help_text="YYYY-MM-DD")
+    end_date = forms.DateField(label=__('End Date'), help_text="YYYY-MM-DD")
     project_description = forms.CharField(label=__('Project Description'), required=False, widget=forms.Textarea(
         attrs={'placeholder': __('(Optional) Please briefly describe your project')}))
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)

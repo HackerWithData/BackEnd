@@ -176,26 +176,47 @@ def save_project(request, project_form):
     professional = content_type.get_object_for_this_type(pk=pro.lic_num)
     uuid = get_a_uuid(Project)
     # TODO this step can be simplified to form.save()
-    project = Project(user=request.user,
-                      project_name=project_form.cleaned_data['project_name'],
-                      first_name=project_form.cleaned_data['first_name'],
-                      last_name=project_form.cleaned_data['last_name'],
-                      content_type=content_type,
-                      object_id=professional.lic_num,
-                      bus_name=professional.lic_name,
-                      project_type=project_form.cleaned_data['project_type'],
-                      street_address=project_form.cleaned_data['street_address'],
-                      street_address2=project_form.cleaned_data['street_address2'],
-                      county=project_form.cleaned_data['county'],
-                      state=project_form.cleaned_data['state'],
-                      zipcode=project_form.cleaned_data['zipcode'],
-                      # country=project_form.cleaned_data['country'],
-                      # cost=project_form.cleaned_data['project_cost'],
-                      start_date=project_form.cleaned_data['start_date'],
-                      # end_date=project_form.cleaned_data['end_date'],
-                      project_description=project_form.cleaned_data['project_description'],
-                      project_status=WAITING,
-                      uuid=uuid)
+    if request.user.is_authenticated:
+        project = Project(user=request.user,
+                          project_name=project_form.cleaned_data['project_name'],
+                          first_name=project_form.cleaned_data['first_name'],
+                          last_name=project_form.cleaned_data['last_name'],
+                          content_type=content_type,
+                          object_id=professional.lic_num,
+                          bus_name=professional.lic_name,
+                          project_type=project_form.cleaned_data['project_type'],
+                          street_address=project_form.cleaned_data['street_address'],
+                          street_address2=project_form.cleaned_data['street_address2'],
+                          county=project_form.cleaned_data['county'],
+                          state=project_form.cleaned_data['state'],
+                          zipcode=project_form.cleaned_data['zipcode'],
+                          # country=project_form.cleaned_data['country'],
+                          # cost=project_form.cleaned_data['project_cost'],
+                          start_date=project_form.cleaned_data['start_date'],
+                          # end_date=project_form.cleaned_data['end_date'],
+                          project_description=project_form.cleaned_data['project_description'],
+                          project_status=WAITING,
+                          uuid=uuid)
+    else:
+        project = Project(project_name=project_form.cleaned_data['project_name'],
+                          first_name=project_form.cleaned_data['first_name'],
+                          last_name=project_form.cleaned_data['last_name'],
+                          content_type=content_type,
+                          object_id=professional.lic_num,
+                          bus_name=professional.lic_name,
+                          project_type=project_form.cleaned_data['project_type'],
+                          street_address=project_form.cleaned_data['street_address'],
+                          street_address2=project_form.cleaned_data['street_address2'],
+                          county=project_form.cleaned_data['county'],
+                          state=project_form.cleaned_data['state'],
+                          zipcode=project_form.cleaned_data['zipcode'],
+                          # country=project_form.cleaned_data['country'],
+                          # cost=project_form.cleaned_data['project_cost'],
+                          start_date=project_form.cleaned_data['start_date'],
+                          end_date=project_form.cleaned_data['end_date'],
+                          project_description=project_form.cleaned_data['project_description'],
+                          project_status=WAITING,
+                          uuid=uuid)
     # TODO:need to consider extreme scenario
     project.save()
     return project
@@ -220,32 +241,6 @@ def save_project_photo(request, project):
         pass
 
 
-@check_recaptcha
-def create_project_direct(request):
-    template_name = 'projects/project_direct_create.html'  # Replace with your template.
-    success_url = reverse('display_project_overview')
-    if request.method == "GET":
-        project_form = ProjectFormDirectCreate(initial={'start_date': datetime.datetime.today()})
-        info_dict = {'project_form': project_form}
-        return render(request, template_name, {'info_dict': info_dict})
-    elif request.method == "POST":
-        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
-        if request.user.is_authenticated:
-            # project = Project.objects.get(project_id=project_id)
-            if project_form.is_valid() and request.recaptcha_is_valid:
-                project = save_project(request, project_form)
-                save_project_attachment(request, project, project_form)
-                save_project_photo(request, project)
-                return redirect(success_url, {'project_form': project_form})
-            else:
-                info_dict = {'project_form': project_form}
-                return render(request, template_name, {'info_dict': info_dict})
-        else:
-            messages.warning(request, __('Please Log in first.'))
-            info_dict = {'project_form': project_form}
-            return render(request, template_name, {'info_dict': info_dict})
-
-
 @login_required
 def display_project_overview(request):
     # print(vars(request))
@@ -260,24 +255,6 @@ def display_project_overview(request):
                                               object_id=int(professional.lic_num)).order_by('-project_id')
             info_dict = {'projects': projects, 'professional': professional}
         return render(request, template_name, {'info_dict': info_dict})
-    elif request.mewthod == "POST":
-        template_name = 'projects/project_direct_create.html'  # Replace with your template.
-        success_url = reverse('display_project_overview')
-        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
-        if request.user.is_authenticated:
-            # project = Project.objects.get(project_id=project_id)
-            if project_form.is_valid() and request.recaptcha_is_valid:
-                project = save_project(request, project_form)
-                save_project_attachment(request, project, project_form)
-                save_project_photo(request, project)
-                return redirect(success_url, project_form)
-            else:
-                info_dict = {'project_form': project_form}
-                return render(request, template_name, {'info_dict': info_dict})
-        else:
-            messages.warning(request, __('Please Log in first.'))
-            info_dict = {'project_form': project_form}
-            return render(request, template_name, {'info_dict': info_dict})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -290,6 +267,9 @@ class ProjectDetail(View):
         }
         milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(uuid=uuid)
+        if project.user is None:
+            project.user = request.user
+            project.save()
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
@@ -371,6 +351,7 @@ class ProjectDetail(View):
             messages.warning(request, __('Failed'))
             return redirect(request.path)  #
 
+
 # @method_decorator(login_required, name='dispatch')
 # class Milestone(View):
 #
@@ -379,3 +360,24 @@ class ProjectDetail(View):
 #
 #     def post(self):
 #
+
+@check_recaptcha
+def create_project_direct(request):
+    template_name = 'projects/project_direct_create.html'  # Replace with your template.
+
+    if request.method == "GET":
+        project_form = ProjectFormDirectCreate(initial={'start_date': datetime.datetime.today()})
+        info_dict = {'project_form': project_form}
+        return render(request, template_name, {'info_dict': info_dict})
+    elif request.method == "POST":
+        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
+        if project_form.is_valid() and request.recaptcha_is_valid:
+            project = save_project(request, project_form)
+            save_project_attachment(request, project, project_form)
+            save_project_photo(request, project)
+            print(project.uuid)
+            success_url = reverse('display_project_overview') + project.uuid
+            return redirect(success_url)
+        else:
+            info_dict = {'project_form': project_form}
+            return render(request, template_name, {'info_dict': info_dict})

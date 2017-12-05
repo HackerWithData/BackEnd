@@ -1,6 +1,7 @@
 {% extends "contractor/contractor.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load account socialaccount %}
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
     <style>
@@ -14,8 +15,10 @@
 {% endblock %}
 {% block content %}
     <div class="main container">
-        <form method="post" enctype="multipart/form-data" action="{% if not user.is_authenticated %}{% url "display_project_overview" %}{% endif %}">
+        <form method="post" enctype="multipart/form-data"
+              action="">
             {% csrf_token %}
+            {{ form.errors }}
             {{ info_dict.project_form.as_p }}
             {#TODO: need to change the outlook of attachment type#}
             <br/>
@@ -25,4 +28,5 @@
             <button class="btn btn-hoome" type="submit" value="submit" name="submit">{% trans 'Create' %}</button>
         </form>
     </div>
+
 {% endblock %}

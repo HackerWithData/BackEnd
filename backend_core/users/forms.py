@@ -1,18 +1,21 @@
-from django import forms
-from allauth.account.forms import SignupForm
-from django.contrib.auth.decorators import login_required
-from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
+import string
 
-from models import User, ConsumerProfile, ProfessionalProfile
+from django import forms
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
+from django.contrib.auth.decorators import login_required
+# from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
+
+from allauth.account.forms import SignupForm
+
 from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, \
     ARCHITECT, DESIGNER
 from professionals.models import Professional, ProfessionalType
-from user_helpers import get_professional_corresponding_object_by_type_and_lic, create_professional_corresponding_object
-from utils import *
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
 from meisters.models import Meister
-import string
+from .models import User, ConsumerProfile, ProfessionalProfile
+from .user_helpers import get_professional_corresponding_object_by_type_and_lic, \
+    create_professional_corresponding_object
+from .utils import *
 
 professional_type = setup_professional_type()
 
@@ -223,12 +226,12 @@ class ProfessionalInfoFillUpForm(forms.Form):
             else:
                 pass
             professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
-                                                                           name=clean_company_name,
-                                                                           entity_type=clean_entity_type,
-                                                                           lic_type=clean_professional_type,
-                                                                           type=clean_professional_type,
-                                                                           state=clean_state,
-                                                                           postal_code=clean_zipcode)
+                                                                       name=clean_company_name,
+                                                                       entity_type=clean_entity_type,
+                                                                       lic_type=clean_professional_type,
+                                                                       type=clean_professional_type,
+                                                                       state=clean_state,
+                                                                       postal_code=clean_zipcode)
             if created:
                 professional.save()
             else:
