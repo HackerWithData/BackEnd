@@ -61,8 +61,8 @@ class TransactionsView(View):
         """
         received_json_data = json.loads(request.body)
 
-        project = Project.objects.get(project_uuid=received_json_data['project_uuid'])
-        milestone = Milestone.objects.get(milestone_uuid=received_json_data['milestone_uuid'])
+        project = Project.objects.get(uuid=received_json_data['project_uuid'])
+        milestone = Milestone.objects.get(uuid=received_json_data['milestone_uuid'])
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
                                                                  content_type=project.content_type,
@@ -81,10 +81,10 @@ class TransactionsView(View):
             while flag:
                 try:
                     uuid = get_a_uuid()
-                    Transaction.objects.get(transaction_uuid=uuid)
+                    Transaction.objects.get(uuid=uuid)
                 except Transaction.DoesNotExist:
                     flag = False
-            transaction.transaction_uuid = uuid
+            transaction.uuid = uuid
 
         transaction.status = received_json_data['status'].upper()[0]
         transaction.save()
@@ -209,9 +209,9 @@ def project_checkout(request):
         url = '/checkout/' + request.POST.get('project_uuid')
         return redirect(url)
 
-
+#TODO: need to take care project_uuid here
 def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
-    projects = Project.objects.get(project_uuid=project_uuid)
+    projects = Project.objects.get(uuid=project_uuid)
     info_dict = {'project': projects}
     return render(request, template_name, {'info_dict': info_dict})

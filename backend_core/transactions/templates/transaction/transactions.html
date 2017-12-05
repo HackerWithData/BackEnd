@@ -32,7 +32,7 @@
                     {% for transaction in info_dict.transactions %}
                         <tr>
                             <td>
-                                <a href="{% url 'display_project_detail' transaction.project.project_uuid %}">
+                                <a href="{% url 'display_project_detail' transaction.project.uuid %}">
                                     {{ transaction.project.project_name }}
                                 </a>
                             </td>

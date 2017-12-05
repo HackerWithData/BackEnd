@@ -27,6 +27,8 @@ class UserSignUpForm(SignupForm):
         choices=ROLE_CHOICES
     )
 
+    # hoome_id = forms.IntegerField(widget=forms.HiddenInput(),required=False)
+
     def clean_role(self):
         # TODO: change role type in form, part 2
         role = self.cleaned_data['role']
