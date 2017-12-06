@@ -72,7 +72,7 @@ urlpatterns = [
     url(r'^rule/', include('rule.urls')),
     url(r'^career/', include('career.urls')),
     url(r'^meister/', include('meisters.urls')),
-    url(r'^apiv1/', include('apiv1.urls', namespace='apiv1'))
+    url(r'^apiv1/', include('apiv1.urls')),
 ]
 
 if settings.DEBUG:
