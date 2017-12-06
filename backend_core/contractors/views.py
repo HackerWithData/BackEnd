@@ -2,10 +2,11 @@
 from __future__ import unicode_literals
 
 import datetime
+import json
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseNotFound, Http404
+from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.views import View
@@ -23,6 +24,7 @@ from overviews.views import edit_overview
 from models import Contractor, BondHistory, WorkerCompensationHistory, ComplaintOverall
 from utils import convert_hscore_to_rank, get_state_full_name, avg_rating
 from professionals.utils import check_professional_type
+
 
 # Create your views here.
 class Complaint1:
@@ -254,3 +256,36 @@ def upload_project_photos(request, contractor_id):
         return render(request, template_name, info_dict)
     else:
         raise Http404(_('No Pages Found.'))
+
+
+def delete_photo(request, contractor_id):
+    if request.is_ajax() and request.method == "POST":
+        if contractor_id:
+            contractor_id = int(contractor_id)
+        if request.user.is_anonymous():
+            p_lic_num = None
+        else:
+            try:
+                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            except:
+                p_lic_num = None
+        if p_lic_num == contractor_id:
+            data = {}
+
+            data.update(json.loads(request.body))
+            # print(data)
+            photo_id = data.get('id', None)
+            if photo_id is not None:
+                photo = Photo.objects.get(id=photo_id)
+                photo.delete()
+                response_data = {'success': 'photo is deleted successfully'}
+
+                return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
+            else:
+                response_data = {'error': 'photo_id is empty'}
+                return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
+        else:
+            response_data = {'error', 'deletion request is not from its owner'}
+            return HttpResponse(response_data, content_type='application/json', status=200)
+    else:
+        raise Http404

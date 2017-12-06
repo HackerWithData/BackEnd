@@ -3,16 +3,16 @@
     <!--summary-->
     <div id="Summary" class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
         <div id='overview-wrapper' class="text height">
-{#            {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}#}
-{#                <div id="edit_overview" class="hide">#}
-{#                    <form action="" method="post" enctype="multipart/form-data">#}
-{#                        {{ info_dict.overview_form.overview }}#}
-{#                        {% csrf_token %}#}
-{#                        <br/>#}
-{#                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>#}
-{#                    </form>#}
-{#                </div>#}
-{#            {% endif %}#}
+            {#            {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}#}
+            {#                <div id="edit_overview" class="hide">#}
+            {#                    <form action="" method="post" enctype="multipart/form-data">#}
+            {#                        {{ info_dict.overview_form.overview }}#}
+            {#                        {% csrf_token %}#}
+            {#                        <br/>#}
+            {#                        <button type="submit" class="btn btn-hoome" value="overview">{{ Submit }}</button>#}
+            {#                    </form>#}
+            {#                </div>#}
+            {#            {% endif %}#}
             <div id="display_overview">
                 {{ info_dict.overview|safe }}
             </div>
@@ -78,19 +78,35 @@
     {% if info_dict.project_photos %}
         <!--photo-->
         <div id="photo" class="col-12 col-md-8 col-lg-8">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span>{{ Photo }}</span>
+                    <span class="col-md-7 vertical-center">{{ Photo }}</span>
                     {#                        <div class="pull-right">#}
-                    <a type="button" class="viewmore btn btn-db btn-sm pull-right">{{ View_More }}</a>
+                    <a type="button" class="viewmore btn btn-db btn-sm pull-right vertical-center">{{ View_More }}</a>
                     {#                        </div>#}
+                    <label class="switch vertical-center">
+                        <input id="edit-photo" type="checkbox" class="off">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="vertical-center">{% trans 'Edit Photo' %}</span>
                 </div>
+
                 <div class="panel-body">
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
-                            <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                <img src="{{ pic.img.url }}">
-                            </a>
+                            <div style="text-align:center">
+                                <div style="margin: 1vh">
+                                    <a href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                        <img src="{{ pic.img.url }}">
+                                    </a>
+                                </div>
+                                {#                            TODO: problem here#}
+                                {% csrf_token %}
+                                <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}"
+                                        data-title="{{ pic.title }}">Remove X
+                                </button>
+                            </div>
+
                             {#    style="height:50%;width:50%"#}
                         {% endfor %}
                     </div>
@@ -138,10 +154,12 @@
                                     <div class="popup-gallery-{{ forloop.counter }}">
                                         {% if rv.photo.all %}
                                             {% for img in rv.photo.all %}
-                                                <a href="{{ img.img.url }}" title="{{ img.title }}">
-                                                    <img src="{{ img.img.url }}" title="{{ img.title }}"
-                                                         style="width:50px;height:50px;">
-                                                </a>
+                                                <div>
+                                                    <a href="{{ img.img.url }}" title="{{ img.title }}">
+                                                        <img src="{{ img.img.url }}" title="{{ img.title }}"
+                                                             style="width:50px;height:50px;">
+                                                    </a>
+                                                </div>
                                             {% endfor %}
                                         {% endif %}
                                     </div>
@@ -170,4 +188,40 @@
 
 <script>
     $("img.lazyload").lazyload();
+    $(document).ready(function () {
+        $("#edit-photo").click(function () {
+            if ($("#edit-photo").prop("checked") === true) {
+                $('.delete-photo-btn').removeClass('hide');
+            } else {
+                $('.delete-photo-btn').addClass('hide');
+            }
+        });
+        $(".delete-photo-btn").click(function () {
+            var id = $(this).data("id");
+            console.log(id);
+            const formData = {"id" : id};
+            $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                },
+                url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
+                data: JSON.stringify(formData),
+                contentType: "application/json;charset=UTF-8",
+{#                dataType: "application/json",#}
+            })
+                .done(function (result) {
+                    location.reload();
+                    alert("Photo has been successfully deleted.");
+                    console.log(result);
+                });
+        });
+    })
+    {#$(".delete-photo-btn").click(function(){#}
+    {#  var id = $(this).data("id");#}
+    {#  console.log(id);#}
+    {#  $.post("contractor_delete_photo", {id: id}, function(data){#}
+    {#    alert("Photo has been successfully deleted.");#}
+    {#    console.log(data);#}
+    {#  })#}
 </script>
