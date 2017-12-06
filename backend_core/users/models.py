@@ -21,6 +21,7 @@ class User(AbstractUser):
     )
 
     hoome_id = models.CharField(max_length=32)
+    uuid = models.CharField(max_length=36, default=0)
 
 
 class ConsumerProfile(models.Model):

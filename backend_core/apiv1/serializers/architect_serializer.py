@@ -38,16 +38,16 @@ class ArchitectSeializer(ModelSerializer):
             'country',
             'pos_code',
             'actions',
-            'architect_uuid',
+            'uuid',
             'overviews',
             'reviews',
         ]
         read_only_fields = (
-            'architect_uuid',
+            'uuid',
         )
 
     def create(self, validated_data):
-        validated_data['architect_uuid'] = get_uuid(model=self.Meta.model, uuid_field_name='architect_uuid')
+        validated_data['uuid'] = get_uuid(model=self.Meta.model)
         return super(ArchitectSeializer, self).create(validated_data)
 
     def update(self, instance, validated_data):

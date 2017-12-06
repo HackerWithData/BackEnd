@@ -16,13 +16,12 @@ def get_reviews(obj):
     return qs
 
 
-def get_uuid(model, uuid_field_name):
+def get_uuid(model):
     flag = True
     while flag:
         try:
             uuid = uuid4()
-            kwargs = {uuid_field_name: uuid}
-            model.objects.get(**kwargs)
+            model.objects.get(uuid=uuid)
         except model.DoesNotExist:
             flag = False
     return uuid
