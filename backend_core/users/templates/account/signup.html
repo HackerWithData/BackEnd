@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load staticfiles %}
-
+{% load users_tag %}
 {% load account socialaccount %}
 {% block metainfo %}
     <style>
@@ -98,9 +98,10 @@
         .socialaccount_providers li {
             margin-top: 10px;
         }
-    .alert.alert-warning li {
-        list-style-type: none;
-    }
+
+        .alert.alert-warning li {
+            list-style-type: none;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 {% endblock %}
@@ -139,6 +140,7 @@
                                                         <a title="{{ brand.name }}"
                                                            class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
                                                            href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+{#                                                             {% if request.GET.next %}next="{{ request.GET.next }}"{% endif %}#}
                                                             <span class="fa fa-{{ provider.name|lower }}"></span>
                                                             <span style="font-weight:900">{% trans 'Sign up with' %} {{ provider.name }}</span>
                                                         </a>
@@ -148,7 +150,8 @@
                                             <li>
                                                 <a title="{{ provider.name }}"
                                                    class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" >
+{#                                                    {% if request.GET.next %}next="{{ request.GET.next }}"{% endif %}#}
                                                     <span class="fa fa-{{ provider.name|lower }}"></span>
                                                     <div class="social-word">
                                                         {% trans 'Sign up with' %} {{ provider.name }}
@@ -160,7 +163,8 @@
                                 </div>
                                 {% include "socialaccount/snippets/login_extra.html" %}
                             {% else %}
-                                <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
+                                <p>{% blocktrans %}If you have not created an account yet, then
+                                    please{% endblocktrans %}
                                     <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
                             {% endif %}
                             <br/>
@@ -212,7 +216,7 @@
                         </form>
                         <br/>
                         <div class="text-right">{% trans 'Already on Hoome?' %} <a
-                                href="{% url 'account_login' %}">{% trans 'Log in' %} </a>
+                                href="{% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Log in' %} </a>
                         </div>
                     </div>
                 </div>
@@ -224,34 +228,44 @@
             </div>
         </div>
     </div>
-<script>
-$(function () {
-    $('.signup-user-selection').click(function () {
-        console.log($('.role-selection').find('select').val());
-        let selection = $(this).attr('value');
-        if (selection === 'consumer') {
-            $('.role-selection').find('select').val('CONSUMER');
-            $('#consumer-signup-option').removeClass('hide').addClass('show');
-        } else if (selection === 'professional') {
-            $('.role-selection').find('select').val('PROFESSIONAL');
-            $('#consumer-signup-option').removeClass('show').addClass('hide');
-        } else {
-            console.warn('Error: undefined user type')
-        }
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-        console.log($('.role-selection').find('select').val());
-    })
+    <script>
+        $(function () {
+            {% is_project_detail_link as check_next_link %}
+            {% if check_next_link %}
+                var identity = localStorage.getItem('role');
+{#                localStorage.removeItem('role');#}
+                $('.signup-user-selection-container').addClass('hide');
+                if (identity == "PROFESSIONAL") {
+                    $('#consumer-signup-option').removeClass('show');
+                }
+            {% else %}
 
-    $('#id_email').focusout(function () {
-        //Use regular expression to check if the email address is valid
-        //Regular expression from http://www.jb51.net/article/110949.htm
-        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-        var emailaddr = $('#id_email').val();
-        if(reg.test(emailaddr)){
-            $('#id_username').val(emailaddr.split('@')[0]);
-        }
-    })
-})
-</script>
+                $('.signup-user-selection').click(function () {
+                    console.log($('.role-selection').find('select').val());
+                    let selection = $(this).attr('value');
+                    if (selection === 'consumer') {
+                        $('.role-selection').find('select').val('CONSUMER');
+                        $('#consumer-signup-option').removeClass('hide').addClass('show');
+                    } else if (selection === 'professional') {
+                        $('.role-selection').find('select').val('PROFESSIONAL');
+                        $('#consumer-signup-option').removeClass('show').addClass('hide');
+                    } else {
+                        console.warn('Error: undefined user type')
+                    }
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+                    console.log($('.role-selection').find('select').val());
+                })
+            {% endif %}
+            $('#id_email').focusout(function () {
+                //Use regular expression to check if the email address is valid
+                //Regular expression from http://www.jb51.net/article/110949.htm
+                var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                var emailaddr = $('#id_email').val();
+                if (reg.test(emailaddr)) {
+                    $('#id_username').val(emailaddr.split('@')[0]);
+                }
+            })
+        })
+    </script>
 {% endblock %}

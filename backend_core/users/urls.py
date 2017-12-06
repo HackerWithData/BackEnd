@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from importlib import import_module
+
+from django.conf.urls import url, include
 from views import (
     sign_up_complete_info,
     DashboardAfterPasswordChangeView,
@@ -22,9 +24,12 @@ from views import (
     ConsumerProfileAfterSignupView,
     ConsumerProfileView,
     ProfessionalProfileView,
-    Login,
+    # Login,
     Signup
 )
+
+from allauth.socialaccount import providers
+from allauth import app_settings
 
 urlpatterns = [
     url(r'^signup/$', Signup.as_view(), name='account_signup'),
@@ -35,5 +40,17 @@ urlpatterns = [
     url(r'^password/set/$', DashboardAfterPasswordSetView.as_view(), name='account_set_password'),
     url(r'^consumer_profile/$', ConsumerProfileView.as_view(), name='account_consumer_profile'),
     url(r'^professional_profile/$', ProfessionalProfileView.as_view(), name='account_professional_profile'),
-    url(r'^login/', Login.as_view(), name='account_login'),
+    # url(r'^login/', Login.as_view(), name='account_login'),
 ]
+
+if app_settings.SOCIALACCOUNT_ENABLED:
+    urlpatterns += [url(r'^social/', include('users.socialaccount.urls'))]
+
+    for provider in providers.registry.get_list():
+        try:
+            prov_mod = import_module(provider.get_package() + '.urls')
+        except ImportError:
+            continue
+        prov_urlpatterns = getattr(prov_mod, 'urlpatterns', None)
+        if prov_urlpatterns:
+            urlpatterns += prov_urlpatterns
