@@ -192,7 +192,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_FORMS = {'signup': 'users.forms.UserSignUpForm'}
 
 # auth and all allauth settings
-LOGIN_REDIRECT_URL = 'home_index'
+# LOGIN_REDIRECT_URL = 'home_index'
 LOGOUT_REDIRECT_URL = 'home_index'
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
@@ -244,11 +244,13 @@ SOCIAL_AUTH_TWITTER_SECRET = 'aunISCyIzbOr7Lh5iAbYd9qOzjiuLOTYEG6WAtmo7Zs4QYPM32
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '167647890871-46behgrf3g0hkda1o5oe1r77bbtjdchf.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '_NErMjXqKFPkf0WKWt90fnVV'
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+# SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard/'
 # home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "users.socialaccount.adapter.SocialAccountAdapter"
 
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'

@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as __
 
 from .models import ProjectAttachment, ProjectPhoto
 from .utils import PROJECT_TYPE
-
+from users.utils import ROLE_CHOICES
 
 class ProjectAttachmentForm(forms.ModelForm):
     class Meta:
@@ -21,9 +21,10 @@ class ProjectPhotoForm(forms.ModelForm):
 
 class ProjectForm(forms.Form):
     # TODO: need a google address autocompeletion/correction
+    identity = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Who you are?"))
     project_name = forms.CharField(label=__('Project Name'), max_length=100)
-    first_name = forms.CharField(label=__('First Name'), max_length=64)
-    last_name = forms.CharField(label=__('Last Name'), max_length=64)
+    first_name = forms.CharField(label=__('Your First Name'), max_length=64)
+    last_name = forms.CharField(label=__('Your Last Name'), max_length=64)
     project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type'), required=False)
     street_address = forms.CharField(label=__('Street Address'))
     street_address2 = forms.CharField(required=False,
@@ -34,7 +35,7 @@ class ProjectForm(forms.Form):
     # country = forms.CharField(label=__('Country'), max_length=10)
     # TODO: need to add a calender widget
     start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget())
-    end_date = forms.DateField(label=__('End Date'), help_text="YYYY-MM-DD")
+    end_date = forms.DateField(label=__('End Date'), widget=forms.SelectDateWidget())
     project_description = forms.CharField(label=__('Project Description'), required=False, widget=forms.Textarea(
         attrs={'placeholder': __('(Optional) Please briefly describe your project')}))
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)

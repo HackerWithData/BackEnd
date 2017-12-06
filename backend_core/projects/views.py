@@ -377,6 +377,8 @@ def create_project_direct(request):
             save_project_photo(request, project)
             print(project.uuid)
             success_url = reverse('display_project_overview') + project.uuid
+            request.session['success_url'] = success_url
+            # print(request.session['project_success_url'])
             return redirect(success_url)
         else:
             info_dict = {'project_form': project_form}
