@@ -15,8 +15,7 @@ def retrieve_professional_link(context):
     :return: rendered professional homepage link element
     """
     user = context['request'].user
-    professional, professional_corresponding_object = get_professional_and_professional_corresponding_object_by_user(
-        user)
+    professional, professional_corresponding_object = get_professional_and_professional_corresponding_object_by_user(user)
     return {
         'professional': professional,
         'professional_corresponding_object': professional_corresponding_object
@@ -41,21 +40,3 @@ def is_sign_up_completed(context):
     return True
 
 
-@register.simple_tag(takes_context=True)
-def is_project_detail_link(context):
-    import re
-    print(context['request'].GET)
-    try:
-        redirect_url = context['request'].GET['next']
-        project_num_pattern = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if redirect_url is not None:
-            el = redirect_url.split('/')
-            # TODO: check project.uuid in database? set limit?
-            if len(el) == 4 and el[1] == "project" and re.match(project_num_pattern, el[2]):
-                return True
-            else:
-                return False
-        else:
-            return False
-    except:
-        return False

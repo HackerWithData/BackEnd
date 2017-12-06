@@ -249,8 +249,6 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 # home_index
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
-# SOCIALACCOUNT_ADAPTER = "users.socialaccount.adapter.SocialAccountAdapter"
 
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'

@@ -227,35 +227,7 @@ class ProfessionalProfileView(View):
         return render(request, self.template_name, {'form': form})
 
 
-# class Login(LoginView):
-#     def dispatch(self, request, *args, **kwargs):
-#         if 'next' in request.GET:
-#             request.session['success_url'] = request.GET['next']
-#         elif 'HTTP_REFERER' in request.META:
-#             if not 'accounts/' in request.META['HTTP_REFERER']:
-#                 request.session['success_url'] = request.META['HTTP_REFERER']
-#         else:
-#             request.session['success_url'] = '/'
-#         return super(LoginView, self).dispatch(request, *args, **kwargs)
-#
-#     def form_valid(self, form):
-#         if 'project_success_url' in self.request.session:
-#             success_url = self.request.session['project_success_url']
-#             del self.request.session['project_success_url']
-#         elif 'success_url' in self.request.session:
-#             success_url = self.request.session['success_url']
-#             del self.request.session['success_url']
-#         elif 'next' in self.request.path:
-#             success_url = self.request.GET['next']
-#         else:
-#             success_url = '/'
-#         try:
-#             return form.login(self.request, redirect_url=success_url)
-#         except ImmediateHttpResponse as e:
-#             return e.response
-
-
-class Signup(SignupView):
+class Login(LoginView):
     def dispatch(self, request, *args, **kwargs):
         if 'next' in request.GET:
             request.session['success_url'] = request.GET['next']
@@ -264,24 +236,27 @@ class Signup(SignupView):
                 request.session['success_url'] = request.META['HTTP_REFERER']
         else:
             request.session['success_url'] = '/'
-        return super(SignupView, self).dispatch(request, *args, **kwargs)
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
+    def form_valid(self, form):
+        if 'success_url' in self.request.session:
+            success_url = self.request.session['success_url']
+        elif 'next' in self.request.path:
+            pass
+        else:
+            success_url = '/'
+        try:
+            return form.login(self.request, redirect_url=success_url)
+        except ImmediateHttpResponse as e:
+            return e.response
+
+
+class Signup(SignupView):
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
         # print(self.request.POST)
         # self.request.POST['hoome_id'] = generate_random_hoome_id()
-        #TODO: need to change in the future
-        # if 'project_success_url' in self.request.session:
-        #     self.success_url = self.request.session['project_success_url']
-        #     del self.request.session['project_success_url']
-        # elif 'success_url' in self.request.session:
-        #     self.success_url = self.request.session['success_url']
-        #     del self.request.session['success_url']
-        # elif 'next' in self.request.path:
-        #     pass
-        # else:
-        #     self.success_url = '/'
         # TODO: there is a better way to add hoome_id
         self.user = form.save(self.request)
         self.user.hoome_id = generate_random_hoome_id()
@@ -293,4 +268,3 @@ class Signup(SignupView):
                 self.get_success_url())
         except ImmediateHttpResponse as e:
             return e.response
-

@@ -105,7 +105,7 @@
                                                 <li>
                                                     <a title="{{ brand.name }}"
                                                        class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" {% if request.GET.next %} next="{{ request.GET.next }}"{% endif %}>
+                                                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
                                                         <span class="fa fa-{{ provider.name|lower }}"></span>
                                                         <span style="font-weight:900">{% trans "Sign in with" %} {{ provider.name }}</span>
                                                     </a>
@@ -115,7 +115,7 @@
                                         <li>
                                             <a title="{{ provider.name }}"
                                                class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" {% if request.GET.next %} next="{{ request.GET.next }}"{% endif %}><span
+                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><span
                                                     class="fa fa-{{ provider.name|lower }}"></span>
                                                 <div class="social-word">{% trans "Sign in with" %} {{ provider.name }}</div>
                                             </a>
