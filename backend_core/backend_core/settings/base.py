@@ -52,7 +52,9 @@ PREREQ_APPS = [
     'haystack',
     'storages',
     'tinymce',
-    'rest_framework'
+    'rest_framework',
+    'crispy_forms',
+    'widget_tweaks'
     # 'django_scss',
 ]
 

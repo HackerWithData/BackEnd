@@ -21,6 +21,7 @@ class ProjectPhotoForm(forms.ModelForm):
 
 
 class ProjectForm(forms.Form):
+
     # TODO: need a google address autocompeletion/correction
     created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Who you are?"))
     project_name = forms.CharField(label=__('Project Name'), max_length=100)
