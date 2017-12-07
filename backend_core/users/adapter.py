@@ -8,6 +8,7 @@ from allauth.compat import is_authenticated, reverse
 
 from .utils import CONSUMER, PROFESSIONAL
 
+
 class MyAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
         assert is_authenticated(request.user)

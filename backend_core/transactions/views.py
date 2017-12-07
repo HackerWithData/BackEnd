@@ -16,7 +16,7 @@ from users.utils import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import *
 from .models import Transaction, TransactionHistory, Milestone
-from projects.utils import (PAYED_TO_HOOME)
+from projects.utils import (PAID_TO_HOOME)
 
 # Create your views here.
 # TODO: Simplify this part
@@ -90,7 +90,7 @@ class TransactionsView(View):
         transaction.save()
         # TODO: we can remove this conditional statement probably
         if transaction.status == SUCCESS:
-            milestone.status = PAYED_TO_HOOME
+            milestone.status = PAID_TO_HOOME
             milestone.save()
         # insert a new transaction history with pending status as soon as a transaction created
         TransactionHistory.objects.create(transaction=transaction, status=transaction.status)

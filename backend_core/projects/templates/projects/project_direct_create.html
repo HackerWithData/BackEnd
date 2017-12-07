@@ -19,15 +19,15 @@
               action="">
             {% csrf_token %}
 
-            <p><label for="id_identity_0">Who you are?</label></p>
-            <ul id="id_identity">
-                <li><label for="id_identity_0"><input type="radio" name="identity" value="PROFESSIONAL" required=""
-                                                      id="id_identity_0">
+            <p><label for="id_created_by_0">Who you are?</label></p>
+            <ul id="id_created_by">
+                <li><label for="id_created_by_0"><input type="radio" name="created_by" value="PROFESSIONAL" required=""
+                                                      id="id_created_by_0">
                     Professional</label>
 
                 </li>
-                <li><label for="id_identity_1"><input type="radio" name="identity" value="CONSUMER" required=""
-                                                      id="id_identity_1">
+                <li><label for="id_created_by_1"><input type="radio" name="created_by" value="CONSUMER" required=""
+                                                      id="id_created_by_1">
                     Homeowner</label>
 
                 </li>
@@ -324,25 +324,25 @@
             var identity;
 
             function check_identity() {
-                if ($("#id_identity_0").is(':checked')) {
+                if ($("#id_created_by_0").is(':checked')) {
                     $(".homeowner_hoome_id_wrapper").removeClass('hide');
                     if (!$(".professional_hoome_id_wrapper").hasClass('hide')) {
                         $(".professional_hoome_id_wrapper").addClass('hide');
                     }
-                    identity = $("#id_identity_0").val();
+                    identity = $("#id_created_by_0").val();
                 }
 
-                if ($("#id_identity_1").is(':checked')) {
+                if ($("#id_created_by_1").is(':checked')) {
                     $(".professional_hoome_id_wrapper").removeClass('hide');
                     if (!$(".homeowner_hoome_id_wrapper").hasClass('hide')) {
                         $(".homeowner_hoome_id_wrapper").addClass('hide');
                     }
-                    identity = $("#id_identity_1").val();
+                    identity = $("#id_created_by_1").val();
                 }
             }
 
             check_identity();
-            $("#id_identity input").click(function () {
+            $("#id_created_by input").click(function () {
                 check_identity();
             })
 

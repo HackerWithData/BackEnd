@@ -22,7 +22,7 @@ class ProjectPhotoForm(forms.ModelForm):
 
 class ProjectForm(forms.Form):
     # TODO: need a google address autocompeletion/correction
-    identity = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Who you are?"))
+    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Who you are?"))
     project_name = forms.CharField(label=__('Project Name'), max_length=100)
     first_name = forms.CharField(label=__('Your First Name'), max_length=64)
     last_name = forms.CharField(label=__('Your Last Name'), max_length=64)
@@ -61,6 +61,7 @@ class ProjectForm(forms.Form):
                           start_date=self.cleaned_data['start_date'],
                           end_date=self.cleaned_data['end_date'],
                           project_description=self.cleaned_data['project_description'],
+                          created_by=self.cleaned_data['created_by'],
                           project_status=WAITING)
         project.uuid = get_a_uuid(Project)
         if commit:

@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 
 from .utils import *
+from users.utils import CONSUMER, ROLE_CHOICES
 
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Project(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     bus_name = models.CharField(max_length=255)
-    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING,null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING, null=True)
     object_id = models.PositiveIntegerField(null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
     # user.id how to get user id
@@ -39,6 +40,7 @@ class Project(models.Model):
     project_action = models.TextField(null=True, blank=True)
     uuid = models.CharField(max_length=36, default='0')  # choices=PROJECT_STATUS,
     created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(default=CONSUMER, choices=ROLE_CHOICES, max_length=16)
 
     class Meta:
         unique_together = ('project_id', 'content_type', 'object_id', 'user')

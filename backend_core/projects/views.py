@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as __, ugettext as _
 from .decorators import check_recaptcha
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
-from .utils import get_a_uuid, WAITING, PENDING, PAYED_TO_PROFESSIONAL, PAYMENT_REQUEST, PAYED_TO_HOOME
+from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
@@ -34,12 +34,12 @@ def milestone_status_explanation(request, status):
             explanation = _("Waiting for homeowner make the payment.")
         elif request.user.role == PROFESSIONAL:
             explanation = _("Waiting for homeowner make the payment.")
-    elif status == PAYED_TO_HOOME:
+    elif status == PAID_TO_HOOME:
         if request.user.role == CONSUMER:
             explanation = _("Hoome has recevied the payment and will hold for you.")
         elif request.user.role == PROFESSIONAL:
             explanation = _("Hoome has recevied the payment and please start to work.")
-    elif status == PAYED_TO_PROFESSIONAL:
+    elif status == PAID_TO_PROFESSIONAL:
         if request.user.role == CONSUMER:
             explanation = _("You have allowed Hoome release the payment.")
         elif request.user.role == PROFESSIONAL:
@@ -127,15 +127,14 @@ def create_project(request, professional_type, lic_id):
             project_form = ProjectForm(request.POST, request.FILES)
             # project = Project.objects.get(project_id=project_id)
             if project_form.is_valid() and request.recaptcha_is_valid:
-
                 content_type = ContentType.objects.get(model=professional_type.lower())
                 lic_id = int(lic_id)
                 professional = content_type.get_object_for_this_type(pk=lic_id)
                 project = project_form.save_project(commit=False)
                 project.user = request.user
-                project.content_type=content_type
-                project.object_id=lic_id
-                project.bus_name=professional.lic_name
+                project.content_type = content_type
+                project.object_id = lic_id
+                project.bus_name = professional.lic_name
                 project.save()
                 save_project_attachment(request, project, project_form)
                 save_project_photo(request, project)
@@ -204,8 +203,9 @@ class ProjectDetail(View):
             professional = request.user.professional_profiles.first().professional
             ct = ContentType.objects.get(model=professional.type.lower())
             lic_num = ct.get_object_for_this_type(lic_num=professional.lic_num).pk
-            #print(type(lic_num)) type: int
-            #print(type(project.object_id)) type: unicode
+            # caution
+            # print(type(lic_num)) type: int
+            # print(type(project.object_id)) type: unicode
             if ct == project.content_type and str(lic_num) == str(project.object_id):
                 flag = True
 
@@ -226,6 +226,8 @@ class ProjectDetail(View):
             if milestone_form.is_valid():
 
                 project = Project.objects.get(uuid=uuid)
+                # TODO: need to add this condition when this function is used in other place
+                # if request.user.role == project.created_by:
                 flag = True
                 while flag:
                     try:
@@ -233,8 +235,8 @@ class ProjectDetail(View):
                         Milestone.objects.get(uuid=milestone_uuid)
                     except Milestone.DoesNotExist:
                         flag = False
-                milestone = Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
-                                                     uuid=milestone_uuid)
+                Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
+                                         uuid=milestone_uuid)
 
                 # TODO: need to consider the project status more carefully
                 # project.project_status = PENDING
@@ -258,7 +260,7 @@ class ProjectDetail(View):
 
         elif request.POST.get('release-money'):
             milestone = Milestone.objects.get(uuid=request.POST.get('release-money'))
-            milestone.status = PAYED_TO_PROFESSIONAL
+            milestone.status = PAID_TO_PROFESSIONAL
             milestone.save()
             project = Project.objects.get(uuid=uuid)
             project.project_action = "Release Money"
@@ -275,17 +277,17 @@ class ProjectDetail(View):
 def save_project(request, project_form):
     project = project_form.save_project(commit=False)
     # pro means the professional in Professional model
-    if project_form.cleaned_data['identity'] == CONSUMER:
+    if project_form.cleaned_data['created_by'] == CONSUMER:
         pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
         project.content_type = ContentType.objects.get(model=pro.type.lower())
         project.object_id = pro.lic_num
         project.bus_name = pro.name
-        if request.user.is_authenticated: # when user is logged in
+        if request.user.is_authenticated:  # when user is logged in
             project.user = request.user
 
-    elif project_form.cleaned_data['identity'] == PROFESSIONAL:
+    elif project_form.cleaned_data['created_by'] == PROFESSIONAL:
         project.user = get_user_by_hoome_id(project_form.cleaned_data['homeowner_hoome_id'])
-        if request.user.is_authenticated:
+        if request.user.is_authenticated:  # when user is logged in
             pro = get_professional_user(request.user)
             project.content_type = ContentType.objects.get(model=pro.type.lower())
             project.object_id = pro.lic_num
@@ -293,8 +295,6 @@ def save_project(request, project_form):
 
     project.save()
     return project
-
-
 
 
 @check_recaptcha

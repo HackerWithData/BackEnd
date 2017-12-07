@@ -21,9 +21,9 @@
                             </div>
                             <div class="col-xs-4">
                                 <div class=""><span class="title">{{ Contracted_With }}</span></div>
-                                {% if request.user.role == "CONSUMER" %}
+                                {% if user.role == "CONSUMER" %}
                                     <div class=""><span class="value">{{ project.bus_name }}</span></div>
-                                {% elif request.user.role == "PROFESSIONAL" %}
+                                {% elif user.role == "PROFESSIONAL" %}
                                     <div class="">
                                         <span class="value">{{ project.first_name }} {{ project.last_name }}</span>
                                     </div>

@@ -31,10 +31,10 @@
                         <br>
 
                         <span class="title">{{ Contracted_With }}:</span>
-                        {% if request.user.role == "CONSUMER" %}
+                        {% if user.role == "CONSUMER" %}
                             {#                            TODO: add a link to professional page#}
                             {{ info_dict.project.bus_name }}
-                        {% elif request.user.role == "PROFESSIONAL" %}
+                        {% elif user.role == "PROFESSIONAL" %}
                             {{ info_dict.project.user.first_name }} {{ info_dict.project.user.last_name }}
                         {% endif %}
                         <br/>
@@ -85,7 +85,7 @@
 {#                <div class="panel-title">#}
                     {{ Milestone }}
 {#                </div>#}
-                {% if request.user.role == 'CONSUMER' %}
+                {% if user.role|stringformat:"s" == info_dict.project.created_by|stringformat:"s" %}
                     <a href="#create-milestone"
                        class="popup-with-form btn btn-hoome move-right">{{ Create_Milestone }}</a>
                 {% endif %}
@@ -113,7 +113,7 @@
                                 </td>
                                 <td>{{ milestone.explanation }}</td>
                                 <td>
-                                    {% if request.user.role == "CONSUMER" %}
+                                    {% if user.role == "CONSUMER" %}
                                         {#                                    and info_dict.project.project_action == "Current Milestone is done."#}
                                         {% if milestone.status == "PTH" or milestone.status == "M" %}
                                             <div class="request-wrapper">
@@ -130,7 +130,7 @@
                                                 {% render_pay_now_button info_dict.project.uuid milestone.uuid %}
                                             </div>
                                         {% endif %}
-                                    {% elif request.user.role == "PROFESSIONAL" %}
+                                    {% elif user.role == "PROFESSIONAL" %}
                                         {#                            TODO: pop out confimation?#}
                                         {% if milestone.status == "PTH" %}
                                             <div class="request-wrapper">
