@@ -12,13 +12,12 @@ from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
 
+from allauth.utils import import_attribute,get_user_model
 from allauth.exceptions import ImmediateHttpResponse
-from allauth.account.signals import user_signed_up
 from allauth.socialaccount.signals import pre_social_login
-from allauth.account.views import PasswordChangeView, PasswordSetView
+from allauth.account.signals import user_signed_up
+from allauth.account.views import PasswordChangeView, PasswordSetView,LoginView, SignupView
 from allauth.account.utils import perform_login, complete_signup
-from allauth.utils import get_user_model
-from allauth.account.views import LoginView, SignupView
 from allauth.account import app_settings
 
 from professionals.models import Professional, ProfessionalType
@@ -31,6 +30,8 @@ from .user_helpers import (retrieve_professional_info,
                            generate_random_hoome_id)
 from .utils import *
 
+def get_adapter(request=None):
+    return import_attribute(app_settings.ADAPTER)(request)
 
 @receiver(user_signed_up)
 def set_role_before_sign_up_complete(request, **kwargs):
@@ -56,7 +57,9 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     users = get_user_model().objects.filter(email=email_address)
     if users:
         perform_login(request=request, user=users[0], email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
-        raise ImmediateHttpResponse(redirect(settings.LOGIN_REDIRECT_URL))
+        url = get_adapter(request).get_login_redirect_url(request)
+        del request.session['success_url']
+        raise ImmediateHttpResponse(redirect(url))
 
 
 @login_required
@@ -138,9 +141,12 @@ class ProfessionalProfileAfterSignupView(View):
             form.save(request)
             professional = get_professional_user(request.user)
             # reverse url name with professional type
-            business_page_url = reverse(professional.type.lower(), args=[professional.lic_num])
-            # print business_page_url
-            return redirect(business_page_url)
+            if request.session['success_url']:
+                redirect_url = request.session['success_url']
+                del request.session['success_url']
+            else:
+                redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
+            return redirect(redirect_url)
 
         return render(request, self.template_name, {'form': form})
 
@@ -234,21 +240,21 @@ class Login(LoginView):
         elif 'HTTP_REFERER' in request.META:
             if not 'accounts/' in request.META['HTTP_REFERER']:
                 request.session['success_url'] = request.META['HTTP_REFERER']
-        else:
-            request.session['success_url'] = '/'
+        # else:
+        #     request.session['success_url'] = '/'
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        if 'success_url' in self.request.session:
-            success_url = self.request.session['success_url']
-        elif 'next' in self.request.path:
-            pass
-        else:
-            success_url = '/'
-        try:
-            return form.login(self.request, redirect_url=success_url)
-        except ImmediateHttpResponse as e:
-            return e.response
+    # def form_valid(self, form):
+    #     if 'success_url' in self.request.session:
+    #         success_url = self.request.session['success_url']
+    #     elif 'next' in self.request.path:
+    #         pass
+    #     else:
+    #         success_url = '/'
+    #     try:
+    #         return form.login(self.request, redirect_url=success_url)
+    #     except ImmediateHttpResponse as e:
+    #         return e.response
 
 
 class Signup(SignupView):

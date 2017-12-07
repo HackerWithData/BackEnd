@@ -7,7 +7,7 @@ from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKe
 from django.contrib.contenttypes.models import ContentType
 
 from photos.models import Photo
-from django.conf import settings
+
 
 # Create your models here.
 
