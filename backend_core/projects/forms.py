@@ -1,9 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as __
 
-from .models import ProjectAttachment, ProjectPhoto
-from .utils import PROJECT_TYPE
+from .models import ProjectAttachment, ProjectPhoto, Project
+from .utils import PROJECT_TYPE, WAITING, get_a_uuid
 from users.utils import ROLE_CHOICES
+
 
 class ProjectAttachmentForm(forms.ModelForm):
     class Meta:
@@ -45,9 +46,31 @@ class ProjectForm(forms.Form):
     # professional_type = forms.CharField(label=__('Project Type'))
     # lic_id = forms.CharField(label=__('Lic Id'))
 
+    def save_project(self, commit=True):
+        project = Project(project_name=self.cleaned_data['project_name'],
+                          first_name=self.cleaned_data['first_name'],
+                          last_name=self.cleaned_data['last_name'],
+                          project_type=self.cleaned_data['project_type'],
+                          street_address=self.cleaned_data['street_address'],
+                          street_address2=self.cleaned_data['street_address2'],
+                          county=self.cleaned_data['county'],
+                          state=self.cleaned_data['state'],
+                          zipcode=self.cleaned_data['zipcode'],
+                          # country=project_form.cleaned_data['country'],
+                          # cost=project_form.cleaned_data['project_cost'],
+                          start_date=self.cleaned_data['start_date'],
+                          end_date=self.cleaned_data['end_date'],
+                          project_description=self.cleaned_data['project_description'],
+                          project_status=WAITING)
+        project.uuid = get_a_uuid(Project)
+        if commit:
+            project.save()
+        return project
+
 
 class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))
+    professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"), required=False)
+    homeowner_hoome_id = forms.CharField(label=__("Homeowner Hoome ID"), required=False)
 
 
 # class ProjectFormAfterLogin(ProjectForm):

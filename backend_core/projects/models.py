@@ -18,8 +18,8 @@ class Project(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     bus_name = models.CharField(max_length=255)
-    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING,null=True)
+    object_id = models.PositiveIntegerField(null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
     # user.id how to get user id
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)

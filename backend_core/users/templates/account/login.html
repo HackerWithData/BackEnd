@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load account socialaccount %}
-
+{% load users_tag %}
 {% block metainfo %}
     <style>
         .header {
@@ -90,55 +90,62 @@
             <div class="col-md-6">
                 <div class="login-wrapper ">
                     <div class="login-container">
+
                         <h1>{% trans "Log In to Hoome" %}</h1>
                         <p>{% blocktrans %}By logging in, you agree to Hoome’s {% endblocktrans %}<a
                                 href="/rule/service">{% trans 'Terms of Service' %}</a> {% trans 'and' %} <a
                                 href="/rule/privacy">{% trans 'Privacy Policy' %}</a>.
                         </p>
-                        {% get_providers as socialaccount_providers %}
-                        {% if socialaccount_providers %}
-                            <div class="socialaccount_ballot">
-                                <ul class="socialaccount_providers">
-                                    {% for provider in socialaccount_providers %}
-                                        {% if provider.id == "openid" %}
-                                            {% for brand in provider.get_brands %}
-                                                <li>
-                                                    <a title="{{ brand.name }}"
-                                                       class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" {% if request.GET.next %} next="{{ request.GET.next }}"{% endif %}>
-                                                        <span class="fa fa-{{ provider.name|lower }}"></span>
-                                                        <span style="font-weight:900">{% trans "Sign in with" %} {{ provider.name }}</span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        {% endif %}
-                                        <li>
-                                            <a title="{{ provider.name }}"
-                                               class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" {% if request.GET.next %} next="{{ request.GET.next }}"{% endif %}><span
-                                                    class="fa fa-{{ provider.name|lower }}"></span>
-                                                <div class="social-word">{% trans "Sign in with" %} {{ provider.name }}</div>
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                        <div class="socialaccount-login">
+                            {% get_providers as socialaccount_providers %}
+                            {% if socialaccount_providers %}
+                                <div class="socialaccount_ballot">
+                                    <ul class="socialaccount_providers">
+                                        {% for provider in socialaccount_providers %}
+                                            {% if provider.id == "openid" %}
+                                                {% for brand in provider.get_brands %}
+                                                    <li>
+                                                        <a title="{{ brand.name }}"
+                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+                                                                {% if request.GET.next %}
+                                                           next="{{ request.GET.next }}"{% endif %}>
+                                                            <span class="fa fa-{{ provider.name|lower }}"></span>
+                                                            <span style="font-weight:900">{% trans "Sign in with" %} {{ provider.name }}</span>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <li>
+                                                <a title="{{ provider.name }}"
+                                                   class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+                                                        {% if request.GET.next %}
+                                                   next="{{ request.GET.next }}"{% endif %}><span
+                                                        class="fa fa-{{ provider.name|lower }}"></span>
+                                                    <div class="social-word">{% trans "Sign in with" %} {{ provider.name }}</div>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
-                            {% include "socialaccount/snippets/login_extra.html" %}
-                        {% else %}
-                            <p>{% blocktrans %}If you have not created an account yet, then please{% endblocktrans %}
-                                <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
-                        {% endif %}
+                                {% include "socialaccount/snippets/login_extra.html" %}
+                            {% else %}
+                                <p>{% blocktrans %}If you have not created an account yet, then
+                                    please{% endblocktrans %}
+                                    <a href="{{ signup_url }}">{% trans "sign up" %}</a> {% trans "first." %}</p>
+                            {% endif %}
 
-                        <br/>
-                        <p class="hr-line"><span>{% trans 'OR' %}</span></p>
-                        <br/>
-
+                            <br/>
+                            <p class="hr-line"><span>{% trans 'OR' %}</span></p>
+                            <br/>
+                        </div>
                         <form class="login" method="POST" action="{% url 'account_login' %}">
                             {% csrf_token %}
                             {% if form.non_field_errors %}
                                 <div class="alert alert-warning">
-                                        {{ form.non_field_errors }}
+                                    {{ form.non_field_errors }}
                                 </div>
                             {% endif %}
                             <p><input type="text" name="login" autofocus="autofocus"
@@ -163,7 +170,12 @@
                         </form>
                         <br/>
                         <div class="text-right">{% trans 'New to Hoome?' %} <a
-                                href="{% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Sign Up' %}</a>
+                                href="
+
+
+
+
+                                        {% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Sign Up' %}</a>
                         </div>
                     </div>
                 </div>
@@ -175,4 +187,20 @@
             </div>
         </div>
     </div>
+    {% is_project_detail_link as check_next_link %}
+    {% if check_next_link %}
+        <script>
+            $(function () {
+
+                var identity = localStorage.getItem('role');
+                {#                localStorage.removeItem('role');#}
+
+
+                if (identity == "PROFESSIONAL") {
+                    $('.socialaccount-login').addClass('hide');
+                }
+
+            })
+        </script>
+    {% endif %}
 {% endblock %}

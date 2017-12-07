@@ -141,9 +141,12 @@ class ProfessionalProfileAfterSignupView(View):
             form.save(request)
             professional = get_professional_user(request.user)
             # reverse url name with professional type
-            business_page_url = reverse(professional.type.lower(), args=[professional.lic_num])
-            # print business_page_url
-            return redirect(business_page_url)
+            if request.session['success_url']:
+                redirect_url = request.session['success_url']
+                del request.session['success_url']
+            else:
+                redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
+            return redirect(redirect_url)
 
         return render(request, self.template_name, {'form': form})
 
