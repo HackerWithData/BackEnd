@@ -316,5 +316,6 @@ def create_project_direct(request):
             request.session['success_url'] = success_url
             return redirect(success_url)
         else:
-            info_dict = {'project_form': project_form}
+            form_errors = project_form.error_info()
+            info_dict = {'project_form': project_form, 'form_errors': form_errors}
             return render(request, template_name, {'info_dict': info_dict})

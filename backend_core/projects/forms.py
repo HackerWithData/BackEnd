@@ -3,8 +3,9 @@ from django.utils.translation import ugettext_lazy as __
 
 from .models import ProjectAttachment, ProjectPhoto, Project
 from .utils import PROJECT_TYPE, WAITING, get_a_uuid
-from users.utils import ROLE_CHOICES
-
+from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
+from django.core.exceptions import ValidationError
+from users.models import User
 
 class ProjectAttachmentForm(forms.ModelForm):
     class Meta:
@@ -73,10 +74,45 @@ class ProjectFormDirectCreate(ProjectForm):
     professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"), required=False)
     homeowner_hoome_id = forms.CharField(label=__("Homeowner Hoome ID"), required=False)
 
+    def clean(self):
+        cleaned_data = super(ProjectFormDirectCreate, self).clean()
+        created_by = cleaned_data.get('created_by')
+        if created_by == PROFESSIONAL:
+            homeowner_hoome_id = cleaned_data.get('homeowner_hoome_id', None)
+            if not homeowner_hoome_id:
+                raise ValidationError(message='hoome id cannot be empty', code='homeowner_hoome_id_error')
+            else:
+                try:
+                    user = User.objects.get(hoome_id=homeowner_hoome_id)
+                except:
+                    raise ValidationError(message='The hoome id does not exist', code='homeowner_hoome_id_error')
+                if user.role == PROFESSIONAL:
+                    raise ValidationError(message='It is a professional user', code='homeowner_hoome_id_error')
+        elif created_by == CONSUMER:
+            professional_hoome_id = cleaned_data.get('professional_hoome_id', None)
+            if not professional_hoome_id:
+                raise ValidationError(message='hoome id cannot be empty', code='professional_hoome_id_error')
+            else:
+                try:
+                    user = User.objects.get(hoome_id=professional_hoome_id)
+                except:
+                    raise ValidationError(message='The hoome id does not exist', code='professional_hoome_id_error')
+                if user.role == CONSUMER:
+                    raise ValidationError(message='It is a consumer user', code='professional_hoome_id_error')
+        return cleaned_data
+
+    def error_info(self):
+        e = self.errors.as_data()
+        errors = e.get('__all__', None)
+        form_errors = {}
+        if errors is not None:
+            for error in errors:
+                form_errors.update({error.code: error.message})
+        return form_errors
 
 # class ProjectFormAfterLogin(ProjectForm):
 #     professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))
 
 
 class MilestoneForm(forms.Form):
-    amount = forms.IntegerField(min_value=0, required=True)
+    amount = forms.IntegerField(min_value=50, required=True)

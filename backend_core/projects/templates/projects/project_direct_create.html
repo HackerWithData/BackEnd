@@ -34,14 +34,16 @@
             </ul>
             <p></p>
             <div class="professional_hoome_id_wrapper hide">
-                <p><label for="id_professional_hoome_id">Professional Hoome ID:</label> <input type="text"
-                                                                                               name="professional_hoome_id"
-                                                                                               id="id_professional_hoome_id">
-                </p></div>
+                <p><label for="id_professional_hoome_id">Professional Hoome ID:</label>
+                    <input type="text" name="professional_hoome_id" id="id_professional_hoome_id">
+                    {{ info_dict.form_errors.professional_hoome_id_error}}
+                </p>
+            </div>
             <div class="homeowner_hoome_id_wrapper hide">
-                <p><label for="id_homeowner_hoome_id">Homeowner Hoome ID:</label> <input type="text"
-                                                                                         name="homeowner_hoome_id"
-                                                                                         id="id_homeowner_hoome_id"></p>
+                <p><label for="id_homeowner_hoome_id">Homeowner Hoome ID:</label>
+                    <input type="text" name="homeowner_hoome_id" id="id_homeowner_hoome_id">
+                    {{ info_dict.form_errors.homeowner_hoome_id_error}}
+                </p>
             </div>
             <p><label for="id_project_name">Project Name:</label> <input type="text" name="project_name" required=""
                                                                          id="id_project_name" maxlength="100"></p>
