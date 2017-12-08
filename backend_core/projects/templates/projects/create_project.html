@@ -1,17 +1,561 @@
-{% extends "dashboard/dashboard.html" %}
+{% extends "contractor/contractor.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load account socialaccount %}
+{% load widget_tweaks %}
+
+{% block metainfo %}
+    <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        .main {
+            margin-top: 100px;
+            margin-bottom: 10%;
+        }
+
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-horizontal ul li {
+            list-style-type: none;
+        }
+
+        .section-title {
+            font-family: Roboto;
+            font-size: 2em;
+            margin-bottom: 12px;
+            margin-left: 0px;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+    <div class="main container">
+        <form method="post" enctype="multipart/form-data" class="form-horizontal" role="form"
+              action="">
+            {% csrf_token %}
+
+            {% with form=info_dict.project_form %}
+                <h1 class="section-title">{% trans 'Tell us what you need done' %}</h1>
+                <br/>
+                {#                non-field error#}
+                {% for error in form.non_field_errors %}
+                    <div class="form-group has-errors text-danger small">
+                        {{ error }}
+                    </div>
+                {% endfor %}
 
 
-{% block dashboard_content %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ info_dict.project_form.as_p }}
-        {#TODO: need to change the outlook of attachment type#}
-        <br/>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-        <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
-        <br/>
-        <button class="btn btn-hoome" type="submit" value="submit" name="submit">{% trans 'Create' %}</button>
-    </form>
+
+                {#                                created_by#}
+                <div class="hide">
+                    {% with field=form.created_by %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endwith %}
+                </div>
+
+                {#                <div class="professional_hoome_id_wrapper hide">#}
+                {#                                professional_hoome_id#}
+                {#                    {% with field=form.professional_hoome_id %}#}
+                {#                        {% if field.errors %}#}
+                {#                            <div class="form-group has-error">#}
+                {#                                <label class="col-sm-2 control-label"#}
+                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
+                {#                                <div class="col-sm-10">#}
+                {#                                    {{ field|attr:"class:form-control" }}#}
+                {#                                    <span class="help-block">#}
+                {#                        {% for error in  field.errors %}{{ error }}{% endfor %}#}
+                {#                                    </span>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        {% else %}#}
+                {#                            <div class="form-group">#}
+                {#                                <label class="col-sm-2 control-label"#}
+                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
+                {#                                <div class="col-sm-10">#}
+                {#                                    {{ field|attr:"class:form-control" }}#}
+                {#                                    {% if field.help_text %}#}
+                {#                                        <p class="help-block">#}
+                {#                                            <small>{{ field.help_text }}</small>#}
+                {#                                        </p>#}
+                {#                                    {% endif %}#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        {% endif %}#}
+                {#                    {% endwith %}#}
+                {#                </div>#}
+                {#                <div class="homeowner_hoome_id_wrapper hide">#}
+                {#                                homeowner_hoome_id#}
+                {#                    {% with field=form.homeowner_hoome_id %}#}
+                {#                        {% if field.errors %}#}
+                {#                            <div class="form-group has-error">#}
+                {#                                <label class="col-sm-2 control-label"#}
+                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
+                {#                                <div class="col-sm-10">#}
+                {#                                    {{ field|attr:"class:form-control" }}#}
+                {#                                    <span class="help-block">#}
+                {#                        {% for error in  field.errors %}{{ error }}{% endfor %}#}
+                {#                    </span>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        {% else %}#}
+                {#                            <div class="form-group">#}
+                {#                                <label class="col-sm-2 control-label"#}
+                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
+                {#                                <div class="col-sm-10">#}
+                {#                                    {{ field|attr:"class:form-control" }}#}
+                {#                                    {% if field.help_text %}#}
+                {#                                        <p class="help-block">#}
+                {#                                            <small>{{ field.help_text }}</small>#}
+                {#                                        </p>#}
+                {#                                    {% endif %}#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        {% endif %}#}
+                {#                    {% endwith %}#}
+                {#                </div>#}
+
+
+                {#                                project_name#}
+                {% with field=form.project_name %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                first_name#}
+                {% with field=form.first_name %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                last_name#}
+                {% with field=form.last_name %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                project_type#}
+                {% with field=form.project_type %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                {#                start_date#}
+                {% with field=form.start_date %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-inline">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class=>
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br/>
+                {#                end_date#}
+                {% with field=form.end_date %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-inline">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+
+                            {#                            <div class="col-sm-12">#}
+                            {{ field|attr:"class:form-control" }}
+                            {% if field.help_text %}
+                                <p class="help-block">
+                                    <small>{{ field.help_text }}</small>
+                                </p>
+                            {% endif %}
+                            {#                            </div>#}
+
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br/>
+
+                {#                project_description#}
+                {% with field=form.project_description %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br>
+                <h1 class="section-title">{% trans 'Please enter the project address' %}</h1>
+                <small>{% trans 'Note: hoome will not show this address in public.' %}</small>
+                <br/> <br/>
+                {#                street_address#}
+                {% with field=form.street_address %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                Apt #, Suite #, ...#}
+                {% with field=form.street_address2 %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                county#}
+                {% with field=form.county %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                state#}
+                {% with field=form.state %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                zipcode#}
+                {% with field=form.zipcode %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br/>
+
+                <h1 class="section-title">{% trans 'Attach any documents/photos if you would like' %}</h1>
+                <br/>
+                {#                attachment_type#}
+                {% with field=form.attachment_type %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                project_attachment#}
+                {% with field=form.project_attachment %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                project_photo#}
+                {% with field=form.project_photo %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
+                <br/>
+                <button class="btn btn-hoome" type="submit" value="submit" name="submit">{% trans 'Create' %}</button>
+            {% endwith %}
+        </form>
+    </div>
+    <script>
+        $("#id_created_by_1").prop("checked", true);
+    </script>
 {% endblock %}

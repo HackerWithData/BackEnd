@@ -1,8 +1,5 @@
 {% extends "dashboard/dashboard.html" %}
-{% load staticfiles %}
-{% load i18n %}
-{% load payment_tag %}
-
+{% load staticfiles i18n payment_tag widget_tweaks %}
 {% block dashboard_content %}
     {% if messages %}
         {% for message in messages %}
@@ -82,9 +79,9 @@
         </div>
         <div class="panel panel-default project-basic-info">
             <div class="panel-heading">
-{#                <div class="panel-title">#}
-                    {{ Milestone }}
-{#                </div>#}
+                {#                <div class="panel-title">#}
+                {{ Milestone }}
+                {#                </div>#}
                 {% if user.role|stringformat:"s" == info_dict.project.created_by|stringformat:"s" %}
                     <a href="#create-milestone"
                        class="popup-with-form btn btn-hoome move-right">{{ Create_Milestone }}</a>
@@ -240,11 +237,44 @@
     </div>
     {#        <a href="{% url 'display_project_detail' info_dict.project.project_id %}">detail</a>#}
     <form id="create-milestone" action="" method="post" enctype="multipart/form-data"
-          class="mfp-hide white-popup-block">
-        {{ info_dict.milestone_form.as_p }}
+          class="mfp-hide white-popup-block form-inline">
+
+        {% with field=info_dict.milestone_form.amount %}
+            {% if field.errors %}
+                <div class="form-group has-error">
+                    <label class="sr-only" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                        {{ field|attr:"class:form-control" }}
+                        {#                    <input type="text" class="form-control" id="id_{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value }}">#}
+                        <div class="input-group-addon">.00</div>
+                    </div>
+                    <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label class="sr-only" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                        {{ field|attr:"class:form-control" }}
+                        {#                    <input type="text" class="form-control" id="id_{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value }}">#}
+                        <div class="input-group-addon">.00</div>
+
+                    </div>
+                    <p class="help-block">
+                        <small>{{ field.help_text }}</small>
+                    </p>
+                </div>
+            {% endif %}
+        {% endwith %}
+        <br>
+        <br>
+        {#    {{ info_dict.milestone_form }}#}
         {% csrf_token %}
         <button type="submit" class='btn btn-hoome' name="create-milestone"
-                value="create-milestone">{{ Create_Milestone }}</button>
+                value="create-milestone">{{ Create }}</button>
     </form>
     <script>
         var curHeight = $('.project-description .text').height();

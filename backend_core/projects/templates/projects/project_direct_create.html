@@ -6,14 +6,39 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/contractor.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
         .main {
             margin-top: 100px;
             margin-bottom: 10%;
         }
-    .form-horizontal ul li{
-        list-style-type: none;
-    }
+
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-horizontal ul li {
+            list-style-type: none;
+        }
+
+        .section-title {
+            font-family: Roboto;
+            font-size: 2em;
+            margin-bottom: 12px;
+            margin-left: 0px;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+        }
+
+        #milestone .btn.btn-default {
+            padding: 0 12px;
+            height: 34;
+        }
     </style>
 {% endblock %}
 {% block header %}
@@ -23,12 +48,18 @@
         <form method="post" enctype="multipart/form-data" class="form-horizontal" role="form"
               action="">
             {% csrf_token %}
+
             {% with form=info_dict.project_form %}
+                <h1 class="section-title">{% trans 'Tell us what you need done' %}</h1>
+                <br/>
+                {#                non-field error#}
                 {% for error in form.non_field_errors %}
                     <div class="form-group has-errors text-danger small">
                         {{ error }}
                     </div>
                 {% endfor %}
+
+
 
                 {#                                created_by#}
                 {% with field=form.created_by %}
@@ -38,8 +69,8 @@
                             <div class="col-sm-10">
                                 {{ field }}
                                 <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
+                                    {% for error in  field.errors %}{{ error }}{% endfor %}
+                                </span>
                             </div>
                         </div>
                     {% else %}
@@ -56,24 +87,10 @@
                         </div>
                     {% endif %}
                 {% endwith %}
-{#                <p><label for="id_created_by_0">Who you are?</label></p>#}
-{#                <ul id="id_created_by">#}
-{#                    <li><label for="id_created_by_0"><input type="radio" name="created_by" value="PROFESSIONAL"#}
-{#                                                            required=""#}
-{#                                                            id="id_created_by_0">#}
-{#                        Professional</label>#}
-{##}
-{#                    </li>#}
-{#                    <li><label for="id_created_by_1"><input type="radio" name="created_by" value="CONSUMER" required=""#}
-{#                                                            id="id_created_by_1">#}
-{#                        Homeowner</label>#}
-{##}
-{#                    </li>#}
-{#                </ul>#}
-{#                <p></p>#}
+
                 <div class="professional_hoome_id_wrapper hide">
                     {#                                professional_hoome_id#}
-                    {% with field=form.project_name %}
+                    {% with field=form.professional_hoome_id %}
                         {% if field.errors %}
                             <div class="form-group has-error">
                                 <label class="col-sm-2 control-label"
@@ -82,7 +99,7 @@
                                     {{ field|attr:"class:form-control" }}
                                     <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
+                                    </span>
                                 </div>
                             </div>
                         {% else %}
@@ -99,7 +116,8 @@
                                 </div>
                             </div>
                         {% endif %}
-                    {% endwith %}</div>
+                    {% endwith %}
+                </div>
                 <div class="homeowner_hoome_id_wrapper hide">
                     {#                                homeowner_hoome_id#}
                     {% with field=form.homeowner_hoome_id %}
@@ -239,7 +257,93 @@
                         </div>
                     {% endif %}
                 {% endwith %}
+                {#                start_date#}
+                {% with field=form.start_date %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-inline">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class=>
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br/>
+                {#                end_date#}
+                {% with field=form.end_date %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-inline">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
 
+                            {#                            <div class="col-sm-12">#}
+                            {{ field|attr:"class:form-control" }}
+                            {% if field.help_text %}
+                                <p class="help-block">
+                                    <small>{{ field.help_text }}</small>
+                                </p>
+                            {% endif %}
+                            {#                            </div>#}
+
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br/>
+
+                {#                project_description#}
+                {% with field=form.project_description %}
+                    {% if field.errors %}
+                        <div class="form-group has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                    </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <br>
+                <h1 class="section-title">{% trans 'Please enter the project address' %}</h1>
+                <small>{% trans 'Note: hoome will not show this address in public.' %}</small>
+                <br/> <br/>
                 {#                street_address#}
                 {% with field=form.street_address %}
                     {% if field.errors %}
@@ -267,7 +371,7 @@
                     {% endif %}
                 {% endwith %}
 
-                {#                street_address2#}
+                {#                Apt #, Suite #, ...#}
                 {% with field=form.street_address2 %}
                     {% if field.errors %}
                         <div class="form-group has-error">
@@ -375,87 +479,9 @@
                     {% endif %}
                 {% endwith %}
                 <br/>
-                {#                start_date#}
-                {% with field=form.start_date %}
-                    {% if field.errors %}
-                        <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class="col-sm-10">
-                                {{ field|attr:"class:form-control" }}
-                                <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="form-inline">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class=>
-                                {{ field|attr:"class:form-control" }}
-                                {% if field.help_text %}
-                                    <p class="help-block">
-                                        <small>{{ field.help_text }}</small>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endwith %}
-                <br/>
-                {#                end_date#}
-                {% with field=form.end_date %}
-                    {% if field.errors %}
-                        <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class="col-sm-10">
-                                {{ field|attr:"class:form-control" }}
-                                <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="form-inline">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class=>
-                                {{ field|attr:"class:form-control" }}
-                                {% if field.help_text %}
-                                    <p class="help-block">
-                                        <small>{{ field.help_text }}</small>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endwith %}
-                <br/>
-                {#                project_description#}
-                {% with field=form.project_description %}
-                    {% if field.errors %}
-                        <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class="col-sm-10">
-                                {{ field|attr:"class:form-control" }}
-                                <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class="col-sm-10">
-                                {{ field|attr:"class:form-control" }}
-                                {% if field.help_text %}
-                                    <p class="help-block">
-                                        <small>{{ field.help_text }}</small>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endwith %}
 
+                <h1 class="section-title">{% trans 'Attach any documents/photos if you would like' %}</h1>
+                <br/>
                 {#                attachment_type#}
                 {% with field=form.attachment_type %}
                     {% if field.errors %}
@@ -518,8 +544,8 @@
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
+                                    {% for error in  field.errors %}{{ error }}{% endfor %}
+                                </span>
                             </div>
                         </div>
                     {% else %}
@@ -537,34 +563,144 @@
                     {% endif %}
                 {% endwith %}
 
+                <h1 class="section-title">{{ Milestone }}</h1>
+                <br>
+                {% if milestone_form.non_form_errors %}
+                    {% for error in milestone_form.non_form_errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                <table id='milestone' width="100%">
+                    <tr>
+                        <th>{{ Milestone_Number }}</th>
+                        <th>{{ Amount }}</th>
+                    </tr>
+                    {{ info_dict.milestone_formset.management_form }}
+                    {% for milestone_form in info_dict.milestone_formset %}
+
+                        <tr class="milestone-formset">
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                {#                                    {{ milestone_form.amount }}#}
+                                {% if milestone_form.amount.errors %}
+                                    {% for error in milestone_form.amount.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="form-inline">
+                                    <label class="sr-only"
+                                           for="id_{{ milestone_form.amount.name }}">{{ milestone_form.amount.label }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                        {{ milestone_form.amount|attr:"class:form-control " }}
+                                        {#                    <input type="text" class="form-control" id="id_{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value }}">#}
+                                        <div class="input-group-addon">.00</div>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success btn-default" type="button">
+                                                <span class=" glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            </span>
+                                    </div>
+                                    <p class="help-block">
+                                        <small>{{ milestone_form.amount.help_text }}</small>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+
+                <br/>
+                <br/>
                 <script src='https://www.google.com/recaptcha/api.js'></script>
                 <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
                 <br/>
-                <button class="btn btn-hoome" type="submit" value="submit" name="submit">{% trans 'Create' %}</button>
+                <button class="btn btn-hoome" type="submit" value="submit" name="submit">{{ Create }}</button>
             {% endwith %}
         </form>
     </div>
+    {#    <script src="{% static 'js/formset.js' %}"></script>#}
     <script>
+
+        {#    TODO: need to write a more generic one#}
+        {#    <script src="{% static 'js/formset.js' %}"></script>#}
+
+        {#        $('.milestone-formset').formset({#}
+        {#            addText: '+',#}
+        {#            deleteText: '-',#}
+        {#            deleteCssClass:'btn btn-warning btn-block',#}
+
+        function addForm(index, form_count) {
+            var content_html =
+                '<tr class="milestone-formset">' +
+                '<td>' + index + '</td>' +
+                '<td>' +
+                '<div class="form-inline">' +
+                '<label class="sr-only" for="id_amount">Amount</label>' +
+                '<div class="input-group">' +
+                '<div class="input-group-addon">$</div>' +
+                '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="0">' +
+                '<div class="input-group-addon">.00</div>' +
+                '<span class="input-group-btn">' +
+                '<button class="btn btn-success btn-default" type="button">' +
+                '<span class=" glyphicon glyphicon-plus"></span>' +
+                '</button>' +
+                '</span>' +
+                '</div>' +
+                '<p class="help-block">' +
+                '<small></small>' +
+                '</p>' +
+                '</div>' +
+                '</td>' +
+                '</tr>'
+            $('#milestone tr:last button').removeClass('btn-success').addClass('btn-danger');
+            $('#milestone tr:last button span').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+            $('#milestone tr:last').after(content_html);
+        }
+
+        function removeForm(obj) {
+            obj.closest('tr').remove();
+            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
+            var count = 1;
+            $('#milestone .milestone-formset').each(function (index) {
+                $(this).find('td').first().html(index + 1);
+            })
+        }
+
+        var form_count = 0;
+        $('#milestone').on('click', '.btn.btn-success.btn-default', function () {
+            form_count++;
+            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
+            addForm(rows, form_count);
+        })
+
+        $('#milestone').on('click', '.btn.btn-danger.btn-default', function () {
+            removeForm($(this));
+        })
+
+        function check_identity() {
+            if ($("#id_created_by_0").is(':checked')) {
+                $(".homeowner_hoome_id_wrapper").removeClass('hide');
+                if (!$(".professional_hoome_id_wrapper").hasClass('hide')) {
+                    $(".professional_hoome_id_wrapper").addClass('hide');
+                }
+                identity = $("#id_created_by_0").val();
+            }
+
+            if ($("#id_created_by_1").is(':checked')) {
+                $(".professional_hoome_id_wrapper").removeClass('hide');
+                if (!$(".homeowner_hoome_id_wrapper").hasClass('hide')) {
+                    $(".homeowner_hoome_id_wrapper").addClass('hide');
+                }
+                identity = $("#id_created_by_1").val();
+            }
+        }
+
         $(document).ready(function () {
             var identity;
+            {#            changeformset();#}
 
-            function check_identity() {
-                if ($("#id_created_by_0").is(':checked')) {
-                    $(".homeowner_hoome_id_wrapper").removeClass('hide');
-                    if (!$(".professional_hoome_id_wrapper").hasClass('hide')) {
-                        $(".professional_hoome_id_wrapper").addClass('hide');
-                    }
-                    identity = $("#id_created_by_0").val();
-                }
-
-                if ($("#id_created_by_1").is(':checked')) {
-                    $(".professional_hoome_id_wrapper").removeClass('hide');
-                    if (!$(".homeowner_hoome_id_wrapper").hasClass('hide')) {
-                        $(".homeowner_hoome_id_wrapper").addClass('hide');
-                    }
-                    identity = $("#id_created_by_1").val();
-                }
-            }
 
             check_identity();
             $("#id_created_by input").click(function () {

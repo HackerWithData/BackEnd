@@ -169,6 +169,18 @@ def display_project_overview(request):
         return render(request, template_name, {'info_dict': info_dict})
 
 
+def save_milestone(amount, project):
+    flag = True
+    while flag:
+        try:
+            milestone_uuid = get_a_uuid()
+            Milestone.objects.get(uuid=milestone_uuid)
+        except Milestone.DoesNotExist:
+            flag = False
+    Milestone.objects.create(amount=amount, project=project,
+                             uuid=milestone_uuid)
+
+
 @method_decorator(login_required, name='dispatch')
 class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
@@ -224,19 +236,10 @@ class ProjectDetail(View):
             milestone_form = MilestoneForm(request.POST)
             # print(milestone_form.is_valid())
             if milestone_form.is_valid():
-
                 project = Project.objects.get(uuid=uuid)
                 # TODO: need to add this condition when this function is used in other place
                 # if request.user.role == project.created_by:
-                flag = True
-                while flag:
-                    try:
-                        milestone_uuid = get_a_uuid()
-                        Milestone.objects.get(uuid=milestone_uuid)
-                    except Milestone.DoesNotExist:
-                        flag = False
-                Milestone.objects.create(amount=milestone_form.cleaned_data['amount'], project=project,
-                                         uuid=milestone_uuid)
+                save_milestone(milestone_form.cleaned_data['amount'], project)
 
                 # TODO: need to consider the project status more carefully
                 # project.project_status = PENDING
@@ -297,24 +300,44 @@ def save_project(request, project_form):
     return project
 
 
+from django.forms.formsets import formset_factory
+import re
+
+
 @check_recaptcha
 def create_project_direct(request):
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
-
+    MilestoneFormSet = formset_factory(MilestoneForm)
     if request.method == "GET":
         # initial={'start_date': datetime.datetime.today()}
+        milestone_formset = MilestoneFormSet()
         project_form = ProjectFormDirectCreate()
-        info_dict = {'project_form': project_form}
-        return render(request, template_name, {'info_dict': info_dict})
+
     elif request.method == "POST":
         project_form = ProjectFormDirectCreate(request.POST, request.FILES)
-        if project_form.is_valid() and request.recaptcha_is_valid:
+        milestone_formset = MilestoneFormSet(request.POST)
+        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
+            # print(request.POST)
+            # print(milestone_formset)
+
             project = save_project(request, project_form)
+            list_amount = []
+            for key in request.POST:
+                reg = re.match("form-(\d)-amount", key)
+                if reg:
+                    index = reg.group(1)
+                    try:
+                        list_amount.append([int(index), key])
+                    except:
+                        pass
+
+            list_amount = sorted(list_amount, key=lambda x: x[0])
+            for item in list_amount:
+                save_milestone(amount=request.POST[item[1]], project=project)
             save_project_attachment(request, project, project_form)
             save_project_photo(request, project)
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url
             return redirect(success_url)
-        else:
-            info_dict = {'project_form': project_form}
-            return render(request, template_name, {'info_dict': info_dict})
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
+    return render(request, template_name, {'info_dict': info_dict})

@@ -21,28 +21,34 @@ class ProjectPhotoForm(forms.ModelForm):
 
 
 class ProjectForm(forms.Form):
-
     # TODO: need a google address autocompeletion/correction
-    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Who you are?"))
-    project_name = forms.CharField(label=__('Project Name'), max_length=100)
-    first_name = forms.CharField(label=__('Your First Name'), max_length=64)
-    last_name = forms.CharField(label=__('Your Last Name'), max_length=64)
-    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type'), required=False)
-    street_address = forms.CharField(label=__('Street Address'))
-    street_address2 = forms.CharField(required=False,
-                                      widget=forms.TextInput(attrs={'placeholder': __("Apt #,Suite #,...")}))
-    county = forms.CharField(label=__('County/City'), max_length=64)
-    state = forms.CharField(label=__('State'), max_length=64)
-    zipcode = forms.CharField(label=__('Zip Code'), max_length=10)
+    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Choose your idenity*"))
+    project_name = forms.CharField(label=__('Choose a name for your project*'), max_length=100)
+    first_name = forms.CharField(label=__("Homeowner's First Name*"), max_length=64)
+    last_name = forms.CharField(label=__("Honemowner's Last Name*"), max_length=64)
+    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type*'), required=False)
+    project_description = forms.CharField(label=__('Tell us more about your project'), required=False,
+                                          widget=forms.Textarea(
+                                              attrs={'placeholder': __(
+                                                  '(Optional) Please briefly describe your project.')}))
+    street_address = forms.CharField(label=__('Street Address*'))
+    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
+    county = forms.CharField(label=__('County/City*'), max_length=64)
+    state = forms.CharField(label=__('State*'), max_length=64)
+    zipcode = forms.CharField(label=__('Zip Code*'), max_length=10)
     # country = forms.CharField(label=__('Country'), max_length=10)
     # TODO: need to add a calender widget
-    start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget())
-    end_date = forms.DateField(label=__('End Date'), widget=forms.SelectDateWidget())
-    project_description = forms.CharField(label=__('Project Description'), required=False, widget=forms.Textarea(
-        attrs={'placeholder': __('(Optional) Please briefly describe your project')}))
+    start_date = forms.DateField(label=__('Start Date*'), widget=forms.SelectDateWidget())
+    end_date = forms.DateField(label=__('End Date*'), widget=forms.SelectDateWidget())
+
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)
-    project_attachment = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
-    project_photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    project_attachment = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
+        help_text=__('upload any documents or contracts that might be helpful in explaining your project brief here.'))
+    project_photo = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
+        help_text=__('upload any photos that might be helpful in explaining your project brief here.'))
     # project_status = forms.CharField(label=__('Project Status'),)
     # professional_type = forms.CharField(label=__('Project Type'))
     # lic_id = forms.CharField(label=__('Lic Id'))
@@ -71,8 +77,8 @@ class ProjectForm(forms.Form):
 
 
 class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"), required=False)
-    homeowner_hoome_id = forms.CharField(label=__("Homeowner Hoome ID"), required=False)
+    professional_hoome_id = forms.CharField(label=__("Enter the Professional's Hoome ID*"), required=False)
+    homeowner_hoome_id = forms.CharField(label=__("Enter the Homeowner's Hoome ID*"), required=False)
 
 
 # class ProjectFormAfterLogin(ProjectForm):
@@ -81,3 +87,27 @@ class ProjectFormDirectCreate(ProjectForm):
 
 class MilestoneForm(forms.Form):
     amount = forms.IntegerField(min_value=0, required=True)
+#
+# class MilestoneBaseFormSet(forms.formset.BaseFormSet):
+#     def clean(self):
+#         if any(self.errors):
+#             return
+#
+#         for form in self.froms:
+#             if form.cleaned_data:
+#                 amount = form.cleaned_data['amount']
+#                 try:
+#                     int(amount)
+#                 except:
+#                     raise forms.ValidationError(
+#                         'Amount must a number',
+#                         code='not a number '
+#                     )
+#                 if amount > 0:
+#                     pass
+#                 else:
+#                     raise forms.ValidationError(
+#                         'Amount must a number greater than 0',
+#                         code='negative number '
+#                     )
+
