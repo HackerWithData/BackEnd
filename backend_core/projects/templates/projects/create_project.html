@@ -527,6 +527,8 @@
                     {% endif %}
                 {% endwith %}
 
+                {#    milestone-form#}
+                {{ info_dict.milestone_formset.management_form }}
                 <h1 class="section-title">{{ Milestone }}</h1>
                 <br>
                 {% if milestone_form.non_form_errors %}
@@ -539,49 +541,39 @@
                         <th>{{ Milestone_Number }}</th>
                         <th>{{ Amount }}</th>
                     </tr>
-                    {#                    <span class="input-group-btn hide">#}
-                    <button class="btn btn-success btn-default" type="button">
-                        {{ Create_Milestone }}
-                    </button>
-                    <br>
-                    <br>
-                    {#                        </span>#}
-                    {{ info_dict.milestone_formset.management_form }}
-                    {#                    {% for milestone_form in info_dict.milestone_formset %}#}
+                    {% for milestone_form in info_dict.milestone_formset %}
 
-                    {#                        <tr class="milestone-formset">#}
-                    {#                            <td>{{ forloop.counter }}</td>#}
-                    {#                            <td>#}
-                    {#                                {% if milestone_form.amount.errors %}#}
-                    {#                                    {% for error in milestone_form.amount.errors %}#}
-                    {#                                        {{ error|escape }}#}
-                    {#                                    {% endfor %}#}
-                    {#                                {% endif %}#}
-                    {#                                <div class="form-inline">#}
-                    {#                                    <label class="sr-only"#}
-                    {#                                           for="id_{{ milestone_form.amount.name }}">{{ milestone_form.amount.label }}</label>#}
-                    {#                                    <div class="input-group">#}
-                    {#                                        <div class="input-group-addon">$</div>#}
-                    {#                                        {{ milestone_form.amount|attr:"class:form-control " }}#}
-                    {#                                        <div class="input-group-addon">.00</div>#}
-                    {#                                        <span class="input-group-btn ">#}
-                    {#                                                                    <button class="btn btn-danger btn-default"#}
-                    {#                                                                            type="button">#}
-                    {#                                                                        <span class=" glyphicon glyphicon-minus"></span>#}
-                    {#                                                                    </button>#}
-                    {#                                                                    </span>#}
-                    {#                                    </div>#}
-                    {#                                    <p class="help-block">#}
-                    {#                                        <small>{{ milestone_form.amount.help_text }}</small>#}
-                    {#                                    </p>#}
-                    {#                                </div>#}
-                    {#                            </td>#}
-                    {#                        </tr>#}
-
-                    {#                    {% endfor %}#}
+                        <tr class="milestone-formset">
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                {% if milestone_form.amount.errors %}
+                                    {% for error in milestone_form.amount.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="form-inline">
+                                    <label class="sr-only"
+                                           for="id_{{ milestone_form.amount.name }}">{{ milestone_form.amount.label }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                        {{ milestone_form.amount|attr:"class:form-control " }}
+                                        <span class="input-group-btn ">
+                                            <button class="btn btn-success btn-default" type="button">
+                                                <span class=" glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <p class="help-block">
+                                        <small>{{ milestone_form.amount.help_text }}</small>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                        <br>
+                    {% endfor %}
                 </table>
 
-
+                <br>
                 <br>
                 <script src='https://www.google.com/recaptcha/api.js'></script>
                 <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
@@ -593,6 +585,7 @@
     <script>
         $("#id_created_by_1").prop("checked", true);
 
+
         function addForm(index, form_count) {
             var content_html =
                 '<tr class="milestone-formset">' +
@@ -603,8 +596,10 @@
                 '<div class="input-group">' +
                 '<div class="input-group-addon">$</div>' +
                 '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="0">' +
-                '<div class="input-group-addon">.00</div>' +
                 '<span class="input-group-btn">' +
+                '<button class="btn btn-success btn-default" type="button">' +
+                '<span class=" glyphicon glyphicon-plus"></span>' +
+                '</button>' +
                 '<button class="btn btn-danger btn-default" type="button">' +
                 '<span class=" glyphicon glyphicon-minus"></span>' +
                 '</button>' +
@@ -616,53 +611,48 @@
                 '</div>' +
                 '</td>' +
                 '</tr>'
-            {#            if (index > 1) {#}
-            {#                $('#milestone tr:nth-of-type(2) .input-group-btn').removeClass('hide');#}
-            {#            } else {#}
-            {#                if (!$('#milestone tr:nth-of-type(2) .input-group-btn').hasClass('hide')) {#}
-            {#                    $('#milestone tr:nth-of-type(2) .input-group-btn').addClass('hide');#}
-            {#                }#}
-            {##}
-            {#            }#}
-            {#            $('#milestone tr:last button').removeClass('btn-success').addClass('btn-danger');#}
-            {#            $('#milestone tr:last button span').removeClass('glyphicon-plus').addClass('glyphicon-minus');#}
+
             $('#milestone tr:last').after(content_html);
+            $('#milestone tr:nth-of-type(' + (index) + ') span.input-group-btn').remove();
         }
 
-        function hideth() {
-            var index = document.getElementById('milestone').getElementsByTagName("tr").length;
-            if (index == 1) {
-                $('#milestone tr:nth-of-type(1)').addClass('hide');
-            } else {
-                if ($('#milestone tr:nth-of-type(1)').hasClass('hide')) {
-                    $('#milestone tr:nth-of-type(1)').removeClass('hide');
-                }
-
-            }
-        }
-
-        hideth();
+        const input_group_btn = '<span class="input-group-btn">' +
+            '<button class="btn btn-success btn-default" type="button">' +
+            '<span class=" glyphicon glyphicon-plus"></span>' +
+            '</button>' +
+            '<button class="btn btn-danger btn-default" type="button">' +
+            '<span class=" glyphicon glyphicon-minus"></span>' +
+            '</button>' +
+            '</span>'
 
         function removeForm(obj) {
+            if ($(obj).closest("tr").is(":last-child")) {
+                if ($(obj).closest("tr").is(":nth-child(3)")) {
+                    $(obj).closest('tr').prev('tr').find('.input-group input').after('<span class="input-group-btn">' +
+                        '<button class="btn btn-success btn-default" type="button">' +
+                        '<span class=" glyphicon glyphicon-plus"></span>' +
+                        '</button>');
+                }
+                else {
+                    $(obj).closest('tr').prev('tr').find('.input-group input').after(input_group_btn);
+                }
+            }
             obj.closest('tr').remove();
-            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
-            var count = 1;
             $('#milestone .milestone-formset').each(function (index) {
                 $(this).find('td').first().html(index + 1);
             })
         }
 
-        var form_count = 0;
-        $('.btn.btn-success.btn-default').on('click', function () {
-            form_count++;
+        $('#milestone').on('click', '.btn.btn-success.btn-default', function () {
+
             var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
-            addForm(rows, form_count);
-            hideth();
+            addForm(rows, rows - 1);
+            {#            hideth();#}
         })
 
         $('#milestone').on('click', '.btn.btn-danger.btn-default', function () {
             removeForm($(this));
-            hideth();
+            {#            hideth();#}
         })
 
     </script>

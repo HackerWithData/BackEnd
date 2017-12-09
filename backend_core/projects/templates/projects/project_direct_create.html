@@ -632,10 +632,6 @@
                         <th>{{ Milestone_Number }}</th>
                         <th>{{ Amount }}</th>
                     </tr>
-                    {#                    <span class="input-group-btn hide">#}
-
-                    {#                        </span>#}
-
                     {% for milestone_form in info_dict.milestone_formset %}
 
                         <tr class="milestone-formset">
@@ -652,12 +648,7 @@
                                     <div class="input-group">
                                         <div class="input-group-addon">$</div>
                                         {{ milestone_form.amount|attr:"class:form-control " }}
-                                        <div class="input-group-addon">.00</div>
                                         <span class="input-group-btn ">
-                                            <button class="btn btn-danger btn-default"
-                                                    type="button">
-                                                <span class=" glyphicon glyphicon-minus"></span>
-                                            </button>
                                             <button class="btn btn-success btn-default" type="button">
                                                 <span class=" glyphicon glyphicon-plus"></span>
                                             </button>
@@ -684,12 +675,7 @@
     </div>
     <script>
         {#    TODO: need to write a more generic one#}
-{#        {{   info_dict.project_form.created_by  }}#}
-{#        {% if info_dict.project_form == '' %}#}
-{#            $("#id_created_by_1").prop("checked", true);#}
-{#        {% else %}#}
-{#            $("#id_created_by_0").prop("checked", true);#}
-{#        {% endif %}#}
+
         function addForm(index, form_count) {
             var content_html =
                 '<tr class="milestone-formset">' +
@@ -700,13 +686,12 @@
                 '<div class="input-group">' +
                 '<div class="input-group-addon">$</div>' +
                 '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="0">' +
-                '<div class="input-group-addon">.00</div>' +
                 '<span class="input-group-btn">' +
-                '<button class="btn btn-danger btn-default" type="button">' +
-                '<span class=" glyphicon glyphicon-minus"></span>' +
-                '</button>' +
                 '<button class="btn btn-success btn-default" type="button">' +
                 '<span class=" glyphicon glyphicon-plus"></span>' +
+                '</button>' +
+                '<button class="btn btn-danger btn-default" type="button">' +
+                '<span class=" glyphicon glyphicon-minus"></span>' +
                 '</button>' +
                 '</span>' +
                 '</div>' +
@@ -716,57 +701,48 @@
                 '</div>' +
                 '</td>' +
                 '</tr>'
-            {#            if (index > 1) {#}
-            {#                $('#milestone tr:nth-of-type(2) .input-group-btn').removeClass('hide');#}
-            {#            } else {#}
-            {#                if (!$('#milestone tr:nth-of-type(2) .input-group-btn').hasClass('hide')) {#}
-            {#                    $('#milestone tr:nth-of-type(2) .input-group-btn').addClass('hide');#}
-            {#                }#}
-            {##}
-            {#            }#}
-            {#            $('#milestone tr:last button').removeClass('btn-success').addClass('btn-danger');#}
-            {#            $('#milestone tr:last button span').removeClass('glyphicon-plus').addClass('glyphicon-minus');#}
+
             $('#milestone tr:last').after(content_html);
-            $('#milestone tr:nth-of-type('+(index)+') .btn.btn-success.btn-default').remove();
+            $('#milestone tr:nth-of-type(' + (index) + ') span.input-group-btn').remove();
         }
 
-        function hideth() {
-            var index = document.getElementById('milestone').getElementsByTagName("tr").length;
-            if (index == 1) {
-                $('#milestone tr:nth-of-type(1)').addClass('hide');
-            } else {
-                if ($('#milestone tr:nth-of-type(1)').hasClass('hide')) {
-                    $('#milestone tr:nth-of-type(1)').removeClass('hide');
-                }
-
-            }
-        }
-
-        hideth();
+        const input_group_btn = '<span class="input-group-btn">' +
+            '<button class="btn btn-success btn-default" type="button">' +
+            '<span class=" glyphicon glyphicon-plus"></span>' +
+            '</button>' +
+            '<button class="btn btn-danger btn-default" type="button">' +
+            '<span class=" glyphicon glyphicon-minus"></span>' +
+            '</button>' +
+            '</span>'
 
         function removeForm(obj) {
             if ($(obj).closest("tr").is(":last-child")) {
-                $(obj).closest('tr').prev('tr').find('button').after('<button class="btn btn-success btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>');
+                if ($(obj).closest("tr").is(":nth-child(3)")) {
+                    $(obj).closest('tr').prev('tr').find('.input-group input').after('<span class="input-group-btn">' +
+                        '<button class="btn btn-success btn-default" type="button">' +
+                        '<span class=" glyphicon glyphicon-plus"></span>' +
+                        '</button>');
+                }
+                else {
+                    $(obj).closest('tr').prev('tr').find('.input-group input').after(input_group_btn);
+                }
             }
             obj.closest('tr').remove();
-            {#            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;#}
-            {#            var count = 1;#}
             $('#milestone .milestone-formset').each(function (index) {
                 $(this).find('td').first().html(index + 1);
             })
         }
 
-        var form_count = 0;
         $('#milestone').on('click', '.btn.btn-success.btn-default', function () {
-            form_count++;
+
             var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
-            addForm(rows, form_count);
-            hideth();
+            addForm(rows, rows - 1);
+            {#            hideth();#}
         })
 
         $('#milestone').on('click', '.btn.btn-danger.btn-default', function () {
             removeForm($(this));
-            hideth();
+            {#            hideth();#}
         })
 
         function check_identity(identity) {

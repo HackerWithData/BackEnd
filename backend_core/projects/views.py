@@ -278,8 +278,8 @@ def create_project(request, professional_type, lic_id):
         if request.method == "GET":
             milestone_formset = MilestoneFormSet()
             project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name,
-                                                'start_date': datetime.datetime.today()})
+                                                'last_name': request.user.last_name})
+            # 'start_date': datetime.datetime.today()
         elif request.method == "POST":
             project_form = ProjectForm(request.POST, request.FILES)
             milestone_formset = MilestoneFormSet(request.POST)
