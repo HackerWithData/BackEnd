@@ -78,9 +78,11 @@ def submit_review(request, o_id):
                 instance.save()
         else:
             pass
+        request.session.pop('review_form', None)
         # TODO: redirect the sucess url and add bootstrap messages: success
         return redirect(request.path)
     else:
+        request.session.update({'review_form': review_form.data})
         return redirect(request.path)
 
 
@@ -154,13 +156,17 @@ class ContractorDetail(View):
 
         # other situation
         user_rating_form = UserRatingForm()
-        if request.user.is_authenticated:
-            review_form = ReviewForm(initial={'first_name': request.user.first_name,
-                                              'last_name': request.user.last_name,
-                                              'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+        review_form = request.session.get('review_form', None)
+        if review_form is None:
+            if request.user.is_authenticated:
+                review_form = ReviewForm(initial={'first_name': request.user.first_name,
+                                                  'last_name': request.user.last_name,
+                                                  'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+            else:
+                review_form = ReviewForm(initial={
+                    'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
         else:
-            review_form = ReviewForm(initial={
-                'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+            review_form = ReviewForm(review_form)
 
         # TODO: specialization
         # preferred_project_type = 'house remodel'
