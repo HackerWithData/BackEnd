@@ -26,7 +26,7 @@ class ProjectForm(forms.Form):
     project_name = forms.CharField(label=__('Choose a name for your project*'), max_length=100)
     first_name = forms.CharField(label=__("Homeowner's First Name*"), max_length=64)
     last_name = forms.CharField(label=__("Honemowner's Last Name*"), max_length=64)
-    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type*'), required=False)
+    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type*'))
     project_description = forms.CharField(label=__('Tell us more about your project'), required=False,
                                           widget=forms.Textarea(
                                               attrs={'placeholder': __(
@@ -41,7 +41,8 @@ class ProjectForm(forms.Form):
     # TODO: need to add a calender widget
     start_date = forms.DateField(label=__('Start Date*'), widget=forms.SelectDateWidget())
     end_date = forms.DateField(label=__('End Date*'), widget=forms.SelectDateWidget())
-
+    # project_cost = forms.IntegerField(label=__('Total Project Cost shown in Contract*'),min_value=0, required=True)
+    contract_price = forms.IntegerField(label=__('Contract Price*'), min_value=0)
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)
     project_attachment = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
@@ -49,6 +50,7 @@ class ProjectForm(forms.Form):
     project_photo = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
         help_text=__('upload any photos that might be helpful in explaining your project brief here.'))
+
     # project_status = forms.CharField(label=__('Project Status'),)
     # professional_type = forms.CharField(label=__('Project Type'))
     # lic_id = forms.CharField(label=__('Lic Id'))
@@ -64,7 +66,8 @@ class ProjectForm(forms.Form):
                           state=self.cleaned_data['state'],
                           zipcode=self.cleaned_data['zipcode'],
                           # country=project_form.cleaned_data['country'],
-                          # cost=project_form.cleaned_data['project_cost'],
+                          # project_cost=self.cleaned_data['project_cost'],
+                          contract_price=self.cleaned_data['contract_price'],
                           start_date=self.cleaned_data['start_date'],
                           end_date=self.cleaned_data['end_date'],
                           project_description=self.cleaned_data['project_description'],
@@ -77,7 +80,7 @@ class ProjectForm(forms.Form):
 
 
 class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Enter the Professional's Hoome ID*"), required=False)
+    professional_hoome_id = forms.CharField(label=__("Enter the Contractor/Meister's Hoome ID*"), required=False)
     homeowner_hoome_id = forms.CharField(label=__("Enter the Homeowner's Hoome ID*"), required=False)
 
 
@@ -87,6 +90,7 @@ class ProjectFormDirectCreate(ProjectForm):
 
 class MilestoneForm(forms.Form):
     amount = forms.IntegerField(min_value=0, required=True)
+
 #
 # class MilestoneBaseFormSet(forms.formset.BaseFormSet):
 #     def clean(self):
@@ -110,4 +114,3 @@ class MilestoneForm(forms.Form):
 #                         'Amount must a number greater than 0',
 #                         code='negative number '
 #                     )
-

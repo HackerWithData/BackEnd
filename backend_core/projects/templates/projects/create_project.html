@@ -34,6 +34,19 @@
         .form-horizontal .control-label {
             text-align: left;
         }
+
+        .form-horizontal .col-sm-10 {
+            padding-left: 10px;
+        }
+
+        #milestone .btn.btn-default {
+            padding: 0 12px;
+            height: 34px;
+        }
+
+        #milestone tr td:first-of-type, #milestone tr th:first-of-type {
+            width: 160px;
+        }
     </style>
 {% endblock %}
 {% block header %}
@@ -43,7 +56,6 @@
         <form method="post" enctype="multipart/form-data" class="form-horizontal" role="form"
               action="">
             {% csrf_token %}
-
             {% with form=info_dict.project_form %}
                 <h1 class="section-title">{% trans 'Tell us what you need done' %}</h1>
                 <br/>
@@ -54,86 +66,25 @@
                     </div>
                 {% endfor %}
 
-
-
                 {#                                created_by#}
-                <div class="hide">
-                    {% with field=form.created_by %}
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            <div class="col-sm-10">
-                                {{ field }}
-                                {% if field.help_text %}
-                                    <p class="help-block">
-                                        <small>{{ field.help_text }}</small>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endwith %}
+                <div class="form-group hide">
+                    <label class="col-sm-2 control-label" for="id_created_by">Choose your idenity*</label>
+                    <div class="col-sm-10">
+                        <ul id="id_created_by">
+                            <li><label for="id_created_by_0"><input type="radio" name="created_by" value="PROFESSIONAL"
+                                                                    required="" id="id_created_by_0">
+                                {% trans 'Contractor/Meister' %}</label>
+
+                            </li>
+                            <li><label for="id_created_by_1"><input type="radio" name="created_by" value="CONSUMER"
+                                                                    required="" id="id_created_by_1">
+                                {{ Homeowner }}</label>
+
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-
-                {#                <div class="professional_hoome_id_wrapper hide">#}
-                {#                                professional_hoome_id#}
-                {#                    {% with field=form.professional_hoome_id %}#}
-                {#                        {% if field.errors %}#}
-                {#                            <div class="form-group has-error">#}
-                {#                                <label class="col-sm-2 control-label"#}
-                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
-                {#                                <div class="col-sm-10">#}
-                {#                                    {{ field|attr:"class:form-control" }}#}
-                {#                                    <span class="help-block">#}
-                {#                        {% for error in  field.errors %}{{ error }}{% endfor %}#}
-                {#                                    </span>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        {% else %}#}
-                {#                            <div class="form-group">#}
-                {#                                <label class="col-sm-2 control-label"#}
-                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
-                {#                                <div class="col-sm-10">#}
-                {#                                    {{ field|attr:"class:form-control" }}#}
-                {#                                    {% if field.help_text %}#}
-                {#                                        <p class="help-block">#}
-                {#                                            <small>{{ field.help_text }}</small>#}
-                {#                                        </p>#}
-                {#                                    {% endif %}#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        {% endif %}#}
-                {#                    {% endwith %}#}
-                {#                </div>#}
-                {#                <div class="homeowner_hoome_id_wrapper hide">#}
-                {#                                homeowner_hoome_id#}
-                {#                    {% with field=form.homeowner_hoome_id %}#}
-                {#                        {% if field.errors %}#}
-                {#                            <div class="form-group has-error">#}
-                {#                                <label class="col-sm-2 control-label"#}
-                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
-                {#                                <div class="col-sm-10">#}
-                {#                                    {{ field|attr:"class:form-control" }}#}
-                {#                                    <span class="help-block">#}
-                {#                        {% for error in  field.errors %}{{ error }}{% endfor %}#}
-                {#                    </span>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        {% else %}#}
-                {#                            <div class="form-group">#}
-                {#                                <label class="col-sm-2 control-label"#}
-                {#                                       for="id_{{ field.name }}">{{ field.label }}</label>#}
-                {#                                <div class="col-sm-10">#}
-                {#                                    {{ field|attr:"class:form-control" }}#}
-                {#                                    {% if field.help_text %}#}
-                {#                                        <p class="help-block">#}
-                {#                                            <small>{{ field.help_text }}</small>#}
-                {#                                        </p>#}
-                {#                                    {% endif %}#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        {% endif %}#}
-                {#                    {% endwith %}#}
-                {#                </div>#}
-
 
                 {#                                project_name#}
                 {% with field=form.project_name %}
@@ -242,8 +193,9 @@
                         </div>
                     {% endif %}
                 {% endwith %}
-                {#                start_date#}
-                {% with field=form.start_date %}
+
+                {#                contract_price#}
+                {% with field=form.contract_price %}
                     {% if field.errors %}
                         <div class="form-group has-error">
                             <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
@@ -252,6 +204,33 @@
                                 <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}
                     </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                {% if field.help_text %}
+                                    <p class="help-block">
+                                        <small>{{ field.help_text }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {#                start_date#}
+                {% with field=form.start_date %}
+                    {% if field.errors %}
+                        <div class="form-inline has-error">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                            </span>
                             </div>
                         </div>
                     {% else %}
@@ -272,7 +251,7 @@
                 {#                end_date#}
                 {% with field=form.end_date %}
                     {% if field.errors %}
-                        <div class="form-group has-error">
+                        <div class="form-inline has-error">
                             <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
@@ -529,8 +508,8 @@
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
+                                    {% for error in  field.errors %}{{ error }}{% endfor %}
+                                </span>
                             </div>
                         </div>
                     {% else %}
@@ -548,6 +527,62 @@
                     {% endif %}
                 {% endwith %}
 
+                <h1 class="section-title">{{ Milestone }}</h1>
+                <br>
+                {% if milestone_form.non_form_errors %}
+                    {% for error in milestone_form.non_form_errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                <table id='milestone' width="100%">
+                    <tr>
+                        <th>{{ Milestone_Number }}</th>
+                        <th>{{ Amount }}</th>
+                    </tr>
+                    {#                    <span class="input-group-btn hide">#}
+                    <button class="btn btn-success btn-default" type="button">
+                        {{ Create_Milestone }}
+                    </button>
+                    <br>
+                    <br>
+                    {#                        </span>#}
+                    {{ info_dict.milestone_formset.management_form }}
+                    {#                    {% for milestone_form in info_dict.milestone_formset %}#}
+
+                    {#                        <tr class="milestone-formset">#}
+                    {#                            <td>{{ forloop.counter }}</td>#}
+                    {#                            <td>#}
+                    {#                                {% if milestone_form.amount.errors %}#}
+                    {#                                    {% for error in milestone_form.amount.errors %}#}
+                    {#                                        {{ error|escape }}#}
+                    {#                                    {% endfor %}#}
+                    {#                                {% endif %}#}
+                    {#                                <div class="form-inline">#}
+                    {#                                    <label class="sr-only"#}
+                    {#                                           for="id_{{ milestone_form.amount.name }}">{{ milestone_form.amount.label }}</label>#}
+                    {#                                    <div class="input-group">#}
+                    {#                                        <div class="input-group-addon">$</div>#}
+                    {#                                        {{ milestone_form.amount|attr:"class:form-control " }}#}
+                    {#                                        <div class="input-group-addon">.00</div>#}
+                    {#                                        <span class="input-group-btn ">#}
+                    {#                                                                    <button class="btn btn-danger btn-default"#}
+                    {#                                                                            type="button">#}
+                    {#                                                                        <span class=" glyphicon glyphicon-minus"></span>#}
+                    {#                                                                    </button>#}
+                    {#                                                                    </span>#}
+                    {#                                    </div>#}
+                    {#                                    <p class="help-block">#}
+                    {#                                        <small>{{ milestone_form.amount.help_text }}</small>#}
+                    {#                                    </p>#}
+                    {#                                </div>#}
+                    {#                            </td>#}
+                    {#                        </tr>#}
+
+                    {#                    {% endfor %}#}
+                </table>
+
+
+                <br>
                 <script src='https://www.google.com/recaptcha/api.js'></script>
                 <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
                 <br/>
@@ -557,5 +592,78 @@
     </div>
     <script>
         $("#id_created_by_1").prop("checked", true);
+
+        function addForm(index, form_count) {
+            var content_html =
+                '<tr class="milestone-formset">' +
+                '<td>' + index + '</td>' +
+                '<td>' +
+                '<div class="form-inline">' +
+                '<label class="sr-only" for="id_amount">Amount</label>' +
+                '<div class="input-group">' +
+                '<div class="input-group-addon">$</div>' +
+                '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="0">' +
+                '<div class="input-group-addon">.00</div>' +
+                '<span class="input-group-btn">' +
+                '<button class="btn btn-danger btn-default" type="button">' +
+                '<span class=" glyphicon glyphicon-minus"></span>' +
+                '</button>' +
+                '</span>' +
+                '</div>' +
+                '<p class="help-block">' +
+                '<small></small>' +
+                '</p>' +
+                '</div>' +
+                '</td>' +
+                '</tr>'
+            {#            if (index > 1) {#}
+            {#                $('#milestone tr:nth-of-type(2) .input-group-btn').removeClass('hide');#}
+            {#            } else {#}
+            {#                if (!$('#milestone tr:nth-of-type(2) .input-group-btn').hasClass('hide')) {#}
+            {#                    $('#milestone tr:nth-of-type(2) .input-group-btn').addClass('hide');#}
+            {#                }#}
+            {##}
+            {#            }#}
+            {#            $('#milestone tr:last button').removeClass('btn-success').addClass('btn-danger');#}
+            {#            $('#milestone tr:last button span').removeClass('glyphicon-plus').addClass('glyphicon-minus');#}
+            $('#milestone tr:last').after(content_html);
+        }
+
+        function hideth() {
+            var index = document.getElementById('milestone').getElementsByTagName("tr").length;
+            if (index == 1) {
+                $('#milestone tr:nth-of-type(1)').addClass('hide');
+            } else {
+                if ($('#milestone tr:nth-of-type(1)').hasClass('hide')) {
+                    $('#milestone tr:nth-of-type(1)').removeClass('hide');
+                }
+
+            }
+        }
+
+        hideth();
+
+        function removeForm(obj) {
+            obj.closest('tr').remove();
+            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
+            var count = 1;
+            $('#milestone .milestone-formset').each(function (index) {
+                $(this).find('td').first().html(index + 1);
+            })
+        }
+
+        var form_count = 0;
+        $('.btn.btn-success.btn-default').on('click', function () {
+            form_count++;
+            var rows = document.getElementById('milestone').getElementsByTagName("tr").length;
+            addForm(rows, form_count);
+            hideth();
+        })
+
+        $('#milestone').on('click', '.btn.btn-danger.btn-default', function () {
+            removeForm($(this));
+            hideth();
+        })
+
     </script>
 {% endblock %}

@@ -38,9 +38,7 @@ PROJECT_STATUS = (
 
 REMODEL = "R"
 NEW_BUILT = "N"
-PROJECT_TYPE = (
-    ("", 'N/A'),
-    (REMODEL, __('REMODEL')),
+PROJECT_TYPE = ((REMODEL, __('REMODEL')),
     (NEW_BUILT, __("NEW BUILT HOUSE")),
 )
 
