@@ -334,7 +334,7 @@ def create_project_direct(request):
         project_form = ProjectFormDirectCreate()
 
     elif request.method == "POST":
-        print(request.POST)
+        # print(request.POST)
         project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
@@ -360,5 +360,7 @@ def create_project_direct(request):
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url
             return redirect(success_url)
-    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
+    form_errors = project_form.error_info()
+
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset,'form_errors': form_errors}
     return render(request, template_name, {'info_dict': info_dict})
