@@ -284,13 +284,14 @@
                                         </div>
                                     </div>
                                 </li>
-                            <li><a class="create-project desktop" href="{% url 'create_project_direct' %}">
-                                <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
-                            </a></li>
+
                                 {#                            <li><a href="{% url 'account_logout' %}" >Log Out</a></li>#}
                             {% else %}
                                 <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                             {% endif %}
+                            <li><a class="create-project desktop" href="{% url 'create_project_direct' %}">
+                                <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
+                            </a></li>
                         </ul>
                     </div>
                     <!--/.navbar-collapse-->

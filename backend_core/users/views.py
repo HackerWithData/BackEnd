@@ -264,6 +264,7 @@ class Signup(SignupView):
         # TODO: there is a better way to add hoome_id
         self.user = form.save(self.request)
         self.user.hoome_id = generate_random_hoome_id()
+        self.user.username = self.user.hoome_id
         self.user.save()
         try:
             response = complete_signup(
