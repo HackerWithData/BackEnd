@@ -111,14 +111,14 @@ class ProjectFormDirectCreate(ProjectForm):
                     raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"), code='professional_hoome_id_error')
         return cleaned_data
 
-    def error_info(self):
-        e = self.errors.as_data()
-        errors = e.get('__all__', None)
-        form_errors = {}
-        if errors is not None:
-            for error in errors:
-                form_errors.update({error.code: error.message})
-        return form_errors
+    # def error_info(self):
+    #     e = self.errors.as_data()
+    #     errors = e.get('__all__', None)
+    #     form_errors = {}
+    #     if errors is not None:
+    #         for error in errors:
+    #             form_errors.update({error.code: error.message})
+    #     return form_errors
 
 # class ProjectFormAfterLogin(ProjectForm):
 #     professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))

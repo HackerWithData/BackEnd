@@ -96,17 +96,22 @@
                 {#                    {% endif %}#}
                 {#                {% endwith %}#}
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="id_created_by">Choose your idenity*</label>
+
+                <div class="form-group {% if user.is_authenticated %} hide {% endif %}">
+                    <label class="col-sm-2 control-label"
+                           for="id_created_by">{% trans 'Choose your idenity*' %}</label>
                     <div class="col-sm-10">
                         <ul id="id_created_by">
-                            <li><label for="id_created_by_0"><input type="radio" name="created_by" value="PROFESSIONAL"
-                                                                    required="" id="id_created_by_0">
+                            <li><label for="id_created_by_0"><input type="radio" name="created_by"
+                                                                    value="PROFESSIONAL"
+                                                                    required="" id="id_created_by_0"
+                                                                    {% if request.POST.created_by == "PROFESSIONAL" %}checked="checked"{% endif %}>
                                 {% trans 'Contractor/Meister' %}</label>
 
                             </li>
                             <li><label for="id_created_by_1"><input type="radio" name="created_by" value="CONSUMER"
-                                                                    required="" id="id_created_by_1">
+                                                                    required="" id="id_created_by_1"
+                                                                    {% if request.POST.created_by == "CONSUMER" %}checked="checked"{% endif %}>
                                 {{ Homeowner }}</label>
 
                             </li>
@@ -114,6 +119,7 @@
 
                     </div>
                 </div>
+
 
                 <div class="professional_hoome_id_wrapper hide">
                     {#                                professional_hoome_id#}
@@ -126,6 +132,7 @@
                                     {{ field|attr:"class:form-control" }}
                                     <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}
+{#                                     {{ info_dict.form_errors.professional_hoome_id_error }}#}
                                     </span>
                                 </div>
                             </div>
@@ -157,7 +164,8 @@
                                     {{ field|attr:"class:form-control" }}
                                     <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}
-                    </span>
+{#                    {{ info_dict.form_errors.homeowner_hoome_id_error }}#}
+                                    </span>
                                 </div>
                             </div>
                         {% else %}
@@ -676,6 +684,11 @@
     <script>
         {#    TODO: need to write a more generic one#}
 
+        {% if user.role == "CONSUMER" %}
+            $("#id_created_by_1").prop("checked", true);
+        {% elif user.role == "PROFESSIONAL" %}
+            $("#id_created_by_0").prop("checked", true);
+        {% endif %}
         function addForm(index, form_count) {
             var content_html =
                 '<tr class="milestone-formset">' +
@@ -685,7 +698,7 @@
                 '<label class="sr-only" for="id_amount">Amount</label>' +
                 '<div class="input-group">' +
                 '<div class="input-group-addon">$</div>' +
-                '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="0">' +
+                '<input type="number" name="form-' + form_count + '-amount" id="id_form-' + form_count + '-amount" class="form-control " min="500">' +
                 '<span class="input-group-btn">' +
                 '<button class="btn btn-success btn-default" type="button">' +
                 '<span class=" glyphicon glyphicon-plus"></span>' +
@@ -745,6 +758,22 @@
             {#            hideth();#}
         })
 
+
+        $(document).ready(function () {
+            identity = check_identity(identity);
+            $("#id_created_by input").click(function () {
+                identity = check_identity(identity);
+            })
+
+            $("button.btn.btn-hoome").click(function () {
+                if (!(localStorage.getItem("role") === null)) {
+                    localStorage.removeItem("role");
+                }
+                localStorage.setItem("role", identity);
+            });
+        })
+        var identity;
+
         function check_identity(identity) {
             if ($("#id_created_by_0").is(':checked')) {
                 $(".homeowner_hoome_id_wrapper").removeClass('hide');
@@ -762,23 +791,5 @@
                 return $("#id_created_by_1").val();
             }
         }
-
-        $(document).ready(function () {
-            var identity;
-            {#            changeformset();#}
-
-            identity = check_identity(identity);
-            $("#id_created_by input").click(function () {
-                identity = check_identity(identity);
-            })
-
-            $("button.btn.btn-hoome").click(function () {
-                if (!(localStorage.getItem("role") === null)) {
-                    localStorage.removeItem("role");
-                }
-                localStorage.setItem("role", identity);
-            });
-        })
-
     </script>
 {% endblock %}

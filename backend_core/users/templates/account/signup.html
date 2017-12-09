@@ -206,6 +206,10 @@
                                     <option value="CONSUMER" selected>{% trans 'Consumer' %}</option>
                                 </select>
                             </div>
+                            {#                            {% if redirect_field_value %}#}
+                            {#                                <input type="hidden" name="{{ redirect_field_name }}"#}
+                            {#                                       value="{{ redirect_field_value }}"/>#}
+                            {#                            {% endif %}#}
                             <p><input type="password" name="password1" required=""
                                       placeholder="{% trans 'Password' %}" id="id_password1"></p>
                             <p><input type="password" name="password2" required=""
@@ -217,6 +221,8 @@
                         <br/>
                         <div class="text-right">{% trans 'Already on Hoome?' %} <a
                                 href="
+
+
                                         {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Log in' %} </a>
                         </div>
                     </div>

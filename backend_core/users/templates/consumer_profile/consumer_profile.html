@@ -8,6 +8,7 @@
         <form class="consumer-profile-form" id="consumerProfileEditForm" method="post"
               action="{% url 'account_consumer_profile' %}">
             {% csrf_token %}
+            <label for="id_hoome_id">Hoome id:</label> <span id="id_hoome_id">{{ user.hoome_id }}</span>
             {{ form.as_p }}
             <button class="btn btn-hoome" type="submit">{% trans "Submit" %}</button>
         </form>

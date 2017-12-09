@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import datetime
 
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, reverse
@@ -11,43 +10,20 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as __, ugettext as _
+from django.utils.translation import ugettext_lazy as __
+from django.forms.formsets import formset_factory
+# from django.contrib.auth import (logout as django_logout)
 
+from users.utils import CONSUMER, PROFESSIONAL
+from users.user_helpers import get_professional_user, get_user_by_hoome_id
+
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectFormDirectCreate, ProjectPhotoForm, MilestoneForm
+from .adapter import save_milestone, _save_milestone, save_project, save_project_attachment, save_project_photo, \
+    milestone_status_explanation
 from .decorators import check_recaptcha
 from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
-from users.utils import CONSUMER, PROFESSIONAL
-from users.user_helpers import get_professional_user, get_user_by_hoome_id
-from django.contrib.auth import (logout as django_logout)
-from django.forms.formsets import formset_factory
-import re
-
-
-def milestone_status_explanation(request, status):
-    """
-    explain each status of milestone
-    :param request:
-    :param status:
-    :return: the explanation of each milestone status
-    """
-    explanation = None
-    if status == WAITING:
-        if request.user.role == CONSUMER:
-            explanation = _("Waiting for homeowner make the payment.")
-        elif request.user.role == PROFESSIONAL:
-            explanation = _("Waiting for homeowner make the payment.")
-    elif status == PAID_TO_HOOME:
-        if request.user.role == CONSUMER:
-            explanation = _("Hoome has recevied the payment and will hold for you.")
-        elif request.user.role == PROFESSIONAL:
-            explanation = _("Hoome has recevied the payment and please start to work.")
-    elif status == PAID_TO_PROFESSIONAL:
-        if request.user.role == CONSUMER:
-            explanation = _("You have allowed Hoome release the payment.")
-        elif request.user.role == PROFESSIONAL:
-            explanation = _("Homeowner have released the payment for current milestone.")
-    return explanation
 
 
 # TODO: need to rewrite the architecture here.
@@ -97,7 +73,6 @@ def upload_project_photo(request, uuid):
 
 @login_required
 def display_project_overview(request):
-    # print(vars(request))
     if request.method == "GET":
         template_name = 'projects/project_overview.html'
         if request.user.role == CONSUMER:
@@ -109,18 +84,6 @@ def display_project_overview(request):
                                               object_id=int(professional.lic_num)).order_by('-project_id')
             info_dict = {'projects': projects, 'professional': professional}
         return render(request, template_name, {'info_dict': info_dict})
-
-
-def save_milestone(amount, project):
-    flag = True
-    while flag:
-        try:
-            milestone_uuid = get_a_uuid()
-            Milestone.objects.get(uuid=milestone_uuid)
-        except Milestone.DoesNotExist:
-            flag = False
-    Milestone.objects.create(amount=amount, project=project,
-                             uuid=milestone_uuid)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -181,8 +144,7 @@ class ProjectDetail(View):
                 project = Project.objects.get(uuid=uuid)
                 # TODO: need to add this condition when this function is used in other place
                 # if request.user.role == project.created_by:
-                save_milestone(milestone_form.cleaned_data['amount'], project)
-
+                _save_milestone(milestone_form.cleaned_data['amount'], project)
                 # TODO: need to consider the project status more carefully
                 # project.project_status = PENDING
                 # project.project_action = "."
@@ -192,14 +154,14 @@ class ProjectDetail(View):
         elif request.POST.get('request-money'):
             # print(request.POST)
             # print(request.POST.get('request-money'))
-
             milestone = Milestone.objects.get(uuid=request.POST.get('request-money'))
             milestone.status = PAYMENT_REQUEST
             milestone.save()
             project = Project.objects.get(uuid=uuid)
             project.project_action = "Request Money"
-            # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
             project.save()
+
+            # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
             messages.success(request, __('Success'))
             return redirect(request.path)
 
@@ -209,8 +171,8 @@ class ProjectDetail(View):
             milestone.save()
             project = Project.objects.get(uuid=uuid)
             project.project_action = "Release Money"
-            # TODO: add some functions to send the money?
             project.save()
+            # TODO: add some functions to send the money?
             messages.success(request, __('Success'))
             return redirect(request.path)
 
@@ -219,52 +181,12 @@ class ProjectDetail(View):
             return redirect(request.path)  #
 
 
-def save_project_attachment(request, project, project_form):
-    files = request.FILES.getlist('project_attachment')
-    if len(files) > 0:
-        for f in files:
-            ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                             attachment_type=project_form.cleaned_data['attachment_type'])
-    else:
-        pass
-
-
-def save_project_photo(request, project):
-    files = request.FILES.getlist('project_photo')
-    if len(files) > 0:
-        for f in files:
-            ProjectPhoto.objects.create(project_photo=f, title=f.name, project=project)
-    else:
-        pass
-
-
-def save_project(request, project_form):
-    project = project_form.save_project(commit=False)
-    # pro means the professional in Professional model
-    if project_form.cleaned_data['created_by'] == CONSUMER:
-        pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
-        project.content_type = ContentType.objects.get(model=pro.type.lower())
-        project.object_id = pro.lic_num
-        project.bus_name = pro.name
-        if request.user.is_authenticated:  # when user is logged in
-            project.user = request.user
-
-    elif project_form.cleaned_data['created_by'] == PROFESSIONAL:
-        project.user = get_user_by_hoome_id(project_form.cleaned_data['homeowner_hoome_id'])
-        if request.user.is_authenticated:  # when user is logged in
-            pro = get_professional_user(request.user)
-            project.content_type = ContentType.objects.get(model=pro.type.lower())
-            project.object_id = pro.lic_num
-            project.bus_name = pro.name
-
-    project.save()
-    return project
-
-
-
-@login_required
+# else:
+#     messages.warning(request, __('Please Log in as Homeowner first.'))
+#     django_logout(request)
+#     return redirect(reverse('account_login')+'?next='+request.path)
 @check_recaptcha
-def create_project(request, professional_type, lic_id):
+def create_project(request, professional_type=None, lic_id=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
     :param request:
@@ -272,95 +194,35 @@ def create_project(request, professional_type, lic_id):
     :param lic_id:
     :return:
     """
-    if request.user.is_authenticated and request.user.role == CONSUMER:
-        template_name = 'projects/create_project.html'  # Replace with your template.
-        MilestoneFormSet = formset_factory(MilestoneForm)
-        if request.method == "GET":
-            milestone_formset = MilestoneFormSet()
-            project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name})
-            # 'start_date': datetime.datetime.today()
-        elif request.method == "POST":
-            project_form = ProjectForm(request.POST, request.FILES)
-            milestone_formset = MilestoneFormSet(request.POST)
-            # project = Project.objects.get(project_id=project_id)
-            if project_form.is_valid() and request.recaptcha_is_valid  and milestone_formset.is_valid:
-                content_type = ContentType.objects.get(model=professional_type.lower())
-                lic_id = int(lic_id)
-                professional = content_type.get_object_for_this_type(pk=lic_id)
-                #save project
-                project = project_form.save_project(commit=False)
-                project.user = request.user
-                project.content_type = content_type
-                project.object_id = lic_id
-                project.bus_name = professional.lic_name
-                project.save()
-                #save milestone
-                list_amount = []
-                for key in request.POST:
-                    reg = re.match("form-(\d)-amount", key)
-                    if reg:
-                        index = reg.group(1)
-                        try:
-                            list_amount.append([int(index), key])
-                        except:
-                            pass
-
-                list_amount = sorted(list_amount, key=lambda x: x[0])
-                for item in list_amount:
-                    save_milestone(amount=request.POST[item[1]], project=project)
-
-                save_project_attachment(request, project, project_form)
-                save_project_photo(request, project)
-                success_url = reverse('display_project_overview') + project.uuid
-                return redirect(success_url)
-
-        info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
-        return render(request, template_name, {'info_dict': info_dict})
-
-    else:
-        messages.warning(request, __('Please Log in as Homeowner first.'))
-        django_logout(request)
-        return redirect(reverse('account_login'))
-
-
-@check_recaptcha
-def create_project_direct(request):
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
     MilestoneFormSet = formset_factory(MilestoneForm)
     if request.method == "GET":
         # initial={'start_date': datetime.datetime.today()}
         milestone_formset = MilestoneFormSet()
-        project_form = ProjectFormDirectCreate()
+        if professional_type and lic_id:
+            project_form = ProjectForm(initial={'first_name': request.user.first_name,
+                                                'last_name': request.user.last_name})
+        else:
+            project_form = ProjectFormDirectCreate()
 
     elif request.method == "POST":
         # print(request.POST)
-        project_form = ProjectFormDirectCreate(request.POST, request.FILES)
+        if professional_type and lic_id:
+            project_form = ProjectForm(request.POST, request.FILES)
+        else:
+            project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
+
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
             # print(request.POST)
             # print(milestone_formset)
-
-            project = save_project(request, project_form)
-            list_amount = []
-            for key in request.POST:
-                reg = re.match("form-(\d)-amount", key)
-                if reg:
-                    index = reg.group(1)
-                    try:
-                        list_amount.append([int(index), key])
-                    except:
-                        pass
-
-            list_amount = sorted(list_amount, key=lambda x: x[0])
-            for item in list_amount:
-                save_milestone(amount=request.POST[item[1]], project=project)
+            project = save_project(request, project_form, professional_type, lic_id)
+            save_milestone(request, project)
             save_project_attachment(request, project, project_form)
             save_project_photo(request, project)
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url
             return redirect(success_url)
-    form_errors = project_form.error_info()
 
-    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset,'form_errors': form_errors}
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
     return render(request, template_name, {'info_dict': info_dict})

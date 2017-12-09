@@ -122,8 +122,8 @@
 {% trans 'Meister' as Meister %}
 {% trans 'Checkout' as Checkout %}
 {% trans 'Milestone' as Milestone %}
-{% trans 'Release the Payment' as Release_Payment %}
-{% trans 'Request the Payment' as Request_Payment %}
+{% trans 'Release Payment' as Release_Payment %}
+{% trans 'Request Payment' as Request_Payment %}
 {% trans 'Create Milestone' as Create_Milestone %}
 {% trans 'Milestone #' as Milestone_Number %}
 {% trans "Actions" as Action %}
@@ -167,8 +167,10 @@
                     <!--/.navbar-header-->
                     <div id="main-nav" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
+                            <li><a class="create-project mobile" href="{% url 'create_project_direct' %}">
+                                {{ Create_Project }}
+                            </a></li>
                             <li><a href="/" class="scroll-top">{{ Home }}</a></li>
-                            <li><a href="{% url 'create_project_direct' %}">{{ Create_Project }}</a></li>
                             {% if user.is_authenticated %}
                                 <li>
                                     <div class="dropdown">
@@ -197,6 +199,7 @@
                                             </div>
                                             <div class="dropdown-menu-group">
                                                 <ul class="dropdown-menu-group-list">
+
                                                     <li class="dropdown-menu-items">
                                                     <span class="dropdown-menu-icon-container">
                                                         <img class="dropdown-menu-icon"
@@ -281,6 +284,9 @@
                                         </div>
                                     </div>
                                 </li>
+                            <li><a class="create-project desktop" href="{% url 'create_project_direct' %}">
+                                <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
+                            </a></li>
                                 {#                            <li><a href="{% url 'account_logout' %}" >Log Out</a></li>#}
                             {% else %}
                                 <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>

@@ -8,6 +8,7 @@ from projects.models import Project, Milestone
 
 register = template.Library()
 
+
 @register.inclusion_tag('payment/pay_now_button.html', takes_context=True)
 def render_pay_now_button(context, project_uuid, milestone_uuid):
     """
@@ -30,10 +31,11 @@ def render_pay_now_button(context, project_uuid, milestone_uuid):
     ret = settings.FORTE_CONFIG.copy()
     del ret['secure_trans_key']
     project_id = Project.objects.get(uuid=project_uuid).pk
+    milestone_id = Milestone.objects.get(uuid=milestone_uuid).pk
     ret['project_uuid'] = project_uuid
-    ret['milestone_uuid'] = milestone_uuid
     ret['total_amount'] = Milestone.objects.get(uuid=milestone_uuid).amount
-    ret['order_number'] = generate_transaction_number(project_id)
+    ret['milestone_uuid'] = milestone_uuid
+    ret['order_number'] = generate_transaction_number(project_id,milestone_id)
     ret['utc_time'] = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     # no customer_token and paymehtod_token
     # string eg.   api_login_id | method | version_number | total_amount | utc_time | order_number | customer_token | paymethod_token
