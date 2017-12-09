@@ -71,7 +71,7 @@ class ProjectForm(forms.Form):
 
 
 class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"), required=False)
+    professional_hoome_id = forms.CharField(label=__("Contractor/Meister's Hoome ID"), required=False)
     homeowner_hoome_id = forms.CharField(label=__("Homeowner Hoome ID"), required=False)
 
     def clean(self):
@@ -80,25 +80,25 @@ class ProjectFormDirectCreate(ProjectForm):
         if created_by == PROFESSIONAL:
             homeowner_hoome_id = cleaned_data.get('homeowner_hoome_id', None)
             if not homeowner_hoome_id:
-                raise ValidationError(message='hoome id cannot be empty', code='homeowner_hoome_id_error')
+                raise ValidationError(message=__('Hoome id cannot be empty.'), code='homeowner_hoome_id_error')
             else:
                 try:
                     user = User.objects.get(hoome_id=homeowner_hoome_id)
                 except:
-                    raise ValidationError(message='The hoome id does not exist', code='homeowner_hoome_id_error')
+                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"), code='homeowner_hoome_id_error')
                 if user.role == PROFESSIONAL:
-                    raise ValidationError(message='It is a professional user', code='homeowner_hoome_id_error')
+                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"), code='homeowner_hoome_id_error')
         elif created_by == CONSUMER:
             professional_hoome_id = cleaned_data.get('professional_hoome_id', None)
             if not professional_hoome_id:
-                raise ValidationError(message='hoome id cannot be empty', code='professional_hoome_id_error')
+                raise ValidationError(message=__('Hoome id cannot be empty'), code='professional_hoome_id_error')
             else:
                 try:
                     user = User.objects.get(hoome_id=professional_hoome_id)
                 except:
-                    raise ValidationError(message='The hoome id does not exist', code='professional_hoome_id_error')
+                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"), code='professional_hoome_id_error')
                 if user.role == CONSUMER:
-                    raise ValidationError(message='It is a consumer user', code='professional_hoome_id_error')
+                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"), code='professional_hoome_id_error')
         return cleaned_data
 
     def error_info(self):
