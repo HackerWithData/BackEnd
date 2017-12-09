@@ -6,7 +6,7 @@ from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKe
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 
-from .utils import *
+from .utils import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
 from users.utils import CONSUMER, ROLE_CHOICES
 
 
@@ -25,7 +25,7 @@ class Project(models.Model):
     # user.id how to get user id
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     # Project Type choice field
-    project_type = models.CharField(max_length=5, choices=PROJECT_TYPE, default='', null=False, blank=True)
+    project_type = models.CharField(max_length=5, choices=PROJECT_TYPE, default=REMODEL, null=False, blank=True)
     street_address = models.TextField()
     street_address2 = models.TextField()
     county = models.CharField(max_length=64)
@@ -33,6 +33,7 @@ class Project(models.Model):
     zipcode = models.CharField(max_length=10)
     # country = models.CharField(max_length=255)
     project_cost = models.IntegerField(default=0)
+    contract_price = models.IntegerField(default=0)
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(auto_now_add=True)
     project_description = models.TextField()

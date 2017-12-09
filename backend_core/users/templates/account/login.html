@@ -155,10 +155,10 @@
                             <p><input type="password" name="password" required=""
                                       placeholder="{% trans 'Password' %}" id="id_password"></p>
                             {#<label for="id_remember">Remember Me:</label><p><input type="checkbox" name="remember" id="id_remember"> </p>#}
-                            {% if redirect_field_value %}
-                                <input type="hidden" name="{{ redirect_field_name }}"
-                                       value="{{ redirect_field_value }}"/>
-                            {% endif %}
+{#                            {% if redirect_field_value %}#}
+                            {#                                <input type="hidden" name="{{ redirect_field_name }}"#}
+                            {#                                       value="{{ redirect_field_value }}"/>#}
+                            {#                            {% endif %}#}
 
                             <div class="text-right">
                                 <a class="button secondaryAction"
@@ -167,14 +167,14 @@
                             <br/>
                             <button class="primaryAction btn btn-hoome full-width"
                                     type="submit">{% trans "Sign In" %}</button>
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
                         </form>
                         <br/>
                         <div class="text-right">{% trans 'New to Hoome?' %} <a
                                 href="
-
-
-
-
                                         {% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Sign Up' %}</a>
                         </div>
                     </div>

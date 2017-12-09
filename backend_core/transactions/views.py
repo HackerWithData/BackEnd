@@ -59,10 +59,13 @@ class TransactionsView(View):
             :param kwargs:
             :return:
         """
+        print(request.body)
         received_json_data = json.loads(request.body)
-
+        print(received_json_data)
         project = Project.objects.get(uuid=received_json_data['project_uuid'])
+        print(received_json_data['milestone_uuid'])
         milestone = Milestone.objects.get(uuid=received_json_data['milestone_uuid'])
+        print(milestone.uuid)
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
                                                                  content_type=project.content_type,

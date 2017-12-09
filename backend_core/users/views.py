@@ -12,11 +12,11 @@ from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
 
-from allauth.utils import import_attribute,get_user_model
+from allauth.utils import import_attribute, get_user_model
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.signals import user_signed_up
-from allauth.account.views import PasswordChangeView, PasswordSetView,LoginView, SignupView
+from allauth.account.views import PasswordChangeView, PasswordSetView, LoginView, SignupView
 from allauth.account.utils import perform_login, complete_signup
 from allauth.account import app_settings
 
@@ -30,8 +30,10 @@ from .user_helpers import (retrieve_professional_info,
                            generate_random_hoome_id)
 from .utils import *
 
+
 def get_adapter(request=None):
     return import_attribute(app_settings.ADAPTER)(request)
+
 
 @receiver(user_signed_up)
 def set_role_before_sign_up_complete(request, **kwargs):
@@ -244,17 +246,13 @@ class Login(LoginView):
         #     request.session['success_url'] = '/'
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-    # def form_valid(self, form):
-    #     if 'success_url' in self.request.session:
-    #         success_url = self.request.session['success_url']
-    #     elif 'next' in self.request.path:
-    #         pass
-    #     else:
-    #         success_url = '/'
-    #     try:
-    #         return form.login(self.request, redirect_url=success_url)
-    #     except ImmediateHttpResponse as e:
-    #         return e.response
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        try:
+            response = form.login(self.request, redirect_url=success_url)
+            return response
+        except ImmediateHttpResponse as e:
+            return e.response
 
 
 class Signup(SignupView):
@@ -266,11 +264,15 @@ class Signup(SignupView):
         # TODO: there is a better way to add hoome_id
         self.user = form.save(self.request)
         self.user.hoome_id = generate_random_hoome_id()
+        self.user.username = self.user.hoome_id
         self.user.save()
         try:
-            return complete_signup(
+            response = complete_signup(
                 self.request, self.user,
                 app_settings.EMAIL_VERIFICATION,
                 self.get_success_url())
+            print(response)
+            return response
         except ImmediateHttpResponse as e:
+            print(e.response)
             return e.response

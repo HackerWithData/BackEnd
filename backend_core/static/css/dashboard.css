@@ -171,8 +171,12 @@ html, body {
     min-width: 200px;
 }
 
-.project-basic-info, .project-attachments, .project-photos {
+.project-basic-info, .project-attachments, .project-photos, project-milestone {
     margin: 10px 0;
+}
+
+project-milestone {
+
 }
 
 .project-detail-wrapper .row {

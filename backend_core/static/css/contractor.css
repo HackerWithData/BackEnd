@@ -531,9 +531,6 @@ h1 {
 }
 
 .header.active #main-nav .navbar-nav > li .dropdown > a {
-    font-size: 13px;
-    font-weight: 300;
-    text-shadow: none;
     color: #ffffff;
 }
 

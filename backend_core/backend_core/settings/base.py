@@ -52,7 +52,9 @@ PREREQ_APPS = [
     'haystack',
     'storages',
     'tinymce',
-    'rest_framework'
+    'rest_framework',
+    'crispy_forms',
+    'widget_tweaks'
     # 'django_scss',
 ]
 
@@ -192,7 +194,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_FORMS = {'signup': 'users.forms.UserSignUpForm'}
 
 # auth and all allauth settings
-# LOGIN_REDIRECT_URL = 'home_index'
+LOGIN_REDIRECT_URL = 'show_dashboard'
 LOGOUT_REDIRECT_URL = 'home_index'
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
