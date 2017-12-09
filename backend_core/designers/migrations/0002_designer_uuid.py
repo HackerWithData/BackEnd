@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='designer',
-            name='designer_uuid',
-            field=models.CharField(default='0', max_length=36, unique=True),
+            name='uuid',
+            field=models.CharField(default='0', max_length=36)
         ),
     ]

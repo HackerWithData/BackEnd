@@ -100,7 +100,16 @@ class ContractorDetail(View):
             '-insur_effective_date').first()
 
         data_source = 'California Contractors State License Board'
-        hscore = Hscore.objects.get(contractor_id=contractor_id)
+        try:
+            hscore = Hscore.objects.get(contractor_id=contractor_id)
+        except:
+            Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+
+            # hscore.
+            # hscore.
+            # hscore.
+            # hscore.
+            # hscore.
         letter_grade = convert_hscore_to_rank(hscore)
         full_state_name = get_state_full_name(contractor.state)
         # Lic Type

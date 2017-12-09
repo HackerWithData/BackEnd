@@ -271,8 +271,8 @@ class Signup(SignupView):
                 self.request, self.user,
                 app_settings.EMAIL_VERIFICATION,
                 self.get_success_url())
-            print(response)
+            # print(response)
             return response
         except ImmediateHttpResponse as e:
-            print(e.response)
+            # print(e.response)
             return e.response

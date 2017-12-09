@@ -19,6 +19,6 @@ class Hscore(models.Model):
         related_name='hscores',
         related_query_name='hscore'
     )
-    score = models.IntegerField()
-    rank = models.IntegerField()
-    max = models.IntegerField()
+    score = models.IntegerField(null=True)
+    rank = models.IntegerField(null=True)
+    max = models.IntegerField(null=True)
