@@ -334,6 +334,7 @@ def create_project_direct(request):
         project_form = ProjectFormDirectCreate()
 
     elif request.method == "POST":
+        print(request.POST)
         project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
