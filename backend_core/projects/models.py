@@ -50,13 +50,13 @@ class Project(models.Model):
 class ProjectAttachment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)
     attachment_type = models.CharField(max_length=100)
-    project_attachment = models.FileField(upload_to='project/attachment/%Y/%m/%d')
+    project_attachment = models.FileField(upload_to='projects/attachments/%Y/%m/%d')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
 
 
 class ProjectPhoto(models.Model):
-    project_photo = models.ImageField(upload_to='projects/photo/%Y/%m/%d')
+    project_photo = models.ImageField(upload_to='projects/photos/%Y/%m/%d')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255, blank=True)
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)

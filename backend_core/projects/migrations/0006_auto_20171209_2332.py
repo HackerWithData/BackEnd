@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='projectattachment',
             name='project_attachment',
-            field=models.FileField(upload_to='project/attachment/%Y/%m/%d'),
+            field=models.FileField(upload_to='projects/attachments/%Y/%m/%d'),
         ),
         migrations.AlterField(
             model_name='projectphoto',
             name='project_photo',
-            field=models.ImageField(upload_to='projects/photo/%Y/%m/%d'),
+            field=models.ImageField(upload_to='projects/photos/%Y/%m/%d'),
         ),
     ]
