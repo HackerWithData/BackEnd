@@ -89,13 +89,16 @@ class DesignerDetail(View):
                                               object_id=o_id)
 
         user_rating_form = UserRatingForm()
-        if request.user.is_authenticated:
-            review_form = ReviewForm(initial={'first_name': request.user.first_name,
-                                              'last_name': request.user.last_name,
-                                              'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+        review_form = request.session.get('review_form', None)
+        if review_form is None:
+            if request.user.is_authenticated:
+                review_form = ReviewForm(initial={'first_name': request.user.first_name,
+                                                  'last_name': request.user.last_name,
+                                                  'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+            else:
+                review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
         else:
-            review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
-
+            review_form = ReviewForm(review_form)
         try:
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='designer'),
                                             object_id=o_id).overview
