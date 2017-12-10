@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load staticfiles %}
-{% load widget_tweaks %}
+{% load staticfiles i18n widget_tweaks %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
@@ -147,32 +145,30 @@
         <h1 class="section-title">{% trans 'Review us' %}</h1>
         <br/>
         {#                non-field error#}
-        {% for field in info_dict.user_rating_form %}
-            <div class="rating-name">
-                {% if field.label == 'Efficiency' %}
-                    {{ Efficiency }} :
-                {% elif field.label == 'Quality' %}
-                    {{ Quality }} :
-                {% elif field.label == 'Length' %}
-                    {{ Length }} :
-                {% endif %}
-            </div>
-            <fieldset class="rating">
-                {% for radio in field %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
-                {% endfor %}
-            </fieldset>
-            <br>
-            <br>
-        {% endfor %}
-
-
         {% with form=info_dict.review_form %}
             {% for error in form.non_field_errors %}
                 <div class="form-group has-errors text-danger small">
                     {{ error }}
                 </div>
+            {% endfor %}
+            {% for field in info_dict.user_rating_form %}
+                <div class="rating-name">
+                    {% if field.label == 'Efficiency' %}
+                        {{ Efficiency }} :
+                    {% elif field.label == 'Quality' %}
+                        {{ Quality }} :
+                    {% elif field.label == 'Length' %}
+                        {{ Length }} :
+                    {% endif %}
+                </div>
+                <fieldset class="rating">
+                    {% for radio in field %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}"></label>
+                    {% endfor %}
+                </fieldset>
+                <br>
+                <br>
             {% endfor %}
 
             {#comments#}
@@ -247,6 +243,24 @@
                     </div>
                 </div>
             {% endwith %}
+            {#email            #}
+            {% with field=form.email %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div>
+                        {{ field|attr:"class:form-control" }}
+                        {% if field.errors %}
+                            <span class="help-block">
+                                {% for error in  field.errors %}{{ error }}{% endfor %}
+                            </span>
+                        {% elif field.help_text %}
+                            <span class="help-block">
+                            {{ field.help_text }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endwith %}
 
             {#project_date            #}
             {% with field=form.project_date %}
@@ -266,7 +280,7 @@
                     </div>
                 </div>
             {% endwith %}
-
+            <br>
             {#project_type            #}
             {% with field=form.project_type %}
                 <div class="form-group {% if field.errors %}has-error{% endif %}">
@@ -323,6 +337,7 @@
                     </div>
                 </div>
             {% endwith %}
+
             {#project_duration            #}
             {% with field=form.project_duration %}
                 <div class="form-group {% if field.errors %}has-error{% endif %}">
@@ -341,8 +356,9 @@
                     </div>
                 </div>
             {% endwith %}
-            {#email            #}
-            {% with field=form.email %}
+
+            {#street_address            #}
+            {% with field=form.street_address %}
                 <div class="form-group {% if field.errors %}has-error{% endif %}">
                     <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
                     <div>
@@ -359,8 +375,62 @@
                     </div>
                 </div>
             {% endwith %}
-            {#project_address            #}
-            {% with field=form.project_address %}
+            {#street_address2            #}
+            {% with field=form.street_address2 %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div>
+                        {{ field|attr:"class:form-control" }}
+                        {% if field.errors %}
+                            <span class="help-block">
+                                {% for error in  field.errors %}{{ error }}{% endfor %}
+                            </span>
+                        {% elif field.help_text %}
+                            <span class="help-block">
+                            {{ field.help_text }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endwith %}
+            {#county            #}
+            {% with field=form.county %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div>
+                        {{ field|attr:"class:form-control" }}
+                        {% if field.errors %}
+                            <span class="help-block">
+                                {% for error in  field.errors %}{{ error }}{% endfor %}
+                            </span>
+                        {% elif field.help_text %}
+                            <span class="help-block">
+                            {{ field.help_text }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endwith %}
+            {#state           #}
+            {% with field=form.state %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                    <div>
+                        {{ field|attr:"class:form-control" }}
+                        {% if field.errors %}
+                            <span class="help-block">
+                                {% for error in  field.errors %}{{ error }}{% endfor %}
+                            </span>
+                        {% elif field.help_text %}
+                            <span class="help-block">
+                            {{ field.help_text }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endwith %}
+            {#zipcode            #}
+            {% with field=form.zipcode %}
                 <div class="form-group {% if field.errors %}has-error{% endif %}">
                     <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
                     <div>

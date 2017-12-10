@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy as __
 from django.views import View
 from hscore.models import Hscore
 from photos.forms import PhotoForm
@@ -35,55 +35,55 @@ class Complaint1:
         self.complaint = 0
 
 
-def submit_review(request, o_id):
-    user_rating_form = UserRatingForm(request.POST)
-    review_form = ReviewForm(request.POST)
-    # TODO: assign a random password
-    # TODO: validator doesn't work
-    if review_form.is_valid() and user_rating_form.is_valid():
-        # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
-        user = User(email=review_form.cleaned_data['email'],
-                    username=review_form.cleaned_data['email'],
-                    last_name=review_form.cleaned_data['last_name'],
-                    first_name=review_form.cleaned_data['first_name'],
-                    password=make_password("aaaaaaa"))
-        user.save()
-        model_type = check_professional_type(request)
-        review = Review(content_type=ContentType.objects.get(model=model_type),
-                        object_id=o_id,
-                        user=user,
-                        comments=review_form.cleaned_data['comments'],
-                        project_date=review_form.cleaned_data['project_date'],
-                        project_zipcode=review_form.cleaned_data['project_zipcode'],
-                        project_cost=review_form.cleaned_data['project_cost'],
-                        project_duration=review_form.cleaned_data['project_duration'],
-                        project_address=review_form.cleaned_data['project_address'],
-                        is_anonymous=review_form.cleaned_data['is_anonymous'],
-                        project_type=review_form.cleaned_data['project_type'])
-        review.save()
-        for field in user_rating_form.cleaned_data:
-            user_rating = UserRating(review=review,
-                                     rating_type=field[0].upper(),
-                                     rating_score=int(user_rating_form.cleaned_data[field]))
-            user_rating.save()
-        # direct to the page to upload photos
-        # TODO: ADD PHOTOFORM VALIDATION FOR SECURITY
-        content_type = ContentType.objects.get(model='review')
-        object_id = int(review.id)
-        files = request.FILES.getlist('project photos')
-        if len(files) > 0:
-            for f in files:
-                instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
-                instance.save()
-        else:
-            pass
-        # request.session.pop('review_form', None)
-        # TODO: redirect the sucess url and add bootstrap messages: success
-        return redirect(request.path)
-    else:
-        # request.session.update({'review_form': review_form.data})
-        info_dict = {'review_form': review_form, "user_rating_form": user_rating_form}
-        return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
+# def submit_review(request, o_id):
+#     user_rating_form = UserRatingForm(request.POST)
+#     review_form = ReviewForm(request.POST)
+#     # TODO: assign a random password
+#     # TODO: validator doesn't work
+#     if review_form.is_valid() and user_rating_form.is_valid():
+#         # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
+#         user = User(email=review_form.cleaned_data['email'],
+#                     username=review_form.cleaned_data['email'],
+#                     last_name=review_form.cleaned_data['last_name'],
+#                     first_name=review_form.cleaned_data['first_name'],
+#                     password=make_password("aaaaaaa"))
+#         user.save()
+#         model_type = check_professional_type(request)
+#         review = Review(content_type=ContentType.objects.get(model=model_type),
+#                         object_id=o_id,
+#                         user=user,
+#                         comments=review_form.cleaned_data['comments'],
+#                         project_date=review_form.cleaned_data['project_date'],
+#                         project_zipcode=review_form.cleaned_data['project_zipcode'],
+#                         project_cost=review_form.cleaned_data['project_cost'],
+#                         project_duration=review_form.cleaned_data['project_duration'],
+#                         project_address=review_form.cleaned_data['project_address'],
+#                         is_anonymous=review_form.cleaned_data['is_anonymous'],
+#                         project_type=review_form.cleaned_data['project_type'])
+#         review.save()
+#         for field in user_rating_form.cleaned_data:
+#             user_rating = UserRating(review=review,
+#                                      rating_type=field[0].upper(),
+#                                      rating_score=int(user_rating_form.cleaned_data[field]))
+#             user_rating.save()
+#         # direct to the page to upload photos
+#         # TODO: ADD PHOTOFORM VALIDATION FOR SECURITY
+#         content_type = ContentType.objects.get(model='review')
+#         object_id = int(review.id)
+#         files = request.FILES.getlist('project photos')
+#         if len(files) > 0:
+#             for f in files:
+#                 instance = Photo.objects.create(img=f, title=f.name, content_type=content_type, object_id=object_id)
+#                 instance.save()
+#         else:
+#             pass
+#         # request.session.pop('review_form', None)
+#         # TODO: redirect the sucess url and add bootstrap messages: success
+#         return redirect(request.path)
+#     else:
+#         # request.session.update({'review_form': review_form.data})
+#         info_dict = {'review_form': review_form, "user_rating_form": user_rating_form}
+#         return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
 
 
 class ContractorDetail(View):
@@ -301,25 +301,20 @@ class ContractorDetail(View):
             if review_form.is_valid() and user_rating_form.is_valid():
                 # User = #ContentType.objects.get_for_model(settings.AUTH_USER_MODEL)
 
-                user = User(email=review_form.cleaned_data['email'],
-                            username=review_form.cleaned_data['email'],
-                            last_name=review_form.cleaned_data['last_name'],
-                            first_name=review_form.cleaned_data['first_name'],
-                            password=make_password("aaaaaaa"))
-                user.save()
+                # user = User(email=review_form.cleaned_data['email'],
+                #             username=review_form.cleaned_data['email'],
+                #             last_name=review_form.cleaned_data['last_name'],
+                #             first_name=review_form.cleaned_data['first_name'],
+                #             password=make_password("aaaaaaa"))
+                # user.save()
                 model_type = check_professional_type(request)
-                review = Review(content_type=ContentType.objects.get(model=model_type),
-                                object_id=o_id,
-                                user=user,
-                                comments=review_form.cleaned_data['comments'],
-                                project_date=review_form.cleaned_data['project_date'],
-                                project_zipcode=review_form.cleaned_data['project_zipcode'],
-                                project_cost=review_form.cleaned_data['project_cost'],
-                                project_duration=review_form.cleaned_data['project_duration'],
-                                project_address=review_form.cleaned_data['project_address'],
-                                is_anonymous=review_form.cleaned_data['is_anonymous'],
-                                project_type=review_form.cleaned_data['project_type'])
+                review = review_form.save(commit=False)
+                if request.user.is_authenticated():
+                    review.user = request.user
+                review.content_type = ContentType.objects.get(model=model_type)
+                review.object_id = contractor_id
                 review.save()
+
                 for field in user_rating_form.cleaned_data:
                     user_rating = UserRating(review=review,
                                              rating_type=field[0].upper(),
@@ -344,6 +339,7 @@ class ContractorDetail(View):
                 # request.session.update({'review_form': review_form.data})
                 info_dict['review_form'] = review_form
                 info_dict["user_rating_form"] = user_rating_form
+                messages.warning(request, __('Submit Failed. Please verify your content is correct.'))
                 return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
         # TODO: need to change here
         elif request.POST.get('overview'):

@@ -97,7 +97,7 @@
                 {#                {% endwith %}#}
 
 
-                <div class="form-group {% if user.is_authenticated %} hide {% endif %}">
+                <div class="form-group {% if user.is_authenticated %} hide {% endif %} {% if not info_dict.direct_create %}hide{% endif %}">
                     <label class="col-sm-2 control-label"
                            for="id_created_by">{% trans 'Choose your idenity*' %}</label>
                     <div class="col-sm-10">
@@ -759,20 +759,6 @@
         })
 
 
-        $(document).ready(function () {
-            identity = check_identity(identity);
-            $("#id_created_by input").click(function () {
-                identity = check_identity(identity);
-            })
-
-            $("button.btn.btn-hoome").click(function () {
-                if (!(localStorage.getItem("role") === null)) {
-                    localStorage.removeItem("role");
-                }
-                localStorage.setItem("role", identity);
-            });
-        })
-        var identity;
 
         function check_identity(identity) {
             if ($("#id_created_by_0").is(':checked')) {
@@ -791,5 +777,24 @@
                 return $("#id_created_by_1").val();
             }
         }
+        $(document).ready(function () {
+            var identity;
+            {% if not info_dict.direct_create %}
+                $("#id_created_by_1").prop("checked", true);
+                identity = $("#id_created_by_1").attr('value');
+            {% endif %}
+            identity = check_identity(identity);
+            $("#id_created_by input").click(function () {
+                identity = check_identity(identity);
+            })
+
+            $("button.btn.btn-hoome").click(function () {
+                if (!(localStorage.getItem("role") === null)) {
+                    localStorage.removeItem("role");
+                }
+                localStorage.setItem("role", identity);
+            });
+        })
+
     </script>
 {% endblock %}

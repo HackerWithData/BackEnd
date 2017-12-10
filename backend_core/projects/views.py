@@ -195,15 +195,18 @@ def create_project(request, professional_type=None, lic_id=None):
     :return:
     """
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
+    direct_create = True
     MilestoneFormSet = formset_factory(MilestoneForm)
     if request.method == "GET":
         # initial={'start_date': datetime.datetime.today()}
         milestone_formset = MilestoneFormSet()
-        if professional_type and lic_id:
+        if request.user.is_authenticated:
             project_form = ProjectForm(initial={'first_name': request.user.first_name,
                                                 'last_name': request.user.last_name})
         else:
             project_form = ProjectFormDirectCreate()
+        if professional_type and lic_id:
+            direct_create = False
 
     elif request.method == "POST":
         # print(request.POST)
@@ -224,5 +227,5 @@ def create_project(request, professional_type=None, lic_id=None):
             request.session['success_url'] = success_url
             return redirect(success_url)
 
-    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset,'direct_create': direct_create}
     return render(request, template_name, {'info_dict': info_dict})
