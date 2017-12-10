@@ -12,7 +12,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as __
 from django.forms.formsets import formset_factory
-# from django.contrib.auth import (logout as django_logout)
+from django.contrib.auth import (logout as django_logout)
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
@@ -91,19 +91,29 @@ class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
     def get(self, request, uuid):
-        initial = {
-            "amount": 2000
-        }
+        initial = {"amount": 2000}
         milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(uuid=uuid)
+
         if project.user is None:
-            project.user = request.user
-            project.save()
+            if request.user.role == CONSUMER:
+                project.user = request.user
+            else:
+                django_logout(request)
+                messages.warning(request, __("Please Login as Homeowner."))
+                request.session['success_url'] = '/project/'+uuid
+                return redirect(request.session['success_url'])
         elif project.content_type is None:
-            pro = get_professional_user(request.user)
-            project.content_type = ContentType.objects.get(model=pro.type.lower())
-            project.object_id = pro.lic_num
-            project.save()
+            if request.user.role == PROFESSIONAL:
+                pro = get_professional_user(request.user)
+                project.content_type = ContentType.objects.get(model=pro.type.lower())
+                project.object_id = pro.lic_num
+            else:
+                django_logout(request)
+                messages.warning(request, __("Please Login as Professional."))
+                request.session['success_url'] = '/project/'+uuid
+                return redirect(request.session['success_url'])
+        project.save()
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
@@ -125,7 +135,6 @@ class ProjectDetail(View):
             # print(type(project.object_id)) type: unicode
             if ct == project.content_type and str(lic_num) == str(project.object_id):
                 flag = True
-
         if flag:
             info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
                          'project_photos': project_photos, 'transactions': transactions,
@@ -200,9 +209,12 @@ def create_project(request, professional_type=None, lic_id=None):
     if request.method == "GET":
         # initial={'start_date': datetime.datetime.today()}
         milestone_formset = MilestoneFormSet()
-        if request.user.is_authenticated:
-            project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name})
+        if professional_type and lic_id:
+            if request.user.is_authenticated:
+                project_form = ProjectForm(initial={'first_name': request.user.first_name,
+                                                    'last_name': request.user.last_name})
+            else:
+                project_form = ProjectForm()
         else:
             project_form = ProjectFormDirectCreate()
         if professional_type and lic_id:
@@ -227,5 +239,5 @@ def create_project(request, professional_type=None, lic_id=None):
             request.session['success_url'] = success_url
             return redirect(success_url)
 
-    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset,'direct_create': direct_create}
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}
     return render(request, template_name, {'info_dict': info_dict})

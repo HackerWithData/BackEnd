@@ -684,11 +684,6 @@
     <script>
         {#    TODO: need to write a more generic one#}
 
-        {% if user.role == "CONSUMER" %}
-            $("#id_created_by_1").prop("checked", true);
-        {% elif user.role == "PROFESSIONAL" %}
-            $("#id_created_by_0").prop("checked", true);
-        {% endif %}
         function addForm(index, form_count) {
             var content_html =
                 '<tr class="milestone-formset">' +
@@ -758,8 +753,6 @@
             {#            hideth();#}
         })
 
-
-
         function check_identity(identity) {
             if ($("#id_created_by_0").is(':checked')) {
                 $(".homeowner_hoome_id_wrapper").removeClass('hide');
@@ -777,11 +770,18 @@
                 return $("#id_created_by_1").val();
             }
         }
+
         $(document).ready(function () {
             var identity;
             {% if not info_dict.direct_create %}
                 $("#id_created_by_1").prop("checked", true);
                 identity = $("#id_created_by_1").attr('value');
+            {% else %}
+                {% if user.role == "CONSUMER" %}
+                    $("#id_created_by_1").prop("checked", true);
+                {% elif user.role == "PROFESSIONAL" %}
+                    $("#id_created_by_0").prop("checked", true);
+                {% endif %}
             {% endif %}
             identity = check_identity(identity);
             $("#id_created_by input").click(function () {

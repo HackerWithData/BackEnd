@@ -122,14 +122,15 @@ class ProfessionalInfoFillUpForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
 
-    personal_name = forms.CharField(
-        required=True,
-        max_length=255,
-        label=__('Name'),
-        widget=forms.TextInput(attrs={'class': 'input-personal-name'})
-    )
+    # personal_name = forms.CharField(
+    #     required=True,
+    #     max_length=255,
+    #     label=__('Name'),
+    #     widget=forms.TextInput(attrs={'class': 'input-personal-name'})
+    # )
 
     company_name = forms.CharField(
+        required=True,
         max_length=255,
         label=__('Name'),
         widget=forms.TextInput(attrs={'class': 'input-company-name'})
@@ -203,7 +204,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     def save(self, request):
         exists = False
         clean_license_num = self.cleaned_data['license_num']
-        clean_personal_name = self.cleaned_data['personal_name']
+        # clean_personal_name = self.cleaned_data['personal_name']
         clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
@@ -215,8 +216,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
         # print(clean_professional_type)
         if clean_professional_type == "MEISTER":
             # professional_object = create_professional_corresponding_object(prof_type=clean_professional_type)
-            meister, created = Meister.objects.get_or_create(lic_name=clean_personal_name,
-                                                             bus_name=clean_company_name,
+            meister, created = Meister.objects.get_or_create(lic_name=clean_company_name,
+                                                             # bus_name=clean_company_name,
                                                              street_address=clean_street,
                                                              county=clean_county,
                                                              state=clean_state,
@@ -236,7 +237,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 professional.save()
             else:
                 pass
-
 
         else:
             professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
@@ -275,10 +275,11 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 professional.save()
                 professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
                                                                                lic=clean_license_num)
-                professional_object.bus_name = clean_company_name
+                professional_object.lic_name = clean_company_name
                 professional_object.entity = clean_entity_type
                 professional_object.state = clean_state
                 professional_object.county = clean_county
+                professional_object.csp = clean_county + ' ' + clean_state + ', ' + clean_zipcode
                 professional_object.street_address = clean_street
                 professional_object.pos_code = clean_zipcode
                 professional_object.save()
@@ -331,12 +332,12 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         widget=forms.TextInput(attrs={'class': 'input-license-number', 'readonly': 'true'})
     )
 
-    company_name = forms.CharField(
-        required=True,
-        max_length=128,
-        label=__('Name'),
-        widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
-    )
+    # company_name = forms.CharField(
+    #     required=True,
+    #     max_length=128,
+    #     label=__('Name'),
+    #     widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
+    # )
 
     professional_type = forms.ChoiceField(
         required=True,
@@ -349,12 +350,12 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
     def save(self, request):
         # Cannot be changed
         clean_license_num = self.cleaned_data['license_num']
-        clean_company_name = self.cleaned_data['company_name']
+        # clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
         clean_zipcode = self.cleaned_data['zipcode']
         clean_entity_type = self.cleaned_data['entity_type']
-        # Cannot be changed
+
         clean_professional_type = self.cleaned_data['professional_type']
 
         clean_professional_subtype = self.cleaned_data['professional_subtype']
