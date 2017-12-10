@@ -173,8 +173,6 @@ class ContractorDetail(APIView):
         # else:
         #     review_form = ReviewForm(initial={
         #         'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
-
-
         serializer = ContractorSerializer(contractor)
         return Response(serializer.data)
 
