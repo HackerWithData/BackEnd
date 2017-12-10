@@ -53,7 +53,6 @@ PREREQ_APPS = [
     'storages',
     'tinymce',
     'rest_framework',
-    'crispy_forms',
     'widget_tweaks'
     # 'django_scss',
 ]

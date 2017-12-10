@@ -1,13 +1,15 @@
 import urllib
 
 from django.forms.models import model_to_dict
+from django.db.models import Q
 
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from meisters.models import Meister
 from professionals.models import Professional, ProfessionalType
-from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES,MEISTER
+from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, \
+    MEISTER
 from contractors.utils import convert_hscore_to_rank
 
 
@@ -42,9 +44,7 @@ def search_by_name_or_lic(request):
     # search target is whether a name or lic
     if search_target.isnumeric():
         name_or_lic = int(search_target)
-        qs_prof_by_name = Professional.objects.filter(name=str(name_or_lic))
-        qs_prof_by_lic = Professional.objects.filter(lic_num=name_or_lic)
-        prof_qs = list(qs_prof_by_lic) + list(qs_prof_by_name)
+        prof_qs = Professional.objects.filter(Q(name=str(name_or_lic)) | Q(lic_num=name_or_lic)).distinct()
     # elif search_target in [i[0] for i in PROFESSIONAL_CHOICES]:
     #     prof_qs = Professional.objects.filter(type=search_target)
     # # name search
@@ -67,8 +67,8 @@ def search_by_zipcode(request):
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
     # type search
-    prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type, professional_type__subtype=search_target)
-
+    prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
+                                          professional_type__subtype=search_target).distinct()
     # retrieve corresponding professional through different table
     return retrieve_all_kind_professional(prof_qs)
 
@@ -78,6 +78,8 @@ def retrieve_all_kind_professional(prof_qs):
     for professional in prof_qs:
         if professional.type.upper() == CONTRACTOR:
             contractor = Contractor.objects.filter(lic_num=professional.lic_num).first()
+            # print(contractor)
+            # print(contractor.hscore)
             hscore = contractor.hscores.first()
             item = model_to_dict(contractor).copy()
             item['score'] = hscore.score
@@ -91,7 +93,7 @@ def retrieve_all_kind_professional(prof_qs):
             designer = Designer.objects.filter(lic_num=professional.lic_num).first()
             item = model_to_dict(designer).copy()
             item['type'] = DESIGNER
-        #TODO: need to take care this part.
+        # TODO: need to take care this part.
         elif professional.type.upper() == MEISTER:
             meister = Meister.objects.filter(lic_num=professional.lic_num).first()
             item = model_to_dict(meister).copy()

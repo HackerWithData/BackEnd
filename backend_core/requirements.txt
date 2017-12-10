@@ -24,6 +24,7 @@ django-storages==1.6.5
 django-tinymce==2.6.0
 django-tinymce4-lite==1.5.2
 djangorestframework==3.6.3
+django-widget-tweaks==1.4.1
 docutils==0.14
 Flask==0.12.2
 future==0.16.0

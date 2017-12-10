@@ -47,6 +47,7 @@
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
                             <li>{{ info_dict.contractor.csp }}</li>
+                            {% if info_dict.score %}
                             <li id="score-popup" class='popup' onmouseover="popUp1()" onclick="popUp1()">
                                 {{ Score }}: {{ info_dict.score }}
                                 <div id="Score-explanation" class="popuptext">
@@ -59,6 +60,7 @@
                                     </ul>
                                 </div>
                             </li>
+                            {% endif %}
                             <li id="rank-popup">
                                 {#                           class='popup' onmouseover="popUp2()" onclick="popUp2()"#}
                                 {{ Rank }}: {{ info_dict.rank }}
