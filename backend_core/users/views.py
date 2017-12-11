@@ -84,14 +84,14 @@ def sign_up_complete_info(request, **kwargs):
 class DashboardAfterPasswordChangeView(PasswordChangeView):
     @property
     def success_url(self):
-        return '/'
+        return self.request.path
 
 
 @method_decorator(login_required, name='dispatch')
 class DashboardAfterPasswordSetView(PasswordSetView):
     @property
     def success_url(self):
-        return '/'
+        return self.request.path
 
 
 @method_decorator(login_required, name='dispatch')
@@ -214,6 +214,7 @@ class ProfessionalProfileView(View):
         self.initial['professional_type'] = professional.type
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
+        self.initial['county'] = professional.county
         self.initial['zipcode'] = professional.postal_code
         professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
                                                                                     lic=professional.lic_num)

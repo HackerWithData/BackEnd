@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as __
 from django.forms.formsets import formset_factory
 from django.contrib.auth import (logout as django_logout)
 from django.forms.models import model_to_dict
+from django.shortcuts import get_object_or_404
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
@@ -224,9 +225,6 @@ def create_project(request, professional_type=None, lic_id=None):
             direct_create = False
 
     elif request.method == "POST":
-        if request.is_ajax():
-            return validate_hoome_id(request)
-
         # print(request.POST)
         if professional_type and lic_id:
             project_form = ProjectForm(request.POST, request.FILES)
@@ -247,9 +245,6 @@ def create_project(request, professional_type=None, lic_id=None):
 
     info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}
     return render(request, template_name, {'info_dict': info_dict})
-
-
-from django.shortcuts import get_object_or_404
 
 
 @check_recaptcha

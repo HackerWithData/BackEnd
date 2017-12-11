@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^edit/(?P<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$', edit_project,
         name='edit_project'),
 
-    # url(r'^check_hoome_id/$', validate_hoome_id, name='validate_hoome_id'),
+    url(r'^validation/$', validate_hoome_id, name='validate_hoome_id'),
     # url(r'^success/$', views.edit_success, name='edit_success'),
 ]

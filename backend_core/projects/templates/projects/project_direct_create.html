@@ -122,36 +122,23 @@
                 <div class="professional_hoome_id_wrapper hide">
                     {#                                professional_hoome_id#}
                     {% with field=form.professional_hoome_id %}
-                        {% if field.errors %}
-                            <div class="form-group has-error">
-                                <label class="col-sm-2 control-label"
-                                       for="id_{{ field.name }}">{{ field.label }}</label>
-                                <div class="col-sm-10">
-                                    {{ field|attr:"class:form-control" }}
-                                    <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-{#                                     {{ info_dict.form_errors.professional_hoome_id_error }}#}
-                                    </span>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"
-                                       for="id_{{ field.name }}">{{ field.label }}</label>
-                                <div class="col-sm-10">
-                                    {{ field|attr:"class:form-control" }}
-                                    <span id="hoome_id_error_professional"/>
-                                    {% if field.help_text %}
-                                        <p class="help-block">
-                                            <small>{{ field.help_text }}</small>
-                                        </p>
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field|attr:"class:form-control" }}
+                                <span class="help-block">
+                                        <span id="hoome_id_error_professional"/>
+                                    {% if field.errors %}
+                                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                                    {% elif field.help_text %}
+                                        {{ field.help_text }}
                                     {% endif %}
-                                </div>
+                                    </span>
                             </div>
-                        {% endif %}
+                        </div>
+
                     {% endwith %}
                 </div>
-
                 <div class="homeowner_hoome_id_wrapper hide">
                     {#                                homeowner_hoome_id#}
                     {% with field=form.homeowner_hoome_id %}
@@ -162,9 +149,9 @@
                                 <div class="col-sm-10">
                                     {{ field|attr:"class:form-control" }}
                                     <span class="help-block">
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                {% for error in  field.errors %}{{ error }}{% endfor %}
 {#                    {{ info_dict.form_errors.homeowner_hoome_id_error }}#}
-                                    </span>
+                            </span>
                                 </div>
                             </div>
                         {% else %}
@@ -191,7 +178,8 @@
                 {% with field=form.project_name %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -201,7 +189,8 @@
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 {% if field.help_text %}
@@ -272,7 +261,8 @@
                 {% with field=form.project_type %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -282,7 +272,8 @@
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 {% if field.help_text %}
@@ -299,7 +290,8 @@
                 {% with field=form.contract_price %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -309,7 +301,8 @@
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 {% if field.help_text %}
@@ -326,7 +319,8 @@
                 {% with field=form.start_date %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -336,7 +330,8 @@
                         </div>
                     {% else %}
                         <div class="form-inline">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class=>
                                 {{ field|attr:"class:form-control" }}
                                 {% if field.help_text %}
@@ -349,11 +344,13 @@
                     {% endif %}
                 {% endwith %}
                 <br/>
+
                 {#                end_date#}
                 {% with field=form.end_date %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -363,7 +360,8 @@
                         </div>
                     {% else %}
                         <div class="form-inline">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
 
                             {#                            <div class="col-sm-12">#}
                             {{ field|attr:"class:form-control" }}
@@ -373,7 +371,6 @@
                                 </p>
                             {% endif %}
                             {#                            </div>#}
-
                         </div>
                     {% endif %}
                 {% endwith %}
@@ -383,7 +380,8 @@
                 {% with field=form.project_description %}
                     {% if field.errors %}
                         <div class="form-group has-error">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 <span class="help-block">
@@ -393,7 +391,8 @@
                         </div>
                     {% else %}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            <label class="col-sm-2 control-label"
+                                   for="id_{{ field.name }}">{{ field.label }}</label>
                             <div class="col-sm-10">
                                 {{ field|attr:"class:form-control" }}
                                 {% if field.help_text %}
@@ -754,7 +753,7 @@
             {#            hideth();#}
         })
 
-        function check_identity(identity) {
+        function check_identity() {
             if ($("#id_created_by_0").is(':checked')) {
                 $(".homeowner_hoome_id_wrapper").removeClass('hide');
                 if (!$(".professional_hoome_id_wrapper").hasClass('hide')) {
@@ -762,7 +761,6 @@
                 }
                 return $("#id_created_by_0").val();
             }
-
             else if ($("#id_created_by_1").is(':checked')) {
                 $(".professional_hoome_id_wrapper").removeClass('hide');
                 if (!$(".homeowner_hoome_id_wrapper").hasClass('hide')) {
@@ -771,6 +769,31 @@
                 return $("#id_created_by_1").val();
             }
         }
+
+        var check_hoome_id = function (hoome_id) {
+            var created_by = $("input[name=created_by]:checked").val();
+            if (hoome_id != null) {
+                $.ajax({
+                    url: "{% url 'validate_hoome_id' %}",
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                    },
+                    data: JSON.stringify({"hoome_id": hoome_id, "created_by": created_by}),
+                    contentType: "application/json;",
+                    datatype: "json",
+                }).done(function (data) {
+                    var res = JSON.parse(data);
+                    if (created_by == "CONSUMER") {
+                        $("#hoome_id_error_professional").html(res.error_message);
+                    }
+                    if (created_by == "PROFESSIONAL") {
+                        $("#hoome_id_error_consumer").html(res.error_message);
+                    }
+                });
+            }
+        };
+
         $(document).ready(function () {
             var identity;
             {% if not info_dict.direct_create %}
@@ -783,9 +806,9 @@
                     $("#id_created_by_0").prop("checked", true);
                 {% endif %}
             {% endif %}
-            identity = check_identity(identity);
+            identity = check_identity();
             $("#id_created_by input").click(function () {
-                identity = check_identity(identity);
+                identity = check_identity();
             })
 
             $("button.btn.btn-hoome").click(function () {
@@ -794,40 +817,17 @@
                 }
                 localStorage.setItem("role", identity);
             });
-        })
 
-        var check_hoome_id = function(hoome_id){
-            var created_by = $("input[name=created_by]:checked").val();
-            $.ajax({
-                url: "{% url 'create_project_direct' %}",
-                type: "POST",
-                beforeSend: function (request) {
-                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                },
-                data: JSON.stringify({"hoome_id": hoome_id, "created_by": created_by}),
-                contentType: "application/json;",
-                datatype : "json",
-            }).done(function(data){
-                var res = JSON.parse(data);
-                if(created_by == "CONSUMER"){
-                    $("#hoome_id_error_professional").html(res.error_message);
-                }
-                if(created_by == "PROFESSIONAL"){
-                    $("#hoome_id_error_consumer").html(res.error_message);
-                }
+            $("#id_professional_hoome_id").blur(function () {
+                var hoome_id = $(this).val();
+                check_hoome_id(hoome_id);
             });
-        };
 
-        $("#id_professional_hoome_id").blur(function(){
-            var hoome_id = $(this).val();
-            check_hoome_id(hoome_id);
-        });
+            $("#id_homeowner_hoome_id").blur(function () {
+                var hoome_id = $(this).val();
+                check_hoome_id(hoome_id);
+            })
 
-        $("#id_homeowner_hoome_id").blur(function(){
-            var hoome_id = $(this).val();
-            check_hoome_id(hoome_id);
         })
-
-}
     </script>
 {% endblock %}
