@@ -33,7 +33,7 @@ def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
     elif prof_type == DESIGNER:
         ret_professional_object = Designer.objects.get(lic_num=lic)
     elif prof_type == MEISTER:
-        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
+        ret_professional_object = Meister.objects.get(lic_num=lic)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object

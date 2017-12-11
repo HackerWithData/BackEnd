@@ -6,7 +6,8 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _, ugettext_lazy as __
+from django.utils.translation import ugettext as _
+    # ugettext_lazy as _
 from django.views import View
 
 from photos.forms import PhotoForm
@@ -187,7 +188,7 @@ class MeisterDetail(View):
                 # request.session.update({'review_form': review_form.data})
                 info_dict['review_form'] = review_form
                 info_dict["user_rating_form"] = user_rating_form
-                messages.warning(request, __('Submit Failed. Please verify your content is correct.'))
+                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
                 return render(request, template_name, {"info_dict": info_dict})
         elif request.POST.get('overview'):
             edit_overview(request, o_id)

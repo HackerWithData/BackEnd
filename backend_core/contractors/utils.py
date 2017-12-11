@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as _
 
 
 def convert_hscore_to_rank(hscore):
@@ -12,7 +12,7 @@ def convert_hscore_to_rank(hscore):
     elif hscore.score > 70:
         letter_grade = "A"
     elif hscore.score == 0:
-        letter_grade = __("Warning")
+        letter_grade = _("Warning")
     else:
         letter_grade = 'A-'
     return letter_grade

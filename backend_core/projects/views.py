@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext as _
 from django.forms.formsets import formset_factory
 from django.contrib.auth import (logout as django_logout)
 from django.forms.models import model_to_dict
@@ -103,7 +103,7 @@ class ProjectDetail(View):
                 project.user = request.user
             else:
                 django_logout(request)
-                messages.warning(request, __("Please Login as Homeowner."))
+                messages.warning(request, _("Please Login as Homeowner."))
                 request.session['success_url'] = '/project/' + uuid
                 return redirect(request.session['success_url'])
         elif project.content_type is None:
@@ -114,7 +114,7 @@ class ProjectDetail(View):
                 project.object_id = pro.lic_num
             else:
                 django_logout(request)
-                messages.warning(request, __("Please Login as Professional."))
+                messages.warning(request, _("Please Login as Professional."))
                 request.session['success_url'] = '/project/' + uuid
                 return redirect(request.session['success_url'])
         project.save()
@@ -147,7 +147,7 @@ class ProjectDetail(View):
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
-            raise Http404(__("Page Not Found"))
+            raise Http404(_("Page Not Found"))
 
     def post(self, request, uuid):
         if request.POST.get('create-milestone'):
@@ -175,7 +175,7 @@ class ProjectDetail(View):
             project.save()
 
             # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
-            messages.success(request, __('Success'))
+            messages.success(request, _('Success'))
             return redirect(request.path)
 
         elif request.POST.get('release-money'):
@@ -186,16 +186,16 @@ class ProjectDetail(View):
             project.project_action = "Release Money"
             project.save()
             # TODO: add some functions to send the money?
-            messages.success(request, __('Success'))
+            messages.success(request, _('Success'))
             return redirect(request.path)
 
         else:  # TODO: The logic here is weird need to change
-            messages.warning(request, __('Failed'))
+            messages.warning(request, _('Failed'))
             return redirect(request.path)  #
 
 
 # else:
-#     messages.warning(request, __('Please Log in as Homeowner first.'))
+#     messages.warning(request, _('Please Log in as Homeowner first.'))
 #     django_logout(request)
 #     return redirect(reverse('account_login')+'?next='+request.path)
 @check_recaptcha

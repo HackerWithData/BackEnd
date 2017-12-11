@@ -2,7 +2,7 @@ import string
 
 from django import forms
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 # from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
@@ -47,26 +47,26 @@ class ConsumerInfoFillUpForm(forms.Form):
     first_name = forms.CharField(
         required=True,
         max_length=128,
-        label=__('First Name'),
+        label=_('First Name'),
     )
 
     last_name = forms.CharField(
         required=True,
         max_length=128,
-        label=__('Last Name'),
+        label=_('Last Name'),
     )
 
     zipcode = forms.CharField(
         required=True,
         max_length=5,
         min_length=5,
-        label=__('Zipcode'),
+        label=_('Zipcode'),
     )
 
     gender = forms.MultipleChoiceField(
         required=True,
         choices=GENDER_CHOICES,
-        label=__("Gender")
+        label=_("Gender")
     )
 
     def clean_zipcode(self):
@@ -102,7 +102,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     """
     license_num = forms.CharField(
         required=True,
-        label=__('License Number'),
+        label=_('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number'}),
         initial=0
     )
@@ -111,28 +111,28 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label=__('Professional Type'),
+        label=_('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type'})
     )
 
     professional_subtype = forms.MultipleChoiceField(
         required=True,
         choices=PROFESSIONAL_SUBTYPE_CHOICES,
-        label=__('Field Selections'),
+        label=_('Field Selections'),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
 
     # personal_name = forms.CharField(
     #     required=True,
     #     max_length=255,
-    #     label=__('Name'),
+    #     label=_('Name'),
     #     widget=forms.TextInput(attrs={'class': 'input-personal-name'})
     # )
 
     company_name = forms.CharField(
         required=True,
         max_length=255,
-        label=__('Name'),
+        label=_('Name'),
         widget=forms.TextInput(attrs={'class': 'input-company-name'})
     )
 
@@ -140,33 +140,33 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=ENTITY_CHOICES,
         initial=C,
-        label=__('Entity Type'),
+        label=_('Entity Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
 
     street = forms.CharField(
         required=True,
         max_length=128,
-        label=__('Street'),
+        label=_('Street'),
         widget=forms.TextInput(attrs={'class': 'input-street'})
     )
 
     state = forms.CharField(
         required=True,
         max_length=32,
-        label=__('State'),
+        label=_('State'),
         widget=forms.TextInput(attrs={'class': 'input-state'})
     )
     county = forms.CharField(
         required=True,
         max_length=32,
-        label=__('County'),
+        label=_('County'),
         widget=forms.TextInput(attrs={'class': 'input-county'})
     )
     zipcode = forms.CharField(
         required=True,
         max_length=16,
-        label=__('Postal Code'),
+        label=_('Postal Code'),
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
 
@@ -332,14 +332,14 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
 
     license_num = forms.CharField(
         required=True,
-        label=__('License Number'),
+        label=_('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number', 'readonly': 'true'})
     )
 
     # company_name = forms.CharField(
     #     required=True,
     #     max_length=128,
-    #     label=__('Name'),
+    #     label=_('Name'),
     #     widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
     # )
 
@@ -347,7 +347,7 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label=__('Professional Type'),
+        label=_('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type', 'readonly': 'true'})
     )
 

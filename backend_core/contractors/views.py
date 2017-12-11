@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseNotFound, Http404, HttpResponse
 from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _, ugettext_lazy as __
+from django.utils.translation import ugettext as _, ugettext_lazy as _
 from django.views import View
 from hscore.models import Hscore
 from photos.forms import PhotoForm
@@ -339,7 +339,7 @@ class ContractorDetail(View):
                 # request.session.update({'review_form': review_form.data})
                 info_dict['review_form'] = review_form
                 info_dict["user_rating_form"] = user_rating_form
-                messages.warning(request, __('Submit Failed. Please verify your content is correct.'))
+                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
                 return render(request, 'contractor/contractor.html', {"info_dict": info_dict})
         # TODO: need to change here
         elif request.POST.get('overview'):

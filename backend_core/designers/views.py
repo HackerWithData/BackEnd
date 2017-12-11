@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import datetime
-from django.utils.translation import ugettext as _, ugettext_lazy as __
+from django.utils.translation import ugettext as _, ugettext_lazy as _
 from django.views import View
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
@@ -144,7 +144,7 @@ class DesignerDetail(View):
                 # request.session.update({'review_form': review_form.data})
                 info_dict['review_form'] = review_form
                 info_dict["user_rating_form"] = user_rating_form
-                messages.warning(request, __('Submit Failed. Please verify your content is correct.'))
+                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
                 return render(request, 'designer/designer.html', {"info_dict": info_dict})
         elif request.POST.get('overview'):
             edit_overview(request, o_id)
