@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as __
 from django.forms.formsets import formset_factory
 from django.contrib.auth import (logout as django_logout)
+from django.forms.models import model_to_dict
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
@@ -21,7 +22,8 @@ from .forms import ProjectAttachmentForm, ProjectForm, ProjectFormDirectCreate, 
 from .adapter import save_milestone, _save_milestone, save_project, save_project_attachment, save_project_photo, \
     milestone_status_explanation
 from .decorators import check_recaptcha
-from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate, \
+    ProjectEditForm
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
 
@@ -101,17 +103,18 @@ class ProjectDetail(View):
             else:
                 django_logout(request)
                 messages.warning(request, __("Please Login as Homeowner."))
-                request.session['success_url'] = '/project/'+uuid
+                request.session['success_url'] = '/project/' + uuid
                 return redirect(request.session['success_url'])
         elif project.content_type is None:
             if request.user.role == PROFESSIONAL:
                 pro = get_professional_user(request.user)
+                project.bus_name = pro.name
                 project.content_type = ContentType.objects.get(model=pro.type.lower())
                 project.object_id = pro.lic_num
             else:
                 django_logout(request)
                 messages.warning(request, __("Please Login as Professional."))
-                request.session['success_url'] = '/project/'+uuid
+                request.session['success_url'] = '/project/' + uuid
                 return redirect(request.session['success_url'])
         project.save()
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
@@ -228,7 +231,7 @@ def create_project(request, professional_type=None, lic_id=None):
             project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
 
-        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
+        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             # print(request.POST)
             # print(milestone_formset)
             project = save_project(request, project_form, professional_type, lic_id)
@@ -240,4 +243,23 @@ def create_project(request, professional_type=None, lic_id=None):
             return redirect(success_url)
 
     info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}
+    return render(request, template_name, {'info_dict': info_dict})
+
+
+from django.shortcuts import get_object_or_404
+
+
+@check_recaptcha
+def edit_project(request, uuid):
+    template_name = "projects/edit_project.html"
+    project = get_object_or_404(Project, uuid=uuid)
+    if request.method == "GET":
+        project_edit_form = ProjectEditForm(initial=model_to_dict(project))
+    elif request.method == "POST":
+        project_edit_form = ProjectEditForm(request.POST)
+        if project_edit_form.is_valid():
+            project_edit_form.update(instance=project)
+            success_url = reverse('display_project_detail', kwargs={'uuid': uuid})
+            return redirect(success_url)
+    info_dict = {'project_edit_form': project_edit_form}
     return render(request, template_name, {'info_dict': info_dict})

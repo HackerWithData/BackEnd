@@ -41,9 +41,9 @@
                             {#                            {% elif request.user.role == 'PROFESSIONAL' %}#}
                             {#                                <td><a href="{% url 'display_project_detail' 1 %}">{{ transaction.user }}</a></td>#}
                             {#                            {% endif %}#}
-                            <td>{{ transaction.amount }}</td>
-                            <td>{{ transaction.get_status_display }}</td>
-                            <td>{{ transaction.updated_at }}</td>
+                            <td><span class="table-cell">{{ transaction.amount }}</span></td>
+                            <td><span class="table-cell">{{ transaction.get_status_display }}</span></td>
+                            <td><span class="table-cell">{{ transaction.updated_at|date:'Y-m-d H:i' }}</span></td>
                         </tr>
                     {% endfor %}
                 </table>

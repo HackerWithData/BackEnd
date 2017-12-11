@@ -117,6 +117,10 @@
 }
 
 @media (max-width: 767px ) {
+    .project-transactions .panel-body table td {
+        font-size: 0.5em;
+    }
+
     .menu-side {
         display: none;
     }

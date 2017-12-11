@@ -131,6 +131,8 @@
 {% trans "Homeowner" as Homeowner %}
 {% trans "Create Project" as Create_Project %}
 {% trans "Create" as Create %}
+{% trans "Add More Detail" as Add_Detail %}
+
 <!--nav bar start-->
 {% block body %}
     {#    TODO: Take care the message#}
@@ -167,7 +169,7 @@
                     <!--/.navbar-header-->
                     <div id="main-nav" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li><a class="create-project mobile" href="{% url 'create_project_direct' %}">
+                            <li class="mobile"><a class="create-project mobile" href="{% url 'create_project_direct' %}">
                                 {{ Create_Project }}
                             </a></li>
                             <li><a href="/" class="scroll-top">{{ Home }}</a></li>
@@ -265,8 +267,6 @@
                                                         {% retrieve_professional_link %}
                                                     </li>
                                                 {% endif %}
-                                            </ul>
-                                            <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
                                                     <form class="dropdown-item" method="post"
                                                           action="{% url 'account_logout' %}">
@@ -289,7 +289,7 @@
                             {% else %}
                                 <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                             {% endif %}
-                            <li><a class="create-project desktop" href="{% url 'create_project_direct' %}">
+                            <li class="desktop"><a class="create-project desktop" href="{% url 'create_project_direct' %}">
                                 <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
                             </a></li>
                         </ul>

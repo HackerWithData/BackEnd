@@ -7,6 +7,7 @@ from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
 from django.core.exceptions import ValidationError
 from users.models import User
 
+
 class ProjectAttachmentForm(forms.ModelForm):
     class Meta:
         model = ProjectAttachment
@@ -23,27 +24,29 @@ class ProjectPhotoForm(forms.ModelForm):
 
 class ProjectForm(forms.Form):
     # TODO: need a google address autocompeletion/correction
-    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Choose your idenity*"))
-    project_name = forms.CharField(label=__('Choose a name for your project*'), max_length=100)
-    first_name = forms.CharField(label=__("Homeowner's First Name*"), max_length=64)
-    last_name = forms.CharField(label=__("Honemowner's Last Name*"), max_length=64)
+    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Choose your identity*"))
+    project_name = forms.CharField(label=__('Project Name*'), max_length=100,
+                                   widget=forms.TextInput(attrs={'placeholder': __('Choose a name for your project')}))
     project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type*'))
-    project_description = forms.CharField(label=__('Tell us more about your project'), required=False,
-                                          widget=forms.Textarea(
-                                              attrs={'placeholder': __(
-                                                  '(Optional) Please briefly describe your project.')}))
-    street_address = forms.CharField(label=__('Street Address*'))
-    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
-                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
-    county = forms.CharField(label=__('County/City*'), max_length=64)
-    state = forms.CharField(label=__('State*'), max_length=64)
-    zipcode = forms.CharField(label=__('Zip Code*'), max_length=10)
-    # country = forms.CharField(label=__('Country'), max_length=10)
-    # TODO: need to add a calender widget
+    contract_price = forms.IntegerField(label=__('Contract Price*'), min_value=0)
     start_date = forms.DateField(label=__('Start Date*'), widget=forms.SelectDateWidget())
     end_date = forms.DateField(label=__('End Date*'), widget=forms.SelectDateWidget())
+    first_name = forms.CharField(label=__("Homeowner's First Name"), max_length=64, required=False)
+    last_name = forms.CharField(label=__("Honemowner's Last Name"), max_length=64, required=False)
+    project_description = forms.CharField(label=__('Project Description'), required=False,
+                                          widget=forms.Textarea(
+                                              attrs={'placeholder': __(
+                                                  '(Optional) Tell us more about your project.')}))
+    street_address = forms.CharField(label=__('Street Address'), required=False)
+    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
+    county = forms.CharField(label=__('County/City'), max_length=64, required=False)
+    state = forms.CharField(label=__('State'), max_length=64, required=False)
+    zipcode = forms.CharField(label=__('Zip Code'), max_length=10, required=False)
+    # country = forms.CharField(label=__('Country'), max_length=10)
+    # TODO: need to add a calender widget
+
     # project_cost = forms.IntegerField(label=__('Total Project Cost shown in Contract*'),min_value=0, required=True)
-    contract_price = forms.IntegerField(label=__('Contract Price*'), min_value=0)
     attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)
     project_attachment = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
@@ -80,6 +83,41 @@ class ProjectForm(forms.Form):
         return project
 
 
+class ProjectEditForm(forms.Form):
+    # project_name = forms.CharField(label=__('Project Name'), max_length=100, disabled=True)
+    # project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type'), disabled=True)
+    # contract_price = forms.IntegerField(label=__('Contract Price'), min_value=0, disabled=True)
+    # start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget(), disabled=True)
+    # end_date = forms.DateField(label=__('End Date'), widget=forms.SelectDateWidget(), disabled=True)
+    first_name = forms.CharField(label=__("Homeowner's First Name"), max_length=64, required=False)
+    last_name = forms.CharField(label=__("Honemowner's Last Name"), max_length=64, required=False)
+    project_description = forms.CharField(label=__('Project Description'), required=False,
+                                          widget=forms.Textarea(
+                                              attrs={'placeholder': __(
+                                                  '(Optional) Tell us more about your project.')}))
+    street_address = forms.CharField(label=__('Street Address'), required=False)
+    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
+    county = forms.CharField(label=__('County/City'), max_length=64, required=False)
+    state = forms.CharField(label=__('State'), max_length=64, required=False)
+    zipcode = forms.CharField(label=__('Zip Code'), max_length=10, required=False)
+
+    def update(self, instance, commit=True):
+        if instance:
+            instance.first_name = self.cleaned_data['first_name']
+            instance.last_name = self.cleaned_data['last_name']
+            instance.street_address = self.cleaned_data['street_address']
+            instance.street_address2 = self.cleaned_data['street_address2']
+            instance.county = self.cleaned_data['county']
+            instance.state = self.cleaned_data['state']
+            instance.zipcode = self.cleaned_data['zipcode']
+            instance.project_description = self.cleaned_data['project_description']
+
+        if commit:
+            instance.save()
+        return instance
+
+
 class ProjectFormDirectCreate(ProjectForm):
     professional_hoome_id = forms.CharField(label=__("Enter the Contractor/Meister's Hoome ID*"), required=False)
     homeowner_hoome_id = forms.CharField(label=__("Enter the Homeowner's Hoome ID*"), required=False)
@@ -95,9 +133,11 @@ class ProjectFormDirectCreate(ProjectForm):
                 try:
                     user = User.objects.get(hoome_id=homeowner_hoome_id)
                 except:
-                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"), code='homeowner_hoome_id_error')
+                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"),
+                                          code='homeowner_hoome_id_error')
                 if user.role == PROFESSIONAL:
-                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"), code='homeowner_hoome_id_error')
+                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"),
+                                          code='homeowner_hoome_id_error')
         elif created_by == CONSUMER:
             professional_hoome_id = cleaned_data.get('professional_hoome_id', None)
             if not professional_hoome_id:
@@ -106,19 +146,22 @@ class ProjectFormDirectCreate(ProjectForm):
                 try:
                     user = User.objects.get(hoome_id=professional_hoome_id)
                 except:
-                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"), code='professional_hoome_id_error')
+                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"),
+                                          code='professional_hoome_id_error')
                 if user.role == CONSUMER:
-                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"), code='professional_hoome_id_error')
+                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"),
+                                          code='professional_hoome_id_error')
         return cleaned_data
 
-    # def error_info(self):
-    #     e = self.errors.as_data()
-    #     errors = e.get('__all__', None)
-    #     form_errors = {}
-    #     if errors is not None:
-    #         for error in errors:
-    #             form_errors.update({error.code: error.message})
-    #     return form_errors
+        # def error_info(self):
+        #     e = self.errors.as_data()
+        #     errors = e.get('__all__', None)
+        #     form_errors = {}
+        #     if errors is not None:
+        #         for error in errors:
+        #             form_errors.update({error.code: error.message})
+        #     return form_errors
+
 
 # class ProjectFormAfterLogin(ProjectForm):
 #     professional_hoome_id = forms.CharField(label=__("Professional Hoome ID"))
