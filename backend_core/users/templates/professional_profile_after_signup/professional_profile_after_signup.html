@@ -339,10 +339,12 @@
             <span class="progress"><span></span></span>
 
             <div class="panels">
+                {% if form.errors or form.non_field_errors %}
                 <div class="alert alert-warning">
-                    {{ form.errors }}
+                    {% for field in form %} {{ field.errors|escape }}{% endfor %}
                     {{ form.non_field_errors }}
                 </div>
+                {% endif %}
                 <div data-panel="one" id="stage-one">
                     <h4>{% trans "Choose License Type" %}</h4>
                     <div>{% trans "If you don't have license, please choose meister." %} </div>
@@ -590,7 +592,7 @@
 
 //        TODO: async
             $('#id_license_num').keyup(function () {
-                if ($("input:radio[name='professional_type']:checked").val() != "Meister") {
+                if ($("input:radio[name='professional_type']:checked").val() != "MEISTER") {
                     if (globalTimeout != null) {
                         clearTimeout(globalTimeout);
                     }

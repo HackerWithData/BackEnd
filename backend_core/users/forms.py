@@ -215,7 +215,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
         # print(clean_professional_type)
-        if clean_professional_type == "MEISTER":
+        if str(clean_professional_type) == "MEISTER":
             # professional_object = create_professional_corresponding_object(prof_type=clean_professional_type)
             meister, created = Meister.objects.get_or_create(lic_name=clean_company_name,
                                                              # bus_name=clean_company_name,
@@ -231,8 +231,9 @@ class ProfessionalInfoFillUpForm(forms.Form):
             professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
                                                                        name=clean_company_name,
                                                                        entity_type=clean_entity_type,
-                                                                       lic_type=clean_professional_type,
+                                                                       lic_type='&'.join(clean_professional_subtype),
                                                                        type=clean_professional_type,
+                                                                       county=clean_county,
                                                                        state=clean_state,
                                                                        postal_code=clean_zipcode)
             if created:

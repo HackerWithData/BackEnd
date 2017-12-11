@@ -4,7 +4,7 @@ CONTRACTOR = 'CONTRACTOR'
 ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
 MEISTER = 'MEISTER'
-#TODO: take care
+# TODO: take care
 PROFESSIONAL_CHOICES = (
     (CONTRACTOR, __('Contractor')),
     (ARCHITECT, __('Architect')),
@@ -40,7 +40,8 @@ DC = 'Drywall Contractor'
 EC = 'Electrical Contractor'
 PDC = 'Painting And Decorating Contractor'
 SMC = 'Sheet Metal Contractor'
-ME = 'MEISTER'
+ME = 'Meister'
+AC = 'Architect'
 
 PROFESSIONAL_SUBTYPE_CHOICES = (
     (GC, __('General Contractor')),
@@ -59,7 +60,8 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
     (EC, __('Electrical Contractor')),
     (PDC, __('Painting And Decorating Contractor')),
     (SMC, __('Sheet Metal Contractor')),
-    (ME, __('MEISTER'))
+    (ME, __('Meister')),
+    (AC, __('Architect')),
 )
 
 
