@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 # Create your views here.
 import datetime
-from django.utils.translation import ugettext as _,  ugettext_lazy as __
+from django.utils.translation import ugettext as _,  ugettext_lazy as _
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.views import View

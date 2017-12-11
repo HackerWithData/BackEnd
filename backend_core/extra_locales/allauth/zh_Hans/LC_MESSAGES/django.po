@@ -18,937 +18,1603 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: account/adapter.py:50
-msgid "Username can not be used. Please use other username."
-msgstr "此用户名不能使用，请改用其他用户名。"
+#: apiv1/serializers/review_serializer.py:6
+msgid "Comments"
+msgstr "評論"
 
-#: account/adapter.py:54
-msgid "Too many failed login attempts. Try again later."
-msgstr "登录失败次数过多，请稍后重试。"
+#: apiv1/serializers/review_serializer.py:9
+msgid "Project Date"
+msgstr "施工起始時間"
 
-#: account/adapter.py:56
-msgid "A user is already registered with this e-mail address."
-msgstr "此e-mail地址已被其他用户注册。"
+#: apiv1/serializers/review_serializer.py:10 templates/base.html:51
+msgid "Project Type"
+msgstr "項目類型"
 
-#: account/adapter.py:293
+#: apiv1/serializers/review_serializer.py:11
+msgid "Project Zipcode"
+msgstr "項目所在郵政編碼"
+
+#: apiv1/serializers/review_serializer.py:12 templates/base.html:50
+msgid "Project Cost"
+msgstr "項目開銷"
+
+#: apiv1/serializers/review_serializer.py:13 templates/base.html:52
+msgid "Project Duration"
+msgstr "項目工期"
+
+#: apiv1/serializers/review_serializer.py:15
+msgid "Project Address"
+msgstr "項目地址"
+
+#: apiv1/serializers/review_serializer.py:16 review/forms.py:48
+msgid "Is Anonymous?"
+msgstr "匿名用戶"
+
+#: architects/templates/architect/architect.html:41
+#: contractors/templates/contractor/contractor.html:43
+#: designers/templates/designer/designer.html:44
+#: meisters/templates/meister/meister.html:47
+msgid "Edit page?"
+msgstr "編輯頁面?"
+
+#: architects/templates/architect/architect.html:86
+#: contractors/templates/contractor/contractor.html:95
+#: designers/templates/designer/designer.html:91
+msgid "Contract Us"
+msgstr "與我們簽訂合同"
+
+#: architects/templates/architect/architect.html:91
+#: contractors/templates/contractor/contractor.html:101
+#: designers/templates/designer/designer.html:97
+#: meisters/templates/meister/meister.html:103
+msgid "Project Photo Upload"
+msgstr "上傳項目照片"
+
+#: architects/templates/architect/architect.html:93
+#: contractors/templates/contractor/contractor.html:103
+#: designers/templates/designer/designer.html:99
+#: meisters/templates/meister/meister.html:105
+msgid "Background Image Upload"
+msgstr "上傳背景照片"
+
+#: architects/templates/architect/architect.html:136
+#: contractors/templates/contractor/contractor.html:145
+#: designers/templates/designer/designer.html:140
+#: meisters/templates/meister/meister.html:147 templates/base.html:32
+msgid "Review us"
+msgstr "評價我們"
+
+# python-brace-format
+#: architects/views.py:99 architects/views.py:224
 #, python-brace-format
-msgid "Password must be a minimum of {0} characters."
-msgstr "密码长度不得少于 {0} 个字符。"
-
-#: account/apps.py:7
-#, fuzzy
-msgid "Accounts"
-msgstr "账号"
-
-#: account/forms.py:41 account/forms.py:378
-msgid "You must type the same password each time."
-msgstr "每次输入的密码必须相同"
-
-#: account/forms.py:71 account/forms.py:345 account/forms.py:456
-msgid "Password"
-msgstr "密码"
-
-#: account/forms.py:72
-msgid "Remember Me"
-msgstr "记住我"
-
-#: account/forms.py:78
-msgid "This account is currently inactive."
-msgstr "此账号当前未激活。"
-
-#: account/forms.py:81
-msgid "The e-mail address and/or password you specified are not correct."
-msgstr "您提供的e-mail地址或密码不正确。"
-
-#: account/forms.py:84
-msgid "The username and/or password you specified are not correct."
-msgstr "您提供的用户名或密码不正确。"
-
-#: account/forms.py:93 account/forms.py:248 account/forms.py:406
-#: account/forms.py:475
-msgid "E-mail address"
-msgstr "E-mail地址"
-
-#: account/forms.py:95 account/forms.py:281 account/forms.py:401
-#: account/forms.py:470
-msgid "E-mail"
-msgstr "E-mail"
-
-#: account/forms.py:100 account/forms.py:103 account/forms.py:240
-#: account/forms.py:244
-msgid "Username"
-msgstr "用户名"
-
-#: account/forms.py:110
-msgid "Username or e-mail"
-msgstr "用户名或e-mail"
-
-#: account/forms.py:113
-msgctxt "field label"
-msgid "Login"
-msgstr "账号"
-
-#: account/forms.py:272
-#, fuzzy
-#| msgid "E-mail (optional)"
-msgid "E-mail (again)"
-msgstr "E-mail （选填项）"
-
-#: account/forms.py:276
-#, fuzzy
-#| msgid "email confirmation"
-msgid "E-mail address confirmation"
-msgstr "e-mail确认"
-
-#: account/forms.py:284
-msgid "E-mail (optional)"
-msgstr "E-mail （选填项）"
-
-#: account/forms.py:325
-#, fuzzy
-#| msgid "You must type the same password each time."
-msgid "You must type the same email each time."
-msgstr "每次输入的密码必须相同"
-
-#: account/forms.py:348 account/forms.py:457
-msgid "Password (again)"
-msgstr "密码（重复）"
-
-#: account/forms.py:412
-msgid "This e-mail address is already associated with this account."
-msgstr "此e-mail地址已关联到这个账号。"
-
-#: account/forms.py:414
-msgid "This e-mail address is already associated with another account."
-msgstr "此e-mail地址已关联到其他账号。"
-
-#: account/forms.py:436
-msgid "Current Password"
-msgstr "当前密码"
-
-#: account/forms.py:437 account/forms.py:526
-msgid "New Password"
-msgstr "新密码"
-
-#: account/forms.py:438 account/forms.py:527
-msgid "New Password (again)"
-msgstr "新密码（重复）"
-
-#: account/forms.py:446
-msgid "Please type your current password."
-msgstr "请输入您的当前密码"
-
-#: account/forms.py:484
-msgid "The e-mail address is not assigned to any user account"
-msgstr "此e-mail地址未分配给任何用户账号"
-
-#: account/forms.py:548
-msgid "The password reset token was invalid."
-msgstr ""
-
-#: account/models.py:23
-msgid "user"
-msgstr "用户"
-
-#: account/models.py:27 account/models.py:81
-#, fuzzy
-msgid "e-mail address"
-msgstr "e-mail地址"
-
-#: account/models.py:28
-msgid "verified"
-msgstr "已验证"
-
-#: account/models.py:29
-#, fuzzy
-msgid "primary"
-msgstr "首选e-mail"
-
-#: account/models.py:34
-msgid "email address"
-msgstr "e-mail地址"
-
-#: account/models.py:35
-msgid "email addresses"
-msgstr "e-mail地址"
-
-#: account/models.py:83
-msgid "created"
-msgstr "已建立"
-
-#: account/models.py:85
-msgid "sent"
-msgstr "已发送"
-
-#: account/models.py:86 socialaccount/models.py:61
-msgid "key"
-msgstr "key"
-
-#: account/models.py:91
-msgid "email confirmation"
-msgstr "e-mail确认"
-
-#: account/models.py:92
-msgid "email confirmations"
-msgstr "e-mail确认"
-
-#: socialaccount/adapter.py:26
-#, python-format
 msgid ""
-"An account already exists with this e-mail address. Please sign in to that "
-"account first, then connect your %s account."
-msgstr "已有一个账号与此e-mail地址关联，请先登录该账号，然后连接你的 %s 账号。"
-
-#: socialaccount/adapter.py:131
-msgid "Your account has no password set up."
-msgstr "您的账号未设置密码。"
-
-#: socialaccount/adapter.py:138
-msgid "Your account has no verified e-mail address."
-msgstr "您的账号下无任何验证过的e-mail地址。"
-
-#: socialaccount/apps.py:7
-#, fuzzy
-msgid "Social Accounts"
-msgstr "账号"
-
-#: socialaccount/models.py:49 socialaccount/models.py:83
-msgid "provider"
+"{bus_name} is an architect from {city}. The company holds a license number "
+"according to {data_source}. \n"
+"                The License is verified as active when we checked last time. "
+"If you would like to know {bus_name} more, \n"
+"                please contact us and we will share more information about "
+"this architect to you.\n"
+"                "
 msgstr ""
+"{bus_name} 是壹位來自{city} 建築師。根據{data_source}，該建築師持有相關有效證"
+"件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我們，我們"
+"會向您分享更多關於該商家的信息和數據。"
 
-#: socialaccount/models.py:52
-#, fuzzy
-msgid "name"
-msgstr "用户名"
+#: architects/views.py:156 contractors/views.py:349 meisters/views.py:197
+msgid "Error Pages!"
+msgstr "錯誤頁面"
 
-#: socialaccount/models.py:54
-msgid "client id"
+#: architects/views.py:248 architects/views.py:282 contractors/views.py:373
+#: contractors/views.py:407 meisters/views.py:223 meisters/views.py:256
+msgid "No Pages Found."
+msgstr "找不到該網頁。"
+
+#: career/templates/career/career.html:68
+msgid ""
+"If you have any\n"
+"                    question, please contact us: "
+msgstr "如有任何問題，請通過以下方式聯系我們:"
+
+#: career/templates/career/career.html:79
+msgid ""
+"Welcome to Hoome! Hoome platform screens nearby, excellent designers, "
+"reliable\n"
+"                    contractors and awesome renovation meisters for users "
+"who need renovation through big data analysis.\n"
+"                    We are keenly seeking interns and partners to become an "
+"integral part of our team, who thrive in a\n"
+"                    fast paced start-up like environment and want to invent "
+"the future. "
 msgstr ""
+"歡迎來到Hoome! Hoome 平臺通過大數據分析幫助用戶篩選和推動優秀的設計師，可靠的"
+"承包商和裝修專業員工。我們誠心邀請各界社會精英加入我們！"
 
-#: socialaccount/models.py:56
-msgid "App ID, or consumer key"
+#: career/templates/career/career.html:85
+msgid ""
+"If you are interested about any following jobs , please click links\n"
+"                        below, which will redirect to our company page in "
+"AngelList: "
 msgstr ""
+"如果您對以下工作感興趣，請點擊以下鏈接，轉入我們在Angellist上的官方頁面："
 
-#: socialaccount/models.py:57
-msgid "secret key"
+#: career/templates/career/career.html:91
+msgid "iOS and Android App Developer"
+msgstr "蘋果安卓移動端開發人員"
+
+#: career/templates/career/career.html:93
+msgid "Web Developer"
+msgstr "網頁開發人員"
+
+#: career/templates/career/career.html:96
+msgid "Full Stack Data Scientist Intern"
+msgstr "全棧數據科學家實習"
+
+#: contractors/templates/contractor/contractor_project_photos_upload.html:25
+#: meisters/templates/meister/meister_project_photos_upload.html:25
+#: templates/base.html:31
+msgid "Project Photos"
+msgstr "項目照片"
+
+#: contractors/utils.py:15 users/templates/account/email.html:52
+msgid "Warning"
+msgstr "警告"
+
+#: contractors/views.py:177 contractors/views.py:281
+#, python-brace-format
+msgid ""
+"{lic_name} is a contractor company located in {csp} . The company holds a "
+"license number \n"
+"            according to {data_source}. According to real-time data "
+"analysis, this licensed contractor's hoome score \n"
+"            is {score} and is rated as {rank}. The License is verified as "
+"active when we checked last time. If you would\n"
+"             like to know {lic_name} more, please contact us and we will "
+"share more information and data about this\n"
+"              contractor to you."
 msgstr ""
+"{lic_name} 是壹家位於{csp}建築裝修承包商公司。根據{data_source}，該承包商持有"
+"相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
+"{score}， 評定區間為{rank}。如果您需要了解{lic_name}更多的資訊，請聯系我們，"
+"我們會向您分享更多關於該商家的信息和數據。"
 
-#: socialaccount/models.py:59
-msgid "API secret, client secret, or consumer secret"
+#: contractors/views.py:342 designers/views.py:147 meisters/views.py:191
+msgid "Submit Failed. Please verify your content is correct."
+msgstr "提交失敗，請確保您所填內容正確"
+
+#: dashboard/templates/dashboard/dashboard.html:22
+#: dashboard/templates/dashboard/dashboard.html:74
+msgid "’s Account Settings"
+msgstr "的賬戶設置"
+
+#: dashboard/templates/dashboard/dashboard.html:36 templates/base.html:75
+msgid "Profile"
+msgstr "檔案"
+
+#: dashboard/templates/dashboard/dashboard.html:128
+msgid "Hello, Welcome to Hoome!"
+msgstr "您好，歡迎來到Hoome!"
+
+#: dashboard/templates/dashboard/dashboard.html:130
+msgid ""
+"It's Your Personal Dashboard. You could set up you account\n"
+"                                by clicking left buttons."
+msgstr "這是您的個人用戶面板。您可以通過點擊左邊按鈕來設置您的賬戶。"
+
+#: dashboard/templates/dashboard/dashboard.html:164
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr "您真的想移除選中的郵箱嗎？"
+
+#: designers/views.py:96 designers/views.py:219
+#, python-brace-format
+msgid ""
+"{bus_name} is a designer based on {city} {state} . The company holds a "
+"license number according to {data_source}. \n"
+"                The License is verified as active when we checked last time. "
+"If you would like to know {bus_name} more, \n"
+"                please contact us and we will share more information about "
+"this designer to you.\n"
+"                "
 msgstr ""
+"{bus_name} 是壹位基於{city} {state}設計師。根據{data_source}，該設計師持有相"
+"關有效證件，並被Hoome認證有效。 如果您需要了解{bus_name}更多的資訊，請聯系我"
+"們，我們會向您分享更多關於該商家的信息和數據。"
 
-#: socialaccount/models.py:64
-#, fuzzy
-msgid "Key"
-msgstr "key"
+#: home/templates/home/home.html:112
+msgid "Find excellent professionals"
+msgstr "篩選優秀的裝修團隊"
 
-#: socialaccount/models.py:72
-msgid "social application"
+#: home/templates/home/home.html:153
+msgid "Database in California State"
+msgstr "加州數據庫"
+
+#: meisters/views.py:82 meisters/views.py:144
+#, python-brace-format
+msgid ""
+"{lic_name} is a professional located in {full_state_name}. The professional "
+"is verified as \n"
+"            active when we checked last time. If you would like to know "
+"{lic_name} more, please contact us and we will \n"
+"            share more information and data about this meister to you."
 msgstr ""
+"{lic_name} 是壹位基於{full_state_name}裝修專業人士。該專業人士被Hoome認證有"
+"效。 如果您需要了解{lic_name}更多的資訊，請聯系我們，我們會向您分享更多關於其"
+"的信息和數據。"
 
-#: socialaccount/models.py:73
-msgid "social applications"
-msgstr ""
+#: overviews/views.py:21
+msgid "Request Success"
+msgstr "請求成功"
 
-#: socialaccount/models.py:102
-msgid "uid"
-msgstr ""
+#: overviews/views.py:23
+msgid "Request Failed"
+msgstr "請求失敗"
 
-#: socialaccount/models.py:104
-msgid "last login"
-msgstr ""
+#: photos/templates/photos/background_photo_upload.html:18
+msgid "Background Images"
+msgstr "背景照片"
 
-#: socialaccount/models.py:106
-msgid "date joined"
-msgstr ""
+#: professionals/utils.py:9 search/templates/search_bar/search_bar.html:47
+#: templates/base.html:91
+msgid "Contractor"
+msgstr "承包商"
 
-#: socialaccount/models.py:108
-msgid "extra data"
-msgstr ""
+#: professionals/utils.py:10 professionals/utils.py:64
+#: search/templates/search_bar/search_bar.html:15
+#: search/templates/search_bar/search_bar.html:131 templates/base.html:92
+msgid "Architect"
+msgstr "建築師"
 
-#: socialaccount/models.py:112
-msgid "social account"
-msgstr ""
+#: professionals/utils.py:11 professionals/utils.py:55
+#: search/templates/search_bar/search_bar.html:17
+#: search/templates/search_bar/search_bar.html:112 templates/base.html:93
+msgid "Designer"
+msgstr "設計師"
 
-#: socialaccount/models.py:113
-msgid "social accounts"
-msgstr ""
+#: professionals/utils.py:12 professionals/utils.py:63
+#: search/templates/search_bar/search_bar.html:19
+#: search/templates/search_bar/search_bar.html:137 templates/base.html:122
+msgid "Meister"
+msgstr "守藝人"
 
-#: socialaccount/models.py:139
-msgid "token"
-msgstr ""
+#: professionals/utils.py:20
+msgid "Corporation"
+msgstr "公司經營"
 
-#: socialaccount/models.py:141
-msgid "\"oauth_token\" (OAuth1) or access token (OAuth2)"
-msgstr ""
+#: professionals/utils.py:21
+msgid "Partnership"
+msgstr "合夥經營"
 
-#: socialaccount/models.py:144
-msgid "token secret"
-msgstr ""
+#: professionals/utils.py:22
+msgid "Sole Ownership"
+msgstr "個體經營"
 
-#: socialaccount/models.py:146
-msgid "\"oauth_token_secret\" (OAuth1) or refresh token (OAuth2)"
-msgstr ""
+#: professionals/utils.py:47 search/templates/search_bar/search_bar.html:12
+#: search/templates/search_bar/search_bar.html:51
+msgid "General Contractor"
+msgstr "總承包商"
 
-#: socialaccount/models.py:148
-msgid "expires at"
-msgstr ""
+#: professionals/utils.py:48 search/templates/search_bar/search_bar.html:77
+msgid "Landscaping Contractor"
+msgstr "景觀園藝承包商"
 
-#: socialaccount/models.py:152
-msgid "social application token"
-msgstr ""
+#: professionals/utils.py:49 search/templates/search_bar/search_bar.html:92
+msgid "Swimming Pool Contractor"
+msgstr "泳池承包商"
 
-#: socialaccount/models.py:153
-msgid "social application tokens"
-msgstr ""
+#: professionals/utils.py:50
+msgid "Kitchen & Bath Remodeler"
+msgstr "廚房衛浴承包商"
 
-#: socialaccount/providers/douban/views.py:36
-msgid "Invalid profile data"
-msgstr ""
+#: professionals/utils.py:51
+msgid "Roofing Contractor"
+msgstr "屋頂承包商"
 
-#: socialaccount/providers/oauth/client.py:78
-#, python-format
-msgid "Invalid response while obtaining request token from \"%s\"."
-msgstr "Invalid response while obtaining request token from \"%s\"."
+#: professionals/utils.py:52 search/templates/search_bar/search_bar.html:83
+msgid "Plumbing Contractor"
+msgstr "水管道承包商"
 
-#: socialaccount/providers/oauth/client.py:109
-#, python-format
-msgid "Invalid response while obtaining access token from \"%s\"."
-msgstr "Invalid response while obtaining access token from \"%s\"."
+#: professionals/utils.py:53 search/templates/search_bar/search_bar.html:69
+msgid "Fencing Contractor"
+msgstr "圍欄承包商"
 
-#: socialaccount/providers/oauth/client.py:128
-#, python-format
-msgid "No request token saved for \"%s\"."
-msgstr "No request token saved for \"%s\"."
+#: professionals/utils.py:54
+msgid "HVAC Contractor"
+msgstr "暖通空調承包商"
 
-#: socialaccount/providers/oauth/client.py:177
-#, python-format
-msgid "No access token saved for \"%s\"."
-msgstr "No access token saved for \"%s\"."
+#: professionals/utils.py:56 search/templates/search_bar/search_bar.html:60
+msgid "Doors, Gates and Activating Devices"
+msgstr "門和啟動裝置承包商"
 
-#: socialaccount/providers/oauth/client.py:197
-#, python-format
-msgid "No access to private resources at \"%s\"."
-msgstr "无权访问私有资源 \"%s\"。"
+#: professionals/utils.py:57 search/templates/search_bar/search_bar.html:54
+msgid "Carpentry Contractor"
+msgstr "木工承包商"
 
-#: templates/account/account_inactive.html:5
-#: templates/account/account_inactive.html:8
-msgid "Account Inactive"
-msgstr "账号未激活"
+#: professionals/utils.py:58 search/templates/search_bar/search_bar.html:57
+msgid "Concrete Contractor"
+msgstr "混凝土承包商"
 
-#: templates/account/account_inactive.html:10
-msgid "This account is inactive."
-msgstr "此账号未激活"
+#: professionals/utils.py:59 search/templates/search_bar/search_bar.html:63
+msgid "Drywall Contractor"
+msgstr "石膏板承包商"
 
-#: templates/account/email.html:5
+#: professionals/utils.py:60 search/templates/search_bar/search_bar.html:66
+msgid "Electrical Contractor"
+msgstr "電工承包商"
+
+#: professionals/utils.py:61 search/templates/search_bar/search_bar.html:80
+msgid "Painting And Decorating Contractor"
+msgstr "油漆承包商"
+
+#: professionals/utils.py:62 search/templates/search_bar/search_bar.html:89
+msgid "Sheet Metal Contractor"
+msgstr "金屬板承包商"
+
+#: projects/adapter.py:109 projects/adapter.py:111
+msgid "Waiting for homeowner make the payment."
+msgstr "等待業主支付"
+
+#: projects/adapter.py:114
+msgid "Hoome has recevied the payment and will hold for you."
+msgstr "Hoome已經收到此款項並為您保存"
+
+#: projects/adapter.py:116
+msgid "Hoome has recevied the payment and please start to work."
+msgstr "Hoome已經收到此款項， 請開始施工"
+
+#: projects/adapter.py:119
+msgid "You have allowed Hoome release the payment."
+msgstr "您已經允許Hoome釋放這筆款項"
+
+#: projects/adapter.py:121
+msgid "Homeowner have released the payment for current milestone."
+msgstr "業主已經釋放現階段的款項給您"
+
+#: projects/forms.py:26
+#: projects/templates/projects/project_direct_create.html:104
+msgid "Choose your identity*"
+msgstr "請選擇您的身份*"
+
+#: projects/forms.py:27
+msgid "Project Name*"
+msgstr "項目名稱*"
+
+#: projects/forms.py:28
+msgid "Choose a name for your project"
+msgstr "請為您的項目設定壹個名字"
+
+#: projects/forms.py:29
+msgid "Project Type*"
+msgstr "項目類型*"
+
+#: projects/forms.py:30
+msgid "Contract Price*"
+msgstr "合同造價*"
+
+#: projects/forms.py:31
+msgid "Start Date*"
+msgstr "施工起始時間*"
+
+#: projects/forms.py:32
+msgid "End Date*"
+msgstr "竣工日期*"
+
+#: projects/forms.py:33 projects/forms.py:91
+msgid "Homeowner's First Name"
+msgstr "業主的名"
+
+#: projects/forms.py:34 projects/forms.py:92
+msgid "Honemowner's Last Name"
+msgstr "業主的姓"
+
+#: projects/forms.py:35 projects/forms.py:93
+msgid "Project Description"
+msgstr "項目描述"
+
+#: projects/forms.py:38 projects/forms.py:96
+msgid "(Optional) Tell us more about your project."
+msgstr "（可選）告訴我們更多關於該項目的細節"
+
+#: projects/forms.py:39 projects/forms.py:97
+msgid "Street Address"
+msgstr "街道地址"
+
+#: projects/forms.py:40 projects/forms.py:98 review/forms.py:43
+msgid "Apt #, Suite #, ..."
+msgstr "門牌號，房間號"
+
+#: projects/forms.py:41
+msgid "(Optional) Apt #,Suite #,..."
+msgstr "(可選)門牌號，房間號"
+
+#: projects/forms.py:42 projects/forms.py:100
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:454
+msgid "County/City"
+msgstr "縣/市"
+
+#: projects/forms.py:43 projects/forms.py:101 templates/base.html:77
+#: users/forms.py:157
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:455
+msgid "State"
+msgstr "州"
+
+#: projects/forms.py:44 projects/forms.py:102
+msgid "Zip Code"
+msgstr "郵編號碼"
+
+#: projects/forms.py:49
+msgid "Attachment Type"
+msgstr "附件類型"
+
+#: projects/forms.py:52
+msgid ""
+"upload any documents or contracts that might be helpful in explaining your "
+"project brief here."
+msgstr "上傳文件或合同有助於豐富您項目的內容"
+
+#: projects/forms.py:55
+msgid ""
+"upload any photos that might be helpful in explaining your project brief "
+"here."
+msgstr "上傳照片有助於豐富您項目的內容"
+
+#: projects/forms.py:121
+msgid "Enter the Contractor/Meister's Hoome ID*"
+msgstr "請輸入承包商/守藝人的Hoome ID*"
+
+#: projects/forms.py:122
+msgid "Enter the Homeowner's Hoome ID*"
+msgstr "請輸入業主的Hoome ID*"
+
+#: projects/forms.py:130
+msgid "Hoome id cannot be empty."
+msgstr "Hoome ID 不能為空"
+
+#: projects/forms.py:135 projects/forms.py:138
+msgid "Homeowener's Hoome id does not exist"
+msgstr "業主的Hoome ID不存在"
+
+#: projects/forms.py:143
+msgid "Hoome id cannot be empty"
+msgstr "Hoome ID 不能為空"
+
+#: projects/forms.py:148 projects/forms.py:151
+msgid "Contractor/Meister's Hoome id does not exist"
+msgstr "承包商/守藝人的Hoome ID 不存在"
+
+#: projects/templates/projects/create_project.html:60
+msgid "Tell us what you need done"
+msgstr "請告訴我們您需要完成什麽"
+
+#: projects/templates/projects/create_project.html:76
+#: projects/templates/projects/project_direct_create.html:111
+msgid "Contractor/Meister"
+msgstr "承包商/守藝人"
+
+#: projects/templates/projects/create_project.html:308
+#: projects/templates/projects/edit_project.html:286
+msgid "Please enter the project address"
+msgstr "請輸入項目地址"
+
+#: projects/templates/projects/create_project.html:309
+#: projects/templates/projects/edit_project.html:287
+msgid "Note: hoome will not show this address in public."
+msgstr "註意：Hoome 不會將項目地址公開."
+
+#: projects/templates/projects/create_project.html:447
+msgid "Attach any documents/photos if you would like"
+msgstr "請附加任何附件或照片"
+
+#: projects/templates/projects/create_project.html:581 templates/base.html:133
+msgid "Create"
+msgstr "創建"
+
+#: projects/templates/projects/project_direct_create.html:65
+#: templates/base.html:132
+msgid "Create Project"
+msgstr "創建項目"
+
+#: projects/templates/projects/project_overview.html:68
+msgid ""
+"You don't have any projects right now. Please go to professional\n"
+"                        page\n"
+"                        and contract with someone you like."
+msgstr "您目前沒有任何項目。請到您相中的承包商頁面中締結合約。"
+
+#: projects/templates/projects/upload_project_attachment.html:14
+#: projects/templates/projects/upload_project_photo.html:14
+msgid "Upload"
+msgstr "上傳"
+
+#: projects/utils.py:24
+msgid "Waiting"
+msgstr "等待"
+
+#: projects/utils.py:25
+msgid "Paid to Hoome"
+msgstr "已經支付給Hoome"
+
+#: projects/utils.py:26
+msgid "Paid to Professional"
+msgstr "已支付給承包商/手藝人"
+
+#: projects/utils.py:27
+msgid "Done"
+msgstr "完成"
+
+#: projects/utils.py:28
+msgid "Payment Request"
+msgstr "請求支付"
+
+#: projects/utils.py:32
+msgid "PENDING"
+msgstr "受理中"
+
+#: projects/utils.py:33
+msgid "ACCEPTED"
+msgstr "已接受"
+
+#: projects/utils.py:34
+msgid "ONGOING"
+msgstr "正在進行中"
+
+#: projects/utils.py:35
+msgid "REJECTED"
+msgstr "拒絕"
+
+#: projects/utils.py:36
+msgid "DONE"
+msgstr "完成"
+
+#: projects/utils.py:41
+msgid "REMODEL"
+msgstr "裝修"
+
+#: projects/utils.py:42
+msgid "NEW BUILT HOUSE"
+msgstr "新建房"
+
+#: projects/views.py:106
+msgid "Please Login as Homeowner."
+msgstr "請以業主的身份先登入"
+
+#: projects/views.py:117
+msgid "Please Login as Professional."
+msgstr "請以裝修人士/承包商的身份先登入"
+
+#: projects/views.py:150 templates/404.html:29
+msgid "Page Not Found"
+msgstr "找不到網頁"
+
+#: projects/views.py:178 projects/views.py:189
+msgid "Success"
+msgstr "成功"
+
+#: projects/views.py:193
+msgid "Failed"
+msgstr "失敗"
+
+#: review/forms.py:13
+msgid "name must contain only alphabetic characters"
+msgstr "名字必須包含字母"
+
+#: review/forms.py:19
+msgid "zipcode format should be xxxxx or xxxxx-xxxx"
+msgstr "郵政編碼格式應該為xxxxx 或者 xxxxx-xxxx"
+
+#: review/forms.py:30
+msgid "invalid email address"
+msgstr "無效郵箱地址"
+
+#: review/forms.py:34
+msgid "Comments*"
+msgstr "評論*"
+
+#: review/forms.py:35
+msgid "First Name*"
+msgstr "名"
+
+#: review/forms.py:36
+msgid "Last Name*"
+msgstr "姓"
+
+#: review/forms.py:37
+msgid "When did the project start?*"
+msgstr "項目開始日期*"
+
+#: review/forms.py:39
+msgid "Project Cost*"
+msgstr "項目開銷"
+
+#: review/forms.py:40
+msgid "How many days does the project take?*"
+msgstr "多久完成項目？*"
+
+#: review/forms.py:41
+msgid "Email*"
+msgstr "Email地址*"
+
+#: review/forms.py:42
+msgid "Street Address*"
+msgstr "街道地址*"
+
+#: review/forms.py:45
+msgid "County/City*"
+msgstr "縣/市*"
+
+#: review/forms.py:46
+msgid "State*"
+msgstr "州*"
+
+#: review/forms.py:47
+msgid "Zip Code*"
+msgstr "郵編號碼*"
+
+#: search/templates/search_bar/search_bar.html:9
+msgid "Find Professionals"
+msgstr "尋找裝修專業人士或承包商"
+
+#: search/templates/search_bar/search_bar.html:27
+msgid "Zipcode or City"
+msgstr "請輸入郵政編碼或者城市名稱"
+
+#: search/templates/search_bar/search_bar.html:30
+msgid "Current Location"
+msgstr "當前位置"
+
+#: search/templates/search_bar/search_bar.html:71
+msgid "HVAC"
+msgstr "空調通風承包商"
+
+#: search/templates/search_bar/search_bar.html:74
+msgid "Kitchen & Bath Contractor"
+msgstr "廚房衛浴承包商"
+
+#: search/templates/search_bar/search_bar.html:86
+msgid "Roofing"
+msgstr "屋頂承包商"
+
+#: search/templates/search_card/search_card.html:3 templates/base.html:36
+msgid "License #"
+msgstr "證件號碼"
+
+#: search/templates/search_card/search_card.html:4 templates/base.html:38
+msgid "License Type"
+msgstr "證件類型"
+
+#: search/templates/search_list/search_list.html:98
+msgid ""
+"No professional match your condition. Please try another way to search again."
+msgstr "沒有商家符合您的要求。請嘗試其他格式來搜索。"
+
+#: templates/400.html:29
+msgid "Bad Request"
+msgstr "錯誤請求"
+
+#: templates/400.html:30
+msgid "Hoome cannot understand your request, Please try again. "
+msgstr "服務器無法理解您的請求，請再試壹次。"
+
+#: templates/403.html:29
+msgid "Permission Denied"
+msgstr "沒有權限"
+
+#: templates/403.html:30
+msgid "You don't have the permission to do the following actions. "
+msgstr "您沒有權限進行以下操作"
+
+#: templates/404.html:30
+msgid "Hoome cannot find the page per your request, Please try again. "
+msgstr "Hoome根據您的請求找不到對應的頁面。請重試"
+
+#: templates/500.html:29
+msgid "Server Error"
+msgstr "服務器錯誤"
+
+#: templates/500.html:30
+msgid "Server in maintenance. Please try later."
+msgstr "服務器正在施工中，請重試"
+
+#: templates/base.html:24
 msgid "Account"
-msgstr "账号"
+msgstr "賬戶"
 
-#: templates/account/email.html:8
-msgid "E-mail Addresses"
-msgstr "E-mail地址"
+#: templates/base.html:25
+msgid "Dashboard"
+msgstr "用戶面板"
 
-#: templates/account/email.html:10
+#: templates/base.html:26
+msgid "Log out"
+msgstr "登出"
+
+#: templates/base.html:27
+msgid "Hoome Score"
+msgstr "Hoome 評分"
+
+#: templates/base.html:28
+msgid "Phone"
+msgstr "電話"
+
+#: templates/base.html:29
+msgid "Overall Rating"
+msgstr "總體用戶評分"
+
+#: templates/base.html:30
+msgid "Overview"
+msgstr "總覽"
+
+#: templates/base.html:33
+msgid "Review"
+msgstr "評價"
+
+#: templates/base.html:34
+msgid "Read more"
+msgstr "閱讀更多"
+
+#: templates/base.html:35
+msgid "Business Information"
+msgstr "商家資訊"
+
+#: templates/base.html:37
+msgid "License Status"
+msgstr "證件狀態"
+
+#: templates/base.html:39 users/forms.py:105 users/forms.py:335
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:428
+msgid "License Number"
+msgstr "證件號碼"
+
+#: templates/base.html:40
+msgid "Entity"
+msgstr "實體"
+
+#: templates/base.html:41 users/forms.py:143
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:438
+msgid "Entity Type"
+msgstr "實體類型"
+
+#: templates/base.html:42
+msgid "Issued Date"
+msgstr "發布日期"
+
+#: templates/base.html:43
+msgid "Expiration Date"
+msgstr "失效日期"
+
+#: templates/base.html:44
+msgid "Bonded"
+msgstr "擔保公司"
+
+#: templates/base.html:45
+msgid "Issued"
+msgstr "保險公司"
+
+#: templates/base.html:46
+msgid "Address"
+msgstr "地址"
+
+#: templates/base.html:47 templates/base.html:111
+msgid "Photo"
+msgstr "照片"
+
+#: templates/base.html:48
+msgid "View More"
+msgstr "瀏覽更多"
+
+#: templates/base.html:49
+msgid "Anonymous User"
+msgstr "匿名用戶"
+
+#: templates/base.html:53
+msgid "Read less"
+msgstr "閱讀更少"
+
+#: templates/base.html:54
+msgid "Company Name"
+msgstr "公司名字"
+
+#: templates/base.html:55
+msgid "State Designer Num"
+msgstr "本州設計師證件號"
+
+#: templates/base.html:56
+msgid "Contractor Licence Num"
+msgstr "本州承包商證件號"
+
+#: templates/base.html:57
+msgid "Mobile"
+msgstr "手機"
+
+#: templates/base.html:58
+msgid "Fax"
+msgstr "傳真"
+
+#: templates/base.html:59
+#: users/templates/consumer_profile/consumer_profile.html:13
+#: users/templates/consumer_profile_after_signup/consumer_profile_after_signup.html:16
+msgid "Submit"
+msgstr "提交"
+
+#: templates/base.html:60
+msgid "Contact"
+msgstr "聯系"
+
+#: templates/base.html:61
+msgid "Career"
+msgstr "工作"
+
+#: templates/base.html:62
+msgid "Privacy"
+msgstr "隱私"
+
+#: templates/base.html:63
+msgid "Contact Us"
+msgstr "聯系我們"
+
+#: templates/base.html:64
+msgid "Home"
+msgstr "首頁"
+
+#: templates/base.html:65
+msgid "Excellent Architects"
+msgstr "優秀的建築師"
+
+#: templates/base.html:66
+msgid "NCIQ certificated Designers"
+msgstr "NCIQ 認證設計師"
+
+#: templates/base.html:67
+msgid "Active Contractors"
+msgstr "活躍的承包商"
+
+#: templates/base.html:68
+msgid "Start Search"
+msgstr "開始搜索"
+
+#: templates/base.html:69
+msgid "previous"
+msgstr "上壹頁"
+
+#: templates/base.html:70
+msgid "next"
+msgstr "下壹頁"
+
+#: templates/base.html:71
+msgid "Efficiency"
+msgstr "項目效率"
+
+#: templates/base.html:72
+msgid "Quality"
+msgstr "項目質量"
+
+#: templates/base.html:73
+msgid "Length"
+msgstr "工期"
+
+#: templates/base.html:74 users/forms.py:135
+msgid "Name"
+msgstr "公司名字"
+
+#: templates/base.html:76 users/forms.py:169
+msgid "Postal Code"
+msgstr "郵編"
+
+#: templates/base.html:78 users/forms.py:150
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:453
+msgid "Street"
+msgstr "街道"
+
+#: templates/base.html:79
+msgid "Professional Category"
+msgstr "專業分類"
+
+#: templates/base.html:80
+msgid "Professional Sub-Category"
+msgstr "專業子分類"
+
+#: templates/base.html:81
+msgid "Arbitrations"
+msgstr "仲裁次數"
+
+#: templates/base.html:82
+msgid "Cases"
+msgstr "案件次數"
+
+#: templates/base.html:83
+msgid "Citations"
+msgstr "傳票次數"
+
+#: templates/base.html:84
+msgid "Lawsuits"
+msgstr "訴訟次數"
+
+#: templates/base.html:85 users/templates/account/login.html:156
+#: users/templates/account/signup.html:214
+msgid "Password"
+msgstr "密碼"
+
+#: templates/base.html:86
+msgid "New"
+msgstr "新"
+
+#: templates/base.html:87
+msgid "New Password"
+msgstr "新密碼"
+
+#: templates/base.html:88
+msgid "Current Password"
+msgstr "當前密碼"
+
+#: templates/base.html:89 users/templates/account/email.html:73
+#: users/templates/account/login.html:153
+#: users/templates/account/signup.html:190
+msgid "Email"
+msgstr "Email地址"
+
+#: templates/base.html:90
+msgid "Years in Industry"
+msgstr "工作年限"
+
+#: templates/base.html:94
+msgid "Account Settings"
+msgstr "賬戶設置"
+
+#: templates/base.html:95
+msgid "Rank"
+msgstr "評分區間"
+
+#: templates/base.html:96
+msgid "Project Overview"
+msgstr "項目總覽"
+
+#: templates/base.html:97
+msgid "Project Detail"
+msgstr "項目細節"
+
+#: templates/base.html:98
+msgid "Basic Information"
+msgstr "商家資訊"
+
+#: templates/base.html:99
+msgid "Project Name"
+msgstr "項目名稱"
+
+#: templates/base.html:100 users/forms.py:56
+msgid "Last Name"
+msgstr "姓"
+
+#: templates/base.html:101 users/forms.py:50
+msgid "First Name"
+msgstr "名"
+
+#: templates/base.html:102
+msgid "Client Name"
+msgstr "客戶姓名"
+
+#: templates/base.html:103
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:437
+msgid "Business Name"
+msgstr "商家姓名"
+
+#: templates/base.html:104
+msgid "Contracted With"
+msgstr "合同對象"
+
+#: templates/base.html:105
+msgid "Start Date"
+msgstr "施工起始時間"
+
+#: templates/base.html:106
+msgid "End Date"
+msgstr "發布日期"
+
+#: templates/base.html:107 templates/base.html:130
+msgid "Description"
+msgstr "描述"
+
+#: templates/base.html:108 templates/base.html:117
+msgid "Status"
+msgstr "狀態"
+
+#: templates/base.html:109
+msgid "Action"
+msgstr "具體操作"
+
+#: templates/base.html:110
+msgid "Attachment"
+msgstr "附件"
+
+#: templates/base.html:112
+msgid "Payment"
+msgstr "支付記錄"
+
+#: templates/base.html:113
+msgid "Transaction History"
+msgstr "交易記錄"
+
+#: templates/base.html:114
+msgid "Type"
+msgstr "類型"
+
+#: templates/base.html:115
+msgid "Time"
+msgstr "時間"
+
+#: templates/base.html:116 transactions/forms.py:14
+msgid "Amount"
+msgstr "金額"
+
+#: templates/base.html:118
+msgid "Updated At"
+msgstr "上傳日期"
+
+#: templates/base.html:119
+msgid "Project Created"
+msgstr "項目創建於"
+
+#: templates/base.html:120
+msgid "Make a contract"
+msgstr "簽訂合同"
+
+#: templates/base.html:121
+msgid "Project"
+msgstr "項目"
+
+#: templates/base.html:123
+msgid "Checkout"
+msgstr "支付"
+
+#: templates/base.html:124
+msgid "Milestone"
+msgstr "裏程碑"
+
+#: templates/base.html:125
+msgid "Release Payment"
+msgstr "釋放這筆錢款"
+
+#: templates/base.html:126
+msgid "Request Payment"
+msgstr "請求這筆錢款"
+
+#: templates/base.html:127
+msgid "Create Milestone"
+msgstr "創建裏程碑"
+
+#: templates/base.html:128
+msgid "Milestone #"
+msgstr "裏程碑編號"
+
+#: templates/base.html:129
+msgid "Actions"
+msgstr "具體操作"
+
+#: templates/base.html:131
+msgid "Homeowner"
+msgstr "業主"
+
+#: templates/base.html:134
+msgid "Add More Detail"
+msgstr "項目細節"
+
+#: templates/base.html:135 users/forms.py:163
+msgid "County"
+msgstr "縣"
+
+#: templates/base.html:291 users/templates/account/login.html:169
+msgid "Sign In"
+msgstr "登入"
+
+#: transactions/forms.py:19 transactions/forms.py:43
+msgid "Transaction Status"
+msgstr "交易狀態"
+
+#: transactions/forms.py:24
+msgid "Transaction ID"
+msgstr "交易ID"
+
+#: transactions/forms.py:38
+msgid "Created Date"
+msgstr "創建日期"
+
+#: transactions/models.py:18
+msgid "amount"
+msgstr "交易金額"
+
+#: transactions/models.py:19 transactions/models.py:42
+msgid "created at"
+msgstr "創建於"
+
+#: transactions/models.py:20
+msgid "updated at"
+msgstr "上傳於"
+
+#: transactions/models.py:22 transactions/models.py:44
+msgid "transaction status"
+msgstr "交易狀態"
+
+#: transactions/templates/payment/pay_now_button.html:2
+msgid "Make a payment"
+msgstr "支付"
+
+#: transactions/templates/transaction/checkout.html:46
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:472
+msgid "Next"
+msgstr "下壹步"
+
+#: transactions/templates/transaction/checkout.html:74
+#: transactions/templates/transaction/payment.html:131
+msgid ""
+"You don't have any project to pay right now. Please create a new\n"
+"                project."
+msgstr "目前您沒有任何項目。請先創建壹個項目"
+
+#: transactions/templates/transaction/transactions.html:59
+msgid "You don't have any payments right now."
+msgstr "您目前沒有任何交易。"
+
+#: users/forms.py:39
+msgid "Must select a role"
+msgstr "必須選定壹個角色"
+
+#: users/forms.py:63
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:456
+msgid "Zipcode"
+msgstr "郵政編碼"
+
+#: users/forms.py:69
+msgid "Gender"
+msgstr "性別"
+
+#: users/forms.py:77 users/forms.py:196
+msgid "Invalid zipcode"
+msgstr "無效的郵政編碼"
+
+#: users/forms.py:83
+msgid "Must select a gender"
+msgstr "必須選定您的性別"
+
+#: users/forms.py:114 users/forms.py:350
+msgid "Professional Type"
+msgstr "專業類型"
+
+#: users/forms.py:121
+msgid "Field Selections"
+msgstr "專長選擇"
+
+#: users/forms.py:182
+msgid "Must select a professional type"
+msgstr "必須選擇您的專業類別"
+
+#: users/forms.py:188
+msgid "Must select a entity type"
+msgstr "必須選擇您的註冊實體類型，比如：個體戶還是公司"
+
+#: users/templates/account/email.html:6
+msgid "Email Addresses"
+msgstr "郵箱地址"
+
+#: users/templates/account/email.html:9
 msgid "The following e-mail addresses are associated with your account:"
-msgstr "以下e-mail地址已关联到您的帐号："
+msgstr "下列郵箱地址已關連到您的賬號上："
 
-#: templates/account/email.html:24
+#: users/templates/account/email.html:29
 msgid "Verified"
-msgstr "已验证"
+msgstr "已認證"
 
-#: templates/account/email.html:26
+#: users/templates/account/email.html:31
 msgid "Unverified"
-msgstr "未验证"
+msgstr "未認證"
 
-#: templates/account/email.html:28
+#: users/templates/account/email.html:34
 msgid "Primary"
-msgstr "首选e-mail"
+msgstr "首要"
 
-#: templates/account/email.html:34
+#: users/templates/account/email.html:41
 msgid "Make Primary"
-msgstr "设置首选e-mail"
+msgstr "選為首要"
 
-#: templates/account/email.html:35
+#: users/templates/account/email.html:43
 msgid "Re-send Verification"
-msgstr "重发验证e-mail"
+msgstr "重新發送確認信"
 
-#: templates/account/email.html:36 templates/socialaccount/connections.html:35
+#: users/templates/account/email.html:45
 msgid "Remove"
 msgstr "移除"
 
-#: templates/account/email.html:43
-msgid "Warning:"
-msgstr "警告："
-
-#: templates/account/email.html:43
+#: users/templates/account/email.html:52
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
-msgstr ""
-"您当前未设置任何邮件地址。您需要设置一个邮件地址，以便接收通知，重置密码等。"
+msgstr "您還沒有設置您的郵箱。您應該先加壹個郵箱地址來進行其他操作。"
 
-#: templates/account/email.html:48
-msgid "Add E-mail Address"
-msgstr "添加E-mail地址"
+#: users/templates/account/email.html:55
+msgid "Add Email Address"
+msgstr "添加郵箱地址"
 
-#: templates/account/email.html:53
+#: users/templates/account/email.html:75
+msgid "Email address"
+msgstr "郵箱地址"
+
+#: users/templates/account/email.html:79
 msgid "Add E-mail"
-msgstr "添加E-mail"
+msgstr "添加Email"
 
-#: templates/account/email.html:62
-msgid "Do you really want to remove the selected e-mail address?"
-msgstr "您真的想移除选定的e-mail地址吗？"
-
-#: templates/account/email/email_confirmation_message.txt:1
-#, fuzzy, python-format
-#| msgid ""
-#| "User %(user_display)s at %(site_name)s has given this as an email "
-#| "address.\n"
-#| "\n"
-#| "To confirm this is correct, go to %(activate_url)s\n"
-msgid ""
-"Hello from %(site_name)s!\n"
-"\n"
-"You're receiving this e-mail because user %(user_display)s has given yours "
-"as an e-mail address to connect their account.\n"
-"\n"
-"To confirm this is correct, go to %(activate_url)s\n"
-msgstr ""
-"网站%(site_name)s上的用户%(user_display)s将此设为其e-mail地址。\n"
-"\n"
-"为验证这是正确的，请访问%(activate_url)s\n"
-
-#: templates/account/email/email_confirmation_message.txt:7
-#, python-format
-msgid ""
-"Thank you from %(site_name)s!\n"
-"%(site_domain)s"
-msgstr ""
-
-#: templates/account/email/email_confirmation_subject.txt:3
-#, fuzzy
-#| msgid "Confirm E-mail Address"
-msgid "Please Confirm Your E-mail Address"
-msgstr "确认E-mail地址"
-
-#: templates/account/email/password_reset_key_message.txt:1
-#, fuzzy, python-format
-#| msgid ""
-#| "You're receiving this e-mail because you or someone else has requested a "
-#| "password for your user account at %(site_domain)s.\n"
-#| "It can be safely ignored if you did not request a password reset. Click "
-#| "the link below to reset your password."
-msgid ""
-"Hello from %(site_name)s!\n"
-"\n"
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password."
-msgstr ""
-"您收到此邮件表示您或者他人在网站 %(site_domain)s上为您的账号请求了密码重"
-"置。\n"
-"若您未请求密码重置，可以直接忽略此邮件。如要重置密码，请点击下面的链接。"
-
-#: templates/account/email/password_reset_key_message.txt:8
-#, python-format
-msgid "In case you forgot, your username is %(username)s."
-msgstr "作为提示，您的用户名是%(username)s."
-
-#: templates/account/email/password_reset_key_message.txt:10
-#, python-format
-msgid ""
-"Thank you for using %(site_name)s!\n"
-"%(site_domain)s"
-msgstr ""
-
-#: templates/account/email/password_reset_key_subject.txt:3
-msgid "Password Reset E-mail"
-msgstr "密码重置邮件"
-
-#: templates/account/email_confirm.html:6
-#: templates/account/email_confirm.html:10
+#: users/templates/account/email_confirm.html:6
+#: users/templates/account/email_confirm.html:9
 msgid "Confirm E-mail Address"
-msgstr "确认E-mail地址"
+msgstr "添加郵箱地址"
 
-#: templates/account/email_confirm.html:16
+#: users/templates/account/email_confirm.html:13
 #, python-format
 msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
-"address for user %(user_display)s."
-msgstr ""
-"请确认<a href=\"mailto:%(email)s\">%(email)s</a>是否是用户 %(user_display)s的"
-"e-mail地址。"
+"Please confirm that\n"
+"                %(email)s is an e-mail address for user %(user_display)s\n"
+"                ."
+msgstr "請確認%(email)s是%(user_display)s的郵箱。"
 
-#: templates/account/email_confirm.html:20
+#: users/templates/account/email_confirm.html:19
 msgid "Confirm"
-msgstr "确认"
+msgstr "確認"
 
-#: templates/account/email_confirm.html:27
-#, python-format
+#: users/templates/account/email_confirm.html:23
+msgid "This e-mail confirmation link expired or is invalid."
+msgstr "該確認鏈接已經失效。"
+
+#: users/templates/account/email_confirm.html:24
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a href="
-"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr ""
-"e-mail验证链接失效或无效。请点击 <a href=\"%(email_url)s\">发起新的e-mail验证"
-"请求。"
+"Please issue a new e-mail confirmation\n"
+"                    request."
+msgstr "請重新要求新的郵件確認"
 
-#: templates/account/login.html:6 templates/account/login.html:10
-#: templates/account/login.html:43
-msgid "Sign In"
-msgstr "登录"
+#: users/templates/account/login.html:94
+msgid "Log In to Hoome"
+msgstr "登入Hoome"
 
-#: templates/account/login.html:15
-#, fuzzy, python-format
+#: users/templates/account/login.html:95
+msgid "By logging in, you agree to Hoome’s "
+msgstr "登入Hoome表示您已經同意Hoome的"
+
+#: users/templates/account/login.html:96
+#: users/templates/account/signup.html:118
+msgid "Terms of Service"
+msgstr "服務條款"
+
+#: users/templates/account/login.html:96
+#: users/templates/account/signup.html:118
+msgid "and"
+msgstr "和"
+
+#: users/templates/account/login.html:97
+#: users/templates/account/signup.html:119
+msgid "Privacy Policy"
+msgstr "隱私條款"
+
+#: users/templates/account/login.html:114
+#: users/templates/account/login.html:126
+msgid "Sign in with"
+msgstr "第三方登入："
+
+#: users/templates/account/login.html:135
+#: users/templates/account/signup.html:166
 msgid ""
-"Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a>\n"
-"for a %(site_name)s account and sign in below:"
-msgstr ""
-"请用您的第三方账号登录。\n"
-"或者<a href=\"%(signup_url)s\">注册</a> \n"
-"一个 %(site_name)s账号并登录："
+"If you have not created an account yet, then\n"
+"                                    please"
+msgstr "如果妳還沒有創建用戶，請"
 
-#: templates/account/login.html:25
+#: users/templates/account/login.html:137
+#: users/templates/account/signup.html:168
+msgid "sign up"
+msgstr "註冊"
+
+#: users/templates/account/login.html:137
+#: users/templates/account/signup.html:168
+msgid "first."
+msgstr "先"
+
+#: users/templates/account/login.html:141
+#: users/templates/account/signup.html:171
+msgid "OR"
+msgstr "或"
+
+#: users/templates/account/login.html:153
+#: users/templates/account/signup.html:196
+msgid "Username"
+msgstr "用戶名"
+
+#: users/templates/account/login.html:153
 msgid "or"
 msgstr "或"
 
-#: templates/account/login.html:32
-#, python-format
-msgid ""
-"If you have not created an account yet, then please\n"
-"<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
-"如果没有账号，请先\n"
-"<a href=\"%(signup_url)s\">注册</a> 。"
-
-#: templates/account/login.html:42
+#: users/templates/account/login.html:165
 msgid "Forgot Password?"
-msgstr "忘记密码了？"
+msgstr "忘記密碼"
 
-#: templates/account/logout.html:5 templates/account/logout.html:8
-#: templates/account/logout.html:17
-msgid "Sign Out"
-msgstr "注销"
+#: users/templates/account/login.html:176
+msgid "New to Hoome?"
+msgstr "第壹次使用Hoome?"
 
-#: templates/account/logout.html:10
-msgid "Are you sure you want to sign out?"
-msgstr "您确定要注销登录吗？"
-
-#: templates/account/messages/cannot_delete_primary_email.txt:2
-#, python-format
-msgid "You cannot remove your primary e-mail address (%(email)s)."
-msgstr "您不能删除您的主e-mail地址 (%(email)s) "
-
-#: templates/account/messages/email_confirmation_sent.txt:2
-#, fuzzy, python-format
-msgid "Confirmation e-mail sent to %(email)s."
-msgstr "确认e-mail已发往 %(email)s"
-
-#: templates/account/messages/email_confirmed.txt:2
-#, python-format
-msgid "You have confirmed %(email)s."
-msgstr "您已确认e-mail地址 %(email)s "
-
-#: templates/account/messages/email_deleted.txt:2
-#, fuzzy, python-format
-msgid "Removed e-mail address %(email)s."
-msgstr "e-mail地址 %(email)s 已删除"
-
-#: templates/account/messages/logged_in.txt:4
-#, python-format
-msgid "Successfully signed in as %(name)s."
-msgstr "以 %(name)s..身份成功登录"
-
-#: templates/account/messages/logged_out.txt:2
-msgid "You have signed out."
-msgstr "您已注销登录。"
-
-#: templates/account/messages/password_changed.txt:2
-msgid "Password successfully changed."
-msgstr "密码修改成功。"
-
-#: templates/account/messages/password_set.txt:2
-msgid "Password successfully set."
-msgstr "密码设置成功。"
-
-#: templates/account/messages/primary_email_set.txt:2
-msgid "Primary e-mail address set."
-msgstr "主e-mail地址已设置"
-
-#: templates/account/messages/unverified_primary_email.txt:2
-msgid "Your primary e-mail address must be verified."
-msgstr "您的主e-mail地址必须被验证。"
-
-#: templates/account/password_change.html:5
-#: templates/account/password_change.html:8
-#: templates/account/password_change.html:13
-#: templates/account/password_reset_from_key.html:4
-#: templates/account/password_reset_from_key.html:7
-#: templates/account/password_reset_from_key_done.html:4
-#: templates/account/password_reset_from_key_done.html:7
-msgid "Change Password"
-msgstr "修改密码"
-
-#: templates/account/password_reset.html:6
-#: templates/account/password_reset.html:10
-#: templates/account/password_reset_done.html:6
-#: templates/account/password_reset_done.html:9
-msgid "Password Reset"
-msgstr "密码重置"
-
-#: templates/account/password_reset.html:15
-msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
-msgstr ""
-"忘记密码？在下面输入您的e-mail地址，我们将给您发送一封e-mail，以便重置密码。"
-
-#: templates/account/password_reset.html:20
-msgid "Reset My Password"
-msgstr "重置我的密码"
-
-#: templates/account/password_reset.html:23
-msgid "Please contact us if you have any trouble resetting your password."
-msgstr "如在重置密码时遇到问题，请与我们联系。"
-
-#: templates/account/password_reset_done.html:15
-msgid ""
-"We have sent you an e-mail. Please contact us if you do not receive it "
-"within a few minutes."
-msgstr "我们已给您发了一封e-mail，如您在几分钟后仍没收到，请与我们联系。"
-
-#: templates/account/password_reset_from_key.html:7
-msgid "Bad Token"
-msgstr "Bad Token"
-
-#: templates/account/password_reset_from_key.html:11
-#, python-format
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
-msgstr ""
-"密码重置链接无效，可能该链接已被使用。请重新申请<a href="
-"\"%(passwd_reset_url)s\">链接重置</a>。"
-
-#: templates/account/password_reset_from_key.html:17
-msgid "change password"
-msgstr "修改密码"
-
-#: templates/account/password_reset_from_key.html:20
-#: templates/account/password_reset_from_key_done.html:8
-msgid "Your password is now changed."
-msgstr "您的密码现已被修改。"
-
-#: templates/account/password_set.html:5 templates/account/password_set.html:8
-#: templates/account/password_set.html:13
-msgid "Set Password"
-msgstr "设置密码"
-
-#: templates/account/signup.html:5 templates/socialaccount/signup.html:5
-msgid "Signup"
-msgstr "注册"
-
-#: templates/account/signup.html:8 templates/account/signup.html:18
-#: templates/socialaccount/signup.html:8 templates/socialaccount/signup.html:19
+#: users/templates/account/login.html:178
+#: users/templates/account/signup.html:219
 msgid "Sign Up"
-msgstr "注册"
+msgstr "註冊"
 
-#: templates/account/signup.html:10
-#, python-format
-msgid ""
-"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "已经有一个账号？ 请<a href=\"%(login_url)s\">登录</a>."
+#: users/templates/account/password_change.html:23
+#: users/templates/account/password_change.html:26
+#: users/templates/account/password_set.html:18
+#: users/templates/account/password_set.html:21
+msgid "New Password (again)"
+msgstr "再壹次輸入新密碼"
 
-#: templates/account/signup_closed.html:5
-#: templates/account/signup_closed.html:8
-msgid "Sign Up Closed"
-msgstr "已关闭注册"
+#: users/templates/account/password_change.html:28
+msgid "Change Password"
+msgstr "修改密碼"
 
-#: templates/account/signup_closed.html:10
-msgid "We are sorry, but the sign up is currently closed."
-msgstr "非常抱歉，当前已关闭注册。"
+#: users/templates/account/password_set.html:23
+msgid "Set Password"
+msgstr "設定密碼"
 
-#: templates/account/snippets/already_logged_in.html:5
-msgid "Note"
-msgstr "注意"
+#: users/templates/account/signup.html:116
+msgid "Sign Up for Hoome"
+msgstr "在Hoome註冊"
 
-#: templates/account/snippets/already_logged_in.html:5
-#, python-format
-msgid "you are already logged in as %(user_display)s."
-msgstr "您已以 %(user_display)s的身份登录"
+#: users/templates/account/signup.html:117
+msgid "By signing up, you agree to Hoome’s "
+msgstr "在Hoome註冊表示您已經同意了"
 
-#: templates/account/verification_sent.html:5
-#: templates/account/verification_sent.html:8
-#: templates/account/verified_email_required.html:5
-#: templates/account/verified_email_required.html:8
-msgid "Verify Your E-mail Address"
-msgstr "验证您的E-mail地址。"
+#: users/templates/account/signup.html:127
+#: users/templates/account/signup.html:205 users/utils.py:13
+msgid "Professional"
+msgstr "專業"
 
-#: templates/account/verification_sent.html:10
-msgid ""
-"We have sent an e-mail to you for verification. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it "
-"within a few minutes."
-msgstr ""
-"我们已向您发了一封验证e-mail。点击e-mail中的链接完成注册流程。如果您在几分钟"
-"后仍未收到邮件，请与我们联系。"
+#: users/templates/account/signup.html:145
+#: users/templates/account/signup.html:157
+msgid "Sign up with"
+msgstr "第三方註冊："
 
-#: templates/account/verified_email_required.html:12
-msgid ""
-"This part of the site requires us to verify that\n"
-"you are who you claim to be. For this purpose, we require that you\n"
-"verify ownership of your e-mail address. "
-msgstr ""
-"网站的这部分功能要求验证您的真实身份。\n"
-"为此，我们需要您确认您是此账号e-mail地址的所有者。"
+#: users/templates/account/signup.html:206 users/utils.py:14
+msgid "Consumer"
+msgstr "顧客"
 
-#: templates/account/verified_email_required.html:16
-msgid ""
-"We have sent an e-mail to you for\n"
-"verification. Please click on the link inside this e-mail. Please\n"
-"contact us if you do not receive it within a few minutes."
-msgstr ""
-"我们已经给您发送了一封e-mail验证邮件。\n"
-"请点击e-mail中的链接。若您在几分钟后仍未收到邮件，请联系我们。"
+#: users/templates/account/signup.html:216
+msgid "Password (again)"
+msgstr "再壹次輸入密碼"
 
-#: templates/account/verified_email_required.html:20
-#, python-format
-msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
-"mail address</a>."
-msgstr ""
-"<strong>注意:</strong> 您仍然能够<a href=\"%(email_url)s\">修改您的e-mail地"
-"址 </a>."
+#: users/templates/account/signup.html:222
+msgid "Already on Hoome?"
+msgstr "已經擁有Hoome賬號了？"
 
-#: templates/openid/login.html:9
-msgid "OpenID Sign In"
-msgstr "OpenID登录"
+#: users/templates/account/signup.html:226
+msgid "Log in"
+msgstr "登入"
 
-#: templates/socialaccount/authentication_error.html:5
-#: templates/socialaccount/authentication_error.html:8
-msgid "Social Network Login Failure"
-msgstr "社交网络登录失败"
+#: users/templates/link/professional_homepage_link.html:2
+msgid "Professional Info"
+msgstr "專業人士信息"
 
-#: templates/socialaccount/authentication_error.html:10
-msgid ""
-"An error occurred while attempting to login via your social network account."
-msgstr "当尝试用您的社交网络账号登录时，发生了一个错误。"
+#: users/templates/professional_profile/professional_profile.html:132
+msgid "Save Changes"
+msgstr "保存修改"
 
-#: templates/socialaccount/connections.html:5
-#: templates/socialaccount/connections.html:8
-msgid "Account Connections"
-msgstr "账号链接"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:349
+msgid "Choose License Type"
+msgstr "請選擇證件類型"
 
-#: templates/socialaccount/connections.html:11
-msgid ""
-"You can sign in to your account using any of the following third party "
-"accounts:"
-msgstr "您可以用您的以下任何第三方账号登录"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:350
+msgid "If you don't have license, please choose meister."
+msgstr "如果您沒有證，請選擇手藝人這個選項"
 
-#: templates/socialaccount/connections.html:43
-msgid ""
-"You currently have no social network accounts connected to this account."
-msgstr "您当前没有任何社交网络账号与此账号关联"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:424
+msgid "Find Your License In Our Database"
+msgstr "請輸入您的證件號碼與我們數據庫匹配"
 
-#: templates/socialaccount/connections.html:46
-msgid "Add a 3rd Party Account"
-msgstr "添加一个第三方账号"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:425
+msgid "If you don't have license, please skip this step."
+msgstr "如果您沒有證，請跳過這壹步"
 
-#: templates/socialaccount/login_cancelled.html:5
-#: templates/socialaccount/login_cancelled.html:9
-msgid "Login Cancelled"
-msgstr "登录已取消"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:432
+msgid "Enter Or Modify Business Name and Entity Type"
+msgstr "請輸入您的名字或公司的名字和實體類型"
 
-#: templates/socialaccount/login_cancelled.html:13
-#, python-format
-msgid ""
-"You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
-"\">sign in</a>."
-msgstr ""
-"您决定取消使用您的已有账号登录我们的网站。如果这是一个失误，请继续<a href="
-"\"%(login_url)s\">登录</a>."
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:443
+msgid "Enter Or Modify Your Service Category"
+msgstr "請選擇您服務的類型"
 
-#: templates/socialaccount/messages/account_connected.txt:2
-#, fuzzy
-msgid "The social account has been connected."
-msgstr "社交账号已连接"
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:450
+msgid "Enter Or Modify Your Company Address"
+msgstr "請輸入您公司的地址"
 
-#: templates/socialaccount/messages/account_connected_other.txt:2
-msgid "The social account is already connected to a different account."
-msgstr "社交账号已连接到另一个账号。"
+#: users/utils.py:21
+msgid "Male"
+msgstr "男性"
 
-#: templates/socialaccount/messages/account_disconnected.txt:2
-#, fuzzy
-msgid "The social account has been disconnected."
-msgstr "社交账号已断开连接"
+#: users/utils.py:22
+msgid "Female"
+msgstr "女性"
 
-#: templates/socialaccount/signup.html:10
-#, fuzzy, python-format
-msgid ""
-"You are about to use your %(provider_name)s account to login to\n"
-"%(site_name)s. As a final step, please complete the following form:"
-msgstr ""
-"您将使用您的%(provider_name)s账号登录\n"
-"%(site_name)s。作为最后一步，请完成以下表单："
+#: users/utils.py:30
+msgid "Hold"
+msgstr "保留"
 
-#~ msgid "The login and/or password you specified are not correct."
-#~ msgstr "您提供的账号或密码错误"
+#: users/utils.py:31
+msgid "Bad"
+msgstr "壞"
 
-#~ msgid "Usernames can only contain letters, digits and @/./+/-/_."
-#~ msgstr "用户名只能包含字母，数字和@/./+/-/_."
+#: users/utils.py:32
+msgid "Signed"
+msgstr "已登記"
 
-#~ msgid "This username is already taken. Please choose another."
-#~ msgstr "此用户名已被使用，请选择其他用户名。"
+#: users/utils.py:33
+msgid "Available"
+msgstr "可用"
 
-#, fuzzy
-#~| msgid "Sign In"
-#~ msgid "Shopify Sign In"
-#~ msgstr "登录"
+#: users/views.py:134
+msgid "Lic number does not exist"
+msgstr "證件號碼不存在"
+
+#: users/views.py:191 users/views.py:233
+msgid "Your Profile updated."
+msgstr "您的檔案已更新"
+
+#~ msgid "cannot be a negative number"
+#~ msgstr "不能為負數"
+
+#~ msgid "Enter Or Modify Your Company Category"
+#~ msgstr "請輸入您公司的類別"
+
+#~ msgid "Your Name"
+#~ msgstr "您的名字"
+
+#~ msgid "Company Name(Optional)"
+#~ msgstr "公司名字（可選填）"
+
+#~ msgid "Sorry. Pages Not Found"
+#~ msgstr "找不到網頁"
+
+#~ msgid "Updated Date"
+#~ msgstr "上傳日期"
 
 #~ msgid ""
-#~ "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
-#~ "e-mail address for user %(user_display)s."
+#~ "Hoome Score is caculated by how many years it is in the\n"
+#~ "                                            industry,\n"
+#~ "                                            suspension history,\n"
+#~ "                                            complaints and other many "
+#~ "factors. Now we calculate the Hoome Score by\n"
+#~ "                                            number of\n"
+#~ "                                            work experience, suspension\n"
+#~ "                                            history, complaints. Later "
+#~ "the score will evolve with more\n"
+#~ "                                            factors. "
 #~ msgstr ""
-#~ "您已确认<a href=\"mailto:%(email)s\">%(email)s</a>是用户%(user_display)s的"
-#~ "e-mail地址。"
+#~ "Hoome評分是通過計算工作年限，執照吊銷記錄，投訴記錄和其他因素得出。現在"
+#~ "Hoome評分囊括了工作年限，執照吊銷記錄和投訴記錄。 後期該評分會添加更多考量"
+#~ "因素。"
 
-#~ msgid "Thanks for using our site!"
-#~ msgstr "感谢您使用我们的网站！"
-
-#~ msgid "Confirmation e-mail sent to %(email)s"
-#~ msgstr "确认e-mail已发往 %(email)s"
-
-#~ msgid "Delete Password"
-#~ msgstr "删除密码"
+#~ msgid "Professional Homepage"
+#~ msgstr "商家頁面"
 
 #~ msgid ""
-#~ "You may delete your password since you are currently logged in using "
-#~ "OpenID."
-#~ msgstr "您当前使用OpenID登录，因此您可以删除你的密码。"
-
-#~ msgid "delete my password"
-#~ msgstr "删除我的密码"
-
-#~ msgid "Password Deleted"
-#~ msgstr "密码已删除"
-
-#~ msgid "Your password has been deleted."
-#~ msgstr "您的密码已被删除。"
-
-#~ msgid "Your e-mail address has already been verified"
-#~ msgstr "Je e-mail adres is al geverifieerd"
-
-#~ msgid ""
-#~ "If you have any trouble resetting your password, contact us at <a href="
-#~ "\"mailto:%(CONTACT_EMAIL)s\">%(CONTACT_EMAIL)s</a>."
+#~ "\n"
+#~ "                                    In Hoome, Contractors could be "
+#~ "classified into 6 categories: A+++,A++,A+,A,A-,Warning.\n"
+#~ "                                    "
 #~ msgstr ""
-#~ "Als je problemen hebt je wachtwoord opnieuw in te stellen, neem dan "
-#~ "contact op met <a href=\"mailto:%(CONTACT_EMAIL)s\">%(CONTACT_EMAIL)s</a>."
-
-#~ msgid "Invalid confirmation key."
-#~ msgstr "Ongeldige bevestigingssleutel."
-
-#~ msgid "OpenID"
-#~ msgstr "OpenID"
-
-#~ msgid "Already have an account?"
-#~ msgstr "Heb je al een account?"
-
-#~ msgid "Sign in"
-#~ msgstr "Aanmelden"
-
-#~ msgid "Language"
-#~ msgstr "Taal"
-
-#~ msgid "Pinax can be used in your preferred language."
-#~ msgstr "Deze site kan in jouw voorkeurstaal gebruikt worden."
-
-#~ msgid "Change my language"
-#~ msgstr "Verander mijn taal"
-
-#~ msgid "Timezone"
-#~ msgstr "Tijdzone"
-
-#, fuzzy
-#~ msgid ""
-#~ "You're receiving this e-mail because you requested a password reset\n"
-#~ "for your user account at Pinax.\n"
 #~ "\n"
-#~ "Your new password is: %(new_password)s\n"
-#~ "\n"
-#~ "Your username, in case you've forgotten: %(username)s\n"
-#~ "\n"
-#~ "You should log in as soon as possible and change your password.\n"
-#~ "\n"
-#~ "Thanks for using our site!\n"
-#~ msgstr ""
-#~ "Je ontvangt deze mail omdat er een verzoek is ingelegd om het wachtwoord\n"
-#~ "behorende bij je %(site_name)s account opnieuw in te stellen.\n"
-#~ "\n"
-#~ "Je nieuwe wachtwoord is: %(new_password)s\n"
-#~ "\n"
-#~ "Je gebruikersnaam, voor het geval je die vergeten bent, is: %(username)s\n"
-#~ "\n"
-#~ "Je moet zo snel mogelijk inloggen en bovenstaand wachtwoord veranderen.\n"
-#~ "\n"
-#~ "Bedankt voor het gebruik van onze site!\n"
+#~ "Hoome將承包商分成了6大類：A+++,A++,A+,A,A-,警告。"
 
-#~ msgid "If checked you will stay logged in for 3 weeks"
-#~ msgstr "Bij 'Onthouden' blijf je ingelogd gedurende 3 weken"
+#~ msgid "Number of Cases"
+#~ msgstr "案件次數"
 
-#~ msgid "Timezone successfully updated."
-#~ msgstr "Tijdzone gewijzigd."
+#~ msgid "Current"
+#~ msgstr "當前"
 
-#~ msgid "Language successfully updated."
-#~ msgstr "Taal gewijzigd."
+#~| msgid "sign up"
+#~ msgid "Sign up"
+#~ msgstr "註冊"
 
-#~ msgid "E-Mail Addresses"
-#~ msgstr "E-mail adressen"
+#~ msgid "Dismiss"
+#~ msgstr "關閉"
 
-#~ msgid "None"
-#~ msgstr "Geen"
+#~ msgid "Please sign in with one of your existing third party accounts. Or,"
+#~ msgstr "請登入您其中壹個第三方賬戶，或者"
 
-#~ msgid "add"
-#~ msgstr "Voeg toe"
+#~ msgid " for a third-party account and sign in below:"
+#~ msgstr "第三方用戶，請通過以下方式登入"
 
-#~ msgid "Log In"
-#~ msgstr "Inloggen"
+#~ msgid "Already have an account? Then please "
+#~ msgstr "已經創建賬戶？ "
 
-#~ msgid "Log in"
-#~ msgstr "Inloggen"
+#~ msgid "Complete"
+#~ msgstr "完成"
 
-#~ msgid "Logout"
-#~ msgstr "Afmelden"
+#~ msgid "What We Do"
+#~ msgstr "我們的服務"
+
+#~ msgid "Data Analysis"
+#~ msgstr "數據分析"
 
 #~ msgid ""
-#~ "When you receive the new password, you should <a href=\"%(login_url)s"
-#~ "\">log in</a> and change it as soon as possible."
-#~ msgstr ""
-#~ "Zodra je het nieuwe wachtwoord ontvangen hebt moet je zo snel mogelijk <a "
-#~ "href=\"%(login_url)s\">inloggen</a> en het wachtwoord wijzigen."
+#~ "Using big data analysis to rate 215606 California licensed\n"
+#~ "                            contractors."
+#~ msgstr "通過數據分析對加州215606承包商進行分值評定"
 
-#~ msgid "You are already logged in."
-#~ msgstr "Je bent al ingelogd."
+#~ msgid "Project Management"
+#~ msgstr "項目管理"
 
 #~ msgid ""
-#~ "By clicking \"Sign Up\", you are indicating that you have read and agree "
-#~ "to the <a href=\"%(terms_url)s\">Terms of Use</a> and <a href="
-#~ "\"%(privacy_url)s\">Privacy Policy</a>."
-#~ msgstr ""
-#~ "Door te registreren geef je aan dat je de <a href=\"%(terms_url)s"
-#~ "\">gebruiksvoorwaarden</a> en de <a href=\"%(privacy_url)s\">privacy "
-#~ "policy</a> gelezen hebt en ermee akkoord gaat."
+#~ "Real-time monitor and manage the project Create new industry\n"
+#~ "                            standard"
+#~ msgstr "對項目進行實時監管 建立裝修行業標準 "
+
+#~ msgid "Payment Guarantee"
+#~ msgstr "付款保障"
 
 #~ msgid ""
-#~ "If you have any trouble creating your account, contact us at <a href="
-#~ "\"mailto:%(contact_email)s\">%(contact_email)s</a>."
-#~ msgstr ""
-#~ "Als je problemen hebt om een account aan te maken, neem dan contact op "
-#~ "met <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a>."
+#~ " Save payment in our platform to ensure safety on\n"
+#~ "                            both sides"
+#~ msgstr "平臺進行工程款托管 保障雙方權益 "
 
-#~ msgid "Log in &raquo;"
-#~ msgstr "Inloggen"
+#~ msgid "  Copyright © 2017 "
+#~ msgstr " 版權 © 2017 "
+
+#~ msgid ". All Rights Reserved."
+#~ msgstr "。 保留所有權利。"
+
+#~ msgid ""
+#~ "Combined with contractors' background like past work history, we will "
+#~ "rate them by Big Data\n"
+#~ "                            Analysis Tool and match nearby high rated "
+#~ "professionals for you."
+#~ msgstr ""
+#~ "根據承包商的背景例如工作記錄，我們通過大數據分析會對他們進行評分並向您推送"
+#~ "優秀的承包商。"
+
+#~ msgid "Transparent Monitoring and Project Management"
+#~ msgstr "透明的項目管理體系"
+
+#~ msgid ""
+#~ "collaborate between contractors and customers in a more clear and "
+#~ "transparent platform to\n"
+#~ "                            push the projects move on seamlessly and "
+#~ "flawlessly."
+#~ msgstr ""
+#~ "在我們更加透明的平臺上聯動承包商和顧客進行協作來推動項目的無縫無痕發展。"
+
+#~ msgid "Premium Experience"
+#~ msgstr "完美的體驗"
+
+#~ msgid ""
+#~ "We commit to offering premium experience for our clients. Among Hoome’s "
+#~ "high quality clients,\n"
+#~ "                            we offer the price as lower as possible at "
+#~ "the same level of quality. About 10%% of owners\n"
+#~ "                            will enjoy the benefit –”Work first and pay "
+#~ "later”, after background check."
+#~ msgstr ""
+#~ "我們致力於為客戶提供完美的體驗。 在Hoome高質量客戶中，我們想盡可能地向他們"
+#~ "提供實惠的價格。 大約10%%的業主在通過背景調查之後享受了先施工後付款的服"
+#~ "務。"
+
+#~ msgid "Hoome beta version has come,"
+#~ msgstr "Hoome 測試版已上線，"
+
+#~ msgid "Try it now and enjoy."
+#~ msgstr "來試壹試吧！"
+
+#~ msgid ""
+#~ "We have released the information of California State Contractors, "
+#~ "Designers and Architects.\n"
+#~ "                            Other States' information are comming soon."
+#~ msgstr ""
+#~ "我們已經公布了加州的承包商，設計師，和建築師的信息。其他州的信息將會相繼上"
+#~ "線。"
+
+#~ msgid ""
+#~ "We thrive to build more functionality and improve data analyzing power to "
+#~ "enhance user\n"
+#~ "                            experience in Hoome platform. "
+#~ msgstr ""
+#~ "我們奮力建設更完全更多的功能並增強數據分析的力度來改善用戶使用我們平臺的體"
+#~ "驗。"
+
+#~ msgid ""
+#~ "If you have any questions or want to invest us, don't hesitate to contact "
+#~ "us:"
+#~ msgstr "如果您有什麽問題或有意願投資我們，不要猶豫，請跟聯系我們!"

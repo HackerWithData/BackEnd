@@ -1,6 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as __
-
+from django.utils.translation import ugettext_lazy as _
 from .models import ProjectAttachment, ProjectPhoto, Project
 from .utils import PROJECT_TYPE, WAITING, get_a_uuid
 from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
@@ -24,36 +23,36 @@ class ProjectPhotoForm(forms.ModelForm):
 
 class ProjectForm(forms.Form):
     # TODO: need a google address autocompeletion/correction
-    created_by = forms.ChoiceField(widget=forms.RadioSelect, choices=ROLE_CHOICES, label=__("Choose your identity*"))
-    project_name = forms.CharField(label=__('Project Name*'), max_length=100,
-                                   widget=forms.TextInput(attrs={'placeholder': __('Choose a name for your project')}))
-    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=__('Project Type*'))
-    contract_price = forms.IntegerField(label=__('Contract Price*'), min_value=0)
-    start_date = forms.DateField(label=__('Start Date*'), widget=forms.SelectDateWidget())
-    end_date = forms.DateField(label=__('End Date*'), widget=forms.SelectDateWidget())
-    first_name = forms.CharField(label=__("Homeowner's First Name"), max_length=64, required=False)
-    last_name = forms.CharField(label=__("Honemowner's Last Name"), max_length=64, required=False)
-    project_description = forms.CharField(label=__('Project Description'), required=False,
+    created_by = forms.ChoiceField(label=_("Choose your identity*"), widget=forms.RadioSelect, choices=ROLE_CHOICES)
+    project_name = forms.CharField(label=_('Project Name*'), max_length=100,
+                                   widget=forms.TextInput(attrs={'placeholder': _('Choose a name for your project')}))
+    project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=_('Project Type*'))
+    contract_price = forms.IntegerField(label=_('Contract Price*'), min_value=0)
+    start_date = forms.DateField(label=_('Start Date*'), widget=forms.SelectDateWidget())
+    end_date = forms.DateField(label=_('End Date*'), widget=forms.SelectDateWidget())
+    first_name = forms.CharField(label=_("Homeowner's First Name"), max_length=64, required=False)
+    last_name = forms.CharField(label=_("Honemowner's Last Name"), max_length=64, required=False)
+    project_description = forms.CharField(label=_('Project Description'), required=False,
                                           widget=forms.Textarea(
-                                              attrs={'placeholder': __(
+                                              attrs={'placeholder': _(
                                                   '(Optional) Tell us more about your project.')}))
-    street_address = forms.CharField(label=__('Street Address'), required=False)
-    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
-                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
-    county = forms.CharField(label=__('County/City'), max_length=64, required=False)
-    state = forms.CharField(label=__('State'), max_length=64, required=False)
-    zipcode = forms.CharField(label=__('Zip Code'), max_length=10, required=False)
+    street_address = forms.CharField(label=_('Street Address'), required=False)
+    street_address2 = forms.CharField(label=_('Apt #, Suite #, ...'), required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': _("(Optional) Apt #,Suite #,...")}))
+    county = forms.CharField(label=_('County/City'), max_length=64, required=False)
+    state = forms.CharField(label=_('State'), max_length=64, required=False)
+    zipcode = forms.CharField(label=_('Zip Code'), max_length=10, required=False)
     # country = forms.CharField(label=__('Country'), max_length=10)
     # TODO: need to add a calender widget
 
     # project_cost = forms.IntegerField(label=__('Total Project Cost shown in Contract*'),min_value=0, required=True)
-    attachment_type = forms.CharField(label=__('Attachment Type'), required=False, max_length=64)
+    attachment_type = forms.CharField(label=_('Attachment Type'), required=False, max_length=64)
     project_attachment = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
-        help_text=__('upload any documents or contracts that might be helpful in explaining your project brief here.'))
+        help_text=_('upload any documents or contracts that might be helpful in explaining your project brief here.'))
     project_photo = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False,
-        help_text=__('upload any photos that might be helpful in explaining your project brief here.'))
+        help_text=_('upload any photos that might be helpful in explaining your project brief here.'))
 
     # project_status = forms.CharField(label=__('Project Status'),)
     # professional_type = forms.CharField(label=__('Project Type'))
@@ -89,18 +88,18 @@ class ProjectEditForm(forms.Form):
     # contract_price = forms.IntegerField(label=__('Contract Price'), min_value=0, disabled=True)
     # start_date = forms.DateField(label=__('Start Date'), widget=forms.SelectDateWidget(), disabled=True)
     # end_date = forms.DateField(label=__('End Date'), widget=forms.SelectDateWidget(), disabled=True)
-    first_name = forms.CharField(label=__("Homeowner's First Name"), max_length=64, required=False)
-    last_name = forms.CharField(label=__("Honemowner's Last Name"), max_length=64, required=False)
-    project_description = forms.CharField(label=__('Project Description'), required=False,
+    first_name = forms.CharField(label=_("Homeowner's First Name"), max_length=64, required=False)
+    last_name = forms.CharField(label=_("Honemowner's Last Name"), max_length=64, required=False)
+    project_description = forms.CharField(label=_('Project Description'), required=False,
                                           widget=forms.Textarea(
-                                              attrs={'placeholder': __(
+                                              attrs={'placeholder': _(
                                                   '(Optional) Tell us more about your project.')}))
-    street_address = forms.CharField(label=__('Street Address'), required=False)
-    street_address2 = forms.CharField(label=__('Apt #, Suite #, ...'), required=False,
-                                      widget=forms.TextInput(attrs={'placeholder': __("(Optional) Apt #,Suite #,...")}))
-    county = forms.CharField(label=__('County/City'), max_length=64, required=False)
-    state = forms.CharField(label=__('State'), max_length=64, required=False)
-    zipcode = forms.CharField(label=__('Zip Code'), max_length=10, required=False)
+    street_address = forms.CharField(label=_('Street Address'), required=False)
+    street_address2 = forms.CharField(label=_('Apt #, Suite #, ...'), required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': _("(Optional) Apt #,Suite #,...")}))
+    county = forms.CharField(label=_('County/City'), max_length=64, required=False)
+    state = forms.CharField(label=_('State'), max_length=64, required=False)
+    zipcode = forms.CharField(label=_('Zip Code'), max_length=10, required=False)
 
     def update(self, instance, commit=True):
         if instance:
@@ -119,8 +118,8 @@ class ProjectEditForm(forms.Form):
 
 
 class ProjectFormDirectCreate(ProjectForm):
-    professional_hoome_id = forms.CharField(label=__("Enter the Contractor/Meister's Hoome ID*"), required=False)
-    homeowner_hoome_id = forms.CharField(label=__("Enter the Homeowner's Hoome ID*"), required=False)
+    professional_hoome_id = forms.CharField(label=_("Enter the Contractor/Meister's Hoome ID*"), required=False)
+    homeowner_hoome_id = forms.CharField(label=_("Enter the Homeowner's Hoome ID*"), required=False)
 
     def clean(self):
         cleaned_data = super(ProjectFormDirectCreate, self).clean()
@@ -128,28 +127,28 @@ class ProjectFormDirectCreate(ProjectForm):
         if created_by == PROFESSIONAL:
             homeowner_hoome_id = cleaned_data.get('homeowner_hoome_id', None)
             if not homeowner_hoome_id:
-                raise ValidationError(message=__('Hoome id cannot be empty.'), code='homeowner_hoome_id_error')
+                raise ValidationError(message=_('Hoome id cannot be empty.'), code='homeowner_hoome_id_error')
             else:
                 try:
                     user = User.objects.get(hoome_id=homeowner_hoome_id)
                 except:
-                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"),
+                    raise ValidationError(message=_("Homeowener's Hoome id does not exist"),
                                           code='homeowner_hoome_id_error')
                 if user.role == PROFESSIONAL:
-                    raise ValidationError(message=__("Homeowener's Hoome id does not exist"),
+                    raise ValidationError(message=_("Homeowener's Hoome id does not exist"),
                                           code='homeowner_hoome_id_error')
         elif created_by == CONSUMER:
             professional_hoome_id = cleaned_data.get('professional_hoome_id', None)
             if not professional_hoome_id:
-                raise ValidationError(message=__('Hoome id cannot be empty'), code='professional_hoome_id_error')
+                raise ValidationError(message=_('Hoome id cannot be empty'), code='professional_hoome_id_error')
             else:
                 try:
                     user = User.objects.get(hoome_id=professional_hoome_id)
                 except:
-                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"),
+                    raise ValidationError(message=_("Contractor/Meister's Hoome id does not exist"),
                                           code='professional_hoome_id_error')
                 if user.role == CONSUMER:
-                    raise ValidationError(message=__("Contractor/Meister's Hoome id does not exist"),
+                    raise ValidationError(message=_("Contractor/Meister's Hoome id does not exist"),
                                           code='professional_hoome_id_error')
         return cleaned_data
 
