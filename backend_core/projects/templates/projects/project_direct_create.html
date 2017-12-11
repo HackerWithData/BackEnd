@@ -140,6 +140,7 @@
                                        for="id_{{ field.name }}">{{ field.label }}</label>
                                 <div class="col-sm-10">
                                     {{ field|attr:"class:form-control" }}
+                                    <span id="hoome_id_error_professional"/>
                                     {% if field.help_text %}
                                         <p class="help-block">
                                             <small>{{ field.help_text }}</small>
@@ -172,6 +173,7 @@
                                        for="id_{{ field.name }}">{{ field.label }}</label>
                                 <div class="col-sm-10">
                                     {{ field|attr:"class:form-control" }}
+                                    <span id="hoome_id_error_consumer"/>
                                     {% if field.help_text %}
                                         <p class="help-block">
                                             <small>{{ field.help_text }}</small>
@@ -181,6 +183,7 @@
                             </div>
                         {% endif %}
                     {% endwith %}
+                    </span>
                 </div>
 
 
@@ -768,7 +771,6 @@
                 return $("#id_created_by_1").val();
             }
         }
-
         $(document).ready(function () {
             var identity;
             {% if not info_dict.direct_create %}
@@ -794,5 +796,38 @@
             });
         })
 
+        var check_hoome_id = function(hoome_id){
+            var created_by = $("input[name=created_by]:checked").val();
+            $.ajax({
+                url: "{% url 'create_project_direct' %}",
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                },
+                data: JSON.stringify({"hoome_id": hoome_id, "created_by": created_by}),
+                contentType: "application/json;",
+                datatype : "json",
+            }).done(function(data){
+                var res = JSON.parse(data);
+                if(created_by == "CONSUMER"){
+                    $("#hoome_id_error_professional").html(res.error_message);
+                }
+                if(created_by == "PROFESSIONAL"){
+                    $("#hoome_id_error_consumer").html(res.error_message);
+                }
+            });
+        };
+
+        $("#id_professional_hoome_id").blur(function(){
+            var hoome_id = $(this).val();
+            check_hoome_id(hoome_id);
+        });
+
+        $("#id_homeowner_hoome_id").blur(function(){
+            var hoome_id = $(this).val();
+            check_hoome_id(hoome_id);
+        })
+
+}
     </script>
 {% endblock %}

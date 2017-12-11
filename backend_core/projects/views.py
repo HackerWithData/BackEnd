@@ -26,7 +26,7 @@ from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, Milesto
     ProjectEditForm
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
-
+from helplers import validate_hoome_id
 
 # TODO: need to rewrite the architecture here.
 # Create your views here.
@@ -224,6 +224,9 @@ def create_project(request, professional_type=None, lic_id=None):
             direct_create = False
 
     elif request.method == "POST":
+        if request.is_ajax():
+            return validate_hoome_id(request)
+
         # print(request.POST)
         if professional_type and lic_id:
             project_form = ProjectForm(request.POST, request.FILES)
