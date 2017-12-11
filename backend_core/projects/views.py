@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as __
 from django.forms.formsets import formset_factory
 from django.contrib.auth import (logout as django_logout)
 from django.forms.models import model_to_dict
+from django.shortcuts import get_object_or_404
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
@@ -26,7 +27,7 @@ from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, Milesto
     ProjectEditForm
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
-
+from helplers import validate_hoome_id
 
 # TODO: need to rewrite the architecture here.
 # Create your views here.
@@ -244,9 +245,6 @@ def create_project(request, professional_type=None, lic_id=None):
 
     info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}
     return render(request, template_name, {'info_dict': info_dict})
-
-
-from django.shortcuts import get_object_or_404
 
 
 @check_recaptcha

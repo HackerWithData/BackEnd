@@ -9,17 +9,25 @@
             {% csrf_token %}
             {#                            {{ form.as_p }}#}
             {#TODO: Translate form error#}
-            {% if  form.errors %}
+            {% if  form.non_field_errors %}
                 <div class="alert alert-warning">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
+            <label for="id_hoome_id">Hoome id:</label> <span id="id_hoome_id">{{ user.hoome_id }}</span>
             <p><label for="id_company_name">{{ Name }}:</label> <input type="text" name="company_name"
                                                                        value="{{ form.company_name.initial }}"
                                                                        id="id_company_name"
                                                                        readonly="true" required=""
                                                                        class="input-company-name"
                                                                        maxlength="128">
+                {% with field=form.company_name %}
+                    {% if field.errors %}
+                        <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                    {% endif %}
+                {% endwith %}
+
                 <label for="id_license_num">{{ License_Number }}:</label> <input type="text"
                                                                                  name="license_num"
                                                                                  value="{{ form.license_num.initial }}"
@@ -27,6 +35,13 @@
                                                                                  required=""
                                                                                  class="input-license-number"
                                                                                  id="id_license_num"></p>
+            {% with field=form.license_num %}
+                {% if field.errors %}
+                    <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                {% endif %}
+            {% endwith %}
+
             <div class="form-section-container">
                 {#                                <h3 class="form-title">Address</h3>#}
                 <p><label for="id_street">{{ Street }}:</label><br/> <input type="text" name="street"
@@ -34,33 +49,83 @@
                                                                             id="id_street" required=""
                                                                             class="input-street"
                                                                             maxlength="128"></p>
+                {% with field=form.street %}
+                    {% if field.errors %}
+                        <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                    {% endif %}
+                {% endwith %}
+
+                <p><label for="id_county">{{ County }}:</label><br/> <input type="text" name="county"
+                                                                            value="{{ form.county.initial }}"
+                                                                            id="id_county" required=""
+                                                                            class="input-county"
+                                                                            maxlength="32"></p>
+                {% with field=form.county %}
+                    {% if field.errors %}
+                        <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                    {% endif %}
+                {% endwith %}
                 <p><label for="id_state">{{ State }}:</label><br/> <input type="text" name="state"
                                                                           value="{{ form.state.initial }}"
                                                                           id="id_state" required=""
                                                                           class="input-state"
                                                                           maxlength="32"></p>
+                {% with field=form.state %}
+                    {% if field.errors %}
+                        <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                    {% endif %}
+                {% endwith %}
+
                 <p><label for="id_zipcode">{{ Postal_Code }}:</label><br/> <input type="text" name="zipcode"
                                                                                   value="{{ form.zipcode.initial }}"
                                                                                   id="id_zipcode"
                                                                                   required=""
                                                                                   class="input-zipcode"
                                                                                   maxlength="16"></p>
+                {% with field=form.zipcode %}
+                    {% if field.errors %}
+                        <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                    {% endif %}
+                {% endwith %}
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
 
                     <p><label for="id_entity_type_0">{{ Entity_Type }}:</label></p>
                     {{ form.entity_type }}
+                    {% with field=form.entity_type %}
+                        {% if field.errors %}
+                            <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                        {% endif %}
+                    {% endwith %}
                     <br/>
 
                     <p><label for="id_professional_type_0">{{ Professional_Category }}:</label></p>
                     {#                    #TODO: Translate#}
                     {{ form.professional_type }}
+                    {% with field=form.professional_type %}
+                        {% if field.errors %}
+                            <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                        {% endif %}
+                    {% endwith %}
                     <br/>
+
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <p><label>{{ Professional_Sub_Category }}:</label></p>
                     {{ form.professional_subtype }}
+                    {% with field=form.professional_subtype %}
+                        {% if field.errors %}
+                            <span class="help-block">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}</span>
+                        {% endif %}
+                    {% endwith %}
                     <br/>
                 </div>
             </div>

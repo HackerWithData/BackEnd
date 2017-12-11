@@ -67,8 +67,11 @@ def search_by_zipcode(request):
     search_target = request.GET['target']
     zipcode = request.GET['zipcode']
     # type search
-    prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
+    if search_target and search_type:
+        prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
                                           professional_type__subtype=search_target).distinct()
+    else:
+        prof_qs = Professional.objects.filter(postal_code=zipcode).distinct()
     # retrieve corresponding professional through different table
     return retrieve_all_kind_professional(prof_qs)
 

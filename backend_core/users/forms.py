@@ -170,6 +170,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
 
+    # TODO; need to change this part since lic_num is not numberic sometimes
     def clean_license_num(self):
         lic = self.cleaned_data['license_num']
         lic_num = int(lic.strip(string.ascii_letters))
@@ -214,7 +215,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
         # print(clean_professional_type)
-        if clean_professional_type == "MEISTER":
+        if str(clean_professional_type) == "MEISTER":
             # professional_object = create_professional_corresponding_object(prof_type=clean_professional_type)
             meister, created = Meister.objects.get_or_create(lic_name=clean_company_name,
                                                              # bus_name=clean_company_name,
@@ -226,11 +227,13 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 meister.save()
             else:
                 pass
+            # TODO: need to consider if meister is mutuailly exclusive with other type??
             professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
                                                                        name=clean_company_name,
                                                                        entity_type=clean_entity_type,
-                                                                       lic_type=clean_professional_type,
+                                                                       lic_type='&'.join(clean_professional_subtype),
                                                                        type=clean_professional_type,
+                                                                       county=clean_county,
                                                                        state=clean_state,
                                                                        postal_code=clean_zipcode)
             if created:
@@ -270,6 +273,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                            name=clean_company_name,
                                                            entity_type=clean_entity_type,
                                                            type=clean_professional_type,
+                                                           lic_type='&'.join(clean_professional_subtype),
                                                            state=clean_state,
                                                            postal_code=clean_zipcode)
                 professional.save()
@@ -355,30 +359,36 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         clean_state = self.cleaned_data['state']
         clean_zipcode = self.cleaned_data['zipcode']
         clean_entity_type = self.cleaned_data['entity_type']
-
+        clean_county = self.cleaned_data['county']
         clean_professional_type = self.cleaned_data['professional_type']
 
         clean_professional_subtype = self.cleaned_data['professional_subtype']
+
         profile = request.user.professional_profiles.first()
         professional = profile.professional
+
+        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
+        # create new subtypes for profile
+        existing_prof_types = [pt.subtype for pt in professionaltypes]
+        current_prof_types = list(existing_prof_types)
+        for subtype in clean_professional_subtype:
+            if subtype not in existing_prof_types:
+                ProfessionalType.objects.create(professional=professional,
+                                                type=clean_professional_type,
+                                                subtype=subtype)
+                current_prof_types.append(subtype)
+
         professional.state = clean_state
+        professional.county = clean_county
         professional.postal_code = clean_zipcode
         professional.entity_type = clean_entity_type
+        professional.lic_type = '&'.join(current_prof_types)
         professional.save()
 
         professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=clean_professional_type,
                                                                                     lic=clean_license_num)
         professional_object.street_address = clean_street
         professional_object.save()
-
-        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
-        # create new subtypes for profile
-        existing_prof_types = [pt.subtype for pt in professionaltypes]
-        for subtype in clean_professional_subtype:
-            if subtype not in existing_prof_types:
-                ProfessionalType.objects.create(professional=professional,
-                                                type=clean_professional_type,
-                                                subtype=subtype)
 
 
 class MultipleSameProfessionalFound(Exception):

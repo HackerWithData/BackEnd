@@ -22,14 +22,17 @@ def _save_milestone(amount, project):
                              uuid=milestone_uuid)
 
 
-def save_milestone(request,project):
+def save_milestone(request, project):
     list_amount = []
-    for key in request.POST:
+    for key,value in request.POST.items():
         reg = re.match("form-(\d)-amount", key)
         if reg:
             index = reg.group(1)
             try:
-                list_amount.append([int(index), key])
+                if value == "" or value is None:
+                    pass
+                else:
+                    list_amount.append([int(index), key])
             except:
                 pass
 
