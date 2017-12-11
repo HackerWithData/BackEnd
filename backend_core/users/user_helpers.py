@@ -14,15 +14,16 @@ from .models import HoomeId
 from .utils import AVAILABLE
 
 
-
 def get_professional_user(user):
     professional_profile = user.professional_profiles.first()
     professional = professional_profile.professional
     return professional
 
+
 def get_user_by_hoome_id(hoome_id):
     user = User.objects.get(hoome_id=hoome_id)
     return user
+
 
 def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
     if prof_type == CONTRACTOR:
@@ -31,6 +32,8 @@ def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
         ret_professional_object = Architect.objects.get(lic_num=lic)
     elif prof_type == DESIGNER:
         ret_professional_object = Designer.objects.get(lic_num=lic)
+    elif prof_type == MEISTER:
+        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
@@ -46,6 +49,8 @@ def get_professional_corresponding_object_by_user(user):
         ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
     elif prof_type == DESIGNER:
         ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    elif prof_type == MEISTER:
+        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
@@ -71,11 +76,13 @@ def get_professional_and_professional_corresponding_object_by_user(user):
 
 def create_professional_corresponding_object(prof_type, lic):
     if prof_type == CONTRACTOR:
-        ret_professional_object = Contractor.objects.create(lic_num=lic)
+        ret_professional_object = Contractor.objects.create(lic_num=lic, lic_status="Active")
     elif prof_type == ARCHITECT:
-        ret_professional_object = Architect.objects.create(lic_num=lic)
+        ret_professional_object = Architect.objects.create(lic_num=lic, lic_status="Active")
     elif prof_type == DESIGNER:
         ret_professional_object = Designer.objects.create(lic_num=lic)
+    elif prof_type == MEISTER:
+        ret_professional_object = Meister.objects.get(lic_num=lic)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
@@ -111,7 +118,7 @@ class UndefinedType(Exception):
 
 
 def generate_random_hoome_id():
-    #randint(10000000,99999999)
+    # randint(10000000,99999999)
     count = HoomeId.objects.filter(status=AVAILABLE).count()
     random_index = randint(0, count - 1)
     random_id = HoomeId.objects.filter(status=AVAILABLE)[random_index].hoome_id

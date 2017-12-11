@@ -88,7 +88,7 @@ class LicenseRelation(models.Model):
 
 
 class Complaint(models.Model):
-    lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
+    contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
     complaint_type = models.CharField(max_length=255)
     complain_num = models.CharField(max_length=255)
     time = models.DateField()
@@ -101,7 +101,7 @@ class Complaint(models.Model):
 
 
 class ComplaintOverall(models.Model):
-    lic_num = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
+    contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING)
     case = models.IntegerField(null=True, blank=False)
     citation = models.IntegerField(null=True, blank=False)
     arbitration = models.IntegerField(null=True, blank=False)

@@ -1,15 +1,15 @@
 {% extends "dashboard/dashboard.html" %}
 {% load staticfiles i18n payment_tag widget_tweaks %}
 {% block dashboard_content %}
-{#    {% if messages %}#}
-{#        {% for message in messages %}#}
-{#            <div{% if message.tags %} class="alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">#}
-{#                <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-{#                    <span aria-hidden="true">&times;</span>#}
-{#                </button>#}
-{#                {{ message }}</div>#}
-{#        {% endfor %}#}
-{#    {% endif %}#}
+    {#    {% if messages %}#}
+    {#        {% for message in messages %}#}
+    {#            <div{% if message.tags %} class="alert {{ message.tags }} alert-dismissible"{% endif %} role="alert">#}
+    {#                <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+    {#                    <span aria-hidden="true">&times;</span>#}
+    {#                </button>#}
+    {#                {{ message }}</div>#}
+    {#        {% endfor %}#}
+    {#    {% endif %}#}
     <div class="page-header">
         <h1>{{ Project_Detail }}</h1>
     </div>
@@ -18,6 +18,8 @@
         <div class="panel panel-default project-basic-info">
             <div class="panel-heading">
                 {{ Project_Basic_Information }}
+                <a href="{% url 'edit_project' uuid=info_dict.project.uuid %}"
+                   class="move-right btn btn-hoome">{{ Add_Detail }}</a>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -147,7 +149,7 @@
                         </tbody>
                     </table>
 
-{#                    mobile version#}
+                    {#                    mobile version#}
                     <table class="milestone-table mobile">
                         <thead>
                         <tr>
@@ -302,7 +304,7 @@
                         <div class="input-group-addon">$</div>
                         {{ field|attr:"class:form-control" }}
                         {#                    <input type="text" class="form-control" id="id_{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value }}">#}
-                        <div class="input-group-addon">.00</div>
+{#                        <div class="input-group-addon">.00</div>#}
                     </div>
                     <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}

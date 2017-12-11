@@ -47,7 +47,8 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
         professional = content_type.get_object_for_this_type(pk=lic_id)
         # save project
         project = project_form.save_project(commit=False)
-        project.user = request.user
+        if request.user.is_authenticated:  # when user is logged in
+            project.user = request.user
         project.content_type = content_type
         project.object_id = lic_id
         project.bus_name = professional.lic_name

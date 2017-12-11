@@ -11,7 +11,7 @@ from professionals.models import Professional, ProfessionalType
 from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, \
     MEISTER
 from contractors.utils import convert_hscore_to_rank
-
+from hscore.models import Hscore
 
 # Ajax POST request
 # def search_by_address_object(request):
@@ -80,7 +80,10 @@ def retrieve_all_kind_professional(prof_qs):
             contractor = Contractor.objects.filter(lic_num=professional.lic_num).first()
             # print(contractor)
             # print(contractor.hscore)
+
             hscore = contractor.hscores.first()
+            if hscore is None:
+                hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
             item = model_to_dict(contractor).copy()
             item['score'] = hscore.score
             item['rank'] = convert_hscore_to_rank(hscore)
