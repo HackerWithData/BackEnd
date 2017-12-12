@@ -26,15 +26,21 @@
                     <div class="col-xs-12 col-sm-6">
                         <span class="title">{{ Project_Name }}:</span> {{ info_dict.project.project_name }}
                         <br>
-                        <span class="title">{{ Client_Name }}:</span> {{ info_dict.project.first_name }} {{ info_dict.project.last_name }}
-                        <br>
+                        {% if  info_dict.project.user.first_name and info_dict.project.user.last_name %}
 
-                        <span class="title">{{ Contracted_With }}:</span>
+                            <span class="title">{{ Client_Name }}:</span> {{ info_dict.project.first_name }}
+                            {{ info_dict.project.last_name }}
+                            <br>
+                        {% endif %}
                         {% if user.role == "CONSUMER" %}
                             {#                            TODO: add a link to professional page#}
+                            <span class="title">{{ Contracted_With }}:</span>
                             {{ info_dict.project.bus_name }}
                         {% elif user.role == "PROFESSIONAL" %}
-                            {{ info_dict.project.user.first_name }} {{ info_dict.project.user.last_name }}
+                            {% if  info_dict.project.user.first_name and info_dict.project.user.last_name %}
+                                <span class="title">{{ Contracted_With }}:</span>
+                                {{ info_dict.project.user.first_name }} {{ info_dict.project.user.last_name }}
+                            {% endif %}
                         {% endif %}
                         <br/>
                         <span class="title">{{ Project_Type }}:</span> {{ info_dict.project.get_project_type_display }}
@@ -56,27 +62,32 @@
                         {#                        {% endif %}#}
                     </div>
                 </div>
-                <hr/>
-                <div class="row">
-                    <div class="Address col-xs-12 col-md-4">
-                        <span class="title">{{ Address }}:</span><br/>
-                        {{ info_dict.project.street_address }}{{ info_dict.project.street_address2 }}<br/>
-                        {{ info_dict.project.county }}, {{ info_dict.project.state }} {{ info_dict.project.zipcode }}
+                {% if info_dict.project.street_address or info_dict.project.project_description %}
+                    <hr/>
+                    <div class="row">
+                        {#                    TODO: need to take care. this part needs to change#}
+                        {% if info_dict.project.street_address %}
+                            <div class="Address col-xs-12 col-md-4">
+                                <span class="title">{{ Address }}:</span><br/>
+                                {{ info_dict.project.street_address }}{{ info_dict.project.street_address2 }}<br/>
+                                {{ info_dict.project.county }}, {{ info_dict.project.state }} {{ info_dict.project.zipcode }}
+                            </div>
+                        {% endif %}
+                        {#        TODO: Add trigger to calculate the cost#}
+                        {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
+                        {% if info_dict.project.project_description %}
+                            <div class="project-description col-xs-12 col-md-8">
+                                <div class="text height">
+                                    <span class="title">{{ Project_Description }}:</span> <br/>
+                                    {{ info_dict.project.project_description }}
+                                </div>
+                                <div id="peek" class="link">
+                                    <a id="readmore" class="btn btn-db"> <i class="fa fa-chevron-down "> </i></a>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                    {#        TODO: Add trigger to calculate the cost#}
-                    {#            {{ Project_Cost }}: {{ info_dict.project.project_cost }}#}
-                    {% if info_dict.project.project_description %}
-                        <div class="project-description col-xs-12 col-md-8">
-                            <div class="text height">
-                                <span class="title">{{ Project_Description }}:</span> <br/>
-                                {{ info_dict.project.project_description }}
-                            </div>
-                            <div id="peek" class="link">
-                                <a id="readmore" class="btn btn-db"> <i class="fa fa-chevron-down "> </i></a>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
         </div>
         <div class="panel panel-default project-milestone">
@@ -304,7 +315,7 @@
                         <div class="input-group-addon">$</div>
                         {{ field|attr:"class:form-control" }}
                         {#                    <input type="text" class="form-control" id="id_{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value }}">#}
-{#                        <div class="input-group-addon">.00</div>#}
+                        {#                        <div class="input-group-addon">.00</div>#}
                     </div>
                     <span class="help-block">
                         {% for error in  field.errors %}{{ error }}{% endfor %}
