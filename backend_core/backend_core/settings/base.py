@@ -251,7 +251,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '_NErMjXqKFPkf0WKWt90fnVV'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 ACCOUNT_ADAPTER = "users.adapter.MyAccountAdapter"
-SOCIALACCOUNT_ADAPTER = "users.socialaccount.adapter.SocialAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = "users.socialaccount.adapter.SocialAccountAdapter"
 
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'

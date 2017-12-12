@@ -49,9 +49,11 @@
                                 {#                                {% endif %}#}
                             </div>
                             <div class="col-xs-8 col-sm-7 col-md-6 Address">
-                                <span class="title">{{ Address }}:</span><br/>
-                                {{ project.street_address }}{{ project.street_address2 }}<br/>
-                                {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                                {% if info_dict.project.street_address %}
+                                    <span class="title">{{ Address }}:</span><br/>
+                                    {{ project.street_address }}{{ project.street_address2 }}<br/>
+                                    {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
