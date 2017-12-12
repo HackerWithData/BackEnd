@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-12 02:08+0000\n"
+"POT-Creation-Date: 2017-12-12 22:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -685,11 +685,11 @@ msgid ""
 "No professional match your condition. Please try another way to search again."
 msgstr "没有商家符合您的要求。请尝试其他格式来搜索。"
 
-#: search/views.py:37
+#: search/views.py:49
 msgid "please type something you want to search"
 msgstr "请输入搜索对象"
 
-#: search/views.py:68
+#: search/views.py:80
 msgid "please input something you want to search"
 msgstr "请输入搜索对象"
 
@@ -1396,7 +1396,9 @@ msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
 "a>."
-msgstr "改密码重置链接已失效，请要求一个新的链接 <a href=\"%(passwd_reset_url)s\">重设密码</a>"
+msgstr ""
+"改密码重置链接已失效，请要求一个新的链接 <a href=\"%(passwd_reset_url)s\">重"
+"设密码</a>"
 
 #: users/templates/account/password_reset_from_key.html:18
 msgid "change password"
