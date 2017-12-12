@@ -6,3 +6,10 @@
 .EOP {
     text-align: right;
 }
+.header span.logo.cursive {
+    color: #121212;
+}
+
+.header #main-nav .navbar-nav > li > a, .header.active #main-nav .navbar-nav > li .dropdown > a {
+    color: #121212;
+}
