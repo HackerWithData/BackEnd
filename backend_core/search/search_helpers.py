@@ -87,6 +87,7 @@ def retrieve_all_kind_professional(prof_qs):
             hscore = contractor.hscores.first()
             if hscore is None:
                 hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+            # print(contractor.lic_name, hscore.score)
             item = model_to_dict(contractor).copy()
             item['score'] = hscore.score
             item['rank'] = convert_hscore_to_rank(hscore)

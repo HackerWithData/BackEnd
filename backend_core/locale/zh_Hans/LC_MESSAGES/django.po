@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 11:14+0000\n"
+"POT-Creation-Date: 2017-12-12 22:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -369,7 +369,7 @@ msgid "Homeowner have released the payment for current milestone."
 msgstr "业主已经释放现阶段的款项给您"
 
 #: projects/forms.py:26
-#: projects/templates/projects/project_direct_create.html:104
+#: projects/templates/projects/project_direct_create.html:103
 msgid "Choose your identity*"
 msgstr "请选择您的身份*"
 
@@ -485,7 +485,7 @@ msgid "Tell us what you need done"
 msgstr "请告诉我们您需要完成什么"
 
 #: projects/templates/projects/create_project.html:76
-#: projects/templates/projects/project_direct_create.html:111
+#: projects/templates/projects/project_direct_create.html:110
 msgid "Contractor/Meister"
 msgstr "承包商/守艺人"
 
@@ -507,12 +507,12 @@ msgstr "请附加任何附件或照片"
 msgid "Create"
 msgstr "创建"
 
-#: projects/templates/projects/project_direct_create.html:65
+#: projects/templates/projects/project_direct_create.html:64
 #: templates/base.html:132
 msgid "Create Project"
 msgstr "创建项目"
 
-#: projects/templates/projects/project_overview.html:68
+#: projects/templates/projects/project_overview.html:70
 msgid ""
 "You don't have any projects right now. Please go to professional\n"
 "                        page\n"
@@ -684,6 +684,14 @@ msgstr "证件类型"
 msgid ""
 "No professional match your condition. Please try another way to search again."
 msgstr "没有商家符合您的要求。请尝试其他格式来搜索。"
+
+#: search/views.py:49
+msgid "please type something you want to search"
+msgstr "请输入搜索对象"
+
+#: search/views.py:80
+msgid "please input something you want to search"
+msgstr "请输入搜索对象"
 
 #: templates/400.html:29
 msgid "Bad Request"
@@ -1344,8 +1352,62 @@ msgid "New Password (again)"
 msgstr "再一次输入新密码"
 
 #: users/templates/account/password_change.html:28
+#: users/templates/account/password_reset_from_key.html:4
+#: users/templates/account/password_reset_from_key.html:8
+#: users/templates/account/password_reset_from_key_done.html:4
+#: users/templates/account/password_reset_from_key_done.html:8
 msgid "Change Password"
 msgstr "修改密码"
+
+#: users/templates/account/password_reset.html:6
+#: users/templates/account/password_reset.html:10
+#: users/templates/account/password_reset_done.html:6
+#: users/templates/account/password_reset_done.html:10
+msgid "Password Reset"
+msgstr "重置密码"
+
+#: users/templates/account/password_reset.html:15
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr "忘记密码？ 请输入您的邮箱。我们会发一个确认信到您的邮箱里。"
+
+#: users/templates/account/password_reset.html:20
+msgid "Reset My Password"
+msgstr "重设密码"
+
+#: users/templates/account/password_reset.html:23
+msgid "Please contact us if you have any trouble resetting your password:"
+msgstr "如果你在重设密码的时候遇到困难，请联系我们："
+
+#: users/templates/account/password_reset_done.html:16
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr "我们已经发送邮件。请联系我们，如果几分钟之内您没有收到邮件。"
+
+#: users/templates/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr "链接已坏"
+
+#: users/templates/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+"改密码重置链接已失效，请要求一个新的链接 <a href=\"%(passwd_reset_url)s\">重"
+"设密码</a>"
+
+#: users/templates/account/password_reset_from_key.html:18
+msgid "change password"
+msgstr "修改密码"
+
+#: users/templates/account/password_reset_from_key.html:21
+#: users/templates/account/password_reset_from_key_done.html:9
+msgid "Your password is now changed."
+msgstr "您的密码已修改"
 
 #: users/templates/account/password_set.html:23
 msgid "Set Password"
@@ -1445,11 +1507,11 @@ msgstr "已登记"
 msgid "Available"
 msgstr "可用"
 
-#: users/views.py:134
+#: users/views.py:154
 msgid "Lic number does not exist"
 msgstr "证件号码不存在"
 
-#: users/views.py:191 users/views.py:233
+#: users/views.py:211 users/views.py:253
 msgid "Your Profile updated."
 msgstr "您的档案已更新"
 
