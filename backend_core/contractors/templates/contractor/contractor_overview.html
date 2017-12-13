@@ -77,18 +77,21 @@
     {#        TODO: add ajax to show more photos#}
     {% if info_dict.project_photos %}
         <!--photo-->
-        <div id="photo" class="col-12 col-md-8 col-lg-8">
+        <div id="photo" class="col-12 col-md-8 col-lg-8" style="position: relative">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="col-md-7 vertical-center">{{ Photo }}</span>
-                    {#                        <div class="pull-right">#}
-                    <a type="button" class="viewmore btn btn-db btn-sm pull-right vertical-center">{{ View_More }}</a>
-                    {#                        </div>#}
-{#                    <label class="switch vertical-center">#}
-{#                        <input id="edit-photo" type="checkbox" class="off">#}
-{#                        <span class="slider round"></span>#}
-{#                    </label>#}
-{#                    <span class="vertical-center">{% trans 'Edit Photo' %}</span>#}
+                    <div class="pull-right">
+                      <a type="button" class="viewmore btn btn-db btn-sm pull-right vertical-center">{{ View_More }}</a>
+                    </div>
+                </div>
+                <div style="margin-top: 1vh; margin-bottom: 1vh">
+                  <label class="switch vertical-center">
+                      <input id="edit-photo" type="checkbox" class="off">
+                      <span class="slider round"></span>
+                  </label>
+                  <span class="vertical-center">{% trans 'Edit Photo' %}</span>
+                  <button class="hide batch-delete-btn btn btn-danger col-md-offset-8">Delete</button>
                 </div>
 
                 <div class="panel-body">
@@ -96,6 +99,13 @@
                         {% for pic in  info_dict.project_photos %}
                             <div style="text-align:center">
                                 <div style="margin: 1vh">
+                                  <div class="hide batch-edit-checkbox pretty p-icon p-fill p-tada" style="font-size: 200%">
+                                      <input data-id="{{ pic.id }}" type="checkbox" />
+                                      <div class="state p-danger">
+                                          <i class="icon mdi mdi-close"></i>
+                                          <label style="color: rgba(0,0,0,0)">1</label>
+                                      </div>
+                                  </div>
                                     <a href="{{ pic.img.url }}" title="{{ pic.title }}">
                                         <img src="{{ pic.img.url }}">
                                     </a>
@@ -191,30 +201,56 @@
     $(document).ready(function () {
         $("#edit-photo").click(function () {
             if ($("#edit-photo").prop("checked") === true) {
-                $('.delete-photo-btn').removeClass('hide');
+                $('.batch-edit-checkbox').removeClass('hide');
+                $('.batch-delete-btn').removeClass('hide');
             } else {
-                $('.delete-photo-btn').addClass('hide');
+                $('.batch-edit-checkbox').addClass('hide');
+                $('.batch-delete-btn').addClass('hide');
             }
         });
-        $(".delete-photo-btn").click(function () {
-            var id = $(this).data("id");
-            console.log(id);
-            const formData = {"id" : id};
-            $.ajax({
-                type: "POST",
-                beforeSend: function (request) {
-                    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-                },
-                url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
-                data: JSON.stringify(formData),
-                contentType: "application/json;charset=UTF-8",
-{#                dataType: "application/json",#}
+        $(".batch-delete-btn").click(function () {
+            var len = $("div.batch-edit-checkbox > input:checked").length;
+            console.log(len)
+            $("div.batch-edit-checkbox > input:checked").each(function(index){
+              var id = $(this).data("id");
+              console.log(id);
+              const formData = {"id" : id};
+                          $.ajax({
+                              type: "POST",
+                              beforeSend: function (request) {
+                                  request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+                              },
+                              url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
+                              data: JSON.stringify(formData),
+                              contentType: "application/json;charset=UTF-8",
+              {#                dataType: "application/json",#}
+                          })
+                              .done(function (result) {
+                                  if(index == len - 1){
+                                  location.reload();
+                                  alert("Photo has been successfully deleted.");
+                                  console.log(result);
+                                }
+                              });
             })
-                .done(function (result) {
-                    location.reload();
-                    alert("Photo has been successfully deleted.");
-                    console.log(result);
-                });
+//             var id = $(this).data("id");
+//             console.log(id);
+//             const formData = {"id" : id};
+//             $.ajax({
+//                 type: "POST",
+//                 beforeSend: function (request) {
+//                     request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+//                 },
+//                 url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
+//                 data: JSON.stringify(formData),
+//                 contentType: "application/json;charset=UTF-8",
+// {#                dataType: "application/json",#}
+//             })
+//                 .done(function (result) {
+//                     location.reload();
+//                     alert("Photo has been successfully deleted.");
+//                     console.log(result);
+//                 });
         });
     })
     {#$(".delete-photo-btn").click(function(){#}
