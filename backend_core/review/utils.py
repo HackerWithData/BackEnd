@@ -15,8 +15,11 @@ from django.contrib import messages
 
 def get_review(model_name, object_id, review_status):
     try:
-        review = Review.objects.filter(content_type=ContentType.objects.get(model=model_name),
-                                       object_id=object_id, review_status=review_status)
+        review = Review.objects.filter(
+            content_type=ContentType.objects.get(model=model_name),
+            object_id=object_id,
+            review_status=review_status,
+        )
     except:
         review = None
     return review
@@ -24,9 +27,11 @@ def get_review(model_name, object_id, review_status):
 
 def get_review_form(request):
     if request.user.is_authenticated:
-        review_form = ReviewForm(initial={'first_name': request.user.first_name,
-                                          'last_name': request.user.last_name,
-                                          'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+        review_form = ReviewForm(initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'project_date': datetime.datetime.today().strftime('%Y-%m-%d'),
+        })
     else:
         review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
     return review_form
@@ -77,3 +82,4 @@ def post_review(request, o_id, info_dict, template_name):
         info_dict["user_rating_form"] = user_rating_form
         messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
         return render(request, template_name, {"info_dict": info_dict})
+
