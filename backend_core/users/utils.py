@@ -79,3 +79,14 @@ class SocialAdapter(DefaultSocialAccountAdapter):
 
 class UnexpectedMultipleChoice(Exception):
     pass
+
+
+def get_p_lic_num(request):
+    if request.user.is_anonymous():
+        p_lic_num = None
+    else:
+        try:
+            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        except:
+            p_lic_num = None
+    return p_lic_num

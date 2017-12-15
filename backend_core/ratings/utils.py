@@ -1,4 +1,4 @@
-from .models import Rating
+from .models import Rating, UserRating
 from django.contrib.contenttypes.models import ContentType
 from .forms import UserRatingForm
 
@@ -18,7 +18,7 @@ def avg_rating(review, rt):
         return 0
 
 
-def get_rating(model_name, object_id, review):
+def get_ratings(model_name, object_id, review):
     rating = Rating.objects.filter(
         content_type=ContentType.objects.get(model=model_name),
         object_id=object_id,
@@ -36,3 +36,13 @@ def get_rating(model_name, object_id, review):
 
 def get_user_rating_form():
     return UserRatingForm()
+
+
+def create_user_rating(user_rating_form, review):
+    for field in user_rating_form.cleaned_data:
+        user_rating = UserRating(
+            review=review,
+            rating_type=field[0].upper(),
+            rating_score=int(user_rating_form.cleaned_data[field]),
+        )
+        user_rating.save()

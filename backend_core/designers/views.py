@@ -2,58 +2,66 @@
 from __future__ import unicode_literals
 from .models import Designer
 from professionals.views import ProfessionalDetail
+from django.utils.translation import ugettext as _,  ugettext_lazy as _
+from photos.utils import upload_project_photo, display_project_photo
 
 
 # TODO: add a overview database
 class DesignerDetail(ProfessionalDetail):
-    def __init__(self):
-        super(DesignerDetail, self).__init__()
-        self.template_name = 'designer/designer.html'
-        self.data_source = 'NCIQ'
-        self.model = Designer
+    fields = (
+        'bgimage',
+        'score',
+        'rank',
+        'full_state_name',
+        'lic_type',
+        'review',
+        'ratings',
+        'p_lic_num',
+        'project_photos',
+        'review_form',
+        'user_rating_form',
+        'overview',
+        'overview_form',
+    )
+    template_name = 'designer/designer.html'
+    data_source = 'NCIQ'
+    model = Designer
+
+    def get_overview_message(self, **kwargs):
+        message = _(
+            """{bus_name} is a designer based on {city} {state} . The company holds a license number according to {data_source}. 
+            The License is verified as active when we checked last time. If you would like to know {bus_name} more, 
+            please contact us and we will share more information about this designer to you.
+            """
+        ).format(
+            bus_name=kwargs.get('instance').lic_name,
+            city=kwargs.get('instance').city,
+            state=kwargs.get('instance').state,
+            data_source=self.data_source,
+            rank=kwargs.get('rank'),
+            full_state_name=kwargs.get('full_state_name'),
+        )
+        return message
 
 
 def display_project_photos(request, o_id):
-    if request.is_ajax() and request.method == "POST":
-        template_name = 'designer/designer_project_photo.html'
-        designer = Designer.objects.get(lic_num=o_id)
-        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='designer'),
-                                              object_id=o_id)
-        info_dict = {'project_photos': project_photos, 'designer': designer}
-        return render(request, template_name, {'info_dict': info_dict})
-    else:
-        raise Http404('No Pages Found.')
+    template_name = 'designer/designer_project_photo.html'
+    return display_project_photo(
+        request=request,
+        o_id=o_id,
+        model=Designer,
+        template_name=template_name,
+    )
 
 
-# %% TODO: change function to accept all instance like architects or designers
 def upload_project_photos(request, o_id):
-    if request.user.is_anonymous():
-        p_lic_num = None
-    else:
-        try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
-        except:
-            p_lic_num = None
-
-    if str(p_lic_num) == str(o_id):
-        template_name = 'designer/designer_project_photos_upload.html'  # Replace with your template.
-        success_url = '/designer/' + o_id  # Replace with your URL or reverse().
-
-        if request.method == "POST":
-            form = PhotoForm(request.POST, request.FILES)
-            content_type = ContentType.objects.get(model='designer')
-            files = request.FILES.getlist('img')
-            if form.is_valid():
-                if len(files) > 0:
-                    for f in files:
-                        instance = Photo.objects.create(img=f, title=f.name, content_type=content_type,
-                                                        object_id=int(o_id))
-                        instance.save()
-                else:
-                    pass
-                return redirect(success_url)
-        form = PhotoForm()
-        info_dict = {'form': form}
-        return render(request, template_name, info_dict)
-    else:
-        raise Http404('No Pages Found.')
+    success_url = '/designer/' + o_id
+    model_name = 'designer'
+    template_name = 'designer/designer_project_photos_upload.html'
+    return upload_project_photo(
+        request=request,
+        o_id=o_id,
+        success_url=success_url,
+        model_name=model_name,
+        template_name=template_name
+    )

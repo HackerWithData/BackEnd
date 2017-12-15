@@ -4,6 +4,7 @@ from .models import (
     WorkerCompensationHistory,
     ComplaintOverall,
 )
+import datetime
 
 
 
@@ -44,12 +45,12 @@ def avg_rating(review, rt):
         return 0
 
 
-def get_bond_history(contractor_id):
+def get_bh(contractor_id):
     bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
     return bh
 
 
-def get_workcompensation_history(contractor_id):
+def get_wh(contractor_id):
     wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
         '-insur_effective_date').first()
     return wh
@@ -69,3 +70,15 @@ def get_complaint(contractor):
             }
         )
     return complaint
+
+
+def get_contractor_lic_length(contractor):
+    if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
+        length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+    # test issue, won't happen in prod
+    elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+        length = 0
+    else:
+        length = int(datetime.date.today().year - contractor.lic_issue_date.year)
+    return length
+

@@ -11,25 +11,21 @@ from review.utils import (
     get_review,
     get_review_form,
     post_review,
-    get_p_lic_num,
 )
-
 from photos.utils import (
-    get_background_photo,
+    get_bgimage,
     get_project_photos,
     display_project_photo,
     upload_project_photo,
 )
-
 from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
-
+from users.utils import get_p_lic_num
 from ratings.utils import (
     RATING_STAR_MAX,
-    get_rating,
+    get_ratings,
     get_user_rating_form,
 )
-
 from overviews.utils import (
     get_overview,
     get_overview_form,
@@ -37,67 +33,83 @@ from overviews.utils import (
 
 
 class ProfessionalDetail(View):
+    fields = ()
+    template_name = None
+    info_dict = dict()
+    data_source = None
+    model = None
 
-    def __init__(self):
-        self.model = None
-        self.data_source = None
-        self.score = None
-        self.rank = None
-        self.template_name = None
-        self.info_dict = {}
-        super(ProfessionalDetail, self).__init__()
+    def get_professional_bgimage(self, **kwargs):
+        return get_bgimage(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
-    def get_professional_overview(self, request, o_id, instance):
-        model_name = str(ContentType.objects.get_for_model(instance).name)
-        full_state_name = get_state_full_name(instance.state)
-        score = self.score
-        rank = self.rank
-        data_source = self.data_source
-        overview = get_overview(
-            model_name=model_name,
-            object_id=o_id,
-            **{
-                'bus_name': instance.lic_name,
-                'city': instance.city,
-                'state': instance.state,
-                'data_source': data_source,
-                'score': score,
-                'rank': rank,
-                'full_state_name': full_state_name
-            }
+    def get_professional_lic_type(self, **kwargs):
+        return kwargs.get('instance').lic_type.split('&')
+
+    def get_professional_review(self, **kwargs):
+        return get_review(
+            model_name=kwargs.get('model_name'),
+            object_id=kwargs.get('o_id'),
+            review_status=kwargs.get('review_status', 'A'),
         )
-        return overview
+
+    def get_professional_full_state_name(self, **kwargs):
+        return get_state_full_name(kwargs.get('instance').state)
+
+    def get_professional_ratings(self, **kwargs):
+        return get_ratings(
+            model_name=kwargs.get('model_name'),
+            object_id=kwargs.get('o_id'),
+            review=kwargs.get('review', None),
+        )
+
+    def get_professional_p_lic_num(self, **kwargs):
+        return get_p_lic_num(kwargs.get('request'))
+
+    def get_professional_project_photos(self, **kwargs):
+        return get_project_photos(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
+
+    def get_professional_review_form(self, **kwargs):
+        return get_review_form(request=kwargs.get('request'))
+
+    def get_professional_user_rating_form(self, **kwargs):
+        return get_user_rating_form()
+
+    def get_professional_overview(self, **kwargs):
+        return get_overview(
+            model_name=kwargs.get('model_name'),
+            object_id=kwargs.get('o_id'),
+            message=self.get_overview_message(**kwargs)
+        )
+
+    def get_professional_overview_form(self, **kwargs):
+        return get_overview_form(overview=kwargs.get('overview', None))
+
+    def get_professional_score(self, **kwargs):
+        return None
+
+    def get_professional_rank(self, **kwargs):
+        return None
+
+    def get_overview_message(self, **kwargs):
+        return ""
+
 
     def set_info_dict(self, request, o_id):
-        score = self.score
         model = self.model
         model_name = str(ContentType.objects.get_for_model(model).name)
         instance = model.objects.get(lic_num=o_id)
-        bgimage = get_background_photo(model_name=model_name, object_id=o_id)
-        lic_type = instance.lic_type.split('&')
-        review = get_review(model_name=model_name, object_id=o_id, review_status='A')
-        ratings = get_rating(model_name=model_name, object_id=o_id, review=review)
-        p_lic_num = get_p_lic_num(request)
-        project_photos = get_project_photos(model_name=model_name, object_id=o_id)
-        review_form = get_review_form(request)
-        user_rating_form = get_user_rating_form()
-        overview = self.get_professional_overview(request=request, o_id=o_id, instance=instance)
-        overview_form = get_overview_form(overview=overview)
-        info_dict = {
-            model_name: instance,
-            "bg_image": bgimage,
-            "overview": overview,
-            "score": score,
-            "lic_type": lic_type,
-            'review': review,
-            "ratings": ratings,
-            'project_photos': project_photos,
-            'review_form': review_form,
-            "user_rating_form": user_rating_form,
-            'p_lic_num': p_lic_num,
-            'overview_form': overview_form,
+        kwargs = {
+            'request': request,
+            'o_id': o_id,
+            'model': model,
+            'model_name': model_name,
+            'instance': instance,
         }
-        self.info_dict = info_dict
+        self.info_dict.update({model_name: instance})
+        for field in self.fields:
+            exec('field_val = self.get_professional_{field}(**kwargs)'.format(field=field))
+            kwargs.update({field: field_val})
+            self.info_dict.update({field: field_val})
 
     def post(self, request, o_id):
         self.set_info_dict(request, o_id)
@@ -121,3 +133,4 @@ class ProfessionalDetail(View):
         info_dict = self.info_dict
         template_name = self.template_name
         return render(request, template_name, {"info_dict": info_dict})
+
