@@ -3,9 +3,17 @@ import re
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 
-from .utils import get_a_uuid, WAITING, PAID_TO_PROFESSIONAL, PAID_TO_HOOME
+from .utils import get_a_uuid
 
-from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
+from .models import (
+    Project,
+    ProjectPhoto,
+    ProjectAttachment,
+    Milestone,
+    WAITING,
+    PAID_TO_PROFESSIONAL,
+    PAID_TO_HOOME,
+)
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 

@@ -16,7 +16,7 @@ from users.utils import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import *
 from .models import Transaction, TransactionHistory, Milestone
-from projects.utils import (PAID_TO_HOOME)
+from projects.models import (PAID_TO_HOOME)
 
 # Create your views here.
 # TODO: Simplify this part

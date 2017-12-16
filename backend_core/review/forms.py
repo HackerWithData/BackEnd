@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
-from projects.utils import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
+from projects.models import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
 from .models import Review
 
 

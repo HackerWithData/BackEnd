@@ -5,13 +5,50 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
-from .utils import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
+# from .utils import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
 from users.utils import CONSUMER, ROLE_CHOICES
 
 
 # Create your models here.
 # TODO: Consider cache ?? Interesting!
+
+WAITING = "W"
+PAID_TO_HOOME = "PTH"
+PAID_TO_PROFESSIONAL = "PTP"
+
+PAYMENT_REQUEST = 'M'
+
+WAITING_ACTION = "Contractor is waiting for the payment"
+
+PENDING = 'P'
+ACCEPTED = 'A'
+REJECTED = 'R'
+ONGOING = "O"
+DONE = "D"
+
+MILESTONE_STATUS = (
+    (WAITING, _("Waiting")),
+    (PAID_TO_HOOME, _("Paid to Hoome")),
+    (PAID_TO_PROFESSIONAL, _("Paid to Professional")),
+    (DONE, _("Done")),
+    (PAYMENT_REQUEST, _("Payment Request")),
+)
+
+PROJECT_STATUS = (
+    (PENDING, _('PENDING')),
+    (ACCEPTED, _('ACCEPTED')),
+    (ONGOING, _('ONGOING')),
+    (REJECTED, _('REJECTED')),
+    (DONE, _('DONE')),
+)
+
+REMODEL = "R"
+NEW_BUILT = "N"
+PROJECT_TYPE = ((REMODEL, _('REMODEL')),
+    (NEW_BUILT, _("NEW BUILT HOUSE")),
+)
 
 class Project(models.Model):
     project_id = models.BigAutoField(primary_key=True)

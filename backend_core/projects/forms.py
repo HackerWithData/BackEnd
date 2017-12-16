@@ -1,7 +1,16 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from .models import ProjectAttachment, ProjectPhoto, Project
-from .utils import PROJECT_TYPE, WAITING, get_a_uuid
+from django.forms import formset_factory
+from django.forms.models import model_to_dict
+
+from .models import (
+    ProjectAttachment,
+    ProjectPhoto,
+    Project,
+    PROJECT_TYPE,
+    WAITING,
+)
+from .utils import get_a_uuid
 from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
 from django.core.exceptions import ValidationError
 from users.models import User
@@ -169,26 +178,44 @@ class ProjectFormDirectCreate(ProjectForm):
 class MilestoneForm(forms.Form):
     amount = forms.IntegerField(min_value=500, required=True)
 
-#
-# class MilestoneBaseFormSet(forms.formset.BaseFormSet):
-#     def clean(self):
-#         if any(self.errors):
-#             return
-#
-#         for form in self.froms:
-#             if form.cleaned_data:
-#                 amount = form.cleaned_data['amount']
-#                 try:
-#                     int(amount)
-#                 except:
-#                     raise forms.ValidationError(
-#                         'Amount must a number',
-#                         code='not a number '
-#                     )
-#                 if amount > 0:
-#                     pass
-#                 else:
-#                     raise forms.ValidationError(
-#                         'Amount must a number greater than 0',
-#                         code='negative number '
-#                     )
+
+def get_project_form(request, professional_type=None, lic_id=None):
+    if request.method == "GET":
+        if professional_type and lic_id:
+            if request.user.is_authenticated:
+                project_form = ProjectForm(
+                    initial={
+                        'first_name': request.user.first_name,
+                        'last_name': request.user.last_name,
+                    }
+                )
+            else:
+                project_form = ProjectForm()
+        else:
+            project_form = ProjectFormDirectCreate()
+        return project_form
+    elif request.method == "POST":
+        if professional_type and lic_id:
+            project_form = ProjectForm(request.POST, request.FILES)
+        else:
+            project_form = ProjectFormDirectCreate(request.POST, request.FILES)
+        return project_form
+
+
+def get_milestone_formset(request):
+    milestoneformset = formset_factory(MilestoneForm)
+    if request.method == "GET":
+        milestone_formset = milestoneformset()
+        return milestone_formset
+    elif request.method == "POST":
+        milestone_formset = milestoneformset(request.POST)
+        return milestone_formset
+
+
+def get_project_edit_form(request, project):
+    if request.method == "GET":
+        project_edit_form = ProjectEditForm(initial=model_to_dict(project))
+        return project_edit_form
+    elif request.method == "POST":
+        project_edit_form = ProjectEditForm(request.POST)
+        return project_edit_form

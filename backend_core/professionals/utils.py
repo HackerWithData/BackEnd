@@ -70,6 +70,5 @@ def check_professional_type(request):
         if i.lower() in request.path:
             model_type = i.lower()
             return model_type
-            break
         else:
             pass
