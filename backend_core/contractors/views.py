@@ -11,7 +11,7 @@ from .utils import (
     get_wh,
     get_complaint,
 )
-from photos.utils import upload_project_photo, display_project_photo
+from photos.utils import upload_project_photo, display_project_photo, delete_photo
 from hscore.utils import get_hscore
 from professionals.views import ProfessionalDetail
 from review.utils import update_accept_review as update_review

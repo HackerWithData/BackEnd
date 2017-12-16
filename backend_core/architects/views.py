@@ -27,6 +27,7 @@ class ArchitectDetail(ProfessionalDetail):
     template_name = 'architect/architect.html'
     model = Architect
 
+    #TODO: If there is no msg in database, then the messages here would be used
     def get_overview_message(self, **kwargs):
         message = _(
             """{bus_name} is an architect from {city}. The company holds a license number according to {data_source}. 

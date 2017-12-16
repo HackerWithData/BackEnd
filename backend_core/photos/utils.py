@@ -1,9 +1,14 @@
+import json
+
+from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext as _, ugettext_lazy as _
+from django.http import Http404
+from django.shortcuts import render, redirect, HttpResponse
+
 from .models import BackgroundPhoto, Photo
 from .forms import PhotoForm
-from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext as _,  ugettext_lazy as _
-from django.http import Http404
 from users.utils import get_p_lic_num
+
 
 def get_bgimage(model_name, object_id):
     try:
@@ -61,7 +66,6 @@ def upload_project_photo(request, o_id, success_url, model_name, template_name):
         raise Http404(_('No Pages Found.'))
 
 
-
 def delete_photo(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         if contractor_id:
@@ -85,4 +89,3 @@ def delete_photo(request, contractor_id):
             return HttpResponse(response_data, content_type='application/json', status=200)
     else:
         raise Http404
-
