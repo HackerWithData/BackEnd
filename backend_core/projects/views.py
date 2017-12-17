@@ -143,7 +143,7 @@ class ProjectDetail(View):
             raise Http404(_("Page Not Found"))
 
     def post(self, request, uuid):
-        if request.POST.get('create-milestone'):
+        if request.POST.get('create-milestone', None):
             milestone_form = get_milestone_form(request)
             if milestone_form.is_valid():
                 project = get_project(uuid=uuid)
@@ -153,7 +153,7 @@ class ProjectDetail(View):
                 # TODO: need to consider the project status more carefully
                 return redirect(request.path)
 
-        elif request.POST.get('request-money'):
+        elif request.POST.get('request-money', None):
             update_milestone(
                 uuid=request.POST.get('request-money'),
                 **{
@@ -169,7 +169,7 @@ class ProjectDetail(View):
             messages.success(request, _('Success'))
             return redirect(request.path)
 
-        elif request.POST.get('release-money'):
+        elif request.POST.get('release-money', None):
             update_milestone(
                 uuid=request.POST.get('release-money'),
                 **{
@@ -216,7 +216,7 @@ def create_project(request, professional_type=None, lic_id=None):
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             project = save_project(request, project_form, professional_type, lic_id)
             save_milestone(request, project)
-            upload_attachment(request=request, project=project, form=form)
+            upload_attachment(request=request, project=project, form=project_form)
             save_project_photo(request, project)
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url

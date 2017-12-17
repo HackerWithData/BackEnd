@@ -1,17 +1,19 @@
-from .models import Review
-from .forms import ReviewForm
-from django.contrib.contenttypes.models import ContentType
 import datetime
+
+
+from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
 from django.shortcuts import render, redirect
-from professionals.utils import check_professional_type
+from django.contrib import messages
 
+from professionals.utils import check_professional_type
 from ratings.forms import UserRatingForm
 from ratings.models import UserRating
 from ratings.utils import create_user_rating
 from photos.models import Photo
-from django.contrib import messages
 from photos.utils import upload_photo
+from .models import Review
+from .forms import ReviewForm
 
 
 def get_review(model_name, object_id, review_status):
@@ -49,25 +51,6 @@ def create_review_photos(request, review):
             object_id=object_id,
         )
         instance.save()
-
-
-def post_review(request, o_id, info_dict, template_name):
-    user_rating_form = UserRatingForm(request.POST)
-    review_form = ReviewForm(request.POST)
-    if review_form.is_valid() and user_rating_form.is_valid():
-        review = create_review(
-            request=request,
-            o_id=o_id,
-            review_form=review_form,
-        )
-        create_user_rating(user_rating_form=user_rating_form, review=review)
-        upload_photo(request=request, model_name='review', o_id=review.id)
-        return redirect(request.path)
-    else:
-        info_dict['review_form'] = review_form
-        info_dict["user_rating_form"] = user_rating_form
-        messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
-        return render(request, template_name, {"info_dict": info_dict})
 
 
 def update_accept_review(request):

@@ -7,10 +7,22 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from projects.models import Project, Milestone
-from .utils import *
 
 
-# Create your models here.
+PENDING = 'P'
+FAIL = 'F'
+SUCCESS = 'S'
+ABORT = 'A'
+CANCEL = 'C'
+TRANSACTION_STATUS_CHOICES = (
+    (PENDING, 'PENDING'),
+    (FAIL, 'FAILED'),
+    (SUCCESS, 'SUCCESS'),
+    (ABORT, 'ABORTED'),
+    (CANCEL, 'CANCELED'),
+)
+
+
 class Transaction(models.Model):
     """
         transaction model

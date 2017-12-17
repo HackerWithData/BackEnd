@@ -24,7 +24,11 @@ from allauth.account import app_settings
 from professionals.models import Professional, ProfessionalType
 from .forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, \
     ProfessionalProfileEditForm
-from .models import ConsumerProfile, ProfessionalProfile
+from .models import (
+    ConsumerProfile,
+    ProfessionalProfile,
+    MALE,
+)
 from .user_helpers import (retrieve_professional_info,
                            get_professional_corresponding_object_by_type_and_lic,
                            get_professional_user,
@@ -59,12 +63,9 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     email_address = sociallogin.account.extra_data['email']
     try:
         user = get_user_model().objects.get(email=email_address)
-        print(0)
-        print(user)
     except:
         user = None
     if user:
-        print(1)
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
         url = get_adapter(request).get_login_redirect_url(request)
         if 'success_url' in request.session:

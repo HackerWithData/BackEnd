@@ -1,9 +1,11 @@
+import json
+
 from django import template
 from django.http import HttpResponse
 from django.http.response import HttpResponseBadRequest
-import json
-from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
-from users.models import User
+
+from users.models import User, ROLE_CHOICES, PROFESSIONAL, CONSUMER
+
 register = template.Library()
 
 

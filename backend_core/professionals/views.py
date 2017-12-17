@@ -8,22 +8,21 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
 
-from review.utils import (
-    get_review,
-    post_review,
-)
+from review.utils import get_review, create_review
 from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
     get_photo,
     display_project_photo,
     upload_project_photo,
+    upload_photo,
 )
 from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
 from users.utils import get_p_lic_num
 from ratings.utils import (
     get_ratings,
+    create_user_rating,
 )
 from ratings.models import RATING_STAR_MAX
 from ratings.forms import get_user_rating_form
@@ -92,7 +91,6 @@ class ProfessionalDetail(View):
     def get_overview_message(self, **kwargs):
         return ""
 
-
     def set_info_dict(self, request, o_id):
         model = self.model
         model_name = str(ContentType.objects.get_for_model(model).name)
@@ -114,14 +112,24 @@ class ProfessionalDetail(View):
         self.set_info_dict(request, o_id)
         info_dict = self.info_dict
         template_name = self.template_name
-        if request.POST.get('review'):
-            return post_review(
-                request=request,
-                o_id=o_id,
-                info_dict=info_dict,
-                template_name=template_name,
-            )
-        elif request.POST.get('overview'):
+        if request.POST.get('review', None):
+            user_rating_form = get_user_rating_form(request.POST)
+            review_form = get_review_form(request, method="POST")
+            if review_form.is_valid() and user_rating_form.is_valid():
+                review = create_review(
+                    request=request,
+                    o_id=o_id,
+                    review_form=review_form,
+                )
+                create_user_rating(user_rating_form=user_rating_form, review=review)
+                upload_photo(request=request, model_name='review', o_id=review.id)
+                return redirect(request.path)
+            else:
+                info_dict['review_form'] = review_form
+                info_dict["user_rating_form"] = user_rating_form
+                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
+                return render(request, template_name, {"info_dict": info_dict})
+        elif request.POST.get('overview', None):
             edit_overview(request, o_id)
             return redirect(request.path)
         else:

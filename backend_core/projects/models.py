@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
@@ -7,8 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-# from .utils import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
-from users.utils import CONSUMER, ROLE_CHOICES
+from users.models import CONSUMER, ROLE_CHOICES
 
 
 # Create your models here.

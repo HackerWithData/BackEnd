@@ -9,7 +9,7 @@ from .models import (
     Milestone,
     ProjectPhoto,
 )
-from users.utils import CONSUMER, PROFESSIONAL
+from users.models import CONSUMER, PROFESSIONAL
 
 
 # get a UUID
@@ -75,16 +75,17 @@ def get_project(uuid):
     return project
 
 
-def update_milestone(uuid, **kwargs):
-    milestone = Milestone.objects.get(uuid=uuid)
-    for kw in kwargs:
+def update_milestone(uuid=None, milestone=None, **kwargs):
+    if milestone is None:
+        milestone = Milestone.objects.get(uuid=uuid)
+    for kw in kwargs.items():
         setattr(milestone, kw[0], kw[1])
     milestone.save()
 
 
 def update_project(uuid, **kwargs):
     project = Project.objects.get(uuid=uuid)
-    for kw in kwargs:
+    for kw in kwargs.items():
         setattr(project, kw[0], kw[1])
     project.save()
 
@@ -97,6 +98,11 @@ def get_project_attachments(project):
 def get_milestones(project):
     milestones = Milestone.objects.filter(project=project).order_by('created_at')
     return milestones
+
+
+def get_milestone(uuid):
+    milestone = Milestone.objects.get(uuid=uuid)
+    return milestone
 
 
 def get_project_photos(project):

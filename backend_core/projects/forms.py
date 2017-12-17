@@ -11,9 +11,8 @@ from .models import (
     WAITING,
 )
 from .utils import get_a_uuid
-from users.utils import ROLE_CHOICES, PROFESSIONAL, CONSUMER
 from django.core.exceptions import ValidationError
-from users.models import User
+from users.models import User, ROLE_CHOICES, PROFESSIONAL, CONSUMER
 
 
 class ProjectAttachmentForm(forms.ModelForm):
