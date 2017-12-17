@@ -1,8 +1,10 @@
-from .models import Rating, UserRating
 from django.contrib.contenttypes.models import ContentType
-from .forms import UserRatingForm
 
-RATING_STAR_MAX = 10
+from .models import (
+    Rating,
+    UserRating,
+    RATING_STAR_MAX,
+)
 
 
 def avg_rating(review, rt):
@@ -32,10 +34,6 @@ def get_ratings(model_name, object_id, review):
     except:
         pass
     return ratings
-
-
-def get_user_rating_form():
-    return UserRatingForm()
 
 
 def create_user_rating(user_rating_form, review):

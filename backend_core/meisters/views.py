@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
+
 from .models import Meister
 from professionals.views import ProfessionalDetail
 from photos.utils import upload_project_photo, display_project_photo

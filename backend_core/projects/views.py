@@ -3,50 +3,35 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, reverse
-from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib.auth import (logout as django_logout)
-from django.shortcuts import get_object_or_404
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
-from .forms import ProjectAttachmentForm, ProjectForm, ProjectFormDirectCreate, ProjectPhotoForm, MilestoneForm
+from .forms import (
+    get_milestone_form,
+    get_milestone_formset,
+    get_project_form,
+    get_project_edit_form,
+    get_project_attachment_form,
+)
 from .adapter import (
     save_milestone,
     _save_milestone,
     save_project,
-    save_project_attachment,
     save_project_photo,
     milestone_status_explanation,
 )
 from .decorators import check_recaptcha
-from .forms import (
-    ProjectAttachmentForm,
-    ProjectForm,
-    ProjectPhotoForm,
-    MilestoneForm,
-    ProjectFormDirectCreate,
-    ProjectEditForm,
-    get_project_form,
-    get_project_edit_form,
-)
 from .models import (
-    Project,
-    ProjectPhoto,
-    ProjectAttachment,
-    Milestone,
-    WAITING,
-    PENDING,
     PAID_TO_PROFESSIONAL,
     PAYMENT_REQUEST,
-    PAID_TO_HOOME,
 )
 from .utils import (
     get_a_uuid,
@@ -55,6 +40,9 @@ from .utils import (
     get_project,
     update_milestone,
     update_project,
+    get_milestones,
+    get_project_attachments,
+    get_project_photos,
 )
 from helplers import validate_hoome_id
 
@@ -65,26 +53,28 @@ from helplers import validate_hoome_id
 def upload_project_attachment(request, uuid):
     template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
     success_url = reverse('display_project_overview') + uuid
+    form = get_project_attachment_form(request=request)
     if request.method == "POST":
-        status = upload_attachment(request=request, uuid=uuid)
+        project = get_project(uuid=uuid)
+        status = upload_attachment(request=request, project=project, form=form)
         if status == 'upload_success':
             return redirect(success_url)
-    form = ProjectAttachmentForm()
     info_dict = {'form': form}
-    return render(request, template_name, {info_dict: 'info_dict'})
+    return render(request, template_name, {'info_dict': info_dict})
 
 
 @login_required
 def upload_project_photo(request, uuid):
     template_name = 'projects/upload_project_photo.html'  # Replace with your template.
     success_url = reverse('display_project_overview') + uuid
+    form = get_project_attachment_form(request)
     if request.method == "POST":
-        status = upload_attachment(request=request, uuid=uuid)
+        project = get_project(uuid=uuid)
+        status = upload_attachment(request=request, project=project, form=form)
         if status == 'upload_success':
             return redirect(success_url)
-    form = ProjectAttachmentForm()
     info_dict = {'form': form}
-    return render(request, template_name, {info_dict: 'info_dict'})
+    return render(request, template_name, {'info_dict': info_dict})
 
 
 @login_required
@@ -100,10 +90,8 @@ class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
     def get(self, request, uuid):
-        initial = {'amount': 2000}
-        milestone_form = MilestoneForm(initial=initial)
+        milestone_form = get_milestone_form(request)
         project = get_project(uuid=uuid)
-
         if project.user is None:
             if request.user.role == CONSUMER:
                 project.user = request.user
@@ -124,13 +112,12 @@ class ProjectDetail(View):
                 request.session['success_url'] = '/project/' + uuid
                 return redirect(request.session['success_url'])
         project.save()
-        project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
-        project_photos = ProjectPhoto.objects.filter(project=project)
+        project_attachments = get_project_attachments(project=project)
+        project_photos = get_project_photos(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
-        milestones = Milestone.objects.filter(project=project).order_by('created_at')
-        if milestones.count > 0:
-            for milestone in milestones:
-                milestone.explanation = milestone_status_explanation(request, milestone.status)
+        milestones = get_milestones(project=project)
+        for milestone in milestones:
+            milestone.explanation = milestone_status_explanation(request, milestone.status)
         flag = False
         if request.user.role == CONSUMER:
             if request.user == project.user:
@@ -157,7 +144,7 @@ class ProjectDetail(View):
 
     def post(self, request, uuid):
         if request.POST.get('create-milestone'):
-            milestone_form = MilestoneForm(request.POST)
+            milestone_form = get_milestone_form(request)
             if milestone_form.is_valid():
                 project = get_project(uuid=uuid)
                 # TODO: need to add this condition when this function is used in other place
@@ -220,6 +207,7 @@ def create_project(request, professional_type=None, lic_id=None):
         professional_type=professional_type,
         lic_id=lic_id
     )
+    milestone_formset = get_milestone_formset(request)
     if request.method == "GET":
         if professional_type and lic_id:
             direct_create = False
@@ -228,7 +216,7 @@ def create_project(request, professional_type=None, lic_id=None):
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             project = save_project(request, project_form, professional_type, lic_id)
             save_milestone(request, project)
-            save_project_attachment(request, project, project_form)
+            upload_attachment(request=request, project=project, form=form)
             save_project_photo(request, project)
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url
@@ -244,7 +232,10 @@ def create_project(request, professional_type=None, lic_id=None):
 @check_recaptcha
 def edit_project(request, uuid):
     template_name = "projects/edit_project.html"
-    project = get_object_or_404(Project, uuid=uuid)
+    try:
+        project = get_project(uuid=uuid)
+    except:
+        return Http404
     project_edit_form = get_project_edit_form(request=request, project=project)
     if request.method == "POST":
         if project_edit_form.is_valid():

@@ -219,3 +219,19 @@ def get_project_edit_form(request, project):
     elif request.method == "POST":
         project_edit_form = ProjectEditForm(request.POST)
         return project_edit_form
+
+
+def get_milestone_form(request):
+    if request.method == "POST":
+        milestone_form = MilestoneForm(request.POST)
+        return milestone_form
+    elif request.method == "GET":
+        milestone_form = MilestoneForm(initial={'amount': 2000})
+        return milestone_form
+
+
+def get_project_attachment_form(request):
+    if request.method == "POST":
+        return ProjectAttachmentForm(request.POST, request.FILES)
+    else:
+        return ProjectAttachmentForm()

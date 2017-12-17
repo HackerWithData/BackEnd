@@ -84,16 +84,6 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
     return project
 
 
-def save_project_attachment(request, project, project_form):
-    files = request.FILES.getlist('project_attachment')
-    if len(files) > 0:
-        for f in files:
-            ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                             attachment_type=project_form.cleaned_data['attachment_type'])
-    else:
-        pass
-
-
 def save_project_photo(request, project):
     files = request.FILES.getlist('project_photo')
     if len(files) > 0:

@@ -1,11 +1,12 @@
+import datetime
+
 from django.utils.translation import ugettext_lazy as _
+
 from .models import (
     BondHistory,
     WorkerCompensationHistory,
     ComplaintOverall,
 )
-import datetime
-
 
 
 def convert_hscore_to_rank(hscore):

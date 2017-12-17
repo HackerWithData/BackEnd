@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
-from review.models import Review
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
+from review.models import Review
 
-# Create your models here.
+RATING_STAR_MAX = 10
 
 
 class UserRating(models.Model):
@@ -41,3 +42,4 @@ class Rating(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
     object_id = models.PositiveIntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
+

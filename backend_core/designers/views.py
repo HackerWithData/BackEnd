@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .models import Designer
-from professionals.views import ProfessionalDetail
+
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
+
+from .models import Designer
 from photos.utils import upload_project_photo, display_project_photo
+from professionals.views import ProfessionalDetail
 
 
 # TODO: add a overview database

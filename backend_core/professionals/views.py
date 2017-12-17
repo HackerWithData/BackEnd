@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-# Create your views here.
 import datetime
+
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
+
 from review.utils import (
     get_review,
-    get_review_form,
     post_review,
 )
+from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
-    get_project_photos,
+    get_photo,
     display_project_photo,
     upload_project_photo,
 )
@@ -22,14 +23,12 @@ from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
 from users.utils import get_p_lic_num
 from ratings.utils import (
-    RATING_STAR_MAX,
     get_ratings,
-    get_user_rating_form,
 )
-from overviews.utils import (
-    get_overview,
-    get_overview_form,
-)
+from ratings.models import RATING_STAR_MAX
+from ratings.forms import get_user_rating_form
+from overviews.utils import get_overview
+from overviews.forms import get_overview_form
 
 
 class ProfessionalDetail(View):
@@ -66,10 +65,10 @@ class ProfessionalDetail(View):
         return get_p_lic_num(kwargs.get('request'))
 
     def get_professional_project_photos(self, **kwargs):
-        return get_project_photos(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
+        return get_photo(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
     def get_professional_review_form(self, **kwargs):
-        return get_review_form(request=kwargs.get('request'))
+        return get_review_form(request=kwargs.get('request'), method='GET')
 
     def get_professional_user_rating_form(self, **kwargs):
         return get_user_rating_form()
@@ -82,7 +81,7 @@ class ProfessionalDetail(View):
         )
 
     def get_professional_overview_form(self, **kwargs):
-        return get_overview_form(overview=kwargs.get('overview', None))
+        return get_overview_form(data=kwargs.get('overview', None))
 
     def get_professional_score(self, **kwargs):
         return None

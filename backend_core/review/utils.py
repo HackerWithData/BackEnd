@@ -13,6 +13,7 @@ from photos.models import Photo
 from django.contrib import messages
 from photos.utils import upload_photo
 
+
 def get_review(model_name, object_id, review_status):
     try:
         review = Review.objects.filter(
@@ -23,19 +24,6 @@ def get_review(model_name, object_id, review_status):
     except:
         review = None
     return review
-
-
-def get_review_form(request):
-    if request.user.is_authenticated:
-        review_form = ReviewForm(initial={
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'project_date': datetime.datetime.today().strftime('%Y-%m-%d'),
-        })
-    else:
-        review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
-    return review_form
-
 
 
 def create_review(request, o_id, review_form):
@@ -53,15 +41,14 @@ def create_review_photos(request, review):
     content_type = ContentType.objects.get(model='review')
     object_id = int(review.id)
     files = request.FILES.getlist('project photos')
-    if len(files) > 0:
-        for f in files:
-            instance = Photo.objects.create(
-                img=f,
-                title=f.name,
-                content_type=content_type,
-                object_id=object_id,
-            )
-            instance.save()
+    for f in files:
+        instance = Photo.objects.create(
+            img=f,
+            title=f.name,
+            content_type=content_type,
+            object_id=object_id,
+        )
+        instance.save()
 
 
 def post_review(request, o_id, info_dict, template_name):

@@ -21,19 +21,19 @@ def get_bgimage(model_name, object_id):
     return bgimage
 
 
-def get_project_photos(model_name, object_id):
-    project_photos = Photo.objects.filter(
+def get_photo(model_name, object_id):
+    photo = Photo.objects.filter(
         content_type=ContentType.objects.get(model=model_name),
         object_id=object_id
     )
-    return project_photos
+    return photo
 
 
 def display_project_photo(request, o_id, model, template_name):
     if request.is_ajax() and request.method == "POST":
         model_name = str(ContentType.objects.get_for_model(model=model).name)
         instance = model.objects.get(lic_num=o_id)
-        project_photos = get_project_photos(model_name=model_name, object_id=o_id)
+        project_photos = get_photo(model_name=model_name, object_id=o_id)
         info_dict = {'project_photos': project_photos, model_name: instance}
         return render(request, template_name, {'info_dict': info_dict})
     else:

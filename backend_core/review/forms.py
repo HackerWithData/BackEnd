@@ -1,4 +1,6 @@
 import re
+import datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -65,3 +67,22 @@ class ReviewForm(forms.Form):
         if commit:
             review.save()
         return review
+
+
+def get_review_form(request, method, o_id=None):
+    if method == "GET":
+        if request.user.is_authenticated:
+            review_form = ReviewForm(initial={
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'project_date': datetime.datetime.today().strftime('%Y-%m-%d'),
+            })
+        else:
+            review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
+        if o_id is not None:
+            review_form.initial.update({'contractor': Contractor.objects.get(pk=o_id)})
+        return review_form
+    elif method == "POST":
+        review_form = ReviewForm(request.POST)
+        return review_form
+
