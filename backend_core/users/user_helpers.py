@@ -10,8 +10,13 @@ from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from meisters.models import Meister
-from professionals.models import Professional
-from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER, MEISTER
+from professionals.models import (
+    Professional,
+    CONTRACTOR,
+    ARCHITECT,
+    DESIGNER,
+    MEISTER,
+)
 
 
 def get_professional_user(user):

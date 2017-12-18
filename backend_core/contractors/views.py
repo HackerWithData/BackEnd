@@ -31,6 +31,7 @@ class ContractorDetail(ProfessionalDetail):
         'bh',
         'wh',
         'hscore',
+        'score',
         'letter_grade',
         'complaint',
         'full_state_name',
@@ -55,7 +56,7 @@ class ContractorDetail(ProfessionalDetail):
             lic_name=kwargs.get('instance').lic_name,
             csp=kwargs.get('instance').csp,
             data_source=self.data_source,
-            score=kwargs.get('hscore').score,
+            score=kwargs.get('score'),
             rank=kwargs.get('letter_grade'),
             full_state_name=kwargs.get('full_state_name'),
         )
@@ -72,6 +73,13 @@ class ContractorDetail(ProfessionalDetail):
 
     def get_professional_hscore(self, **kwargs):
         return get_hscore(contractor_id=kwargs.get('o_id'))
+
+    def get_professional_score(self, **kwargs):
+        hscore = kwargs.get('hscore', None)
+        if hscore is not None:
+            return hscore.score
+        else:
+            return None
 
     def get_professional_letter_grade(self, **kwargs):
         return convert_hscore_to_rank(kwargs.get('hscore'))
