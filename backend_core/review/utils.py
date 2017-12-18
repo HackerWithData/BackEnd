@@ -16,7 +16,7 @@ from .models import Review
 from .forms import ReviewForm
 
 
-def get_review(model_name, object_id, review_status):
+def get_reviews(model_name, object_id, review_status):
     try:
         review = Review.objects.filter(
             content_type=ContentType.objects.get(model=model_name),
@@ -63,4 +63,3 @@ def update_accept_review(request):
         rating.total = rating.total + r.rating_score
         rating.count = rating.count + 1
         rating.average = round(rating.total * 1.0 / rating.count, 2)
-    return render(request, '/')

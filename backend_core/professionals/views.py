@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
 
-from review.utils import get_review, create_review
+from review.utils import get_reviews, create_review
 from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
@@ -44,7 +44,7 @@ class ProfessionalDetail(View):
         return kwargs.get('instance').lic_type.split('&')
 
     def get_professional_review(self, **kwargs):
-        return get_review(
+        return get_reviews(
             model_name=kwargs.get('model_name'),
             object_id=kwargs.get('o_id'),
             review_status=kwargs.get('review_status', 'A'),

@@ -15,7 +15,7 @@ from .forms import get_review_form
 from .utils import (
     create_review,
     create_review_photos,
-    get_review,
+    get_reviews,
 )
 
 
@@ -50,7 +50,7 @@ def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
         template_name = r'review/display_review.html'
         model_name = check_professional_type(request)
-        review = get_review(model_name=model_name, object_id=o_id, review_status='A')
+        review = get_reviews(model_name=model_name, object_id=o_id, review_status='A')
         info_dict = {"review": review}
         return render(request, template_name, {"info_dict": info_dict})
     else:

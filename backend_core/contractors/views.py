@@ -81,7 +81,8 @@ class ContractorDetail(ProfessionalDetail):
 
 
 def update_accept_review(request):
-    return update_review(request)
+    update_review(request)
+    return render(request, '/')
 
 
 def display_project_photos(request, o_id):
