@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 
-from .models import PROFESSIONAL_CHOICES
+from .models import PROFESSIONAL_CHOICES, Professional
 
 
 def check_professional_type(request):
@@ -16,4 +16,8 @@ def get_professional_instance(model_type, lic_num):
     model = ContentType.objects.get(model=model_type).model_class()
     instance = model.objects.get(lic_num=lic_num)
     return instance
+
+
+def get_professionals(*args, **kwargs):
+    return Professional.objects.filter(*args, **kwargs).distinct()
 
