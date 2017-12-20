@@ -72,7 +72,7 @@ class ContractorDetail(ProfessionalDetail):
         return get_wh(contractor_id=kwargs.get('o_id'))
 
     def get_professional_hscore(self, **kwargs):
-        return get_hscore(contractor_id=kwargs.get('o_id'))
+        return get_hscore(contractor_id=kwargs.get('o_id'), contractor=kwargs.get('instance'))
 
     def get_professional_score(self, **kwargs):
         hscore = kwargs.get('hscore', None)

@@ -7,6 +7,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 
 from review.utils import get_reviews, create_review
 from review.forms import get_review_form
@@ -118,6 +119,7 @@ class ProfessionalDetail(View):
         if request.POST.get('review', None):
             user_rating_form = get_user_rating_form(request.POST)
             review_form = get_review_form(request, method="POST")
+            print user_rating_form.errors
             if review_form.is_valid() and user_rating_form.is_valid():
                 review = create_review(
                     request=request,
