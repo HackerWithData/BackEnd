@@ -59,8 +59,8 @@ def display_project_photos(request, o_id):
 
 
 def upload_project_photos(request, o_id):
-    print "---"
-    print request.METHOD
+    #print "---"
+    #print request.METHOD
     success_url = '/architect/' + o_id
     model_name = 'architect'
     template_name = 'contractor/contractor_project_photos_upload.html'

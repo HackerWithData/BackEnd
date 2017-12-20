@@ -87,7 +87,7 @@ class ContractorDetail(ProfessionalDetail):
     def get_professional_complaint(self, **kwargs):
         return get_complaint(contractor=kwargs.get('instance'))
 
-
+#TODO: add render in import
 def update_accept_review(request):
     update_review(request)
     return render(request, '/')
@@ -102,7 +102,7 @@ def display_project_photos(request, o_id):
         template_name=template_name,
     )
 
-
+#TODO:
 def upload_project_photos(request, o_id):
     success_url = '/contractor/' + o_id
     model_name = 'contractor'
@@ -115,6 +115,6 @@ def upload_project_photos(request, o_id):
         template_name=template_name
     )
 
-
+#TODO： need to change here.
 def del_photo(request, contractor_id):
     return deletes_photo(request=request, contractor_id=contractor_id)
