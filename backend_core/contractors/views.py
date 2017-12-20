@@ -19,7 +19,7 @@ from review.utils import update_accept_review as update_review
 
 
 class ContractorDetail(ProfessionalDetail):
-    model = Contractor
+    model_name = 'contractor'
     template_name = 'contractor/contractor.html'
     data_source = 'California Contractors State License Board'
 

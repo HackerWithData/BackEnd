@@ -27,7 +27,7 @@ class ArchitectDetail(ProfessionalDetail):
     )
     data_source = 'California Architects Board'
     template_name = 'architect/architect.html'
-    model = Architect
+    model_name = 'architect'
 
     #TODO: If there is no msg in database, then the messages here would be used
     def get_overview_message(self, **kwargs):
