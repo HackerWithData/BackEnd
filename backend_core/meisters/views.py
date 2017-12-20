@@ -11,7 +11,7 @@ from review.utils import update_accept_review as update_review
 
 class MeisterDetail(ProfessionalDetail):
     template_name = 'meister/meister.html'
-    model = Meister
+    model_name = 'meister'
     data_source = 'California Contractors State License Board'
 
     fields = (

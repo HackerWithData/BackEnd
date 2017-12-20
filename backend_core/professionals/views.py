@@ -28,6 +28,7 @@ from ratings.models import RATING_STAR_MAX
 from ratings.forms import get_user_rating_form
 from overviews.utils import get_overview
 from overviews.forms import get_overview_form
+from .utils import get_professional_instance
 
 
 class ProfessionalDetail(View):
@@ -35,7 +36,7 @@ class ProfessionalDetail(View):
     template_name = None
     info_dict = dict()
     data_source = None
-    model = None
+    model_name = None
 
     def get_professional_bgimage(self, **kwargs):
         return get_bgimage(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
@@ -92,9 +93,11 @@ class ProfessionalDetail(View):
         return ""
 
     def set_info_dict(self, request, o_id):
-        model = self.model
-        model_name = str(ContentType.objects.get_for_model(model).name)
-        instance = model.objects.get(lic_num=o_id)
+        model_name = self.model_name
+        instance = get_professional_instance(model_type=model_name, lic_num=o_id)
+        if instance is None:
+            raise Http404(_("Error Pages!"))
+        model = instance.__class__
         kwargs = {
             'request': request,
             'o_id': o_id,

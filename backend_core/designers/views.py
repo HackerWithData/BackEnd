@@ -27,7 +27,7 @@ class DesignerDetail(ProfessionalDetail):
     )
     template_name = 'designer/designer.html'
     data_source = 'NCIQ'
-    model = Designer
+    model_name = 'designer'
 
     def get_overview_message(self, **kwargs):
         message = _(

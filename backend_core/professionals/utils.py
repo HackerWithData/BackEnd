@@ -14,8 +14,11 @@ def check_professional_type(request):
 
 def get_professional_instance(model_type, lic_num):
     model = ContentType.objects.get(model=model_type).model_class()
-    instance = model.objects.get(lic_num=lic_num)
-    return instance
+    try:
+        instance = model.objects.get(lic_num=lic_num)
+        return instance
+    except:
+        return None
 
 
 def get_professionals(*args, **kwargs):
