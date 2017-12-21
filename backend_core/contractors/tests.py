@@ -57,11 +57,9 @@ class ContractorTest(TestCase):
             'l_rating': 9,
         }
 
-
     def test_get_anonymous(self):
         request = self.factory.get(self.url)
         request.user = AnonymousUser()
-        view = ContractorDetail.as_view()
         response = self.view(request=request, **{'o_id': 1})
         self.assertEqual(response.status_code, 200)
 
@@ -71,7 +69,7 @@ class ContractorTest(TestCase):
         response = self.view(request=request, **{'o_id': 1})
         self.assertEqual(response.status_code, 200)
 
-    def test_get_nonexist_id(self):
+    def test_get_not_exist_id(self):
         request = self.factory.get(self.url)
         request.user = self.user
         with self.assertRaises(Http404):
@@ -84,21 +82,46 @@ class ContractorTest(TestCase):
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        self.view(request, **{'o_id': 1})
+        response = self.view(request, **{'o_id': 1})
         count = Review.objects.all().count()
         self.assertEqual(count, 1)
+        self.assertEqual(response.status_code, 302)
 
-    def test_post_form_error(self):
+    def test_post_form_error_zipcode(self):
         data = deepcopy(self.form_data)
-        data.update('zipcode', 123456)
+        data.update({'zipcode': 123456})
         request = self.factory.post(path=self.url, data=data)
         request.user = self.user
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        self.view(request, **{'o_id': 1})
+        response = self.view(request, **{'o_id': 1})
         count = Review.objects.all().count()
         self.assertEqual(count, 0)
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_form_error_email(self):
+        data = deepcopy(self.form_data)
+        data.update({'email': 'adlxl.alo'})
+        request = self.factory.post(path=self.url, data=data)
+        request.user = self.user
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        response = self.view(request, **{'o_id': 1})
+        count = Review.objects.all().count()
+        self.assertEqual(count, 0)
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_not_exist_id(self):
+        data = deepcopy(self.form_data)
+        request = self.factory.post(path=self.url, data=data)
+        request.user = self.user
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
+        with self.assertRaises(Http404):
+            self.view(request, **{'o_id': 2})
 
     def test_post_anonymous(self):
         data = deepcopy(self.form_data)
@@ -107,7 +130,8 @@ class ContractorTest(TestCase):
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        self.view(request, **{'o_id': 1})
+        response = self.view(request, **{'o_id': 1})
         count = Review.objects.all().count()
         self.assertEqual(count, 1)
+        self.assertEqual(response.status_code, 302)
 

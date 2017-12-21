@@ -13,7 +13,7 @@ from review.utils import get_reviews, create_review
 from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
-    get_photo,
+    get_photos,
     display_project_photo,
     upload_project_photo,
     upload_photo,
@@ -66,7 +66,7 @@ class ProfessionalDetail(View):
         return get_p_lic_num(kwargs.get('request'))
 
     def get_professional_project_photos(self, **kwargs):
-        return get_photo(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
+        return get_photos(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
     def get_professional_review_form(self, **kwargs):
         return get_review_form(request=kwargs.get('request'), method='GET')

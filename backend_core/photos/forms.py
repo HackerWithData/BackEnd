@@ -18,3 +18,17 @@ class BackgroundPhotoForm(forms.ModelForm):
 class FileFieldForm(forms.Form):
     img = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     fields = ('img', )
+
+
+def get_photo_form(request, method):
+    if method == "GET":
+        return PhotoForm()
+    elif method == "POST":
+        return PhotoForm(request.POST, request.FILES)
+
+
+def get_bgphoto_form(request, method):
+    if method == "GET":
+        return BackgroundPhotoForm()
+    elif method == "POST":
+        return BackgroundPhotoForm(request.POST, request.FILES)
