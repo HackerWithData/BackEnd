@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _, ugettext_lazy as _
@@ -105,10 +106,21 @@ def delete_photo(request, contractor_id):
         if p_lic_num == contractor_id:
             data = {}
             data.update(json.loads(request.body))
-            # print(data)
             photo_id = data.get('id', None)
             if photo_id is not None:
                 photo = Photo.objects.get(id=photo_id)
+                old_pic_path = photo.img.file.name
+                if hasattr(settings, 'AWS_ACCESS_KEY_ID'):
+                    s3conn = boto.connect_s3(
+                        settings.AWS_ACCESS_KEY_ID,
+                        settings.AWS_SECRET_ACCESS_KEY
+                    )
+                    bucket = s3conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+                    k = Key(bucket)
+                    k.key = str(old_pic_path)
+                    k.delete()
+                else:
+                    os.remove(old_pic_path)
                 photo.delete()
                 response_data = {'success': 'photo is deleted successfully'}
                 return HttpResponse(json.dumps(response_data), content_type='application/json', status=200)
