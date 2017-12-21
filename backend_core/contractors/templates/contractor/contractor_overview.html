@@ -95,29 +95,31 @@
                 </div>
 
                 <div class="panel-body">
+                        
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
-                            <div style="text-align:center">
-                                <div style="margin: 1vh">
-                                  <div class="hide batch-edit-checkbox pretty p-icon p-fill p-tada" style="font-size: 200%">
-                                      <input data-id="{{ pic.id }}" type="checkbox" />
-                                      <div class="state p-danger">
-                                          <i class="icon mdi mdi-close"></i>
-                                          <label style="color: rgba(0,0,0,0)">1</label>
-                                      </div>
-                                  </div>
-                                    <a href="{{ pic.img.url }}" title="{{ pic.title }}">
-                                        <img src="{{ pic.img.url }}">
+                        
+                        <div style="position: relative; display: inline">
+                                <a style="" href="{{ pic.img.url }}" title="{{ pic.title }}">
+                                        <img src="{{ pic.img.url }}" style="margin-bottom: 2vh">
                                     </a>
+                            <div class="hide batch-edit-checkbox pretty p-default p-round p-thick p-pulse" style="font-size: 200%;
+                            position: absolute; top: -11vh; right: -2vw;">
+                                <input data-id="{{ pic.id }}" type="checkbox" />
+                                <div class="state p-success">                                                                      
+                                    <label style="color: rgba(0,0,0,0);">1</label>
                                 </div>
-                                {#                            TODO: problem here#}
-                                {% csrf_token %}
-                                <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}"
-                                        data-title="{{ pic.title }}">Remove X
-                                </button>
                             </div>
+                                              
+                        </div>
+                        {#                            TODO: problem here#}
+                        {% csrf_token %}
+                        <!-- <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}"
+                                data-title="{{ pic.title }}">Remove X
+                        </button> -->
+                    
 
-                            {#    style="height:50%;width:50%"#}
+                        {#    style="height:50%;width:50%"#}
                         {% endfor %}
                     </div>
                 </div>
