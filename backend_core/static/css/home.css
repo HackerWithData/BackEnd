@@ -62,6 +62,10 @@ p {
     line-height: 24px;
 }
 
+.header.active #main-nav .navbar-nav > li .dropdown > a {
+    color: #121212;
+}
+
 .primary-button a {
     display: inline-block;
     background-color: #a2cf8d;
