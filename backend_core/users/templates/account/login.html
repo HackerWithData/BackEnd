@@ -4,82 +4,9 @@
 {% load account socialaccount %}
 {% load users_tag %}
 {% block metainfo %}
-    <style>
-        .header {
-            background-color: #6892D5;
-        }
 
-        .header .navbar .logo.cursive {
-            color: #ffffff;
-        }
-
-        .footer {
-            position: relative;
-        }
-
-        .login-wrapper {
-            padding: 30px;
-            overflow: hidden;
-            min-height: 80%;
-            text-align: center;
-        }
-
-        .socialaccount_providers {
-            list-style-type: None;
-        }
-
-        .login-container {
-            max-width: 300px;
-            margin: auto
-        }
-
-        .login input {
-            width: 100%;
-            height: 30px;
-            border-radius: 3px;
-            border: 1px solid rgb(153, 153, 153);
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .picture-container {
-            padding-bottom: 12px;
-            margin-top: 80px;
-            text-align: center;
-        }
-
-        .picture-container img {
-
-            width: 386px;
-            vertical-align: middle;
-        }
-
-        @media (min-width: 1024px) {
-            .row {
-                width: 960px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        @media (max-width: 1023px) {
-            .pic {
-                display: none;
-            }
-        }
-
-        .social-word {
-            display: flex;
-            justify-content: center;
-            font-weight: 900;
-        }
-
-        .socialaccount_providers li {
-            margin-top: 10px;
-        }
-
-    </style>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 
 

@@ -1,0 +1,12 @@
+.header {
+    background-color: #6892D5;
+}
+
+.footer {
+    position: fixed;
+    bottom: 15px;
+}
+
+.main-content {
+    margin-top: 80px;
+}

@@ -2,11 +2,7 @@
 {% trans 'Make a payment' as Pay %}
 <script type="text/javascript" src="https://sandbox.forte.net/checkout/v1/js"></script>
 {#<script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>#}
-<style>
-    .fortebtn {
-        background-color: #6892D5
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/pay_now_button.css' %}">
 <button class="forte-checkout-button btn btn-hoome" id="payment-btn-{{ order_number }}"
         api_login_id="{{ api_login_id }}"
         method="{{ method }}"
