@@ -1,0 +1,7 @@
+.header {
+    background-color: #6892D5;
+}
+
+.header.active {
+    background-color: #6892D5;
+}
