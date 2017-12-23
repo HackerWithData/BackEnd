@@ -1,64 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
-{% block metainfo %}
-    <style>
-        body {
-            heigth: 100%;
-            min-height:: 100%;
-        }
-
-        .header {
-            background-color: #6892D5;
-        }
-
-        .footer {
-            padding-top: 80px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-
-        }
-
-        @media (max-width: 767px) {
-            .footer {
-                position: relative;
-            }
-
-            .section-1 {
-
-                margin-left: 10%;
-                margin-right: 10%;
-            }
-
-            .page {
-
-                margin-left: 10%;
-                margin-right: 10%;
-            }
-
-        }
-
-        .section-1 {
-            margin-top: 100px;
-            width: auto;
-            margin-left: 20%;
-            margin-right: 20%;
-        }
-
-        .page {
-            margin-top: 40px;
-            width: auto;
-            margin-left: 20%;
-            margin-right: 20%;
-        }
-
-        .page ul li {
-            list-style-type: none;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
 
     <div class="section-1 container">
