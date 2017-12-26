@@ -7,12 +7,13 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 
 from review.utils import get_reviews, create_review
 from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
-    get_photo,
+    get_photos,
     display_project_photo,
     upload_project_photo,
     upload_photo,
@@ -65,7 +66,7 @@ class ProfessionalDetail(View):
         return get_p_lic_num(kwargs.get('request'))
 
     def get_professional_project_photos(self, **kwargs):
-        return get_photo(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
+        return get_photos(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
     def get_professional_review_form(self, **kwargs):
         return get_review_form(request=kwargs.get('request'), method='GET')
@@ -118,6 +119,7 @@ class ProfessionalDetail(View):
         if request.POST.get('review', None):
             user_rating_form = get_user_rating_form(request.POST)
             review_form = get_review_form(request, method="POST")
+            print user_rating_form.errors
             if review_form.is_valid() and user_rating_form.is_valid():
                 review = create_review(
                     request=request,

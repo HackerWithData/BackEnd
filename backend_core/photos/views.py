@@ -1,41 +1,52 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import JsonResponse
-from django.views import View
-from django.conf import settings
-from forms import PhotoForm, FileFieldForm, BackgroundPhotoForm
-from models import Photo, FileField, BackgroundPhoto
-from contractors.models import Contractor
-from django.contrib.contenttypes.models import ContentType
 import datetime
 import pytz
 import os
+
+from django.http import JsonResponse
+from django.views import View
+from django.conf import settings
+
+from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.conf import settings
+
 import boto
 from boto.s3.key import Key
+
 from professionals.utils import check_professional_type
+from forms import PhotoForm, FileFieldForm, BackgroundPhotoForm
+from models import Photo, FileField, BackgroundPhoto
+from contractors.models import Contractor
+from .utils import (
+    get_photo_list,
+    upload_bg_photo,
+)
+from .forms import (
+    get_photo_form,
+    get_bgphoto_form,
+)
 
 # Create your views here.
+
+
 class BasicUploadView(View):
     def get(self, request):
-        photos_list = Photo.objects.all()
-        return render(self.request, 'photos/upload_photo.html', {'photos': photos_list})
+        photos_list = get_photo_list()
+        return render(request, 'photos/upload_photo.html', {'photos': photos_list})
 
     def post(self, request):
-        form = PhotoForm(self.request.POST, self.request.FILES)
-
+        form = get_photo_form(request=request, method='POST')
         if form.is_valid():
             f = form.save(commit=False)
             contractor = Contractor.objects.get(pk='1025362')
             f.content_type = ContentType.objects.get(model='contractor')
             f.object_id = contractor.LicNum
-            # print('test2')
             f.save()
             data = {'is_valid': True, 'name': f.img.name, 'url': f.img.url}
         else:
-            # print('test3')
             data = {'is_valid': False}
         return JsonResponse(data)
 
@@ -52,33 +63,20 @@ def background_photo_upload(request, o_id):
 
     if str(p_lic_num) == str(o_id):
         template_name = 'photos/background_photo_upload.html'
-
         if request.method == 'POST':
             model_type = check_professional_type(request)
-            success_url = "/"+model_type+"/"+o_id
-            form = BackgroundPhotoForm(request.POST, request.FILES)
+            success_url = "/" + model_type + "/" + o_id
+            form = get_bgphoto_form(request=request, method="POST")
             if form.is_valid():
-                bp, nonexist = BackgroundPhoto.objects.get_or_create(content_type=ContentType.objects.get(model=model_type),
-                                                                    object_id=o_id)
-                if not nonexist:
-                    old_pic_path = bp.img.file.name
-                bp.img = form.cleaned_data.get('img')
-                bp.title = form.cleaned_data.get('img').name
-                bp.uploaded_at = datetime.datetime.now(pytz.timezone('UTC'))
-                bp.save()
-                if not nonexist:
-                    if hasattr(settings, 'AWS_ACCESS_KEY_ID'):
-                        s3conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID,
-                                                 settings.AWS_SECRET_ACCESS_KEY)
-                        bucket = s3conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
-                        k = Key(bucket)
-                        k.key = str(old_pic_path)
-                        k.delete()
-                    else:
-                        os.remove(old_pic_path)
+                upload_bg_photo(
+                    request=request,
+                    form=form,
+                    model_name=model_type,
+                    o_id=o_id
+                )
                 return redirect(success_url)
         else:
-            form = BackgroundPhotoForm()
+            form = get_bgphoto_form(request=request, method='GET')
         return render(request, template_name, {'form': form})
     else:
         raise Http404('No Pages Found.')
