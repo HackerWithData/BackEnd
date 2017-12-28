@@ -1,0 +1,33 @@
+.section-1 {
+    margin-top: 100px;
+    width: auto;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.page {
+    margin-top: 40px;
+    width: auto;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.page ul li {
+    list-style-type: none;
+}
+@media (max-width: 767px) {
+
+    .section-1 {
+
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .page {
+
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+}
+
