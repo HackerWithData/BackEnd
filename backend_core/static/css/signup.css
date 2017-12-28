@@ -6,9 +6,6 @@
     min-height: calc(100% - 170px);
 }
 
-.footer {
-    position: relative;
-}
 .stages {
     font-size: 0;
     text-align: justify;
@@ -196,10 +193,6 @@ div[id^="stage-"] > div {
     color: #ffffff;
 }
 
-.footer {
-    position: relative;
-}
-
 .footer-wrapper {
     margin-top: 20px;
 }
@@ -213,40 +206,8 @@ div[id^="stage-"] > div {
     list-style-type: None;
 }
 
-@media (max-width: 992px) {
-    #professionalProfileForm {
-        background: #ffffff;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
-        margin: 0;
-        min-width: 50%;
-        padding: 1em;
-        height: auto;
-        min-height: 80%;
-    }
-}
-
-
-.header {
-    background-color: #6892D5;
-}
-
-.header .navbar .logo.cursive {
-    color: #ffffff;
-}
-
 .footer {
     position: relative;
-}
-
-.signup-wrapper {
-    padding: 30px;
-    overflow: hidden;
-    min-height: 80%;
-    text-align: center;
-}
-
-.socialaccount_providers {
-    list-style-type: None;
 }
 
 .signup-container {
@@ -322,4 +283,11 @@ div[id^="stage-"] > div {
 
 .alert.alert-warning li {
     list-style-type: none;
+}
+
+.signup-wrapper {
+    padding: 30px;
+    overflow: hidden;
+    min-height: 80%;
+    text-align: center;
 }
