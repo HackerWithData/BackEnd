@@ -374,6 +374,10 @@
     .mobile-dropdown {
         background-color: white;
     }
+
+    .footer{
+        position: relative !important;
+    }
 }
 
 /* footer */
