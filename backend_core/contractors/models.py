@@ -7,23 +7,25 @@ from django.db import models
 
 #TODO：Clean Data Format
 class Contractor(models.Model):
-    lic_num = models.IntegerField(primary_key=True, unique=True)
-    lic_type = models.TextField()
-    lic_name = models.CharField(max_length=255)
-    lic_status = models.CharField(max_length=30)
-    lic_issue_date = models.DateField(blank=True, null=True)
-    lic_expire_date = models.DateField(blank=True, null=True)
-    entity = models.CharField(max_length=25)
-    street_address = models.CharField(max_length=255)
-    csp = models.CharField(max_length=63, blank=True)
-    state = models.CharField(max_length=63)
-    pos_code = models.CharField(max_length=25)
+    lic_num = models.CharField(primary_key=True, max_length=63)
+    lic_type = models.TextField(blank=True, null=True)
+    lic_name = models.CharField(max_length=255,blank=True, null=True)
+    lic_status = models.CharField(max_length=30,blank=True, null=True)
+    lic_issue_date = models.DateField()
+    lic_expire_date = models.DateField()
+    entity = models.CharField(max_length=25,blank=True, null=True)
+    street_address = models.CharField(max_length=255,blank=True, null=True)
+    csp = models.CharField(max_length=63, blank=True, null=True)
+    state = models.CharField(max_length=63, blank=True, null=True)
+    pos_code = models.CharField(max_length=25, blank=True, null=True)
     phone = models.CharField(max_length=25, blank=True, null=True)
     lic_status_add = models.TextField(blank=True, null=True)
     bus_info_add = models.TextField(blank=True, null=True)
     dba = models.CharField(max_length=255, blank=True, null=True)
     uuid = models.CharField(max_length=36, default='0')
-
+    license_board = models.CharField(max_length=255, blank=True, null=True, default='California State License Board')
+    class Meta:
+        unique_together = ( 'lic_num', 'lic_type','license_board')
     def __iter__(self):
         return self.__dict__.iteritems()
 

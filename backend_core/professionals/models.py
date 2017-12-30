@@ -14,7 +14,7 @@ class Professional(models.Model):
         choices=ENTITY_CHOICES
     )
     type = models.CharField(
-        max_length=10,
+        max_length=63,
         choices=PROFESSIONAL_CHOICES
     )
     state = models.CharField(max_length=63)
