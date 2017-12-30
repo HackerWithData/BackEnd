@@ -41,17 +41,21 @@ def search_by_address_object_redirect_url(request):
 def search_by_name_or_lic(request):
     search_target = request.GET['target']
     # search target is whether a name or lic
-    if search_target.isnumeric():
-        name_or_lic = int(search_target)
-        prof_qs = Professional.objects.filter(Q(name=str(name_or_lic)) | Q(lic_num=name_or_lic)).distinct()
-    # elif search_target in [i[0] for i in PROFESSIONAL_CHOICES]:
-    #     prof_qs = Professional.objects.filter(type=search_target)
-    # # name search
-    # elif search_target in [i[0] for i in PROFESSIONAL_SUBTYPE_CHOICES]:
-    #     prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
-    #                                           professional_type__subtype=search_target)
+    # if search_target.isnumeric():
+    #     name_or_lic = int(search_target)
+    #     prof_qs = Professional.objects.filter(Q(name=str(name_or_lic)) | Q(lic_num=name_or_lic)).distinct()
+    # # elif search_target in [i[0] for i in PROFESSIONAL_CHOICES]:
+    # #     prof_qs = Professional.objects.filter(type=search_target)
+    # # # name search
+    # # elif search_target in [i[0] for i in PROFESSIONAL_SUBTYPE_CHOICES]:
+    # #     prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
+    # #                                           professional_type__subtype=search_target)
+    # else:
+    if request.GET('zipcode') and str(request.GET('zipcode')).startswith('7'):
+        prof_qs = Professional.objects.filter(Q(name=str(search_target)) | Q(lic_num=('TX'+str(search_target)))).distinct()
     else:
-        prof_qs = Professional.objects.filter(name__icontains=search_target)
+        prof_qs = Professional.objects.filter(Q(name=str(search_target)) | Q(lic_num=str(search_target))).distinct()
+    #prof_qs = Professional.objects.filter(name__icontains=search_target)
     # no result found
     if not prof_qs:
         return prof_qs.values()
