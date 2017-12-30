@@ -21,9 +21,9 @@
                             </div>
                             <div class="col-xs-4">
                                 <div class=""><span class="title">{{ Contracted_With }}</span></div>
-                                {% if request.user.role == "CONSUMER" %}
+                                {% if user.role == "CONSUMER" %}
                                     <div class=""><span class="value">{{ project.bus_name }}</span></div>
-                                {% elif request.user.role == "PROFESSIONAL" %}
+                                {% elif user.role == "PROFESSIONAL" %}
                                     <div class="">
                                         <span class="value">{{ project.first_name }} {{ project.last_name }}</span>
                                     </div>
@@ -49,9 +49,11 @@
                                 {#                                {% endif %}#}
                             </div>
                             <div class="col-xs-8 col-sm-7 col-md-6 Address">
-                                <span class="title">{{ Address }}:</span><br/>
-                                {{ project.street_address }}{{ project.street_address2 }}<br/>
-                                {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                                {% if info_dict.project.street_address %}
+                                    <span class="title">{{ Address }}:</span><br/>
+                                    {{ project.street_address }}{{ project.street_address2 }}<br/>
+                                    {{ project.county }}, {{ project.state }} {{ project.zipcode }}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

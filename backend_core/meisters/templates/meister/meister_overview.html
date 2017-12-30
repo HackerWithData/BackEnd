@@ -90,7 +90,7 @@
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_type %}
-                                        {{ Project_Type }}: {{ rv.project_type }}
+                                        {{ Project_Type }}: {{ rv.get_project_type_display }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_duration %}

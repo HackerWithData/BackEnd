@@ -18,7 +18,7 @@ TRANSACTION_STATUS_CHOICES = (
 )
 
 
-def generate_transaction_number(project_id):
+def generate_transaction_number(project_id, milestone_id):
     """
 
     :param project_id: current project id
@@ -28,5 +28,5 @@ def generate_transaction_number(project_id):
     :type ret_md5: str
     """
     utc_time = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
-    h = HMAC.new(b'%d|%s' % (project_id, utc_time))
+    h = HMAC.new(b'%d|%d|%s' % (project_id,milestone_id, utc_time))
     return h.hexdigest()

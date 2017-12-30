@@ -1,15 +1,15 @@
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as _
 
 CONTRACTOR = 'CONTRACTOR'
 ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
 MEISTER = 'MEISTER'
-#TODO: take care
+# TODO: take care
 PROFESSIONAL_CHOICES = (
-    (CONTRACTOR, __('Contractor')),
-    (ARCHITECT, __('Architect')),
-    (DESIGNER, __('Designer')),
-    (MEISTER, __('Meister'))
+    (CONTRACTOR, _('Contractor')),
+    (ARCHITECT, _('Architect')),
+    (DESIGNER, _('Designer')),
+    (MEISTER, _('Meister'))
 )
 
 # entity type
@@ -17,9 +17,9 @@ C = 'Corporation'
 S = 'Sole Ownership'
 P = 'Partnership'
 ENTITY_CHOICES = (
-    (C, __('Corporation')),
-    (P, __('Partnership')),
-    (S, __('Sole Ownership')),
+    (C, _('Corporation')),
+    (P, _('Partnership')),
+    (S, _('Sole Ownership')),
 )
 
 # TODO: load static file into professional subtype
@@ -40,26 +40,28 @@ DC = 'Drywall Contractor'
 EC = 'Electrical Contractor'
 PDC = 'Painting And Decorating Contractor'
 SMC = 'Sheet Metal Contractor'
-ME = 'MEISTER'
+ME = 'Meister'
+AC = 'Architect'
 
 PROFESSIONAL_SUBTYPE_CHOICES = (
-    (GC, __('General Contractor')),
-    (LC, __('Landscaping Contractor')),
-    (SPC, __('Swimming Pool Contractor')),
-    (KBR, __('Kitchen & Bath Remodeler')),
-    (RG, __('Roofing Contractor')),
-    (PL, __('Plumbing Contractor')),
-    (FC, __('Fencing Contractor')),
-    (HVAC, __('HVAC Contractor')),
-    (DE, __('Designer')),
-    (DG, __('Doors, Gates and Activating Devices')),
-    (CC, __('Carpentry Contractor')),
-    (COC, __('Concrete Contractor')),
-    (DC, __('Drywall Contractor')),
-    (EC, __('Electrical Contractor')),
-    (PDC, __('Painting And Decorating Contractor')),
-    (SMC, __('Sheet Metal Contractor')),
-    (ME, __('MEISTER'))
+    (GC, _('General Contractor')),
+    (LC, _('Landscaping Contractor')),
+    (SPC, _('Swimming Pool Contractor')),
+    (KBR, _('Kitchen & Bath Remodeler')),
+    (RG, _('Roofing Contractor')),
+    (PL, _('Plumbing Contractor')),
+    (FC, _('Fencing Contractor')),
+    (HVAC, _('HVAC Contractor')),
+    (DE, _('Designer')),
+    (DG, _('Doors, Gates and Activating Devices')),
+    (CC, _('Carpentry Contractor')),
+    (COC, _('Concrete Contractor')),
+    (DC, _('Drywall Contractor')),
+    (EC, _('Electrical Contractor')),
+    (PDC, _('Painting And Decorating Contractor')),
+    (SMC, _('Sheet Metal Contractor')),
+    (ME, _('Meister')),
+    (AC, _('Architect')),
 )
 
 

@@ -117,6 +117,10 @@
 }
 
 @media (max-width: 767px ) {
+    .project-transactions .panel-body table td {
+        font-size: 0.5em;
+    }
+
     .menu-side {
         display: none;
     }
@@ -171,8 +175,12 @@ html, body {
     min-width: 200px;
 }
 
-.project-basic-info, .project-attachments, .project-photos {
+.project-basic-info, .project-attachments, .project-photos, project-milestone {
     margin: 10px 0;
+}
+
+project-milestone {
+
 }
 
 .project-detail-wrapper .row {
@@ -251,12 +259,17 @@ html, body {
     width: 100%
 }
 
-.title, .value {
+.title, .value{
     color: #555;
+    font-size: 0.75em;
 }
 
-.project-overview .title {
-    font-size: 0.75em;
+.project-overview .panel-heading .col-xs-4 a {
+    font-size: 0.7em;
+}
+
+.project-overview .panel-heading .title, .project-overview .panel-heading .value{
+    font-size: 0.7em;
 }
 
 .project-overview .lead {

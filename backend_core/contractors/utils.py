@@ -1,28 +1,30 @@
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as _
 
 
 def convert_hscore_to_rank(hscore):
     # percentage = round(hscore.rank * 100.0 / hscore.max, 2)
-    if hscore > 89:
+    if hscore.score > 89:
         letter_grade = "A+++"
-    elif hscore > 80:
+    elif hscore.score > 80:
         letter_grade = "A++"
-    elif hscore > 75:
+    elif hscore.score > 75:
         letter_grade = "A+"
-    elif hscore > 70:
+    elif hscore.score > 70:
         letter_grade = "A"
     elif hscore.score == 0:
-        letter_grade = __("Warning")
+        letter_grade = _("Warning")
     else:
         letter_grade = 'A-'
     return letter_grade
 
-#TODO: need to change in the future
+
+# TODO: need to change in the future
 def get_state_full_name(state):
     FullName = "California"
     return FullName
 
-#TODO: need to revise here
+
+# TODO: need to revise here
 def avg_rating(review, rt):
     s = 0
     l = 0

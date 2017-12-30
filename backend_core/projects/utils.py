@@ -1,10 +1,10 @@
 import uuid
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
 WAITING = "W"
-PAYED_TO_HOOME = "PTH"
-PAYED_TO_PROFESSIONAL = "PTP"
+PAID_TO_HOOME = "PTH"
+PAID_TO_PROFESSIONAL = "PTP"
 
 PAYMENT_REQUEST = 'M'
 
@@ -21,28 +21,25 @@ DONE = "D"
 # SUCCESS = "Success"
 
 MILESTONE_STATUS = (
-    (WAITING, __("Waiting")),
-    (PAYED_TO_HOOME, __("Payed to Hoome")),
-    (PAYED_TO_PROFESSIONAL, __("Payed to Professional")),
-    (DONE, __("Done")),
-    (PAYMENT_REQUEST, __("Payment Request")),
-
+    (WAITING, _("Waiting")),
+    (PAID_TO_HOOME, _("Paid to Hoome")),
+    (PAID_TO_PROFESSIONAL, _("Paid to Professional")),
+    (DONE, _("Done")),
+    (PAYMENT_REQUEST, _("Payment Request")),
 )
 
 PROJECT_STATUS = (
-    (PENDING, __('PENDING')),
-    (ACCEPTED, __('ACCEPTED')),
-    (ONGOING, __('ONGOING')),
-    (REJECTED, __('REJECTED')),
-    (DONE, __('DONE')),
+    (PENDING, _('PENDING')),
+    (ACCEPTED, _('ACCEPTED')),
+    (ONGOING, _('ONGOING')),
+    (REJECTED, _('REJECTED')),
+    (DONE, _('DONE')),
 )
 
 REMODEL = "R"
-NEWBUILT = "N"
-PROJECT_TYPE = (
-    ("", 'N/A'),
-    (REMODEL, __('REMODEL')),
-    (NEWBUILT, __("NEW BUILT HOUSE")),
+NEW_BUILT = "N"
+PROJECT_TYPE = ((REMODEL, _('REMODEL')),
+    (NEW_BUILT, _("NEW BUILT HOUSE")),
 )
 
 

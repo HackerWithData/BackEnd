@@ -6,15 +6,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('architects', '0003_auto_20171130_0117'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='architect',
             name='architect_uuid',
+        ),
+        migrations.AddField(
+            model_name='architect',
+            name='uuid',
             field=models.CharField(default='0', max_length=36),
         ),
     ]

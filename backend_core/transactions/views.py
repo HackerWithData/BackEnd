@@ -16,7 +16,7 @@ from users.utils import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import *
 from .models import Transaction, TransactionHistory, Milestone
-from projects.utils import (PAYED_TO_HOOME)
+from projects.utils import (PAID_TO_HOOME)
 
 # Create your views here.
 # TODO: Simplify this part
@@ -59,10 +59,13 @@ class TransactionsView(View):
             :param kwargs:
             :return:
         """
+        print(request.body)
         received_json_data = json.loads(request.body)
-
+        print(received_json_data)
         project = Project.objects.get(uuid=received_json_data['project_uuid'])
+        print(received_json_data['milestone_uuid'])
         milestone = Milestone.objects.get(uuid=received_json_data['milestone_uuid'])
+        print(milestone.uuid)
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
                                                                  content_type=project.content_type,
@@ -90,7 +93,7 @@ class TransactionsView(View):
         transaction.save()
         # TODO: we can remove this conditional statement probably
         if transaction.status == SUCCESS:
-            milestone.status = PAYED_TO_HOOME
+            milestone.status = PAID_TO_HOOME
             milestone.save()
         # insert a new transaction history with pending status as soon as a transaction created
         TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
@@ -209,7 +212,7 @@ def project_checkout(request):
         url = '/checkout/' + request.POST.get('project_uuid')
         return redirect(url)
 
-
+#TODO: need to take care project_uuid here
 def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
     projects = Project.objects.get(uuid=project_uuid)

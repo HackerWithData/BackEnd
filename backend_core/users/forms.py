@@ -1,18 +1,21 @@
-from django import forms
-from allauth.account.forms import SignupForm
-from django.contrib.auth.decorators import login_required
-from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
+import string
 
-from models import User, ConsumerProfile, ProfessionalProfile
+from django import forms
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
+# from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
+
+from allauth.account.forms import SignupForm
+
 from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, \
     ARCHITECT, DESIGNER
 from professionals.models import Professional, ProfessionalType
-from user_helpers import get_professional_corresponding_object_by_type_and_lic, create_professional_corresponding_object
-from utils import *
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
 from meisters.models import Meister
-import string
+from .models import User, ConsumerProfile, ProfessionalProfile
+from .user_helpers import get_professional_corresponding_object_by_type_and_lic, \
+    create_professional_corresponding_object
+from .utils import *
 
 professional_type = setup_professional_type()
 
@@ -42,26 +45,26 @@ class ConsumerInfoFillUpForm(forms.Form):
     first_name = forms.CharField(
         required=True,
         max_length=128,
-        label=__('First Name'),
+        label=_('First Name'),
     )
 
     last_name = forms.CharField(
         required=True,
         max_length=128,
-        label=__('Last Name'),
+        label=_('Last Name'),
     )
 
     zipcode = forms.CharField(
         required=True,
         max_length=5,
         min_length=5,
-        label=__('Zipcode'),
+        label=_('Zipcode'),
     )
 
     gender = forms.MultipleChoiceField(
         required=True,
         choices=GENDER_CHOICES,
-        label=__("Gender")
+        label=_("Gender")
     )
 
     def clean_zipcode(self):
@@ -97,7 +100,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     """
     license_num = forms.CharField(
         required=True,
-        label=__('License Number'),
+        label=_('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number'}),
         initial=0
     )
@@ -106,27 +109,28 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label=__('Professional Type'),
+        label=_('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type'})
     )
 
     professional_subtype = forms.MultipleChoiceField(
         required=True,
         choices=PROFESSIONAL_SUBTYPE_CHOICES,
-        label=__('Field Selections'),
+        label=_('Field Selections'),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
 
-    personal_name = forms.CharField(
-        required=True,
-        max_length=255,
-        label=__('Name'),
-        widget=forms.TextInput(attrs={'class': 'input-personal-name'})
-    )
+    # personal_name = forms.CharField(
+    #     required=True,
+    #     max_length=255,
+    #     label=_('Name'),
+    #     widget=forms.TextInput(attrs={'class': 'input-personal-name'})
+    # )
 
     company_name = forms.CharField(
+        required=True,
         max_length=255,
-        label=__('Name'),
+        label=_('Name'),
         widget=forms.TextInput(attrs={'class': 'input-company-name'})
     )
 
@@ -134,36 +138,37 @@ class ProfessionalInfoFillUpForm(forms.Form):
         required=True,
         choices=ENTITY_CHOICES,
         initial=C,
-        label=__('Entity Type'),
+        label=_('Entity Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
 
     street = forms.CharField(
         required=True,
         max_length=128,
-        label=__('Street'),
+        label=_('Street'),
         widget=forms.TextInput(attrs={'class': 'input-street'})
     )
 
     state = forms.CharField(
         required=True,
         max_length=32,
-        label=__('State'),
+        label=_('State'),
         widget=forms.TextInput(attrs={'class': 'input-state'})
     )
     county = forms.CharField(
         required=True,
         max_length=32,
-        label=__('County'),
+        label=_('County'),
         widget=forms.TextInput(attrs={'class': 'input-county'})
     )
     zipcode = forms.CharField(
         required=True,
         max_length=16,
-        label=__('Postal Code'),
+        label=_('Postal Code'),
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
 
+    # TODO; need to change this part since lic_num is not numberic sometimes
     def clean_license_num(self):
         lic = self.cleaned_data['license_num']
         lic_num = int(lic.strip(string.ascii_letters))
@@ -198,7 +203,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     def save(self, request):
         exists = False
         clean_license_num = self.cleaned_data['license_num']
-        clean_personal_name = self.cleaned_data['personal_name']
+        # clean_personal_name = self.cleaned_data['personal_name']
         clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
@@ -208,10 +213,10 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
         # print(clean_professional_type)
-        if clean_professional_type == "MEISTER":
+        if str(clean_professional_type) == "MEISTER":
             # professional_object = create_professional_corresponding_object(prof_type=clean_professional_type)
-            meister, created = Meister.objects.get_or_create(lic_name=clean_personal_name,
-                                                             bus_name=clean_company_name,
+            meister, created = Meister.objects.get_or_create(lic_name=clean_company_name,
+                                                             # bus_name=clean_company_name,
                                                              street_address=clean_street,
                                                              county=clean_county,
                                                              state=clean_state,
@@ -220,18 +225,19 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 meister.save()
             else:
                 pass
+            # TODO: need to consider if meister is mutuailly exclusive with other type??
             professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
-                                                                           name=clean_company_name,
-                                                                           entity_type=clean_entity_type,
-                                                                           lic_type=clean_professional_type,
-                                                                           type=clean_professional_type,
-                                                                           state=clean_state,
-                                                                           postal_code=clean_zipcode)
+                                                                       name=clean_company_name,
+                                                                       entity_type=clean_entity_type,
+                                                                       lic_type='&'.join(clean_professional_subtype),
+                                                                       type=clean_professional_type,
+                                                                       county=clean_county,
+                                                                       state=clean_state,
+                                                                       postal_code=clean_zipcode)
             if created:
                 professional.save()
             else:
                 pass
-
 
         else:
             professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
@@ -265,15 +271,17 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                            name=clean_company_name,
                                                            entity_type=clean_entity_type,
                                                            type=clean_professional_type,
+                                                           lic_type='&'.join(clean_professional_subtype),
                                                            state=clean_state,
                                                            postal_code=clean_zipcode)
                 professional.save()
                 professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
                                                                                lic=clean_license_num)
-                professional_object.bus_name = clean_company_name
+                professional_object.lic_name = clean_company_name
                 professional_object.entity = clean_entity_type
                 professional_object.state = clean_state
                 professional_object.county = clean_county
+                professional_object.csp = clean_county + ' ' + clean_state + ', ' + clean_zipcode
                 professional_object.street_address = clean_street
                 professional_object.pos_code = clean_zipcode
                 professional_object.save()
@@ -322,57 +330,63 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
 
     license_num = forms.CharField(
         required=True,
-        label=__('License Number'),
+        label=_('License Number'),
         widget=forms.TextInput(attrs={'class': 'input-license-number', 'readonly': 'true'})
     )
 
-    company_name = forms.CharField(
-        required=True,
-        max_length=128,
-        label=__('Name'),
-        widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
-    )
+    # company_name = forms.CharField(
+    #     required=True,
+    #     max_length=128,
+    #     label=_('Name'),
+    #     widget=forms.TextInput(attrs={'class': 'input-company-name', 'readonly': 'true'})
+    # )
 
     professional_type = forms.ChoiceField(
         required=True,
         choices=PROFESSIONAL_CHOICES,
         initial=CONTRACTOR,
-        label=__('Professional Type'),
+        label=_('Professional Type'),
         widget=forms.RadioSelect(attrs={'class': 'input-professional-type', 'readonly': 'true'})
     )
 
     def save(self, request):
         # Cannot be changed
         clean_license_num = self.cleaned_data['license_num']
-        clean_company_name = self.cleaned_data['company_name']
+        # clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
         clean_zipcode = self.cleaned_data['zipcode']
         clean_entity_type = self.cleaned_data['entity_type']
-        # Cannot be changed
+        clean_county = self.cleaned_data['county']
         clean_professional_type = self.cleaned_data['professional_type']
 
         clean_professional_subtype = self.cleaned_data['professional_subtype']
+
         profile = request.user.professional_profiles.first()
         professional = profile.professional
+
+        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
+        # create new subtypes for profile
+        existing_prof_types = [pt.subtype for pt in professionaltypes]
+        current_prof_types = list(existing_prof_types)
+        for subtype in clean_professional_subtype:
+            if subtype not in existing_prof_types:
+                ProfessionalType.objects.create(professional=professional,
+                                                type=clean_professional_type,
+                                                subtype=subtype)
+                current_prof_types.append(subtype)
+
         professional.state = clean_state
+        professional.county = clean_county
         professional.postal_code = clean_zipcode
         professional.entity_type = clean_entity_type
+        professional.lic_type = '&'.join(current_prof_types)
         professional.save()
 
         professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=clean_professional_type,
                                                                                     lic=clean_license_num)
         professional_object.street_address = clean_street
         professional_object.save()
-
-        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
-        # create new subtypes for profile
-        existing_prof_types = [pt.subtype for pt in professionaltypes]
-        for subtype in clean_professional_subtype:
-            if subtype not in existing_prof_types:
-                ProfessionalType.objects.create(professional=professional,
-                                                type=clean_professional_type,
-                                                subtype=subtype)
 
 
 class MultipleSameProfessionalFound(Exception):
