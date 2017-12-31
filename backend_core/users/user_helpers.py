@@ -12,7 +12,7 @@ from meisters.models import Meister
 from professionals.models import Professional
 from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER, MEISTER
 from .models import HoomeId
-from .utils import AVAILABLE
+from .utils import AVAILABLE,SIGNED
 
 
 def get_professional_user(user):
@@ -35,6 +35,20 @@ def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
         ret_professional_object = Designer.objects.get(lic_num=lic)
     elif prof_type == MEISTER:
         ret_professional_object = Meister.objects.get(lic_num=lic)
+    else:
+        raise UndefinedType("Error: Undefined Type in Object")
+    return ret_professional_object
+
+
+def get_professional_corresponding_object_by_type_and_lic_id(prof_type, lic_id):
+    if prof_type == CONTRACTOR:
+        ret_professional_object = Contractor.objects.get(lic_id=lic_id)
+    elif prof_type == ARCHITECT:
+        ret_professional_object = Architect.objects.get(lic_id=lic_id)
+    elif prof_type == DESIGNER:
+        ret_professional_object = Designer.objects.get(lic_id=lic_id)
+    elif prof_type == MEISTER:
+        ret_professional_object = Meister.objects.get(lic_id=lic_id)
     else:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
@@ -88,7 +102,7 @@ def create_professional_corresponding_object(prof_type, lic):
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
 
-
+#TODO: may need to fix it later
 def retrieve_professional_info(request):
     prof_type = request.GET['type'].upper()
     lic = request.GET['lic']
@@ -122,7 +136,10 @@ def generate_random_hoome_id():
     # randint(10000000,99999999)
     count = HoomeId.objects.filter(status=AVAILABLE).count()
     random_index = randint(0, count - 1)
-    random_id = HoomeId.objects.filter(status=AVAILABLE)[random_index].hoome_id
+    object = HoomeId.objects.filter(status=AVAILABLE)[random_index]
+    object.status = SIGNED
+    object.save()
+    random_id = object.hoome_id
     return random_id
 
 

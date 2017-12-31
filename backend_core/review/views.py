@@ -48,8 +48,10 @@ def submit_review(request, o_id):
             review = review_form.save(request, commit=False)
             if request.user.is_authenticated():
                 review.user = request.user
-            review.content_type = ContentType.objects.get(model=model_type),
-            review.object_id = o_id
+            #TODO: add changes here
+            review.content_type = ContentType.objects.get(model=model_type)
+            instance = review.content_type.model_class().objects.get(lic_num=o_id)
+            review.object_id = instance.lic_id
             review.save()
 
             for field in user_rating_form.cleaned_data:
@@ -88,7 +90,10 @@ def display_review(request, o_id):
     if request.is_ajax() and request.method == "POST":
         template_name = r'review/display_review.html'
         model_type = check_professional_type(request)
-        review = Review.objects.filter(content_type=ContentType.objects.get(model=model_type), object_id=o_id,
+        content_type = ContentType.objects.get(model=model_type)
+        # TODO: add changes here
+        instance = content_type.model_class().objects.get(lic_num=o_id)
+        review = Review.objects.filter(content_type=content_type, object_id=instance.lic_id,
                                        review_status='A')
         # other situation
         info_dict = {"review": review}

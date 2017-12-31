@@ -30,10 +30,10 @@ from .models import Architect
 
 # TODO: add a overview database
 class ArchitectDetail(View):
-    def post(self, request, o_id):
+    def post(self, request, architect_id):
         # architect info
-        architect = Architect.objects.get(lic_num=o_id)
-        # contractor background image
+        architect = Architect.objects.get(lic_num=str(architect_id))
+        o_id = architect.lic_id
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='architect'),
                                                   object_id=o_id)
@@ -76,7 +76,7 @@ class ArchitectDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -120,7 +120,7 @@ class ArchitectDetail(View):
                 if request.user.is_authenticated():
                     review.user = request.user
                 review.content_type = ContentType.objects.get(model=model_type)
-                review.object_id = o_id
+                review.object_id = architect.lic_id
                 review.save()
 
                 for field in user_rating_form.cleaned_data:
@@ -155,9 +155,10 @@ class ArchitectDetail(View):
         else:
             raise Http404(_("Error Pages!"))
 
-    def get(self, request, o_id):
+    def get(self, request, architect_id):
         # architect info
-        architect = Architect.objects.get(lic_num=o_id)
+        architect = Architect.objects.get(lic_num=str(architect_id))
+        o_id = architect.lic_id
         # contractor background image
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='architect'),
@@ -201,7 +202,7 @@ class ArchitectDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -238,10 +239,11 @@ class ArchitectDetail(View):
 
 def display_project_photos(request, o_id):
     if request.is_ajax() and request.method == "POST":
+
         template_name = 'contractor/contractor_project_photo.html'
         architect = Architect.objects.get(lic_num=o_id)
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='architect'),
-                                              object_id=o_id)
+                                              object_id=architect.lic_id)
         info_dict = {'project_photos': project_photos, 'architect': architect}
         return render(request, template_name, {'info_dict': info_dict})
     else:
@@ -254,17 +256,18 @@ def upload_project_photos(request, o_id):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         except:
             p_lic_num = None
     if str(p_lic_num) == str(o_id):
+        architect = Architect.objects.get(lic_num=o_id)
         template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
         success_url = '/architect/' + o_id  # Replace with your URL or reverse().
 
         if request.method == "POST":
             form = PhotoForm(request.POST, request.FILES)
             content_type = ContentType.objects.get(model='architect')
-            object_id = int(o_id)
+            object_id = int(architect.lic_id)
             files = request.FILES.getlist('img')
             if form.is_valid():
                 if len(files) > 0:

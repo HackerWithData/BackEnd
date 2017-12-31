@@ -29,8 +29,9 @@ from .models import Designer
 
 # TODO: add a overview database
 class DesignerDetail(View):
-    def post(self, request, o_id):
-        designer = Designer.objects.get(lic_num=o_id)
+    def post(self, request, designer_id):
+        designer = Designer.objects.get(lic_num=str(designer_id))
+        o_id = designer.lic_id
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='designer'),
                                                   object_id=o_id)
@@ -74,7 +75,7 @@ class DesignerDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -117,7 +118,7 @@ class DesignerDetail(View):
                 if request.user.is_authenticated():
                     review.user = request.user
                 review.content_type = ContentType.objects.get(model=model_type)
-                review.object_id = o_id
+                review.object_id = designer.lic_id
                 review.save()
 
                 for field in user_rating_form.cleaned_data:
@@ -152,8 +153,9 @@ class DesignerDetail(View):
         else:
             raise Http404("Error Pages!")
 
-    def get(self, request, o_id):
-        designer = Designer.objects.get(lic_num=o_id)
+    def get(self, request, designer_id):
+        designer = Designer.objects.get(lic_num=str(designer_id))
+        o_id = designer.lic_id
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='designer'),
                                                   object_id=o_id)
@@ -197,7 +199,7 @@ class DesignerDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -237,7 +239,7 @@ def display_project_photos(request, o_id):
         template_name = 'designer/designer_project_photo.html'
         designer = Designer.objects.get(lic_num=o_id)
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='designer'),
-                                              object_id=o_id)
+                                              object_id=designer.lic_id)
         info_dict = {'project_photos': project_photos, 'designer': designer}
         return render(request, template_name, {'info_dict': info_dict})
     else:
@@ -250,11 +252,12 @@ def upload_project_photos(request, o_id):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         except:
             p_lic_num = None
 
     if str(p_lic_num) == str(o_id):
+        designer = Designer.objects.get(lic_num=o_id)
         template_name = 'designer/designer_project_photos_upload.html'  # Replace with your template.
         success_url = '/designer/' + o_id  # Replace with your URL or reverse().
 
@@ -266,7 +269,7 @@ def upload_project_photos(request, o_id):
                 if len(files) > 0:
                     for f in files:
                         instance = Photo.objects.create(img=f, title=f.name, content_type=content_type,
-                                                        object_id=int(o_id))
+                                                        object_id=int(designer.lic_id))
                         instance.save()
                 else:
                     pass

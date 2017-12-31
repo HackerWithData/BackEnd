@@ -17,6 +17,7 @@ import boto
 from boto.s3.key import Key
 from professionals.utils import check_professional_type
 
+# this funtion is deprecated
 # Create your views here.
 class BasicUploadView(View):
     def get(self, request):
@@ -46,7 +47,7 @@ def background_photo_upload(request, o_id):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         except:
             p_lic_num = None
 
@@ -55,11 +56,13 @@ def background_photo_upload(request, o_id):
 
         if request.method == 'POST':
             model_type = check_professional_type(request)
-            success_url = "/"+model_type+"/"+o_id
+            content_type = ContentType.objects.get(model=model_type)
+            instance = content_type.model_class().objects.get(lic_num=o_id)
+            success_url = "/" + model_type + "/" + o_id
             form = BackgroundPhotoForm(request.POST, request.FILES)
             if form.is_valid():
-                bp, nonexist = BackgroundPhoto.objects.get_or_create(content_type=ContentType.objects.get(model=model_type),
-                                                                    object_id=o_id)
+                bp, nonexist = BackgroundPhoto.objects.get_or_create(content_type=content_type,
+                                                                     object_id=instance.lic_id)
                 if not nonexist:
                     old_pic_path = bp.img.file.name
                 bp.img = form.cleaned_data.get('img')
@@ -83,7 +86,8 @@ def background_photo_upload(request, o_id):
     else:
         raise Http404('No Pages Found.')
 
-#this funtion is deprecated
+
+# this funtion is deprecated
 def FileFieldUpload(request):
     template_name = 'photos/upload_multiple_files.html'  # Replace with your template.
     success_url = 'disk/uploadsuccess.html'  # Replace with your URL or reverse().

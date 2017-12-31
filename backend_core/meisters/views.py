@@ -62,7 +62,7 @@ class MeisterDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = -1
 
@@ -124,7 +124,7 @@ class MeisterDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = -1
 
@@ -228,7 +228,7 @@ def upload_project_photos(request, o_id):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         except:
             p_lic_num = None
     if str(p_lic_num) == str(o_id):

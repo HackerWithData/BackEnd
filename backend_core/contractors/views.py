@@ -91,23 +91,23 @@ class ContractorDetail(View):
         # contractor info
         contractor = Contractor.objects.get(lic_num=contractor_id)
         # contractor background image
+        o_id = contractor.lic_id
         try:
-            contractor_id = int(contractor_id)
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                                  object_id=contractor_id)
+                                                  object_id=o_id)
         except:
             bgimage = None
 
-        bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
-        wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
+        bh = BondHistory.objects.filter(contractor_id=o_id).order_by('-bond_effective_date').first()
+        wh = WorkerCompensationHistory.objects.filter(contractor_id=o_id).order_by(
             '-insur_effective_date').first()
 
         data_source = 'California Contractors State License Board'
         try:
             if contractor_id.startswith('TX'):
-               hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+                hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
             else:
-                hscore = Hscore.objects.get(contractor_id=contractor_id)
+                hscore = Hscore.objects.get(contractor_id=o_id)
         except:
             hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
 
@@ -121,7 +121,7 @@ class ContractorDetail(View):
                 review = None
             else:
                 review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                           object_id=contractor_id, review_status='A')
+                                               object_id=o_id, review_status='A')
         except:
             review = None
         # rating
@@ -135,9 +135,7 @@ class ContractorDetail(View):
 
         else:
             contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                                       object_id=contractor_id).order_by('ratings_average')
-
-
+                                                       object_id=o_id).order_by('ratings_average')
 
             # TODO:NEED TO CHANGE HERE
             ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
@@ -148,7 +146,7 @@ class ContractorDetail(View):
                 pass
         try:
             project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=contractor_id)
+                                                  object_id=o_id)
         except:
             project_photos = None
         try:
@@ -165,7 +163,7 @@ class ContractorDetail(View):
 
         try:
             complaint = ComplaintOverall.objects.get(contractor=contractor)
-        except :
+        except:
             complaint = Complaint1
             complaint.case = 0
             complaint.citation = 0
@@ -176,7 +174,7 @@ class ContractorDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -194,7 +192,7 @@ class ContractorDetail(View):
 
         try:
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                            object_id=contractor_id).overview
+                                            object_id=o_id).overview
         except:
             overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
             according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
@@ -217,19 +215,20 @@ class ContractorDetail(View):
         # contractor info
         contractor = Contractor.objects.get(lic_num=contractor_id)
         # contractor background image
+        o_id = contractor.lic_id
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                                  object_id=contractor_id)
+                                                  object_id=o_id)
         except BackgroundPhoto.DoesNotExist:
             bgimage = None
 
-        bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
+        bh = BondHistory.objects.filter(contractor_id=o_id).order_by('-bond_effective_date').first()
         wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
             '-insur_effective_date').first()
 
         data_source = 'California Contractors State License Board'
         try:
-            hscore = Hscore.objects.get(contractor_id=contractor_id)
+            hscore = Hscore.objects.get(contractor_id=o_id)
         except:
             Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
 
@@ -240,13 +239,13 @@ class ContractorDetail(View):
         # review
         try:
             review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                           object_id=contractor_id, review_status='A')
+                                           object_id=o_id, review_status='A')
         except:
             review = None
         # rating
         RATING_STAR_MAX = 10
         contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                                   object_id=contractor_id).order_by('ratings_average')
+                                                   object_id=o_id).order_by('ratings_average')
         ratings = {}
         ratings['stars'] = range(RATING_STAR_MAX, 0, -1)
         # TODO:NEED TO CHANGE HERE
@@ -258,7 +257,7 @@ class ContractorDetail(View):
             pass
 
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=contractor_id)
+                                              object_id=o_id)
         if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
             length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
         # test issue, won't happen in prod
@@ -280,7 +279,7 @@ class ContractorDetail(View):
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
 
@@ -298,7 +297,7 @@ class ContractorDetail(View):
 
         try:
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='contractor'),
-                                            object_id=contractor_id).overview
+                                            object_id=o_id).overview
         except Overview.DoesNotExist:
             overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
             according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
@@ -334,7 +333,7 @@ class ContractorDetail(View):
                 if request.user.is_authenticated():
                     review.user = request.user
                 review.content_type = ContentType.objects.get(model=model_type)
-                review.object_id = contractor_id
+                review.object_id = contractor.lic_id
                 review.save()
 
                 for field in user_rating_form.cleaned_data:
@@ -386,9 +385,10 @@ def update_accept_review(request):
 
 def display_project_photos(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
+        contractor = Contractor.objects.get(lic_num=contractor_id)
         template_name = 'contractor/contractor_project_photo.html'
         project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=contractor_id)
+                                              object_id=contractor.lic_id)
         info_dict = {'project_photos': project_photos}  # , 'contractor': contractor
         return render(request, template_name, {'info_dict': info_dict})
     else:
@@ -400,10 +400,11 @@ def upload_project_photos(request, contractor_id):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         except:
             p_lic_num = None
     if str(p_lic_num) == str(contractor_id):
+        contractor = Contractor.objects.get(lic_num=contractor_id)
         template_name = 'contractor/contractor_project_photos_upload.html'  # Replace with your template.
         success_url = '/contractor/' + contractor_id  # Replace with your URL or reverse().
 
@@ -411,7 +412,7 @@ def upload_project_photos(request, contractor_id):
             # contractor = Contractor.objects.get(lic_num=contractor_id)
             form = PhotoForm(request.POST, request.FILES)
             content_type = ContentType.objects.get(model='contractor')
-            object_id = int(contractor_id)
+            object_id = int(contractor.lic_id)
             files = request.FILES.getlist('img')
             if form.is_valid():
                 if len(files) > 0:
@@ -432,15 +433,15 @@ def upload_project_photos(request, contractor_id):
 def delete_photo(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         if contractor_id:
-            contractor_id = int(contractor_id)
+            contractor_id = str(contractor_id)
         if request.user.is_anonymous():
             p_lic_num = None
         else:
             try:
-                p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+                p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
             except:
                 p_lic_num = None
-        if p_lic_num == contractor_id:
+        if str(p_lic_num) == str(contractor_id):
             data = {}
 
             data.update(json.loads(request.body))

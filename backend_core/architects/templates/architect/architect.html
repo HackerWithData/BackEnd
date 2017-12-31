@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
                     <span class="bus-name">{{ info_dict.architect.lic_name }}</span>
-                    {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
+                    {% if info_dict.p_lic_num|stringformat:"s" == info_dict.architect.lic_num|stringformat:"s" %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
                             <span class="slider round"></span>
@@ -85,7 +85,7 @@
                         <a href="{% url 'create_project' 'architect' info_dict.architect.lic_num %}"
                            class="btn btn-db">{% trans 'Contract Us' %}</a>
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
+                        {% if info_dict.p_lic_num|stringformat:"s" == info_dict.architect.lic_num|stringformat:"s" %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>

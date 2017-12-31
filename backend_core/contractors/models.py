@@ -7,8 +7,9 @@ from django.db import models
 
 #TODO：Clean Data Format
 class Contractor(models.Model):
-    lic_num = models.CharField(primary_key=True, max_length=63)
-    lic_type = models.TextField(blank=True, null=True)
+    lic_id = models.AutoField(primary_key=True)
+    lic_num = models.CharField(max_length=63)
+    lic_type = models.CharField(blank=True, null=True,max_length=1000)
     lic_name = models.CharField(max_length=255,blank=True, null=True)
     lic_status = models.CharField(max_length=30,blank=True, null=True)
     lic_issue_date = models.DateField(null=True)
@@ -23,9 +24,11 @@ class Contractor(models.Model):
     bus_info_add = models.TextField(blank=True, null=True)
     dba = models.CharField(max_length=255, blank=True, null=True)
     uuid = models.CharField(max_length=36, default='0')
-    license_board = models.CharField(max_length=255, blank=True, null=True, default='California State License Board')
+    license_board = models.CharField(max_length=255, blank=True, null=True, default='California Contractor State License Board')
+
     class Meta:
-        unique_together = ( 'lic_num', 'lic_type','license_board')
+        unique_together = ('lic_num', 'lic_type','license_board')
+
     def __iter__(self):
         return self.__dict__.iteritems()
 

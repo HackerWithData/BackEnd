@@ -103,17 +103,13 @@
                 <div class="panel-body">
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
-                            <div style="text-align:center">
-                                <div style="margin: 1vh">
+                            <div a>
+                                <div>
                                     <a href="{{ pic.img.url }}" title="{{ pic.title }}">
                                         <img src="{{ pic.img.url }}">
                                     </a>
                                 </div>
                                 {#                            TODO: problem here#}
-                                {% csrf_token %}
-                                <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}"
-                                        data-title="{{ pic.title }}">Remove X
-                                </button>
                             </div>
 
                             {#    style="height:50%;width:50%"#}

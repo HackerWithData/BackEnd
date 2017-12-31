@@ -12,14 +12,23 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('review', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('projects', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='review',
+            model_name='project',
             name='user',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
+            model_name='milestone',
+            name='project',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='projects.Project'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='project',
+            unique_together=set([('project_id', 'content_type', 'object_id', 'user')]),
         ),
     ]

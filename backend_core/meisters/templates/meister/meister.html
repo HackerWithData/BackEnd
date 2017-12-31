@@ -40,7 +40,7 @@
                 <div class="col-md-9 col-lg-9 head-info">
                     <span class="bus-name">{{ info_dict.meister.lic_name }}</span>
                     {#                    {TODO: need to change Here}#}
-                    {% if info_dict.p_lic_num == info_dict.meister.lic_num %}
+                    {% if info_dict.p_lic_num|stringformat:"s" == info_dict.meister.lic_num|stringformat:"s" %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
                             <span class="slider round"></span>
@@ -97,7 +97,7 @@
                            class="btn btn-db">{{ Contact_Us }}</a>
 
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.meister.lic_num %}
+                        {% if info_dict.p_lic_num|stringformat:"s" == info_dict.meister.lic_num|stringformat:"s" %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>

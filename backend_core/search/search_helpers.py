@@ -82,35 +82,49 @@ def search_by_zipcode(request):
 def retrieve_all_kind_professional(prof_qs):
     ret_list = []
     for professional in prof_qs:
+        #TODO: need to change later
         if professional.type.upper() == CONTRACTOR:
             contractor = Contractor.objects.filter(lic_num=professional.lic_num).first()
             # print(contractor)
             # print(contractor.hscore)
-
-            hscore = contractor.hscores.first()
-            if hscore is None:
-                hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
-            # print(contractor.lic_name, hscore.score)
-            item = model_to_dict(contractor).copy()
-            item['score'] = hscore.score
-            item['rank'] = convert_hscore_to_rank(hscore)
-            item['type'] = CONTRACTOR
+            if contractor:
+                hscore = contractor.hscores.first()
+                if hscore is None:
+                    hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+                # print(contractor.lic_name, hscore.score)
+                item = model_to_dict(contractor).copy()
+                item['score'] = hscore.score
+                item['rank'] = convert_hscore_to_rank(hscore)
+                item['type'] = CONTRACTOR
+            else:
+                item = None
         elif professional.type.upper() == ARCHITECT:
+            #TODO: would use get_object_or_404 or other method be better?
             architect = Architect.objects.filter(lic_num=professional.lic_num).first()
-            item = model_to_dict(architect).copy()
-            item['type'] = ARCHITECT
+            if architect:
+                item = model_to_dict(architect).copy()
+                item['type'] = ARCHITECT
+            else:
+                item = None
         elif professional.type.upper() == DESIGNER:
             designer = Designer.objects.filter(lic_num=professional.lic_num).first()
-            item = model_to_dict(designer).copy()
-            item['type'] = DESIGNER
+            if designer:
+                item = model_to_dict(designer).copy()
+                item['type'] = DESIGNER
+            else:
+                item = None
         # TODO: need to take care this part.
         elif professional.type.upper() == MEISTER:
             meister = Meister.objects.filter(lic_num=professional.lic_num).first()
-            item = model_to_dict(meister).copy()
-            item['type'] = MEISTER
+            if meister:
+                item = model_to_dict(meister).copy()
+                item['type'] = MEISTER
+            else:
+                item = None
         else:
             raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
-        ret_list.append(item)
+        if item:
+            ret_list.append(item)
 
     sorted_list = sorted(ret_list, key=lambda k: k['score'] if k['type'] == CONTRACTOR else 1000, reverse=True)
     return sorted_list

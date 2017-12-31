@@ -160,7 +160,7 @@ class ContractorDetail(APIView):
         #     p_lic_num = None
         # else:
         #     try:
-        #         p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+        #         p_lic_num = str(request.user.professional_profiles.first().professional.lic_num)
         #     except:
         #         p_lic_num = None
         #

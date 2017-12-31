@@ -225,9 +225,12 @@ class ProfessionalInfoFillUpForm(forms.Form):
                                                              pos_code=clean_zipcode)
             if created:
                 meister.save()
+                #TODO: need to change here
+                meister.lic_num = meister.lic_id
+                meister.save()
             else:
                 pass
-            # TODO: need to consider if meister is mutuailly exclusive with other type??
+            # TODO: need to consider if meister is mutually exclusive with other type??
             professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
                                                                        name=clean_company_name,
                                                                        entity_type=clean_entity_type,
@@ -242,6 +245,9 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 pass
 
         else:
+            # TODO: need to fix later
+            if clean_state.lower == "tx" or clean_state.lower == "texas":
+                clean_license_num = "TX" + clean_license_num
             professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
             # print professional_qs
             # find the result
@@ -384,7 +390,6 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
         professional.entity_type = clean_entity_type
         professional.lic_type = '&'.join(current_prof_types)
         professional.save()
-
         professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=clean_professional_type,
                                                                                     lic=clean_license_num)
         professional_object.street_address = clean_street
