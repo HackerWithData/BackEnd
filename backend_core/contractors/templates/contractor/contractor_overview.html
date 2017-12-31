@@ -39,33 +39,42 @@
                         <td class="rname">{{ License_Type }}:</td>
                         <td>{% for item in info_dict.lic_type %}{{ item }}<br> {% endfor %}</td>
                     </tr>
-
-                    <tr>
-                        <td class="rname">{{ Entity }}:</td>
-                        <td>{{ info_dict.contractor.entity }}</td>
-                    </tr>
-                    <tr>
-                        <td class="rname">{{ Issued_Date }}:</td>
-                        <td>{{ info_dict.contractor.lic_issue_date }}</td>
-                    </tr>
+                    {% if info_dict.contractor.entity %}
+                        <tr>
+                            <td class="rname">{{ Entity }}:</td>
+                            <td>{{ info_dict.contractor.entity }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if info_dict.contractor.lic_issue_date %}
+                        <tr>
+                            <td class="rname">{{ Issued_Date }}:</td>
+                            <td>{{ info_dict.contractor.lic_issue_date }}</td>
+                        </tr>
+                    {% endif %}
                     {% if info_dict.contractor.lic_expire_date %}
                         <tr>
                             <td class="rname">{{ Expiration_Date }}:</td>
                             <td>{{ info_dict.contractor.lic_expire_date }}</td>
                         </tr>
                     {% endif %}
-                    <tr>
-                        <td class="rname">{{ Bonded }}:</td>
-                        <td>{{ info_dict.bond_history.surety_company }}</td>
-                    </tr>
-                    <tr>
-                        <td class="rname">{{ Issued }}:</td>
-                        <td>{{ info_dict.wc_history.insur_company }}</td>
-                    </tr>
+                    {% if info_dict.contractor.surety_company %}
+                        <tr>
+                            <td class="rname">{{ Bonded }}:</td>
+                            <td>{{ info_dict.bond_history.surety_company }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if info_dict.contractor.insur_company %}
+                        <tr>
+                            <td class="rname">{{ Issued }}:</td>
+                            <td>{{ info_dict.wc_history.insur_company }}</td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <td class="rname">{{ Address }}:</td>
                         <td>{{ info_dict.contractor.street_address }} <br/>
-                            {{ info_dict.contractor.csp }}</td>
+                            {% if info_dict.contractor.csp not in info_dict.contractor.street_address %}
+                                {{ info_dict.contractor.csp }}
+                            {% endif %}</td>
                     </tr>
                 </table>
             </div>
@@ -84,27 +93,23 @@
                     {#                        <div class="pull-right">#}
                     <a type="button" class="viewmore btn btn-db btn-sm pull-right vertical-center">{{ View_More }}</a>
                     {#                        </div>#}
-                    <label class="switch vertical-center">
-                        <input id="edit-photo" type="checkbox" class="off">
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="vertical-center">{% trans 'Edit Photo' %}</span>
+                    {#                    <label class="switch vertical-center">#}
+                    {#                        <input id="edit-photo" type="checkbox" class="off">#}
+                    {#                        <span class="slider round"></span>#}
+                    {#                    </label>#}
+                    {#                    <span class="vertical-center">{% trans 'Edit Photo' %}</span>#}
                 </div>
 
                 <div class="panel-body">
                     <div class="popup-gallery">
                         {% for pic in  info_dict.project_photos %}
-                            <div style="text-align:center">
-                                <div style="margin: 1vh">
+                            <div a>
+                                <div>
                                     <a href="{{ pic.img.url }}" title="{{ pic.title }}">
                                         <img src="{{ pic.img.url }}">
                                     </a>
                                 </div>
                                 {#                            TODO: problem here#}
-                                {% csrf_token %}
-                                <button class="hide btn btn-danger delete-photo-btn" data-id="{{ pic.id }}"
-                                        data-title="{{ pic.title }}">Remove X
-                                </button>
                             </div>
 
                             {#    style="height:50%;width:50%"#}
@@ -140,7 +145,7 @@
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_type %}
-                                        {{ Project_Type }}: {{ rv.project_type }}
+                                        {{ Project_Type }}: {{ rv.get_project_type_display }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_duration %}
@@ -199,7 +204,7 @@
         $(".delete-photo-btn").click(function () {
             var id = $(this).data("id");
             console.log(id);
-            const formData = {"id" : id};
+            const formData = {"id": id};
             $.ajax({
                 type: "POST",
                 beforeSend: function (request) {
@@ -208,7 +213,7 @@
                 url: "{% url 'contractor_delete_photo' info_dict.contractor.lic_num %}",
                 data: JSON.stringify(formData),
                 contentType: "application/json;charset=UTF-8",
-{#                dataType: "application/json",#}
+                {#                dataType: "application/json",#}
             })
                 .done(function (result) {
                     location.reload();

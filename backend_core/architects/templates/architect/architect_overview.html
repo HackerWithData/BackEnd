@@ -43,7 +43,7 @@
                         <td class="rname">{{ Issued_Date }}:</td>
                         <td>{{ info_dict.architect.lic_issue_date }}</td>
                     </tr>
-                    {% if info_dict.architect.lic_expire_date %}
+                    {% if info_dict.architect.lic_expire_date and info_dict.architect.lic_expire_date != '' %}
                         <tr>
                             <td class="rname">{{ Expiration_Date }}:</td>
                             <td>{{ info_dict.architect.expire_date }}</td>
@@ -112,7 +112,7 @@
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_type %}
-                                        {{ Project_Type }}: {{ rv.project_type }}
+                                        {{ Project_Type }}: {{ rv.get_project_type_display }}
                                     {% endif %}
                                     <br/>
                                     {% if rv.project_duration %}

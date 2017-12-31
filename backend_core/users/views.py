@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 
 from allauth.utils import import_attribute, get_user_model
 from allauth.exceptions import ImmediateHttpResponse
@@ -27,7 +28,7 @@ from .models import ConsumerProfile, ProfessionalProfile
 from .user_helpers import (retrieve_professional_info,
                            get_professional_corresponding_object_by_type_and_lic,
                            get_professional_user,
-                           generate_random_hoome_id)
+                           generate_random_hoome_id, password_generator)
 from .utils import *
 
 
@@ -56,11 +57,30 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         * https://github.com/pennersr/django-allauth/issues/215
     """
     email_address = sociallogin.account.extra_data['email']
-    users = get_user_model().objects.filter(email=email_address)
-    if users:
-        perform_login(request=request, user=users[0], email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
+    try:
+        user = get_user_model().objects.get(email=email_address)
+        print(0)
+        print(user)
+    except:
+        user = None
+    if user:
+        print(1)
+        perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
         url = get_adapter(request).get_login_redirect_url(request)
-        del request.session['success_url']
+        if 'success_url' in request.session:
+            del request.session['success_url']
+        raise ImmediateHttpResponse(redirect(url))
+    else:
+        # TODO: need to change in the future
+        user = get_user_model()(email=email_address)
+        user.hoome_id = generate_random_hoome_id()
+        user.username = user.hoome_id
+        user.password = make_password(password_generator())
+        user.save()
+        perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
+        url = get_adapter(request).get_login_redirect_url(request)
+        if 'success_url' in request.session:
+            del request.session['success_url']
         raise ImmediateHttpResponse(redirect(url))
 
 
@@ -84,14 +104,14 @@ def sign_up_complete_info(request, **kwargs):
 class DashboardAfterPasswordChangeView(PasswordChangeView):
     @property
     def success_url(self):
-        return '/'
+        return self.request.path
 
 
 @method_decorator(login_required, name='dispatch')
 class DashboardAfterPasswordSetView(PasswordSetView):
     @property
     def success_url(self):
-        return '/'
+        return self.request.path
 
 
 @method_decorator(login_required, name='dispatch')
@@ -143,7 +163,7 @@ class ProfessionalProfileAfterSignupView(View):
             form.save(request)
             professional = get_professional_user(request.user)
             # reverse url name with professional type
-            if request.session['success_url']:
+            if 'success_url' in request.session:
                 redirect_url = request.session['success_url']
                 del request.session['success_url']
             else:
@@ -214,6 +234,7 @@ class ProfessionalProfileView(View):
         self.initial['professional_type'] = professional.type
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
+        self.initial['county'] = professional.county
         self.initial['zipcode'] = professional.postal_code
         professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
                                                                                     lic=professional.lic_num)

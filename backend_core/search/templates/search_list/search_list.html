@@ -218,7 +218,7 @@
                 if (professionalList[i].hasOwnProperty('csp')) {
                     var address = `${professionalList[i]['street_address']}, ${professionalList[i]['csp']}`;
                 } else {
-                    var address = `${professionalList[i]['street_address']}, ${professionalList[i]['county']}, ${professionalList[i]['state']}, ${professionalList[i]['postal_code']}`;
+                    var address = `${professionalList[i]['street_address']}, ${professionalList[i]['county']}, ${professionalList[i]['state']}, ${professionalList[i]['pos_code']}`;
                 }
 
                 geocoder.geocode({'address': address}, function (result, status) {

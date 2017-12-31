@@ -8,7 +8,8 @@ from django.db import models
 # TODO: please change the type of field
 # TODO: need to redesign the architecture of designer
 class Designer(models.Model):
-    lic_num = models.IntegerField(primary_key=True, unique=True)
+    lic_id = models.AutoField(primary_key=True)
+    lic_num = models.CharField(max_length=63)
     lic_type = models.CharField(max_length=10)
     lic_name = models.CharField(max_length=63)
     bus_name = models.CharField(max_length=255, blank=True, null=True)
@@ -26,6 +27,11 @@ class Designer(models.Model):
     pos_code = models.CharField(max_length=25, blank=True, null=True)
     country = models.CharField(max_length=63, blank=True, null=True)
     uuid = models.CharField(max_length=36, default='0')
+    license_board = models.CharField(max_length=255, blank=True, null=True,
+                                     default='NCIDQ Certification')
+
+    class Meta:
+        unique_together = ( 'lic_num', 'lic_type','license_board')
 
     def __iter__(self):
         return self.__dict__.iteritems()

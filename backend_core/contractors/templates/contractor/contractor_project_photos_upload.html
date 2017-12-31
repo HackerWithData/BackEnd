@@ -23,7 +23,7 @@
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="id_img">{% trans "Project Photos" %}:</label>
-{#                #TODO: Change button text.#}
+                {#                #TODO: Change button text.#}
                 <input type="file" name="img" required="" multiple="" id="id_img">
 
                 {#                "{% trans 'Please choose pictures' %}"#}
@@ -34,4 +34,5 @@
         </div>
     </div>
 {% endblock %}
+
 

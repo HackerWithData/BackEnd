@@ -7,20 +7,20 @@ from utils import *
 
 
 class Professional(models.Model):
-    lic_num = models.CharField(max_length=25)
-    name = models.CharField(max_length=255)
+    lic_num = models.CharField(max_length=63)
+    name = models.CharField(max_length=255, blank=True, null=True)
     entity_type = models.CharField(
         max_length=63,
-        choices=ENTITY_CHOICES
+        choices=ENTITY_CHOICES, blank=True, null=True
     )
     type = models.CharField(
-        max_length=10,
-        choices=PROFESSIONAL_CHOICES
+        max_length=63,
+        choices=PROFESSIONAL_CHOICES, blank=True, null=True
     )
-    state = models.CharField(max_length=63)
-    lic_type = models.TextField(default='NO LIC TYPE')
-    #TODO: need to change the name to pos_code later
-    county = models.CharField(max_length=63)
+    state = models.CharField(max_length=63, blank=True, null=True)
+    lic_type = models.TextField(default='NO LIC TYPE', blank=True, null=True)
+    # TODO: need to change the name to pos_code later
+    county = models.CharField(max_length=63, blank=True, null=True)
     postal_code = models.CharField(max_length=63, blank=True, null=True)
 
 

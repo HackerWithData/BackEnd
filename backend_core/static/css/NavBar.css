@@ -331,7 +331,6 @@
 
     #main-nav {
         padding: 0px;
-        height: auto;
     }
 
     .header #main-nav .navbar-nav {
@@ -343,9 +342,9 @@
         color: #000000;
     }
 
-    /*.mobile-hide {*/
-    /*display: none;*/
-    /*}*/
+    .mobile-hide {
+    display: none;
+    }
     .nav.navbar-nav .dropdown {
         background-color: white;
     }

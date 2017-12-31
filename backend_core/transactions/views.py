@@ -45,9 +45,10 @@ class TransactionsView(View):
             transactions = Transaction.objects.filter(user=request.user)
         elif request.user.role == PROFESSIONAL:
             professional = request.user.professional_profiles.first().professional
+            ContentType.objects.get(model=professional.type.lower()).model_class().objects.get(lic_num=professional.lic_num)
             transactions = Transaction.objects.filter(
                 content_type=ContentType.objects.get(model=professional.type.lower()),
-                object_id=int(professional.lic_num))
+                object_id=int(ContentType.objects.get(model=professional.type.lower()).model_class().objects.get(lic_num=professional.lic_num).lic_id))
         info_dict = {'transactions': transactions}
         return render(request, template_name, {'info_dict': info_dict})
 
@@ -59,13 +60,13 @@ class TransactionsView(View):
             :param kwargs:
             :return:
         """
-        print(request.body)
+        #print(request.body)
         received_json_data = json.loads(request.body)
-        print(received_json_data)
+        #print(received_json_data)
         project = Project.objects.get(uuid=received_json_data['project_uuid'])
-        print(received_json_data['milestone_uuid'])
+        #print(received_json_data['milestone_uuid'])
         milestone = Milestone.objects.get(uuid=received_json_data['milestone_uuid'])
-        print(milestone.uuid)
+        #print(milestone.uuid)
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
         transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
                                                                  content_type=project.content_type,

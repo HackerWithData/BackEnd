@@ -10,9 +10,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as __
+from django.utils.translation import ugettext as _
 from django.forms.formsets import formset_factory
-# from django.contrib.auth import (logout as django_logout)
+from django.contrib.auth import (logout as django_logout)
+from django.forms.models import model_to_dict
+from django.shortcuts import get_object_or_404
 
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
@@ -21,10 +23,11 @@ from .forms import ProjectAttachmentForm, ProjectForm, ProjectFormDirectCreate, 
 from .adapter import save_milestone, _save_milestone, save_project, save_project_attachment, save_project_photo, \
     milestone_status_explanation
 from .decorators import check_recaptcha
-from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate
+from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, MilestoneForm, ProjectFormDirectCreate, \
+    ProjectEditForm
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
-
+from helplers import validate_hoome_id
 
 # TODO: need to rewrite the architecture here.
 # Create your views here.
@@ -91,19 +94,30 @@ class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 
     def get(self, request, uuid):
-        initial = {
-            "amount": 2000
-        }
+        initial = {"amount": 2000}
         milestone_form = MilestoneForm(initial=initial)
         project = Project.objects.get(uuid=uuid)
+
         if project.user is None:
-            project.user = request.user
-            project.save()
+            if request.user.role == CONSUMER:
+                project.user = request.user
+            else:
+                django_logout(request)
+                messages.warning(request, _("Please Login as Homeowner."))
+                request.session['success_url'] = '/project/' + uuid
+                return redirect(request.session['success_url'])
         elif project.content_type is None:
-            pro = get_professional_user(request.user)
-            project.content_type = ContentType.objects.get(model=pro.type.lower())
-            project.object_id = pro.lic_num
-            project.save()
+            if request.user.role == PROFESSIONAL:
+                pro = get_professional_user(request.user)
+                project.bus_name = pro.name
+                project.content_type = ContentType.objects.get(model=pro.type.lower())
+                project.object_id = pro.lic_num
+            else:
+                django_logout(request)
+                messages.warning(request, _("Please Login as Professional."))
+                request.session['success_url'] = '/project/' + uuid
+                return redirect(request.session['success_url'])
+        project.save()
         project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
         project_photos = ProjectPhoto.objects.filter(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
@@ -125,7 +139,6 @@ class ProjectDetail(View):
             # print(type(project.object_id)) type: unicode
             if ct == project.content_type and str(lic_num) == str(project.object_id):
                 flag = True
-
         if flag:
             info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
                          'project_photos': project_photos, 'transactions': transactions,
@@ -134,7 +147,7 @@ class ProjectDetail(View):
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
-            raise Http404(__("Page Not Found"))
+            raise Http404(_("Page Not Found"))
 
     def post(self, request, uuid):
         if request.POST.get('create-milestone'):
@@ -162,7 +175,7 @@ class ProjectDetail(View):
             project.save()
 
             # The professional requests homeowner to allow Hoome release the payment and make a new payment for next milestone.
-            messages.success(request, __('Success'))
+            messages.success(request, _('Success'))
             return redirect(request.path)
 
         elif request.POST.get('release-money'):
@@ -173,16 +186,16 @@ class ProjectDetail(View):
             project.project_action = "Release Money"
             project.save()
             # TODO: add some functions to send the money?
-            messages.success(request, __('Success'))
+            messages.success(request, _('Success'))
             return redirect(request.path)
 
         else:  # TODO: The logic here is weird need to change
-            messages.warning(request, __('Failed'))
+            messages.warning(request, _('Failed'))
             return redirect(request.path)  #
 
 
 # else:
-#     messages.warning(request, __('Please Log in as Homeowner first.'))
+#     messages.warning(request, _('Please Log in as Homeowner first.'))
 #     django_logout(request)
 #     return redirect(reverse('account_login')+'?next='+request.path)
 @check_recaptcha
@@ -195,15 +208,21 @@ def create_project(request, professional_type=None, lic_id=None):
     :return:
     """
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
+    direct_create = True
     MilestoneFormSet = formset_factory(MilestoneForm)
     if request.method == "GET":
         # initial={'start_date': datetime.datetime.today()}
         milestone_formset = MilestoneFormSet()
         if professional_type and lic_id:
-            project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                'last_name': request.user.last_name})
+            if request.user.is_authenticated:
+                project_form = ProjectForm(initial={'first_name': request.user.first_name,
+                                                    'last_name': request.user.last_name})
+            else:
+                project_form = ProjectForm()
         else:
             project_form = ProjectFormDirectCreate()
+        if professional_type and lic_id:
+            direct_create = False
 
     elif request.method == "POST":
         # print(request.POST)
@@ -213,7 +232,7 @@ def create_project(request, professional_type=None, lic_id=None):
             project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
 
-        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid:
+        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             # print(request.POST)
             # print(milestone_formset)
             project = save_project(request, project_form, professional_type, lic_id)
@@ -224,5 +243,21 @@ def create_project(request, professional_type=None, lic_id=None):
             request.session['success_url'] = success_url
             return redirect(success_url)
 
-    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset}
+    info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}
+    return render(request, template_name, {'info_dict': info_dict})
+
+
+@check_recaptcha
+def edit_project(request, uuid):
+    template_name = "projects/edit_project.html"
+    project = get_object_or_404(Project, uuid=uuid)
+    if request.method == "GET":
+        project_edit_form = ProjectEditForm(initial=model_to_dict(project))
+    elif request.method == "POST":
+        project_edit_form = ProjectEditForm(request.POST)
+        if project_edit_form.is_valid():
+            project_edit_form.update(instance=project)
+            success_url = reverse('display_project_detail', kwargs={'uuid': uuid})
+            return redirect(success_url)
+    info_dict = {'project_edit_form': project_edit_form}
     return render(request, template_name, {'info_dict': info_dict})
