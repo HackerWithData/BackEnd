@@ -117,10 +117,8 @@ class ContractorDetail(View):
         lic_type = contractor.lic_type.split('&')
         # review
         try:
-            if contractor_id.startswith('TX'):
-                review = None
-            else:
-                review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+
+            review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
                                                object_id=o_id, review_status='A')
         except:
             review = None
@@ -219,18 +217,21 @@ class ContractorDetail(View):
         try:
             bgimage = BackgroundPhoto.objects.get(content_type=ContentType.objects.get(model='contractor'),
                                                   object_id=o_id)
-        except BackgroundPhoto.DoesNotExist:
+        except:
             bgimage = None
 
         bh = BondHistory.objects.filter(contractor_id=o_id).order_by('-bond_effective_date').first()
-        wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
+        wh = WorkerCompensationHistory.objects.filter(contractor_id=o_id).order_by(
             '-insur_effective_date').first()
 
         data_source = 'California Contractors State License Board'
         try:
-            hscore = Hscore.objects.get(contractor_id=o_id)
+            if contractor_id.startswith('TX'):
+                hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+            else:
+                hscore = Hscore.objects.get(contractor_id=o_id)
         except:
-            Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
+            hscore = Hscore.objects.create(contractor=contractor, score=None, rank=None, max=None)
 
         letter_grade = convert_hscore_to_rank(hscore)
         full_state_name = get_state_full_name(contractor.state)
@@ -238,37 +239,51 @@ class ContractorDetail(View):
         lic_type = contractor.lic_type.split('&')
         # review
         try:
+
             review = Review.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                           object_id=o_id, review_status='A')
+                                               object_id=o_id, review_status='A')
         except:
             review = None
         # rating
+
         RATING_STAR_MAX = 10
-        contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                                   object_id=o_id).order_by('ratings_average')
         ratings = {}
         ratings['stars'] = range(RATING_STAR_MAX, 0, -1)
-        # TODO:NEED TO CHANGE HERE
-        ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
-        try:
-            ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
-                               contractor_ratings]
-        except:
-            pass
+        if contractor_id.startswith('TX'):
+            ratings['overall'] = 0
+            ratings['rate'] = 0
 
-        project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
-                                              object_id=o_id)
-        if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
-            length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
-        # test issue, won't happen in prod
-        elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
-            length = 0
         else:
-            length = int(datetime.date.today().year - contractor.lic_issue_date.year)
+            contractor_ratings = Rating.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                                       object_id=o_id).order_by('ratings_average')
+
+            # TODO:NEED TO CHANGE HERE
+            ratings['overall'] = (avg_rating(review, 'Q') + avg_rating(review, 'E') + avg_rating(review, 'L')) / 3
+            try:
+                ratings['rate'] = [(item.average, round(item.average * 1.0 / RATING_STAR_MAX, 2)) for item in
+                                   contractor_ratings]
+            except:
+                pass
+        try:
+            project_photos = Photo.objects.filter(content_type=ContentType.objects.get(model='contractor'),
+                                                  object_id=o_id)
+        except:
+            project_photos = None
+        try:
+            if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
+                length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+            elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+                length = 0
+            else:
+                length = int(datetime.date.today().year - contractor.lic_issue_date.year)
+        except:
+            length = "N/A"
+        # test issue, won't happen in prod
+
 
         try:
             complaint = ComplaintOverall.objects.get(contractor=contractor)
-        except ComplaintOverall.DoesNotExist:
+        except:
             complaint = Complaint1
             complaint.case = 0
             complaint.citation = 0
@@ -298,13 +313,13 @@ class ContractorDetail(View):
         try:
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='contractor'),
                                             object_id=o_id).overview
-        except Overview.DoesNotExist:
+        except:
             overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
-            according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
-            is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
-             like to know {lic_name} more, please contact us and we will share more information and data about this
-              contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
-                                            score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
+              according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+              is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+               like to know {lic_name} more, please contact us and we will share more information and data about this
+                contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
+                                              score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
 
         overview_form = OverviewForm(initial={'overview': overview})
 
