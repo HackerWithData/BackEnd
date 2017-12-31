@@ -250,8 +250,44 @@ class Login(LoginView):
 
     def get_redirect_url(self, request):
         request_path = request.get_full_path()
-        if '?next=' in request_path:
-            return request_path.split('?next=', 1)[1]
+        if 'next=' in request_path:
+            return request_path.split('next=', 1)[1]
+        else:
+            return request.POST.get('next', '/')
+
+    def get_success_url(self):
+        ret = self.get_redirect_url(self.request) or self.success_url
+        return ret
+
+    def get_context_data(self, **kwargs):
+        ret = super(Login, self).get_context_data(**kwargs)
+        ret.update({
+            'redirect_field_value': self.get_success_url(),
+            'signup_url': self.passthrough_next_redirect_url(),
+        })
+        return ret
+
+    def passthrough_next_redirect_url(self):
+        info_url = reverse('account_signup_complete_info')
+        next_url = self.get_success_url()
+        if 'refered' in self.request.GET:
+            return next_url + "&info_url=" + info_url
+        else:
+            return next_url
+
+
+class Signup(SignupView):
+    
+    def dispatch(self, request, *args, **kwargs):
+        print self.get_success_url()
+        return super(Signup, self).dispatch(request, *args, **kwargs)
+
+    def get_redirect_url(self, request):
+        request_path = request.get_full_path()
+        if 'info_url' in request.GET:
+            return request.GET.get('info_url')
+        elif 'next=' in request_path:
+            return request_path.split('next=', 1)[1]
         else:
             return request.POST.get('next', None)
 
@@ -260,12 +296,11 @@ class Login(LoginView):
         return ret
 
     def get_context_data(self, **kwargs):
-        ret = super(Login, self).get_context_data(**kwargs)
-        ret.update({'redirect_field_value': self.get_success_url()})
+        ret = super(Signup, self).get_context_data(**kwargs)
+        ret.update({
+            'redirect_field_value': self.get_success_url(),
+        })
         return ret
-
-
-class Signup(SignupView):
 
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses

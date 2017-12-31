@@ -288,7 +288,7 @@
 
                                 {#                            <li><a href="{% url 'account_logout' %}" >Log Out</a></li>#}
                             {% else %}
-                                <li><a href="{% url 'account_login' %}?next={{ request.get_full_path }}">{% trans "Sign In" %}</a></li>
+                                <li><a href="{% url 'account_login' %}?refered=True&next={{ request.get_full_path }}">{% trans "Sign In" %}</a></li>
                             {% endif %}
                             <li class="desktop"><a class="create-project desktop" href="{% url 'create_project_direct' %}">
                                 <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
