@@ -98,8 +98,8 @@ class ProjectDetail(View):
             else:
                 django_logout(request)
                 messages.warning(request, _("Please Login as Homeowner."))
-                request.session['success_url'] = '/project/' + uuid
-                return redirect(request.session['success_url'])
+                success_url = '/project/' + uuid
+                return redirect(success_url)
         elif project.content_type is None:
             if request.user.role == PROFESSIONAL:
                 pro = get_professional_user(request.user)
@@ -109,8 +109,8 @@ class ProjectDetail(View):
             else:
                 django_logout(request)
                 messages.warning(request, _("Please Login as Professional."))
-                request.session['success_url'] = '/project/' + uuid
-                return redirect(request.session['success_url'])
+                success_url = '/project/' + uuid
+                return redirect(success_url)
         project.save()
         project_attachments = get_project_attachments(project=project)
         project_photos = get_project_photos(project=project)
@@ -219,7 +219,6 @@ def create_project(request, professional_type=None, lic_id=None):
             upload_attachment(request=request, project=project, form=project_form)
             save_project_photo(request, project)
             success_url = reverse('display_project_overview') + project.uuid
-            request.session['success_url'] = success_url
             return redirect(success_url)
     info_dict = {
         'project_form': project_form,

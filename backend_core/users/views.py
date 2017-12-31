@@ -68,8 +68,6 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     if user:
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
         url = get_adapter(request).get_login_redirect_url(request)
-        if 'success_url' in request.session:
-            del request.session['success_url']
         raise ImmediateHttpResponse(redirect(url))
     else:
         # TODO: need to change in the future
@@ -80,20 +78,15 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         user.save()
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
         url = get_adapter(request).get_login_redirect_url(request)
-        if 'success_url' in request.session:
-            del request.session['success_url']
         raise ImmediateHttpResponse(redirect(url))
 
 
 @login_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
-        if 'success_url' in request.session:
-            return redirect(request.session['success_url'])
-        else:
             # return redirect('/')
             # return redirect('account_consumer_profile_after_signup')
-            return redirect('show_dashboard')
+        return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
         return redirect('account_professional_profile_after_signup')
     else:
@@ -164,11 +157,8 @@ class ProfessionalProfileAfterSignupView(View):
             form.save(request)
             professional = get_professional_user(request.user)
             # reverse url name with professional type
-            if 'success_url' in request.session:
-                redirect_url = request.session['success_url']
-                del request.session['success_url']
-            else:
-                redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
+
+            redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
             return redirect(redirect_url)
 
         return render(request, self.template_name, {'form': form})
@@ -250,7 +240,6 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
-
             messages.success(request, _("Your Profile updated."))
             return redirect(request.path)
 
@@ -258,26 +247,26 @@ class ProfessionalProfileView(View):
 
 
 class Login(LoginView):
-    def dispatch(self, request, *args, **kwargs):
-        if 'next' in request.GET:
-            request.session['success_url'] = request.GET['next']
-        elif 'HTTP_REFERER' in request.META:
-            if not 'accounts/' in request.META['HTTP_REFERER']:
-                request.session['success_url'] = request.META['HTTP_REFERER']
-        # else:
-        #     request.session['success_url'] = '/'
-        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        success_url = self.get_success_url()
-        try:
-            response = form.login(self.request, redirect_url=success_url)
-            return response
-        except ImmediateHttpResponse as e:
-            return e.response
+    def get_redirect_url(self, request):
+        request_path = request.get_full_path()
+        if '?next=' in request_path:
+            return request_path.split('?next=', 1)[1]
+        else:
+            return request.POST.get('next', None)
+
+    def get_success_url(self):
+        ret = self.get_redirect_url(self.request) or self.success_url
+        return ret
+
+    def get_context_data(self, **kwargs):
+        ret = super(Login, self).get_context_data(**kwargs)
+        ret.update({'redirect_field_value': self.get_success_url()})
+        return ret
 
 
 class Signup(SignupView):
+
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
