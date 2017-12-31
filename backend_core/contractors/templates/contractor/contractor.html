@@ -68,7 +68,9 @@
                                 {#                                    {% endblocktrans %}#}
                                 {#                                </div>#}
                             </li>
-                            <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
+                            {% if info_dict.contractor.phone %}
+                                <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
+                            {% endif %}
                         </ul>
                         <ul style="list-style-type:None;">
                             <li>

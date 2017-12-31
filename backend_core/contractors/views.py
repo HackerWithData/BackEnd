@@ -192,12 +192,22 @@ class ContractorDetail(View):
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='contractor'),
                                             object_id=o_id).overview
         except:
-            overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
-            according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
-            is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
-             like to know {lic_name} more, please contact us and we will share more information and data about this
-              contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
-                                            score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
+            if contractor.license_board:
+                data_source = contractor.license_board
+            if contractor.csp and contractor.csp != '':
+                overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
+                according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+                is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+                 like to know {lic_name} more, please contact us and we will share more information and data about this
+                  contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
+                                                score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
+            else:
+                overview = _("""{lic_name} is a contractor company. The company holds a license number 
+                according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+                is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+                 like to know {lic_name} more, please contact us and we will share more information and data about this
+                  contractor to you.""").format(lic_name=contractor.lic_name, data_source=data_source,
+                                                score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
 
         overview_form = OverviewForm(initial={'overview': overview})
 
@@ -314,12 +324,22 @@ class ContractorDetail(View):
             overview = Overview.objects.get(content_type=ContentType.objects.get(model='contractor'),
                                             object_id=o_id).overview
         except:
-            overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
-              according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
-              is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
-               like to know {lic_name} more, please contact us and we will share more information and data about this
-                contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
-                                              score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
+            if contractor.license_board:
+                data_source = contractor.license_board
+            if contractor.csp and contractor.csp != '':
+                overview = _("""{lic_name} is a contractor company located in {csp} . The company holds a license number 
+                according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+                is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+                 like to know {lic_name} more, please contact us and we will share more information and data about this
+                  contractor to you.""").format(lic_name=contractor.lic_name, csp=contractor.csp, data_source=data_source,
+                                                score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
+            else:
+                overview = _("""{lic_name} is a contractor company. The company holds a license number 
+                according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+                is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+                 like to know {lic_name} more, please contact us and we will share more information and data about this
+                  contractor to you.""").format(lic_name=contractor.lic_name, data_source=data_source,
+                                                score=hscore.score, rank=letter_grade, full_state_name=full_state_name)
 
         overview_form = OverviewForm(initial={'overview': overview})
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-12 22:14+0000\n"
+"POT-Creation-Date: 2017-12-31 18:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,28 +64,28 @@ msgid "Contract Us"
 msgstr "与我们签订合同"
 
 #: architects/templates/architect/architect.html:91
-#: contractors/templates/contractor/contractor.html:101
+#: contractors/templates/contractor/contractor.html:102
 #: designers/templates/designer/designer.html:97
 #: meisters/templates/meister/meister.html:103
 msgid "Project Photo Upload"
 msgstr "上传项目照片"
 
 #: architects/templates/architect/architect.html:93
-#: contractors/templates/contractor/contractor.html:103
+#: contractors/templates/contractor/contractor.html:104
 #: designers/templates/designer/designer.html:99
 #: meisters/templates/meister/meister.html:105
 msgid "Background Image Upload"
 msgstr "上传背景照片"
 
 #: architects/templates/architect/architect.html:136
-#: contractors/templates/contractor/contractor.html:145
+#: contractors/templates/contractor/contractor.html:146
 #: designers/templates/designer/designer.html:140
 #: meisters/templates/meister/meister.html:147 templates/base.html:32
 msgid "Review us"
 msgstr "评价我们"
 
 # python-brace-format
-#: architects/views.py:99 architects/views.py:224
+#: architects/views.py:99 architects/views.py:225
 #, python-brace-format
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
@@ -100,12 +100,12 @@ msgstr ""
 "件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们"
 "会向您分享更多关于该商家的信息和数据。"
 
-#: architects/views.py:156 contractors/views.py:349 meisters/views.py:197
+#: architects/views.py:156 contractors/views.py:405 meisters/views.py:197
 msgid "Error Pages!"
 msgstr "错误页面"
 
-#: architects/views.py:248 architects/views.py:282 contractors/views.py:373
-#: contractors/views.py:407 meisters/views.py:223 meisters/views.py:256
+#: architects/views.py:250 architects/views.py:285 contractors/views.py:430
+#: contractors/views.py:465 meisters/views.py:223 meisters/views.py:256
 msgid "No Pages Found."
 msgstr "找不到该网页。"
 
@@ -159,25 +159,40 @@ msgstr "项目照片"
 msgid "Warning"
 msgstr "警告"
 
-#: contractors/views.py:177 contractors/views.py:281
-#, python-brace-format
+#: contractors/views.py:198 contractors/views.py:330
 msgid ""
 "{lic_name} is a contractor company located in {csp} . The company holds a "
 "license number \n"
-"            according to {data_source}. According to real-time data "
+"                according to {data_source}. According to real-time data "
 "analysis, this licensed contractor's hoome score \n"
-"            is {score} and is rated as {rank}. The License is verified as "
-"active when we checked last time. If you would\n"
-"             like to know {lic_name} more, please contact us and we will "
+"                is {score} and is rated as {rank}. The License is verified "
+"as active when we checked last time. If you would\n"
+"                 like to know {lic_name} more, please contact us and we will "
 "share more information and data about this\n"
-"              contractor to you."
+"                  contractor to you."
 msgstr ""
 "{lic_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
 "{score}， 评定区间为{rank}。如果您需要了解{lic_name}更多的资讯，请联系我们，"
 "我们会向您分享更多关于该商家的信息和数据。"
 
-#: contractors/views.py:342 designers/views.py:147 meisters/views.py:191
+#: contractors/views.py:205 contractors/views.py:337
+msgid ""
+"{lic_name} is a contractor company. The company holds a license number \n"
+"                according to {data_source}. According to real-time data "
+"analysis, this licensed contractor's hoome score \n"
+"                is {score} and is rated as {rank}. The License is verified "
+"as active when we checked last time. If you would\n"
+"                 like to know {lic_name} more, please contact us and we will "
+"share more information and data about this\n"
+"                  contractor to you."
+msgstr ""
+"{lic_name} 是一家建筑装修承包商公司。根据{data_source}，该承包商持有"
+"相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
+"{score}， 评定区间为{rank}。如果您需要了解{lic_name}更多的资讯，请联系我们，"
+"我们会向您分享更多关于该商家的信息和数据。"
+
+#: contractors/views.py:398 designers/views.py:148 meisters/views.py:191
 msgid "Submit Failed. Please verify your content is correct."
 msgstr "提交失败，请确保您所填内容正确"
 
@@ -204,7 +219,7 @@ msgstr "这是您的个人用户面板。您可以通过点击左边按钮来设
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
-#: designers/views.py:96 designers/views.py:219
+#: designers/views.py:97 designers/views.py:221
 #, python-brace-format
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
@@ -348,23 +363,23 @@ msgstr "油漆承包商"
 msgid "Sheet Metal Contractor"
 msgstr "金属板承包商"
 
-#: projects/adapter.py:109 projects/adapter.py:111
+#: projects/adapter.py:110 projects/adapter.py:112
 msgid "Waiting for homeowner make the payment."
 msgstr "等待业主支付"
 
-#: projects/adapter.py:114
+#: projects/adapter.py:115
 msgid "Hoome has recevied the payment and will hold for you."
 msgstr "Hoome已经收到此款项并为您保存"
 
-#: projects/adapter.py:116
+#: projects/adapter.py:117
 msgid "Hoome has recevied the payment and please start to work."
 msgstr "Hoome已经收到此款项， 请开始施工"
 
-#: projects/adapter.py:119
+#: projects/adapter.py:120
 msgid "You have allowed Hoome release the payment."
 msgstr "您已经允许Hoome释放这笔款项"
 
-#: projects/adapter.py:121
+#: projects/adapter.py:122
 msgid "Homeowner have released the payment for current milestone."
 msgstr "业主已经释放现阶段的款项给您"
 
@@ -765,7 +780,7 @@ msgstr "商家资讯"
 msgid "License Status"
 msgstr "证件状态"
 
-#: templates/base.html:39 users/forms.py:105 users/forms.py:335
+#: templates/base.html:39 users/forms.py:105 users/forms.py:341
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:428
 msgid "License Number"
 msgstr "证件号码"
@@ -1179,7 +1194,7 @@ msgstr "无效的邮政编码"
 msgid "Must select a gender"
 msgstr "必须选定您的性别"
 
-#: users/forms.py:114 users/forms.py:350
+#: users/forms.py:114 users/forms.py:356
 msgid "Professional Type"
 msgstr "专业类型"
 
@@ -1514,6 +1529,33 @@ msgstr "证件号码不存在"
 #: users/views.py:211 users/views.py:253
 msgid "Your Profile updated."
 msgstr "您的档案已更新"
+
+#, fuzzy
+#~| msgid ""
+#~| "{lic_name} is a contractor company located in {csp} . The company holds "
+#~| "a license number \n"
+#~| "            according to {data_source}. According to real-time data "
+#~| "analysis, this licensed contractor's hoome score \n"
+#~| "            is {score} and is rated as {rank}. The License is verified "
+#~| "as active when we checked last time. If you would\n"
+#~| "             like to know {lic_name} more, please contact us and we will "
+#~| "share more information and data about this\n"
+#~| "              contractor to you."
+#~ msgid ""
+#~ "{lic_name} is a contractor company located in {csp} . The company holds a "
+#~ "license number \n"
+#~ "              according to {data_source}. According to real-time data "
+#~ "analysis, this licensed contractor's hoome score \n"
+#~ "              is {score} and is rated as {rank}. The License is verified "
+#~ "as active when we checked last time. If you would\n"
+#~ "               like to know {lic_name} more, please contact us and we "
+#~ "will share more information and data about this\n"
+#~ "                contractor to you."
+#~ msgstr ""
+#~ "{lic_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商"
+#~ "持有相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的"
+#~ "Hoome 评分为{score}， 评定区间为{rank}。如果您需要了解{lic_name}更多的资"
+#~ "讯，请联系我们，我们会向您分享更多关于该商家的信息和数据。"
 
 #~ msgid "cannot be a negative number"
 #~ msgstr "不能为负数"
