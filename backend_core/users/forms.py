@@ -173,7 +173,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
     # TODO; need to change this part since lic_num is not numberic sometimes
     def clean_license_num(self):
         lic = self.cleaned_data['license_num']
-        lic_num = int(lic.strip(string.ascii_letters))
+        lic_num = str(lic.strip(string.ascii_letters))
         return lic_num
 
     def clean_professional_type(self):
@@ -246,8 +246,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
         else:
             # TODO: need to fix later
-            if clean_state.lower == "tx" or clean_state.lower == "texas":
-                clean_license_num = "TX" + clean_license_num
+            if "tx" in clean_state.lower() or "texas" in clean_state.lower():
+                clean_license_num = "TX" + str(clean_license_num)
             professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
             # print professional_qs
             # find the result
