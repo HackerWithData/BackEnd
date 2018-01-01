@@ -8,11 +8,29 @@ from django.contrib.auth.decorators import login_required
 
 from allauth.account.forms import SignupForm
 
-from professionals.utils import ENTITY_CHOICES, P, S, C, PROFESSIONAL_CHOICES, PROFESSIONAL_SUBTYPE_CHOICES, CONTRACTOR, \
-    ARCHITECT, DESIGNER
-from professionals.models import Professional, ProfessionalType
+from professionals.models import (
+    Professional,
+    ProfessionalType,
+    ENTITY_CHOICES,
+    P,
+    S,
+    C,
+    PROFESSIONAL_CHOICES,
+    PROFESSIONAL_SUBTYPE_CHOICES,
+    CONTRACTOR,
+    ARCHITECT,
+    DESIGNER,
+)
 from meisters.models import Meister
-from .models import User, ConsumerProfile, ProfessionalProfile
+from .models import (
+    User,
+    ConsumerProfile,
+    ProfessionalProfile,
+    ROLE_CHOICES,
+    GENDER_CHOICES,
+    MALE,
+    FEMALE,
+)
 from .user_helpers import get_professional_corresponding_object_by_type_and_lic, \
     create_professional_corresponding_object
 from .utils import *

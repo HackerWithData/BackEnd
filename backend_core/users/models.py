@@ -9,7 +9,34 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 from professionals.models import Professional
-from utils import *
+
+
+# role type
+PROFESSIONAL = 'PROFESSIONAL'
+CONSUMER = 'CONSUMER'
+ROLE_CHOICES = (
+    (PROFESSIONAL, _('Professional')),
+    (CONSUMER, _('Consumer')),
+)
+
+# gender type
+MALE = 'MALE'
+FEMALE = 'FEMALE'
+GENDER_CHOICES = (
+    (MALE, _('Male')),
+    (FEMALE, _('Female')),
+)
+
+HOLD = "H"
+SIGNED = "S"
+AVAILABLE = "A"
+BAD = 'B'
+ID_STATUS = (
+    (HOLD, _("Hold")),
+    (BAD, _("Bad")),
+    (SIGNED, _("Signed")),
+    (AVAILABLE, _("Available")),
+)
 
 
 class User(AbstractUser):

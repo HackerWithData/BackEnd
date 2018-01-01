@@ -1,18 +1,22 @@
 from random import randint
+import random
+import string
 
 from django.db.models.aggregates import Count
 from django.core.exceptions import ObjectDoesNotExist
-import random
-import string
-from users.models import User
+
+from users.models import User, AVAILABLE, HoomeId
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
 from meisters.models import Meister
-from professionals.models import Professional
-from professionals.utils import CONTRACTOR, ARCHITECT, DESIGNER, MEISTER
-from .models import HoomeId
-from .utils import AVAILABLE
+from professionals.models import (
+    Professional,
+    CONTRACTOR,
+    ARCHITECT,
+    DESIGNER,
+    MEISTER,
+)
 
 
 def get_professional_user(user):

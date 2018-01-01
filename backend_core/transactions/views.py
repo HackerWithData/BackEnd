@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import json
+from datetime import datetime
 
-from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from django.shortcuts import render, redirect
@@ -10,13 +10,27 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from projects.models import Project
-from projects.utils import get_a_uuid
-from users.utils import CONSUMER, PROFESSIONAL
+from projects.utils import (
+    get_a_uuid,
+    get_project,
+    get_user_projects,
+)
+from users.models import CONSUMER, PROFESSIONAL
 from .forms import TransactionForm, TransactionHistoryForm
-from .utils import *
-from .models import Transaction, TransactionHistory, Milestone
-from projects.utils import (PAID_TO_HOOME)
+from .utils import (
+    get_transactions,
+    generate_transaction_number,
+    get_or_create_transaction,
+    generate_transaction_uuid,
+    create_transaction_history,
+)
+from .models import SUCCESS
+from projects.models import PAID_TO_HOOME
+from projects.utils import (
+    get_milestone,
+    get_project,
+    update_milestone,
+)
 
 # Create your views here.
 # TODO: Simplify this part
@@ -40,14 +54,7 @@ class TransactionsView(View):
             :return:
         """
         template_name = 'transaction/transactions.html'
-
-        if request.user.role == CONSUMER:
-            transactions = Transaction.objects.filter(user=request.user)
-        elif request.user.role == PROFESSIONAL:
-            professional = request.user.professional_profiles.first().professional
-            transactions = Transaction.objects.filter(
-                content_type=ContentType.objects.get(model=professional.type.lower()),
-                object_id=int(professional.lic_num))
+        transactions = get_transactions(request.user)
         info_dict = {'transactions': transactions}
         return render(request, template_name, {'info_dict': info_dict})
 
@@ -59,18 +66,27 @@ class TransactionsView(View):
             :param kwargs:
             :return:
         """
-        print(request.body)
         received_json_data = json.loads(request.body)
-        print(received_json_data)
-        project = Project.objects.get(uuid=received_json_data['project_uuid'])
-        print(received_json_data['milestone_uuid'])
-        milestone = Milestone.objects.get(uuid=received_json_data['milestone_uuid'])
-        print(milestone.uuid)
+        project = get_project(uuid=received_json_data['project_uuid'])
+        milestone = get_milestone(uuid=received_json_data['milestone_uuid'])
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
-        transaction, created = Transaction.objects.get_or_create(project=project, user=project.user, milestone=milestone,
-                                                                 content_type=project.content_type,
-                                                                 object_id=project.object_id,
-                                                                 transaction_key=received_json_data['transaction_key'])
+        # transaction, created = Transaction.objects.get_or_create(
+        #     project=project,
+        #     user=project.user,
+        #     milestone=milestone,
+        #     content_type=project.content_type,
+        #     object_id=project.object_id,
+        #     transaction_key=received_json_data['transaction_key']
+        # )
+        transaction, created = get_or_create_transaction(
+            **{
+                'project': project,
+                'user': project.user,
+                'milestone': milestone,
+                'content_type': project.content_type,
+                'object_id': project.object_id,
+                'transaction_key': received_json_data['transaction_key']
+        })
 
         # TODO: consider wheter ignore to use get_or_create since it will query 2 times. we sill need to change Person object after created.
         # TODO: better to redesign here
@@ -80,23 +96,15 @@ class TransactionsView(View):
             else:
                 transaction.amount = float(received_json_data['amount'])
             transaction.created_at = datetime.utcfromtimestamp(received_json_data['created_at'])
-            flag = True
-            while flag:
-                try:
-                    uuid = get_a_uuid()
-                    Transaction.objects.get(uuid=uuid)
-                except Transaction.DoesNotExist:
-                    flag = False
-            transaction.uuid = uuid
+            transaction.uuid = generate_transaction_uuid()
 
         transaction.status = received_json_data['status'].upper()[0]
         transaction.save()
         # TODO: we can remove this conditional statement probably
         if transaction.status == SUCCESS:
-            milestone.status = PAID_TO_HOOME
-            milestone.save()
+            update_milestone(milestone=milestone, **{'status': PAID_TO_HOOME})
         # insert a new transaction history with pending status as soon as a transaction created
-        TransactionHistory.objects.create(transaction=transaction, status=transaction.status)
+        create_transaction_history(transaction=transaction)
         # TODO: should refresh the page. or refresh some part of html
         return HttpResponse(status=204)
 
@@ -132,6 +140,7 @@ class TransactionView(View):
             :return:
         """
         return HttpResponseNotAllowed
+
 
 @method_decorator(login_required, name='dispatch')
 class TransactionHistoryView(View):
@@ -198,7 +207,7 @@ def project_checkout(request):
     template_name = 'transaction/checkout.html'
 
     # TODO: Add status filter
-    projects = Project.objects.filter(user=request.user).order_by('-project_id')
+    projects = get_user_projects(user=request.user)
     info_dict = {'projects': projects}
     if request.method == 'GET':
         return render(request, template_name, {'info_dict': info_dict})
@@ -212,9 +221,10 @@ def project_checkout(request):
         url = '/checkout/' + request.POST.get('project_uuid')
         return redirect(url)
 
+
 #TODO: need to take care project_uuid here
 def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
-    projects = Project.objects.get(uuid=project_uuid)
+    projects = get_project(uuid=project_uuid)
     info_dict = {'project': projects}
     return render(request, template_name, {'info_dict': info_dict})

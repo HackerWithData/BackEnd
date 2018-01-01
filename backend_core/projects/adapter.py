@@ -3,9 +3,17 @@ import re
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 
-from .utils import get_a_uuid, WAITING, PAID_TO_PROFESSIONAL, PAID_TO_HOOME
+from .utils import get_a_uuid
 
-from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
+from .models import (
+    Project,
+    ProjectPhoto,
+    ProjectAttachment,
+    Milestone,
+    WAITING,
+    PAID_TO_PROFESSIONAL,
+    PAID_TO_HOOME,
+)
 from users.utils import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
@@ -74,16 +82,6 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
 
     project.save()
     return project
-
-
-def save_project_attachment(request, project, project_form):
-    files = request.FILES.getlist('project_attachment')
-    if len(files) > 0:
-        for f in files:
-            ProjectAttachment.objects.create(project_attachment=f, title=f.name, project=project,
-                                             attachment_type=project_form.cleaned_data['attachment_type'])
-    else:
-        pass
 
 
 def save_project_photo(request, project):

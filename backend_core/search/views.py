@@ -13,7 +13,12 @@ from django.utils.functional import Promise
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
 
-from professionals.utils import ARCHITECT, DESIGNER, CONTRACTOR,MEISTER
+from professionals.models import (
+    ARCHITECT,
+    DESIGNER,
+    CONTRACTOR,
+    MEISTER,
+)
 from search_helpers import (search_by_zipcode,
                             search_by_address_object_redirect_url,
                             search_by_name_or_lic)

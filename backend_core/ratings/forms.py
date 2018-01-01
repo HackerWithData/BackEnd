@@ -8,3 +8,10 @@ class UserRatingForm(forms.Form):
     e_rating = forms.CharField(label='Efficiency', widget=forms.RadioSelect(choices=rate_star_choices))
     q_rating = forms.CharField(label='Quality', widget=forms.RadioSelect(choices=rate_star_choices))
     l_rating = forms.CharField(label='Length', widget=forms.RadioSelect(choices=rate_star_choices))
+
+
+def get_user_rating_form(data=None):
+    if data is None:
+        return UserRatingForm()
+    else:
+        return UserRatingForm(data)

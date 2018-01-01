@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='architect',
-            name='uuid',
+            name='architect_uuid',
             field=models.CharField(default='0', max_length=32),
         ),
     ]

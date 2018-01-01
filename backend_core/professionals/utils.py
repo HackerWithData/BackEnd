@@ -1,68 +1,6 @@
-from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
-CONTRACTOR = 'CONTRACTOR'
-ARCHITECT = 'ARCHITECT'
-DESIGNER = 'DESIGNER'
-MEISTER = 'MEISTER'
-# TODO: take care
-PROFESSIONAL_CHOICES = (
-    (CONTRACTOR, _('Contractor')),
-    (ARCHITECT, _('Architect')),
-    (DESIGNER, _('Designer')),
-    (MEISTER, _('Meister'))
-)
-
-# entity type
-C = 'Corporation'
-S = 'Sole Ownership'
-P = 'Partnership'
-ENTITY_CHOICES = (
-    (C, _('Corporation')),
-    (P, _('Partnership')),
-    (S, _('Sole Ownership')),
-)
-
-# TODO: load static file into professional subtype
-# professional subtype
-GC = 'General Contractor'
-LC = 'Landscaping Contractor'
-SPC = 'Swimming Pool Contractor'
-KBR = 'KBR'
-RG = 'Roofing Contractor'
-PL = 'Plumbing Contractor'
-FC = 'Fencing Contractor'
-HVAC = 'HVAC Contractor'
-DE = 'Designer'
-DG = 'Doors, Gates and Activating Devices'
-CC = 'Carpentry Contractor'
-COC = 'Concrete Contractor'
-DC = 'Drywall Contractor'
-EC = 'Electrical Contractor'
-PDC = 'Painting And Decorating Contractor'
-SMC = 'Sheet Metal Contractor'
-ME = 'Meister'
-AC = 'Architect'
-
-PROFESSIONAL_SUBTYPE_CHOICES = (
-    (GC, _('General Contractor')),
-    (LC, _('Landscaping Contractor')),
-    (SPC, _('Swimming Pool Contractor')),
-    (KBR, _('Kitchen & Bath Remodeler')),
-    (RG, _('Roofing Contractor')),
-    (PL, _('Plumbing Contractor')),
-    (FC, _('Fencing Contractor')),
-    (HVAC, _('HVAC Contractor')),
-    (DE, _('Designer')),
-    (DG, _('Doors, Gates and Activating Devices')),
-    (CC, _('Carpentry Contractor')),
-    (COC, _('Concrete Contractor')),
-    (DC, _('Drywall Contractor')),
-    (EC, _('Electrical Contractor')),
-    (PDC, _('Painting And Decorating Contractor')),
-    (SMC, _('Sheet Metal Contractor')),
-    (ME, _('Meister')),
-    (AC, _('Architect')),
-)
+from .models import PROFESSIONAL_CHOICES, Professional
 
 
 def check_professional_type(request):
@@ -70,6 +8,19 @@ def check_professional_type(request):
         if i.lower() in request.path:
             model_type = i.lower()
             return model_type
-            break
         else:
             pass
+
+
+def get_professional_instance(model_type, lic_num):
+    model = ContentType.objects.get(model=model_type).model_class()
+    try:
+        instance = model.objects.get(lic_num=lic_num)
+        return instance
+    except:
+        return None
+
+
+def get_professionals(*args, **kwargs):
+    return Professional.objects.filter(*args, **kwargs).distinct()
+

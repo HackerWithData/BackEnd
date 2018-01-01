@@ -1,4 +1,12 @@
+import datetime
+
 from django.utils.translation import ugettext_lazy as _
+
+from .models import (
+    BondHistory,
+    WorkerCompensationHistory,
+    ComplaintOverall,
+)
 
 
 def convert_hscore_to_rank(hscore):
@@ -36,3 +44,42 @@ def avg_rating(review, rt):
         return s * 1.0 / l
     else:
         return 0
+
+
+def get_bh(contractor_id):
+    bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
+    return bh
+
+
+def get_wh(contractor_id):
+    wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
+        '-insur_effective_date').first()
+    return wh
+
+
+def get_complaint(contractor):
+    try:
+        complaint = ComplaintOverall.objects.get(contractor=contractor)
+    except ComplaintOverall.DoesNotExist:
+        complaint = ComplaintOverall.objects.create(
+            **{
+                'contractor': contractor,
+                'case': 0,
+                'citation': 0,
+                'arbitration': 0,
+                'complaint': 0,
+            }
+        )
+    return complaint
+
+
+def get_contractor_lic_length(contractor):
+    if (contractor.lic_expire_date is not None) and (contractor.lic_expire_date < datetime.date.today()):
+        length = int(contractor.lic_expire_date.year - contractor.lic_issue_date.year)
+    # test issue, won't happen in prod
+    elif (not contractor.lic_expire_date) and (not contractor.lic_issue_date):
+        length = 0
+    else:
+        length = int(datetime.date.today().year - contractor.lic_issue_date.year)
+    return length
+

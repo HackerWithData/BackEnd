@@ -1,46 +1,15 @@
 import uuid
+
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
-WAITING = "W"
-PAID_TO_HOOME = "PTH"
-PAID_TO_PROFESSIONAL = "PTP"
-
-PAYMENT_REQUEST = 'M'
-
-WAITING_ACTION = "Contractor is waiting for the payment"
-
-PENDING = 'P'
-ACCEPTED = 'A'
-REJECTED = 'R'
-ONGOING = "O"
-DONE = "D"
-# TODO: need to move sucess to transaction.utils
-# WITHDRAWN = "Withdrawn"
-# RETURNED = "Returned"
-# SUCCESS = "Success"
-
-MILESTONE_STATUS = (
-    (WAITING, _("Waiting")),
-    (PAID_TO_HOOME, _("Paid to Hoome")),
-    (PAID_TO_PROFESSIONAL, _("Paid to Professional")),
-    (DONE, _("Done")),
-    (PAYMENT_REQUEST, _("Payment Request")),
+from .models import (
+    ProjectAttachment,
+    Project,
+    Milestone,
+    ProjectPhoto,
 )
-
-PROJECT_STATUS = (
-    (PENDING, _('PENDING')),
-    (ACCEPTED, _('ACCEPTED')),
-    (ONGOING, _('ONGOING')),
-    (REJECTED, _('REJECTED')),
-    (DONE, _('DONE')),
-)
-
-REMODEL = "R"
-NEW_BUILT = "N"
-PROJECT_TYPE = ((REMODEL, _('REMODEL')),
-    (NEW_BUILT, _("NEW BUILT HOUSE")),
-)
+from users.models import CONSUMER, PROFESSIONAL
 
 
 # get a UUID
@@ -70,3 +39,72 @@ def get_a_uuid(*argv):
         return r_uuid
     else:
         raise Exception('%d arguments given, which requires 1.' % (len(argv)))
+
+
+def upload_project_attachment(request, project, form):
+    files = request.FILES.getlist('project_attachment')
+    if form.is_valid():
+        for file in files:
+            ProjectAttachment.objects.create(
+                project_attachment=file,
+                title=file.name,
+                project=project,
+                attachment_type=form.cleaned_data['attachment_type'],
+            )
+        return 'upload_success'
+    return 'form_error'
+
+
+def get_user_projects(user):
+    if user.role == CONSUMER:
+        projects = Project.objects.filter(user=user).order_by('-project_id')
+        info_dict = {'projects': projects}
+        return info_dict
+    elif user.role == PROFESSIONAL:
+        professional = user.professional_profiles.first().professional
+        projects = Project.objects.filter(
+            content_type=ContentType.objects.get(model=professional.type.lower()),
+            object_id=int(professional.lic_num)
+        ).order_by('-project_id')
+        info_dict = {'projects': projects, 'professional': professional}
+        return info_dict
+
+
+def get_project(uuid):
+    project = Project.objects.get(uuid=uuid)
+    return project
+
+
+def update_milestone(uuid=None, milestone=None, **kwargs):
+    if milestone is None:
+        milestone = Milestone.objects.get(uuid=uuid)
+    for kw in kwargs.items():
+        setattr(milestone, kw[0], kw[1])
+    milestone.save()
+
+
+def update_project(uuid, **kwargs):
+    project = Project.objects.get(uuid=uuid)
+    for kw in kwargs.items():
+        setattr(project, kw[0], kw[1])
+    project.save()
+
+
+def get_project_attachments(project):
+    project_attachments = ProjectAttachment.objects.filter(project=project).order_by('-uploaded_at')
+    return project_attachments
+
+
+def get_milestones(project):
+    milestones = Milestone.objects.filter(project=project).order_by('created_at')
+    return milestones
+
+
+def get_milestone(uuid):
+    milestone = Milestone.objects.get(uuid=uuid)
+    return milestone
+
+
+def get_project_photos(project):
+    project_photos = ProjectPhoto.objects.filter(project=project)
+    return project_photos
