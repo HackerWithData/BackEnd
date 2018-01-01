@@ -109,9 +109,9 @@ def milestone_status_explanation(request, status):
             explanation = _("Waiting for homeowner make the payment.")
     elif status == PAID_TO_HOOME:
         if request.user.role == CONSUMER:
-            explanation = _("Hoome has recevied the payment and will hold for you.")
+            explanation = _("Hoome has received the payment and will hold for you.")
         elif request.user.role == PROFESSIONAL:
-            explanation = _("Hoome has recevied the payment and please start to work.")
+            explanation = _("Hoome has received the payment and please start to work.")
     elif status == PAID_TO_PROFESSIONAL:
         if request.user.role == CONSUMER:
             explanation = _("You have allowed Hoome release the payment.")
