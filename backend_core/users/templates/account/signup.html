@@ -223,7 +223,7 @@
                                 href="
 
 
-                                        {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Log in' %} </a>
+                                        {% url 'account_login' %}{% if login_url %}?next={{ login_url }}{% endif %}">{% trans 'Log in' %} </a>
                         </div>
                     </div>
                 </div>
