@@ -192,7 +192,6 @@ class ProjectDetail(View):
 
 
 @check_recaptcha
-@login_required
 def create_project(request, professional_type=None, lic_id=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
