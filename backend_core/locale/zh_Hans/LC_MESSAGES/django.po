@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-12 22:14+0000\n"
+"POT-Creation-Date: 2018-01-03 08:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "项目工期"
 msgid "Project Address"
 msgstr "项目地址"
 
-#: apiv1/serializers/review_serializer.py:16 review/forms.py:48
+#: apiv1/serializers/review_serializer.py:16 review/forms.py:50
 msgid "Is Anonymous?"
 msgstr "匿名用户"
 
@@ -85,29 +85,19 @@ msgid "Review us"
 msgstr "评价我们"
 
 # python-brace-format
-#: architects/views.py:99 architects/views.py:224
-#, python-brace-format
+#: architects/views.py:35
 msgid ""
 "{bus_name} is an architect from {city}. The company holds a license number "
 "according to {data_source}. \n"
-"                The License is verified as active when we checked last time. "
-"If you would like to know {bus_name} more, \n"
-"                please contact us and we will share more information about "
-"this architect to you.\n"
-"                "
+"            The License is verified as active when we checked last time. If "
+"you would like to know {bus_name} more, \n"
+"            please contact us and we will share more information about this "
+"architect to you.\n"
+"            "
 msgstr ""
 "{bus_name} 是一位来自{city} 建筑师。根据{data_source}，该建筑师持有相关有效证"
 "件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我们，我们"
 "会向您分享更多关于该商家的信息和数据。"
-
-#: architects/views.py:156 contractors/views.py:349 meisters/views.py:197
-msgid "Error Pages!"
-msgstr "错误页面"
-
-#: architects/views.py:248 architects/views.py:282 contractors/views.py:373
-#: contractors/views.py:407 meisters/views.py:223 meisters/views.py:256
-msgid "No Pages Found."
-msgstr "找不到该网页。"
 
 #: career/templates/career/career.html:68
 msgid ""
@@ -155,36 +145,31 @@ msgstr "全栈数据科学家实习"
 msgid "Project Photos"
 msgstr "项目照片"
 
-#: contractors/utils.py:15 users/templates/account/email.html:52
+#: contractors/utils.py:23 users/templates/account/email.html:52
 msgid "Warning"
 msgstr "警告"
 
-#: contractors/views.py:177 contractors/views.py:281
-#, python-brace-format
+#: contractors/views.py:50
 msgid ""
 "{lic_name} is a contractor company located in {csp} . The company holds a "
 "license number \n"
-"            according to {data_source}. According to real-time data "
+"                    according to {data_source}. According to real-time data "
 "analysis, this licensed contractor's hoome score \n"
-"            is {score} and is rated as {rank}. The License is verified as "
-"active when we checked last time. If you would\n"
-"             like to know {lic_name} more, please contact us and we will "
-"share more information and data about this\n"
-"              contractor to you."
+"                    is {score} and is rated as {rank}. The License is "
+"verified as active when we checked last time. If you would\n"
+"                     like to know {lic_name} more, please contact us and we "
+"will share more information and data about this\n"
+"                      contractor to you."
 msgstr ""
 "{lic_name} 是一家位于{csp}建筑装修承包商公司。根据{data_source}，该承包商持有"
 "相关有效证件，并被Hoome认证有效。通过相关实时数据分析，该承包商的Hoome 评分为"
 "{score}， 评定区间为{rank}。如果您需要了解{lic_name}更多的资讯，请联系我们，"
 "我们会向您分享更多关于该商家的信息和数据。"
 
-#: contractors/views.py:342 designers/views.py:147 meisters/views.py:191
-msgid "Submit Failed. Please verify your content is correct."
-msgstr "提交失败，请确保您所填内容正确"
-
 #: dashboard/templates/dashboard/dashboard.html:22
 #: dashboard/templates/dashboard/dashboard.html:74
-msgid "’s Account Settings"
-msgstr "的账户设置"
+msgid "'s Dashboard"
+msgstr "的用户面板"
 
 #: dashboard/templates/dashboard/dashboard.html:36 templates/base.html:75
 msgid "Profile"
@@ -204,16 +189,15 @@ msgstr "这是您的个人用户面板。您可以通过点击左边按钮来设
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr "您真的想移除选中的邮箱吗？"
 
-#: designers/views.py:96 designers/views.py:219
-#, python-brace-format
+#: designers/views.py:34
 msgid ""
 "{bus_name} is a designer based on {city} {state} . The company holds a "
 "license number according to {data_source}. \n"
-"                The License is verified as active when we checked last time. "
-"If you would like to know {bus_name} more, \n"
-"                please contact us and we will share more information about "
-"this designer to you.\n"
-"                "
+"            The License is verified as active when we checked last time. If "
+"you would like to know {bus_name} more, \n"
+"            please contact us and we will share more information about this "
+"designer to you.\n"
+"            "
 msgstr ""
 "{bus_name} 是一位基于{city} {state}设计师。根据{data_source}，该设计师持有相"
 "关有效证件，并被Hoome认证有效。 如果您需要了解{bus_name}更多的资讯，请联系我"
@@ -227,24 +211,23 @@ msgstr "筛选优秀的装修团队"
 msgid "Database in California State"
 msgstr "加州数据库"
 
-#: meisters/views.py:82 meisters/views.py:144
-#, python-brace-format
+#: meisters/views.py:34
 msgid ""
 "{lic_name} is a professional located in {full_state_name}. The professional "
 "is verified as \n"
-"            active when we checked last time. If you would like to know "
+"        active when we checked last time. If you would like to know "
 "{lic_name} more, please contact us and we will \n"
-"            share more information and data about this meister to you."
+"        share more information and data about this meister to you."
 msgstr ""
 "{lic_name} 是一位基于{full_state_name}装修专业人士。该专业人士被Hoome认证有"
 "效。 如果您需要了解{lic_name}更多的资讯，请联系我们，我们会向您分享更多关于其"
 "的信息和数据。"
 
-#: overviews/views.py:21
+#: overviews/views.py:26
 msgid "Request Success"
 msgstr "请求成功"
 
-#: overviews/views.py:23
+#: overviews/views.py:28
 msgid "Request Failed"
 msgstr "请求失败"
 
@@ -252,233 +235,293 @@ msgstr "请求失败"
 msgid "Background Images"
 msgstr "背景照片"
 
-#: professionals/utils.py:9 search/templates/search_bar/search_bar.html:47
+#: photos/utils.py:45 photos/utils.py:74
+msgid "No Pages Found."
+msgstr "找不到该网页。"
+
+#: professionals/models.py:17 search/templates/search_bar/search_bar.html:47
 #: templates/base.html:91
 msgid "Contractor"
 msgstr "承包商"
 
-#: professionals/utils.py:10 professionals/utils.py:64
+#: professionals/models.py:18 professionals/models.py:72
 #: search/templates/search_bar/search_bar.html:15
 #: search/templates/search_bar/search_bar.html:131 templates/base.html:92
 msgid "Architect"
 msgstr "建筑师"
 
-#: professionals/utils.py:11 professionals/utils.py:55
+#: professionals/models.py:19 professionals/models.py:63
 #: search/templates/search_bar/search_bar.html:17
 #: search/templates/search_bar/search_bar.html:112 templates/base.html:93
 msgid "Designer"
 msgstr "设计师"
 
-#: professionals/utils.py:12 professionals/utils.py:63
+#: professionals/models.py:20 professionals/models.py:71
 #: search/templates/search_bar/search_bar.html:19
 #: search/templates/search_bar/search_bar.html:137 templates/base.html:122
 msgid "Meister"
 msgstr "守艺人"
 
-#: professionals/utils.py:20
+#: professionals/models.py:28
 msgid "Corporation"
 msgstr "公司经营"
 
-#: professionals/utils.py:21
+#: professionals/models.py:29
 msgid "Partnership"
 msgstr "合伙经营"
 
-#: professionals/utils.py:22
+#: professionals/models.py:30
 msgid "Sole Ownership"
 msgstr "个体经营"
 
-#: professionals/utils.py:47 search/templates/search_bar/search_bar.html:12
+#: professionals/models.py:55 search/templates/search_bar/search_bar.html:12
 #: search/templates/search_bar/search_bar.html:51
 msgid "General Contractor"
 msgstr "总承包商"
 
-#: professionals/utils.py:48 search/templates/search_bar/search_bar.html:77
+#: professionals/models.py:56 search/templates/search_bar/search_bar.html:77
 msgid "Landscaping Contractor"
 msgstr "景观园艺承包商"
 
-#: professionals/utils.py:49 search/templates/search_bar/search_bar.html:92
+#: professionals/models.py:57 search/templates/search_bar/search_bar.html:92
 msgid "Swimming Pool Contractor"
 msgstr "泳池承包商"
 
-#: professionals/utils.py:50
+#: professionals/models.py:58
 msgid "Kitchen & Bath Remodeler"
 msgstr "厨房卫浴承包商"
 
-#: professionals/utils.py:51
+#: professionals/models.py:59
 msgid "Roofing Contractor"
 msgstr "屋顶承包商"
 
-#: professionals/utils.py:52 search/templates/search_bar/search_bar.html:83
+#: professionals/models.py:60 search/templates/search_bar/search_bar.html:83
 msgid "Plumbing Contractor"
 msgstr "水管道承包商"
 
-#: professionals/utils.py:53 search/templates/search_bar/search_bar.html:69
+#: professionals/models.py:61 search/templates/search_bar/search_bar.html:69
 msgid "Fencing Contractor"
 msgstr "围栏承包商"
 
-#: professionals/utils.py:54
+#: professionals/models.py:62
 msgid "HVAC Contractor"
 msgstr "暖通空调承包商"
 
-#: professionals/utils.py:56 search/templates/search_bar/search_bar.html:60
+#: professionals/models.py:64 search/templates/search_bar/search_bar.html:60
 msgid "Doors, Gates and Activating Devices"
 msgstr "门和启动装置承包商"
 
-#: professionals/utils.py:57 search/templates/search_bar/search_bar.html:54
+#: professionals/models.py:65 search/templates/search_bar/search_bar.html:54
 msgid "Carpentry Contractor"
 msgstr "木工承包商"
 
-#: professionals/utils.py:58 search/templates/search_bar/search_bar.html:57
+#: professionals/models.py:66 search/templates/search_bar/search_bar.html:57
 msgid "Concrete Contractor"
 msgstr "混凝土承包商"
 
-#: professionals/utils.py:59 search/templates/search_bar/search_bar.html:63
+#: professionals/models.py:67 search/templates/search_bar/search_bar.html:63
 msgid "Drywall Contractor"
 msgstr "石膏板承包商"
 
-#: professionals/utils.py:60 search/templates/search_bar/search_bar.html:66
+#: professionals/models.py:68 search/templates/search_bar/search_bar.html:66
 msgid "Electrical Contractor"
 msgstr "电工承包商"
 
-#: professionals/utils.py:61 search/templates/search_bar/search_bar.html:80
+#: professionals/models.py:69 search/templates/search_bar/search_bar.html:80
 msgid "Painting And Decorating Contractor"
 msgstr "油漆承包商"
 
-#: professionals/utils.py:62 search/templates/search_bar/search_bar.html:89
+#: professionals/models.py:70 search/templates/search_bar/search_bar.html:89
 msgid "Sheet Metal Contractor"
 msgstr "金属板承包商"
 
-#: projects/adapter.py:109 projects/adapter.py:111
+#: professionals/views.py:100 professionals/views.py:141
+msgid "Error Pages!"
+msgstr "错误页面"
+
+#: professionals/views.py:135
+msgid "Submit Failed. Please verify your content is correct."
+msgstr "提交失败，请确保您所填内容正确"
+
+#: projects/adapter.py:107 projects/adapter.py:109
 msgid "Waiting for homeowner make the payment."
 msgstr "等待业主支付"
 
-#: projects/adapter.py:114
-msgid "Hoome has recevied the payment and will hold for you."
+#: projects/adapter.py:112
+msgid "Hoome has received the payment and will hold for you."
 msgstr "Hoome已经收到此款项并为您保存"
 
-#: projects/adapter.py:116
-msgid "Hoome has recevied the payment and please start to work."
+#: projects/adapter.py:114
+msgid "Hoome has received the payment and please start to work."
 msgstr "Hoome已经收到此款项， 请开始施工"
 
-#: projects/adapter.py:119
+#: projects/adapter.py:117
 msgid "You have allowed Hoome release the payment."
 msgstr "您已经允许Hoome释放这笔款项"
 
-#: projects/adapter.py:121
+#: projects/adapter.py:119
 msgid "Homeowner have released the payment for current milestone."
 msgstr "业主已经释放现阶段的款项给您"
 
-#: projects/forms.py:26
+#: projects/forms.py:34
 #: projects/templates/projects/project_direct_create.html:103
 msgid "Choose your identity*"
 msgstr "请选择您的身份*"
 
-#: projects/forms.py:27
+#: projects/forms.py:35
 msgid "Project Name*"
 msgstr "项目名称*"
 
-#: projects/forms.py:28
+#: projects/forms.py:36
 msgid "Choose a name for your project"
 msgstr "请为您的项目设定一个名字"
 
-#: projects/forms.py:29 review/forms.py:38
+#: projects/forms.py:37 review/forms.py:40
 msgid "Project Type*"
 msgstr "项目类型*"
 
-#: projects/forms.py:30
+#: projects/forms.py:38
 msgid "Contract Price*"
 msgstr "合同造价*"
 
-#: projects/forms.py:31
+#: projects/forms.py:39
 msgid "Start Date*"
 msgstr "施工起始时间*"
 
-#: projects/forms.py:32
+#: projects/forms.py:40
 msgid "End Date*"
 msgstr "竣工日期*"
 
-#: projects/forms.py:33 projects/forms.py:91
+#: projects/forms.py:41 projects/forms.py:99
 msgid "Homeowner's First Name"
 msgstr "业主的名"
 
-#: projects/forms.py:34 projects/forms.py:92
+#: projects/forms.py:42 projects/forms.py:100
 msgid "Honemowner's Last Name"
 msgstr "业主的姓"
 
-#: projects/forms.py:35 projects/forms.py:93
+#: projects/forms.py:43 projects/forms.py:101
 msgid "Project Description"
 msgstr "项目描述"
 
-#: projects/forms.py:38 projects/forms.py:96
+#: projects/forms.py:46 projects/forms.py:104
 msgid "(Optional) Tell us more about your project."
 msgstr "（可选）告诉我们更多关于该项目的细节"
 
-#: projects/forms.py:39 projects/forms.py:97
+#: projects/forms.py:47 projects/forms.py:105
 msgid "Street Address"
 msgstr "街道地址"
 
-#: projects/forms.py:40 projects/forms.py:98 review/forms.py:43
+#: projects/forms.py:48 projects/forms.py:106 review/forms.py:45
 msgid "Apt #, Suite #, ..."
 msgstr "门牌号，房间号"
 
-#: projects/forms.py:41 projects/forms.py:99 review/forms.py:44
+#: projects/forms.py:49 projects/forms.py:107 review/forms.py:46
 msgid "(Optional) Apt #,Suite #,..."
 msgstr "(可选)门牌号，房间号"
 
-#: projects/forms.py:42 projects/forms.py:100
+#: projects/forms.py:50 projects/forms.py:108
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:454
 msgid "County/City"
 msgstr "县/市"
 
-#: projects/forms.py:43 projects/forms.py:101 templates/base.html:77
-#: users/forms.py:157
+#: projects/forms.py:51 projects/forms.py:109 templates/base.html:77
+#: users/forms.py:175
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:455
 msgid "State"
 msgstr "州"
 
-#: projects/forms.py:44 projects/forms.py:102
+#: projects/forms.py:52 projects/forms.py:110
 msgid "Zip Code"
 msgstr "邮编号码"
 
-#: projects/forms.py:49
+#: projects/forms.py:57
 msgid "Attachment Type"
 msgstr "附件类型"
 
-#: projects/forms.py:52
+#: projects/forms.py:60
 msgid ""
 "upload any documents or contracts that might be helpful in explaining your "
 "project brief here."
 msgstr "上传文件或合同有助于丰富您项目的内容"
 
-#: projects/forms.py:55
+#: projects/forms.py:63
 msgid ""
 "upload any photos that might be helpful in explaining your project brief "
 "here."
 msgstr "上传照片有助于丰富您项目的内容"
 
-#: projects/forms.py:121
+#: projects/forms.py:129
 msgid "Enter the Contractor/Meister's Hoome ID*"
 msgstr "请输入承包商/守艺人的Hoome ID*"
 
-#: projects/forms.py:122
+#: projects/forms.py:130
 msgid "Enter the Homeowner's Hoome ID*"
 msgstr "请输入业主的Hoome ID*"
 
-#: projects/forms.py:130
+#: projects/forms.py:138
 msgid "Hoome id cannot be empty."
 msgstr "Hoome ID 不能为空"
 
-#: projects/forms.py:135 projects/forms.py:138
+#: projects/forms.py:143 projects/forms.py:146
 msgid "Homeowener's Hoome id does not exist"
 msgstr "业主的Hoome ID不存在"
 
-#: projects/forms.py:143
+#: projects/forms.py:151
 msgid "Hoome id cannot be empty"
 msgstr "Hoome ID 不能为空"
 
-#: projects/forms.py:148 projects/forms.py:151
+#: projects/forms.py:156 projects/forms.py:159
 msgid "Contractor/Meister's Hoome id does not exist"
 msgstr "承包商/守艺人的Hoome ID 不存在"
+
+#: projects/models.py:32
+msgid "Waiting"
+msgstr "等待"
+
+#: projects/models.py:33
+msgid "Paid to Hoome"
+msgstr "已经支付给Hoome"
+
+#: projects/models.py:34
+msgid "Paid to Professional"
+msgstr "已支付给承包商/手艺人"
+
+#: projects/models.py:35
+msgid "Done"
+msgstr "完成"
+
+#: projects/models.py:36
+msgid "Payment Request"
+msgstr "请求支付"
+
+#: projects/models.py:40
+msgid "PENDING"
+msgstr "受理中"
+
+#: projects/models.py:41
+msgid "ACCEPTED"
+msgstr "已接受"
+
+#: projects/models.py:42
+msgid "ONGOING"
+msgstr "正在进行中"
+
+#: projects/models.py:43
+msgid "REJECTED"
+msgstr "拒绝"
+
+#: projects/models.py:44
+msgid "DONE"
+msgstr "完成"
+
+#: projects/models.py:49
+msgid "REMODEL"
+msgstr "装修"
+
+#: projects/models.py:50
+msgid "NEW BUILT HOUSE"
+msgstr "新建房"
 
 #: projects/templates/projects/create_project.html:60
 msgid "Tell us what you need done"
@@ -524,127 +567,79 @@ msgstr "您目前没有任何项目。请到您相中的承包商页面中缔结
 msgid "Upload"
 msgstr "上传"
 
-#: projects/utils.py:24
-msgid "Waiting"
-msgstr "等待"
-
-#: projects/utils.py:25
-msgid "Paid to Hoome"
-msgstr "已经支付给Hoome"
-
-#: projects/utils.py:26
-msgid "Paid to Professional"
-msgstr "已支付给承包商/手艺人"
-
-#: projects/utils.py:27
-msgid "Done"
-msgstr "完成"
-
-#: projects/utils.py:28
-msgid "Payment Request"
-msgstr "请求支付"
-
-#: projects/utils.py:32
-msgid "PENDING"
-msgstr "受理中"
-
-#: projects/utils.py:33
-msgid "ACCEPTED"
-msgstr "已接受"
-
-#: projects/utils.py:34
-msgid "ONGOING"
-msgstr "正在进行中"
-
-#: projects/utils.py:35
-msgid "REJECTED"
-msgstr "拒绝"
-
-#: projects/utils.py:36
-msgid "DONE"
-msgstr "完成"
-
-#: projects/utils.py:41
-msgid "REMODEL"
-msgstr "装修"
-
-#: projects/utils.py:42
-msgid "NEW BUILT HOUSE"
-msgstr "新建房"
-
-#: projects/views.py:106
+#: projects/views.py:100
 msgid "Please Login as Homeowner."
 msgstr "请以业主的身份先登入"
 
-#: projects/views.py:117
+#: projects/views.py:111
 msgid "Please Login as Professional."
 msgstr "请以装修人士/承包商的身份先登入"
 
-#: projects/views.py:150 templates/404.html:29
+#: projects/views.py:143 templates/404.html:29
 msgid "Page Not Found"
 msgstr "找不到网页"
 
-#: projects/views.py:178 projects/views.py:189
+#: projects/views.py:169 projects/views.py:186
 msgid "Success"
 msgstr "成功"
 
-#: projects/views.py:193
+#: projects/views.py:190
 msgid "Failed"
 msgstr "失败"
 
-#: review/forms.py:13
+#: review/forms.py:15
 msgid "name must contain only alphabetic characters"
 msgstr "名字必须包含字母"
 
-#: review/forms.py:19
+#: review/forms.py:21
 msgid "zipcode format should be xxxxx or xxxxx-xxxx"
 msgstr "邮政编码格式应该为xxxxx 或者 xxxxx-xxxx"
 
-#: review/forms.py:30
+#: review/forms.py:32
 msgid "invalid email address"
 msgstr "无效邮箱地址"
 
-#: review/forms.py:34
+#: review/forms.py:36
 msgid "Comments*"
 msgstr "评论*"
 
-#: review/forms.py:35
+#: review/forms.py:37
 msgid "First Name*"
 msgstr "名*"
 
-#: review/forms.py:36
+#: review/forms.py:38
 msgid "Last Name*"
 msgstr "姓*"
 
-#: review/forms.py:37
+#: review/forms.py:39
 msgid "When did the project start?*"
 msgstr "项目开始日期*"
 
-#: review/forms.py:39
+#: review/forms.py:41
 msgid "Project Cost*"
 msgstr "项目开销"
 
-#: review/forms.py:40
+#: review/forms.py:42
 msgid "How many days does the project take?*"
 msgstr "多久完成项目？*"
 
-#: review/forms.py:41
+#: review/forms.py:43
 msgid "Email*"
 msgstr "Email地址*"
 
-#: review/forms.py:42
+#: review/forms.py:44
 msgid "Street Address*"
 msgstr "街道地址*"
 
-#: review/forms.py:45
+#: review/forms.py:47
 msgid "County/City*"
 msgstr "县/市*"
 
-#: review/forms.py:46
+#: review/forms.py:48
 msgid "State*"
 msgstr "州*"
 
-#: review/forms.py:47
+#: review/forms.py:49
 msgid "Zip Code*"
 msgstr "邮编号码*"
 
@@ -652,9 +647,10 @@ msgstr "邮编号码*"
 msgid "Find Professionals"
 msgstr "寻找装修专业人士或承包商"
 
-#: search/templates/search_bar/search_bar.html:27
-msgid "Zipcode or City"
-msgstr "请输入邮政编码或者城市名称"
+#: search/templates/search_bar/search_bar.html:27 users/forms.py:81
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:456
+msgid "Zipcode"
+msgstr "邮政编码"
 
 #: search/templates/search_bar/search_bar.html:30
 msgid "Current Location"
@@ -685,11 +681,11 @@ msgid ""
 "No professional match your condition. Please try another way to search again."
 msgstr "没有商家符合您的要求。请尝试其他格式来搜索。"
 
-#: search/views.py:49
+#: search/views.py:54
 msgid "please type something you want to search"
 msgstr "请输入搜索对象"
 
-#: search/views.py:80
+#: search/views.py:85
 msgid "please input something you want to search"
 msgstr "请输入搜索对象"
 
@@ -765,7 +761,7 @@ msgstr "商家资讯"
 msgid "License Status"
 msgstr "证件状态"
 
-#: templates/base.html:39 users/forms.py:105 users/forms.py:335
+#: templates/base.html:39 users/forms.py:123 users/forms.py:353
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:428
 msgid "License Number"
 msgstr "证件号码"
@@ -774,7 +770,7 @@ msgstr "证件号码"
 msgid "Entity"
 msgstr "实体"
 
-#: templates/base.html:41 users/forms.py:143
+#: templates/base.html:41 users/forms.py:161
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:438
 msgid "Entity Type"
 msgstr "实体类型"
@@ -897,15 +893,15 @@ msgstr "项目质量"
 msgid "Length"
 msgstr "工期"
 
-#: templates/base.html:74 users/forms.py:135
+#: templates/base.html:74 users/forms.py:153
 msgid "Name"
 msgstr "公司名字"
 
-#: templates/base.html:76 users/forms.py:169
+#: templates/base.html:76 users/forms.py:187
 msgid "Postal Code"
 msgstr "邮编"
 
-#: templates/base.html:78 users/forms.py:150
+#: templates/base.html:78 users/forms.py:168
 #: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:453
 msgid "Street"
 msgstr "街道"
@@ -985,11 +981,11 @@ msgstr "商家资讯"
 msgid "Project Name"
 msgstr "项目名称"
 
-#: templates/base.html:100 users/forms.py:56
+#: templates/base.html:100 users/forms.py:74
 msgid "Last Name"
 msgstr "姓"
 
-#: templates/base.html:101 users/forms.py:50
+#: templates/base.html:101 users/forms.py:68
 msgid "First Name"
 msgstr "名"
 
@@ -1102,11 +1098,11 @@ msgstr "业主"
 msgid "Add More Detail"
 msgstr "项目细节"
 
-#: templates/base.html:135 users/forms.py:163
+#: templates/base.html:135 users/forms.py:181
 msgid "County"
 msgstr "县"
 
-#: templates/base.html:291 users/templates/account/login.html:169
+#: templates/base.html:333 users/templates/account/login.html:169
 msgid "Sign In"
 msgstr "登入"
 
@@ -1122,19 +1118,19 @@ msgstr "交易ID"
 msgid "Created Date"
 msgstr "创建日期"
 
-#: transactions/models.py:18
+#: transactions/models.py:30
 msgid "amount"
 msgstr "交易金额"
 
-#: transactions/models.py:19 transactions/models.py:42
+#: transactions/models.py:31 transactions/models.py:54
 msgid "created at"
 msgstr "创建于"
 
-#: transactions/models.py:20
+#: transactions/models.py:32
 msgid "updated at"
 msgstr "上传于"
 
-#: transactions/models.py:22 transactions/models.py:44
+#: transactions/models.py:34 transactions/models.py:56
 msgid "transaction status"
 msgstr "交易状态"
 
@@ -1158,42 +1154,70 @@ msgstr "目前您没有任何项目。请先创建一个项目"
 msgid "You don't have any payments right now."
 msgstr "您目前没有任何交易。"
 
-#: users/forms.py:39
+#: users/forms.py:57
 msgid "Must select a role"
 msgstr "必须选定一个角色"
 
-#: users/forms.py:63
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:456
-msgid "Zipcode"
-msgstr "邮政编码"
-
-#: users/forms.py:69
+#: users/forms.py:87
 msgid "Gender"
 msgstr "性别"
 
-#: users/forms.py:77 users/forms.py:196
+#: users/forms.py:95 users/forms.py:214
 msgid "Invalid zipcode"
 msgstr "无效的邮政编码"
 
-#: users/forms.py:83
+#: users/forms.py:101
 msgid "Must select a gender"
 msgstr "必须选定您的性别"
 
-#: users/forms.py:114 users/forms.py:350
+#: users/forms.py:132 users/forms.py:368
 msgid "Professional Type"
 msgstr "专业类型"
 
-#: users/forms.py:121
+#: users/forms.py:139
 msgid "Field Selections"
 msgstr "专长选择"
 
-#: users/forms.py:182
+#: users/forms.py:200
 msgid "Must select a professional type"
 msgstr "必须选择您的专业类别"
 
-#: users/forms.py:188
+#: users/forms.py:206
 msgid "Must select a entity type"
 msgstr "必须选择您的注册实体类型，比如：个体户还是公司"
+
+#: users/models.py:18 users/templates/account/signup.html:127
+#: users/templates/account/signup.html:205
+msgid "Professional"
+msgstr "专业"
+
+#: users/models.py:19 users/templates/account/signup.html:206
+msgid "Consumer"
+msgstr "顾客"
+
+#: users/models.py:26
+msgid "Male"
+msgstr "男性"
+
+#: users/models.py:27
+msgid "Female"
+msgstr "女性"
+
+#: users/models.py:35
+msgid "Hold"
+msgstr "保留"
+
+#: users/models.py:36
+msgid "Bad"
+msgstr "坏"
+
+#: users/models.py:37
+msgid "Signed"
+msgstr "已登记"
+
+#: users/models.py:38
+msgid "Available"
+msgstr "可用"
 
 #: users/templates/account/email.html:6
 msgid "Email Addresses"
@@ -1421,19 +1445,10 @@ msgstr "在Hoome注册"
 msgid "By signing up, you agree to Hoome’s "
 msgstr "在Hoome注册表示您已经同意了"
 
-#: users/templates/account/signup.html:127
-#: users/templates/account/signup.html:205 users/utils.py:13
-msgid "Professional"
-msgstr "专业"
-
 #: users/templates/account/signup.html:145
 #: users/templates/account/signup.html:157
 msgid "Sign up with"
 msgstr "第三方注册："
-
-#: users/templates/account/signup.html:206 users/utils.py:14
-msgid "Consumer"
-msgstr "顾客"
 
 #: users/templates/account/signup.html:216
 msgid "Password (again)"
@@ -1483,37 +1498,24 @@ msgstr "请选择您服务的类型"
 msgid "Enter Or Modify Your Company Address"
 msgstr "请输入您公司的地址"
 
-#: users/utils.py:21
-msgid "Male"
-msgstr "男性"
-
-#: users/utils.py:22
-msgid "Female"
-msgstr "女性"
-
-#: users/utils.py:30
-msgid "Hold"
-msgstr "保留"
-
-#: users/utils.py:31
-msgid "Bad"
-msgstr "坏"
-
-#: users/utils.py:32
-msgid "Signed"
-msgstr "已登记"
-
-#: users/utils.py:33
-msgid "Available"
-msgstr "可用"
-
-#: users/views.py:154
+#: users/views.py:155
 msgid "Lic number does not exist"
 msgstr "证件号码不存在"
 
-#: users/views.py:211 users/views.py:253
+#: users/views.py:212 users/views.py:254
 msgid "Your Profile updated."
 msgstr "您的档案已更新"
+
+#~ msgid "’s Account Settings"
+#~ msgstr "的账户设置"
+
+#, fuzzy
+#~| msgid "Dashboard"
+#~ msgid "’s Dashboard"
+#~ msgstr "用户面板"
+
+#~ msgid "Zipcode or City"
+#~ msgstr "请输入邮政编码或者城市名称"
 
 #~ msgid "cannot be a negative number"
 #~ msgstr "不能为负数"
