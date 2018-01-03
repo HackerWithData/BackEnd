@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-31 18:18+0000\n"
+"POT-Creation-Date: 2018-01-03 09:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,27 +58,27 @@ msgid "Edit page?"
 msgstr "編輯頁面?"
 
 #: architects/templates/architect/architect.html:86
-#: contractors/templates/contractor/contractor.html:95
+#: contractors/templates/contractor/contractor.html:97
 #: designers/templates/designer/designer.html:91
 msgid "Contract Us"
 msgstr "與我們簽訂合同"
 
 #: architects/templates/architect/architect.html:91
-#: contractors/templates/contractor/contractor.html:102
+#: contractors/templates/contractor/contractor.html:104
 #: designers/templates/designer/designer.html:97
 #: meisters/templates/meister/meister.html:103
 msgid "Project Photo Upload"
 msgstr "上傳項目照片"
 
 #: architects/templates/architect/architect.html:93
-#: contractors/templates/contractor/contractor.html:104
+#: contractors/templates/contractor/contractor.html:106
 #: designers/templates/designer/designer.html:99
 #: meisters/templates/meister/meister.html:105
 msgid "Background Image Upload"
 msgstr "上傳背景照片"
 
 #: architects/templates/architect/architect.html:136
-#: contractors/templates/contractor/contractor.html:146
+#: contractors/templates/contractor/contractor.html:148
 #: designers/templates/designer/designer.html:140
 #: meisters/templates/meister/meister.html:147 templates/base.html:32
 msgid "Review us"
@@ -160,6 +160,7 @@ msgid "Warning"
 msgstr "警告"
 
 #: contractors/views.py:198 contractors/views.py:330
+#, python-brace-format
 msgid ""
 "{lic_name} is a contractor company located in {csp} . The company holds a "
 "license number \n"
@@ -177,6 +178,7 @@ msgstr ""
 "我們會向您分享更多關於該商家的信息和數據。"
 
 #: contractors/views.py:205 contractors/views.py:337
+#, python-brace-format
 msgid ""
 "{lic_name} is a contractor company. The company holds a license number \n"
 "                according to {data_source}. According to real-time data "
@@ -187,8 +189,8 @@ msgid ""
 "share more information and data about this\n"
 "                  contractor to you."
 msgstr ""
-"{lic_name} 是壹家建築裝修承包商公司。根據{data_source}，該承包商持有"
-"相關有效證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
+"{lic_name} 是壹家建築裝修承包商公司。根據{data_source}，該承包商持有相關有效"
+"證件，並被Hoome認證有效。通過相關實時數據分析，該承包商的Hoome 評分為"
 "{score}， 評定區間為{rank}。如果您需要了解{lic_name}更多的資訊，請聯系我們，"
 "我們會向您分享更多關於該商家的信息和數據。"
 
@@ -198,8 +200,8 @@ msgstr "提交失敗，請確保您所填內容正確"
 
 #: dashboard/templates/dashboard/dashboard.html:22
 #: dashboard/templates/dashboard/dashboard.html:74
-msgid "’s Account Settings"
-msgstr "的賬戶設置"
+msgid "'s Dashboard"
+msgstr "的用戶面板"
 
 #: dashboard/templates/dashboard/dashboard.html:36 templates/base.html:75
 msgid "Profile"
@@ -667,9 +669,10 @@ msgstr "郵編號碼*"
 msgid "Find Professionals"
 msgstr "尋找裝修專業人士或承包商"
 
-#: search/templates/search_bar/search_bar.html:27
-msgid "Zipcode or City"
-msgstr "請輸入郵政編碼或者城市名稱"
+#: search/templates/search_bar/search_bar.html:27 users/forms.py:63
+#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:456
+msgid "Zipcode"
+msgstr "郵政編碼"
 
 #: search/templates/search_bar/search_bar.html:30
 msgid "Current Location"
@@ -1121,7 +1124,7 @@ msgstr "項目細節"
 msgid "County"
 msgstr "縣"
 
-#: templates/base.html:291 users/templates/account/login.html:169
+#: templates/base.html:330 users/templates/account/login.html:169
 msgid "Sign In"
 msgstr "登入"
 
@@ -1176,11 +1179,6 @@ msgstr "您目前沒有任何交易。"
 #: users/forms.py:39
 msgid "Must select a role"
 msgstr "必須選定壹個角色"
-
-#: users/forms.py:63
-#: users/templates/professional_profile_after_signup/professional_profile_after_signup.html:456
-msgid "Zipcode"
-msgstr "郵政編碼"
 
 #: users/forms.py:69
 msgid "Gender"
@@ -1529,6 +1527,12 @@ msgstr "證件號碼不存在"
 #: users/views.py:211 users/views.py:253
 msgid "Your Profile updated."
 msgstr "您的檔案已更新"
+
+#~ msgid "’s Account Settings"
+#~ msgstr "的賬戶設置"
+
+#~ msgid "Zipcode or City"
+#~ msgstr "請輸入郵政編碼或者城市名稱"
 
 #, fuzzy
 #~| msgid ""

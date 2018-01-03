@@ -170,7 +170,8 @@
                     <!--/.navbar-header-->
                     <div id="main-nav" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="mobile"><a class="create-project mobile" href="{% url 'create_project_direct' %}">
+                            <li class="mobile"><a class="create-project mobile"
+                                                  href="{% url 'create_project_direct' %}">
                                 {{ Create_Project }}
                             </a></li>
                             <li><a href="/" class="scroll-top">{{ Home }}</a></li>
@@ -202,15 +203,33 @@
                                             </div>
                                             <div class="dropdown-menu-group">
                                                 <ul class="dropdown-menu-group-list">
-
                                                     <li class="dropdown-menu-items">
                                                     <span class="dropdown-menu-icon-container">
                                                         <img class="dropdown-menu-icon"
-                                                             src="{% static 'image/icon/settings-icon.svg' %}">
+                                                             src="{% static 'image/icon/dashboard-icon.svg' %}">
                                                     </span>
                                                         <a class="dropdown-item"
                                                            href="{% url 'show_dashboard' %}">
-                                                            {{ Account_Settings }}
+                                                            {{ Dashboard }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown-menu-items">
+                                                     <span class="dropdown-menu-icon-container">
+                                                         <img class="dropdown-menu-icon"
+                                                              src="{% static 'image/icon/project-icon.svg' %}">
+                                                     </span>
+                                                        <a class="dropdown-item"
+                                                           href="{% url 'display_project_overview' %}">
+                                                            {{ Project_Overview }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown-menu-items">
+                                                     <span class="dropdown-menu-icon-container">
+                                                         <img class="dropdown-menu-icon"
+                                                              src="{% static 'image/icon/payment-icon.svg' %}">+                                                    </span>
+                                                        <a class="dropdown-item"
+                                                           href="{% url 'transactions' %}">
+                                                            {{ Payment }}
                                                         </a>
                                                     </li>
                                                     {% is_professional as show_professional_link %}
@@ -251,12 +270,32 @@
                                         <div class="mobile-dropdown-group hide">
                                             <ul class="dropdown-menu-group-list">
                                                 <li class="dropdown-menu-items">
-                                                <span>
-                                                    <img class="dropdown-menu-icon"
-                                                         src="{% static 'image/icon/settings-icon.svg' %}">
-                                                </span>
-                                                    <a class="dropdown-item" href="{% url 'show_dashboard' %}">
-                                                        {{ Account_Settings }}
+                                                    <span class="dropdown-menu-icon-container">
+                                                        <img class="dropdown-menu-icon"
+                                                             src="{% static 'image/icon/dashboard-icon.svg' %}">
+                                                    </span>
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'show_dashboard' %}">
+                                                        {{ Dashboard }}
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown-menu-items">
+                                                     <span class="dropdown-menu-icon-container">
+                                                         <img class="dropdown-menu-icon"
+                                                              src="{% static 'image/icon/project-icon.svg' %}">
+                                                     </span>
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'display_project_overview' %}">
+                                                        {{ Project_Overview }}
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown-menu-items">
+                                                     <span class="dropdown-menu-icon-container">
+                                                         <img class="dropdown-menu-icon"
+                                                              src="{% static 'image/icon/payment-icon.svg' %}">+                                                    </span>
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'transactions' %}">
+                                                        {{ Payment }}
                                                     </a>
                                                 </li>
                                                 {% if show_professional_link and sign_up_complete %}
@@ -290,7 +329,8 @@
                             {% else %}
                                 <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
                             {% endif %}
-                            <li class="desktop"><a class="create-project desktop" href="{% url 'create_project_direct' %}">
+                            <li class="desktop"><a class="create-project desktop"
+                                                   href="{% url 'create_project_direct' %}">
                                 <button class='btn btn-default btn-success'>{{ Create_Project }}</button>
                             </a></li>
                         </ul>
