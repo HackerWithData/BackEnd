@@ -34,7 +34,7 @@ EMAIL_PORT = 587
 # Optional SMTP authentication information for EMAIL_HOST.
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'service@hoome.io'
-EMAIL_HOST_PASSWORD = 'CZT!2017'
+EMAIL_HOST_PASSWORD = 'Hoome!2017'
 
 GOOGLE_API_KEY = 'AIzaSyBcdtc-alvt2fEOMgDk_rmYG03ueIwpurg'
 
