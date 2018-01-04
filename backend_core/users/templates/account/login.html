@@ -119,7 +119,7 @@
                                             <li>
                                                 <a title="{{ provider.name }}"
                                                    class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params next=social_login_redirect%}"
                                                         {% if request.GET.next %}
                                                    next="{{ request.GET.next }}"{% endif %}><span
                                                         class="fa fa-{{ provider.name|lower }}"></span>

@@ -61,13 +61,16 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         * https://github.com/pennersr/django-allauth/issues/215
     """
     email_address = sociallogin.account.extra_data['email']
+    redirect_to = sociallogin.state.get('next', None)
+    if redirect_to:
+        redirect_to = redirect_to.replace('!!!', '&').replace('***', '?')
     try:
         user = get_user_model().objects.get(email=email_address)
     except:
         user = None
     if user:
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
-        url = get_adapter(request).get_login_redirect_url(request)
+        url = redirect_to or get_adapter(request).get_login_redirect_url(request)
         raise ImmediateHttpResponse(redirect(url))
     else:
         # TODO: need to change in the future
@@ -77,7 +80,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         user.password = make_password(password_generator())
         user.save()
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
-        url = get_adapter(request).get_login_redirect_url(request)
+        url = redirect_to or get_adapter(request).get_login_redirect_url(request)
         raise ImmediateHttpResponse(redirect(url))
 
 
@@ -246,63 +249,62 @@ class ProfessionalProfileView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class Login(LoginView):
-
+class RedirectView(object):
     def get_redirect_url(self, request):
         request_path = request.get_full_path()
         if 'next=' in request_path:
-            return request_path.split('next=', 1)[1]
+            redirect_to = request_path.rsplit('next=', 1)[1]
         else:
-            return request.POST.get('next', '/')
+            redirect_to = request.POST.get('next', '/')
+        if not get_adapter(request).is_safe_url(redirect_to):
+            redirect_to = None
+        return redirect_to
 
     def get_success_url(self):
-        ret = self.get_redirect_url(self.request) or self.success_url
-        return ret
+        success_url = self.get_redirect_url(self.request) or self.success_url
+        return success_url
+
+    def get_sociallogin_redirect_url(self):
+        redirect_to = self.get_success_url()
+        redirect_to = redirect_to.split('&info_url', 1)[0]
+        redirect_to = redirect_to.replace('?', '***').replace('&', '!!!')
+        return redirect_to
+
+    def passthrough_next_redirect_url(self):
+        return self.get_success_url()
+
+
+class Login(RedirectView, LoginView):
 
     def get_context_data(self, **kwargs):
         ret = super(Login, self).get_context_data(**kwargs)
         ret.update({
             'redirect_field_value': self.get_success_url(),
             'signup_url': self.passthrough_next_redirect_url(),
+            'social_login_redirect': self.get_sociallogin_redirect_url(),
         })
         return ret
-
-    def passthrough_next_redirect_url(self):
-        return self.get_success_url()
 
     def form_valid(self, form):
         success_url = self.get_success_url()
         if 'info_url' in success_url:
-            success_url = success_url.rsplit('&', 1)[0]
+            success_url = success_url.split('&info_url', 1)[0]
         try:
             return form.login(self.request, redirect_url=success_url)
         except ImmediateHttpResponse as e:
             return e.response
 
 
-class Signup(SignupView):
-
-    def get_redirect_url(self, request):
-        request_path = request.get_full_path()
-        if 'next=' in request_path:
-            return request_path.split('next=', 1)[1]
-        else:
-            return request.POST.get('next', '/')
-
-    def get_success_url(self):
-        ret = self.get_redirect_url(self.request) or self.success_url
-        return ret
+class Signup(RedirectView, SignupView):
 
     def get_context_data(self, **kwargs):
         ret = super(Signup, self).get_context_data(**kwargs)
         ret.update({
             'redirect_field_value': self.get_success_url(),
             'login_url': self.passthrough_next_redirect_url(),
+            'social_login_redirect': self.get_sociallogin_redirect_url(),
         })
         return ret
-
-    def passthrough_next_redirect_url(self):
-        return self.get_success_url()
 
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
