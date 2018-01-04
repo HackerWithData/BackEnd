@@ -47,7 +47,7 @@ def is_project_detail_link(context):
         #multivalue key error
         redirect_url = context['request'].GET['next']
         project_num_pattern = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-    #print(1)
+        #print(1)
         if redirect_url is not None:
             el = redirect_url.split('/')
             # TODO: check project.uuid in database? set limit?

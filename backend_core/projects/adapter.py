@@ -67,23 +67,10 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
         if project_form.cleaned_data['created_by'] == CONSUMER:
             pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
             project.content_type = ContentType.objects.get(model=pro.type.lower())
-            #professional = project.content_type.model_class().objects.get(lic_num=pro.lic_num)
-            #project.object_id = int(professional.lic_id)
             project.object_id = pro.lic_num
             project.bus_name = pro.name
-            #project.bus_name = pro.name
-            print('pass')
             if request.user.is_authenticated:  # when user is logged in
                 project.user = request.user
-        # elif project_form.cleaned_data['created_by'] == PROFESSIONAL:
-        #     project.user = get_user_by_hoome_id(project_form.cleaned_data['homeowner_hoome_id'])
-        #     if request.user.is_authenticated:  # when user is logged in
-        #         pro = get_professional_user(request.user)
-        #         project.content_type = ContentType.objects.get(model=pro.type.lower())
-        #         professional = project.content_type.model_class().objects.get(lic_num=pro.lic_num)
-        #         project.object_id = int(professional.lic_id)
-        #         project.bus_name = pro.name
-        #
 
         elif project_form.cleaned_data['created_by'] == PROFESSIONAL:
             project.user = get_user_by_hoome_id(project_form.cleaned_data['homeowner_hoome_id'])
