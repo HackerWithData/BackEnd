@@ -92,26 +92,35 @@ class ProjectDetail(View):
     def get(self, request, uuid):
         milestone_form = get_milestone_form(request)
         project = get_project(uuid=uuid)
+        print("0")
         if project.user is None:
+            print("1")
             if request.user.role == CONSUMER:
+                print("2")
                 project.user = request.user
             else:
+                print("3")
                 django_logout(request)
                 messages.warning(request, _("Please Login as Homeowner."))
                 success_url = '/project/' + uuid
                 return redirect(success_url)
         elif project.content_type is None:
+            print("4")
             if request.user.role == PROFESSIONAL:
+                print("5")
                 pro = get_professional_user(request.user)
                 project.bus_name = pro.name
                 project.content_type = ContentType.objects.get(model=pro.type.lower())
                 project.object_id = pro.lic_num
             else:
+                print("6")
                 django_logout(request)
                 messages.warning(request, _("Please Login as Professional."))
                 success_url = '/project/' + uuid
                 return redirect(success_url)
+        print("7")
         project.save()
+
         project_attachments = get_project_attachments(project=project)
         project_photos = get_project_photos(project=project)
         transactions = project.transactions.all().order_by('-updated_at')
