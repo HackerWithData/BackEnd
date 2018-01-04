@@ -139,7 +139,7 @@
                                                     <li>
                                                         <a title="{{ brand.name }}"
                                                            class="socialaccount_provider {{ provider.id }} {{ brand.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process next=social_login_redirect%}">
                                                             {#                                                             {% if request.GET.next %}next="{{ request.GET.next }}"{% endif %}#}
                                                             <span class="fa fa-{{ provider.name|lower }}"></span>
                                                             <span style="font-weight:900">{% trans 'Sign up with' %} {{ provider.name }}</span>
@@ -150,7 +150,7 @@
                                             <li>
                                                 <a title="{{ provider.name }}"
                                                    class="socialaccount_provider {{ provider.id }} btn btn-social btn-{{ provider.name|lower }} full-width"
-                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                                                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params next=social_login_redirect%}">
                                                     {#                                                    {% if request.GET.next %}next="{{ request.GET.next }}"{% endif %}#}
                                                     <span class="fa fa-{{ provider.name|lower }}"></span>
                                                     <div class="social-word">
@@ -206,16 +206,16 @@
                                     <option value="CONSUMER" selected>{% trans 'Consumer' %}</option>
                                 </select>
                             </div>
-                            {#                            {% if redirect_field_value %}#}
-                            {#                                <input type="hidden" name="{{ redirect_field_name }}"#}
-                            {#                                       value="{{ redirect_field_value }}"/>#}
-                            {#                            {% endif %}#}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
                             <p><input type="password" name="password1" required=""
                                       placeholder="{% trans 'Password' %}" id="id_password1"></p>
                             <p><input type="password" name="password2" required=""
                                       placeholder="{% trans 'Password (again)' %}" id="id_password2"></p>
-                            <input type="hidden" name="next"
-                                   value="{% url 'account_signup_complete_info' %}">
+{#                            <input type="hidden" name="next"#}
+{#                                   value="{% url 'account_signup_complete_info' %}">#}
                             <button class='btn btn-hoome full-width' type="submit">{% trans 'Sign Up' %}</button>
                         </form>
                         <br/>
@@ -223,7 +223,7 @@
                                 href="
 
 
-                                        {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans 'Log in' %} </a>
+                                        {% url 'account_login' %}{% if login_url %}?next={{ login_url }}{% endif %}">{% trans 'Log in' %} </a>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import string
 from django.db.models.aggregates import Count
 from django.core.exceptions import ObjectDoesNotExist
 
-from users.models import User, AVAILABLE, HoomeId
+from users.models import User, AVAILABLE, HoomeId, SIGNED
 from contractors.models import Contractor
 from designers.models import Designer
 from architects.models import Architect
@@ -126,8 +126,10 @@ def generate_random_hoome_id():
     # randint(10000000,99999999)
     count = HoomeId.objects.filter(status=AVAILABLE).count()
     random_index = randint(0, count - 1)
-    random_id = HoomeId.objects.filter(status=AVAILABLE)[random_index].hoome_id
-    return random_id
+    random_id = HoomeId.objects.filter(status=AVAILABLE)[random_index]
+    random_id.status = SIGNED
+    random_id.save()
+    return random_id.hoome_id
 
 
 def password_generator(size=16, chars=string.ascii_uppercase + string.digits):

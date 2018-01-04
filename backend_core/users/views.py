@@ -61,15 +61,16 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         * https://github.com/pennersr/django-allauth/issues/215
     """
     email_address = sociallogin.account.extra_data['email']
+    redirect_to = sociallogin.state.get('next', None)
+    if redirect_to:
+        redirect_to = redirect_to.replace('!!!', '&').replace('***', '?')
     try:
         user = get_user_model().objects.get(email=email_address)
     except:
         user = None
     if user:
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
-        url = get_adapter(request).get_login_redirect_url(request)
-        if 'success_url' in request.session:
-            del request.session['success_url']
+        url = redirect_to or get_adapter(request).get_login_redirect_url(request)
         raise ImmediateHttpResponse(redirect(url))
     else:
         # TODO: need to change in the future
@@ -79,21 +80,16 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         user.password = make_password(password_generator())
         user.save()
         perform_login(request=request, user=user, email_verification=settings.ACCOUNT_EMAIL_VERIFICATION)
-        url = get_adapter(request).get_login_redirect_url(request)
-        if 'success_url' in request.session:
-            del request.session['success_url']
+        url = redirect_to or get_adapter(request).get_login_redirect_url(request)
         raise ImmediateHttpResponse(redirect(url))
 
 
 @login_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
-        if 'success_url' in request.session:
-            return redirect(request.session['success_url'])
-        else:
             # return redirect('/')
             # return redirect('account_consumer_profile_after_signup')
-            return redirect('show_dashboard')
+        return redirect('show_dashboard')
     elif request.user.role == PROFESSIONAL:
         return redirect('account_professional_profile_after_signup')
     else:
@@ -164,11 +160,8 @@ class ProfessionalProfileAfterSignupView(View):
             form.save(request)
             professional = get_professional_user(request.user)
             # reverse url name with professional type
-            if 'success_url' in request.session:
-                redirect_url = request.session['success_url']
-                del request.session['success_url']
-            else:
-                redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
+
+            redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
             return redirect(redirect_url)
 
         return render(request, self.template_name, {'form': form})
@@ -250,34 +243,69 @@ class ProfessionalProfileView(View):
         if form.is_valid():
             # <process form cleaned data>
             form.save(request)
-
             messages.success(request, _("Your Profile updated."))
             return redirect(request.path)
 
         return render(request, self.template_name, {'form': form})
 
 
-class Login(LoginView):
-    def dispatch(self, request, *args, **kwargs):
-        if 'next' in request.GET:
-            request.session['success_url'] = request.GET['next']
-        elif 'HTTP_REFERER' in request.META:
-            if not 'accounts/' in request.META['HTTP_REFERER']:
-                request.session['success_url'] = request.META['HTTP_REFERER']
-        # else:
-        #     request.session['success_url'] = '/'
-        return super(LoginView, self).dispatch(request, *args, **kwargs)
+class RedirectView(object):
+    def get_redirect_url(self, request):
+        request_path = request.get_full_path()
+        if 'next=' in request_path:
+            redirect_to = request_path.rsplit('next=', 1)[1]
+        else:
+            redirect_to = request.POST.get('next', '/')
+        if not get_adapter(request).is_safe_url(redirect_to):
+            redirect_to = None
+        return redirect_to
+
+    def get_success_url(self):
+        success_url = self.get_redirect_url(self.request) or self.success_url
+        return success_url
+
+    def get_sociallogin_redirect_url(self):
+        redirect_to = self.get_success_url()
+        redirect_to = redirect_to.split('&info_url', 1)[0]
+        redirect_to = redirect_to.replace('?', '***').replace('&', '!!!')
+        return redirect_to
+
+    def passthrough_next_redirect_url(self):
+        return self.get_success_url()
+
+
+class Login(RedirectView, LoginView):
+
+    def get_context_data(self, **kwargs):
+        ret = super(Login, self).get_context_data(**kwargs)
+        ret.update({
+            'redirect_field_value': self.get_success_url(),
+            'signup_url': self.passthrough_next_redirect_url(),
+            'social_login_redirect': self.get_sociallogin_redirect_url(),
+        })
+        return ret
 
     def form_valid(self, form):
         success_url = self.get_success_url()
+        if 'info_url' in success_url:
+            success_url = success_url.split('&info_url', 1)[0]
         try:
-            response = form.login(self.request, redirect_url=success_url)
-            return response
+            return form.login(self.request, redirect_url=success_url)
         except ImmediateHttpResponse as e:
             return e.response
 
 
-class Signup(SignupView):
+class Signup(RedirectView, SignupView):
+
+    def get_context_data(self, **kwargs):
+        ret = super(Signup, self).get_context_data(**kwargs)
+        ret.update({
+            'redirect_field_value': self.get_success_url(),
+            'login_url': self.passthrough_next_redirect_url(),
+            'social_login_redirect': self.get_sociallogin_redirect_url(),
+        })
+        return ret
+
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
@@ -288,11 +316,16 @@ class Signup(SignupView):
         self.user.hoome_id = generate_random_hoome_id()
         self.user.username = self.user.hoome_id
         self.user.save()
+        success_url = self.get_success_url()
+        if 'info_url' in success_url:
+            success_url = reverse('account_signup_complete_info')
+        else:
+            success_url = success_url.rsplit('&', 1)[0]
         try:
             response = complete_signup(
                 self.request, self.user,
                 app_settings.EMAIL_VERIFICATION,
-                self.get_success_url())
+                success_url)
             # print(response)
             return response
         except ImmediateHttpResponse as e:
