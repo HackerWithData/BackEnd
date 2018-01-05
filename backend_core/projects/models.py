@@ -34,8 +34,9 @@ class Project(models.Model):
     # country = models.CharField(max_length=255)
     project_cost = models.IntegerField(default=0)
     contract_price = models.IntegerField(default=0)
-    start_date = models.DateField(auto_now_add=True)
-    end_date = models.DateField(auto_now_add=True)
+    #dont use auto_time_add or auto add when the field is editable
+    start_date = models.DateField()
+    end_date = models.DateField()
     project_description = models.TextField(blank=True)
     project_status = models.CharField(max_length=1, default=WAITING)  # choices=PROJECT_STATUS,
     project_action = models.TextField(blank=True)

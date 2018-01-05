@@ -50,6 +50,8 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
         lic_id = int(professional.lic_id)
         # save project
         project = project_form.save_project(commit=False)
+        #print(project.start_date)
+        #print(project.end_date)
         if request.user.is_authenticated:  # when user is logged in
             project.user = request.user
         project.content_type = content_type
@@ -72,8 +74,9 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
                 professional = project.content_type.model_class().objects.get(lic_num=pro.lic_num)
                 project.object_id = int(professional.lic_id)
                 project.bus_name = pro.name
-
+    print(6,project.start_date)
     project.save()
+    print(7,project.start_date)
     return project
 
 

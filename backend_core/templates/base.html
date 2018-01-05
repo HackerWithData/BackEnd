@@ -133,7 +133,8 @@
 {% trans "Create" as Create %}
 {% trans "Add More Detail" as Add_Detail %}
 {% trans "County" as County %}
-
+{% trans "Review the form" as Review_Form %}
+{% trans "Edit" as Edit %}
 <!--nav bar start-->
 {% block body %}
     {#    TODO: Take care the message#}
@@ -197,7 +198,7 @@
                                                         {% endif %}
                                                     </div>
                                                     <div class="user-name">
-                                                        <span style="line-height:1em">{{ user.username }}</span>
+                                                        <span style="line-height:1em">Hoome ID: {{ user.username }}</span>
                                                     </div>
                                                 </div>
                                             </div>

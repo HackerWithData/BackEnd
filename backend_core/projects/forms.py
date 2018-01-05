@@ -59,6 +59,8 @@ class ProjectForm(forms.Form):
     # lic_id = forms.CharField(label=__('Lic Id'))
 
     def save_project(self, commit=True):
+        #print(vars(self.cleaned_data))
+        print(self.cleaned_data['start_date'])
         project = Project(project_name=self.cleaned_data['project_name'],
                           first_name=self.cleaned_data['first_name'],
                           last_name=self.cleaned_data['last_name'],
@@ -79,6 +81,7 @@ class ProjectForm(forms.Form):
         project.uuid = get_a_uuid(Project)
         if commit:
             project.save()
+        print(project.start_date)
         return project
 
 

@@ -49,8 +49,19 @@
         }
 
         label {
-            font-weight: 100!important;
+            font-weight: 100 !important;
         }
+
+        .NonEditable {
+            border: 0px;
+        }
+
+        hidden {
+            display: none;
+        }
+    *:focus {
+    outline: none;
+}
     </style>
 {% endblock %}
 {% block header %}
@@ -678,9 +689,12 @@
                 <br/>
                 <br/>
                 <script src='https://www.google.com/recaptcha/api.js'></script>
-                <div class="g-recaptcha" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
+                <div class="g-recaptcha hidden" data-sitekey="6LdWazUUAAAAAFcK-GyEJGerzK1pRY4G15JyVyh0"></div>
                 <br/>
-                <button class="btn btn-hoome" type="submit" value="submit" name="submit">{{ Create }}</button>
+                <a id="double-check-btn" class="btn btn-hoome">{{ Review_Form }}</a>
+                <a id="project-edit" class="btn btn-hoome hidden">{{ Edit }}</a>
+                <button id="project-create" class="btn btn-hoome hidden" type="submit" value="submit"
+                        name="submit">{{ Create }}</button>
             {% endwith %}
         </form>
     </div>
@@ -814,7 +828,7 @@
                 identity = check_identity();
             })
 
-            $("button.btn.btn-hoome").click(function () {
+            $("#project-create").click(function () {
                 if (!(localStorage.getItem("role") === null)) {
                     localStorage.removeItem("role");
                 }
@@ -829,8 +843,48 @@
             $("#id_homeowner_hoome_id").blur(function () {
                 var hoome_id = $(this).val();
                 check_hoome_id(hoome_id);
-            })
+            });
 
+            $("#double-check-btn ").click(function () {
+                $("#double-check-btn").addClass("hidden");
+                $("input").addClass("NonEditable");
+                $("select").addClass("NonEditable");
+                $("textarea").addClass("NonEditable");
+                $("input").prop('readonly', true)
+                $("select").prop('disabled', true)
+                $("textarea").prop('readonly', true)
+                window.scrollTo(0,0);
+                $(".g-recaptcha").removeClass("hidden");
+                $("#project-edit").removeClass("hidden");
+                $("#project-create").removeClass("hidden");
+
+            });
+
+            $("#project-edit ").click(function () {
+                $("#double-check-btn").removeClass("hidden");
+                $("input").removeClass("NonEditable")
+                $("select").removeClass("NonEditable")
+                $("textarea").removeClass("NonEditable")
+                $("input").prop('readonly', false);
+                $("select").prop('disabled', false);
+                $("textarea").prop('readonly', false);
+
+                $("body").scrollTop(0);
+                $(".g-recaptcha").addClass("hidden");
+                $("#project-edit").addClass("hidden");
+                $("#project-create").addClass("hidden");
+
+            });
+
+
+            $("#project-create").click(function () {
+
+                $("input").prop('readonly', false);
+                $("select").prop('disabled', false);
+                $("textarea").prop('readonly', false);
+
+
+            });
         })
     </script>
 {% endblock %}

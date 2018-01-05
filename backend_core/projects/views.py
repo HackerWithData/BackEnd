@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import datetime
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, reverse
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
@@ -28,6 +28,7 @@ from .forms import ProjectAttachmentForm, ProjectForm, ProjectPhotoForm, Milesto
 from .models import Project, ProjectPhoto, ProjectAttachment, Milestone
 from .utils import get_a_uuid, WAITING, PENDING, PAID_TO_PROFESSIONAL, PAYMENT_REQUEST, PAID_TO_HOOME
 from helplers import validate_hoome_id
+
 
 # TODO: need to rewrite the architecture here.
 # Create your views here.
@@ -216,11 +217,15 @@ def create_project(request, professional_type=None, lic_id=None):
         if professional_type and lic_id:
             if request.user.is_authenticated:
                 project_form = ProjectForm(initial={'first_name': request.user.first_name,
-                                                    'last_name': request.user.last_name})
+                                                    'last_name': request.user.last_name,
+                                                    "start_date": datetime.datetime.today().strftime('%Y-%m-%d'),
+                                                    "end_date": datetime.datetime.today().strftime('%Y-%m-%d')})
             else:
-                project_form = ProjectForm()
+                project_form = ProjectForm(initial={ "start_date": datetime.datetime.today().strftime('%Y-%m-%d'),
+                                                    "end_date": datetime.datetime.today().strftime('%Y-%m-%d')})
         else:
-            project_form = ProjectFormDirectCreate()
+            project_form = ProjectFormDirectCreate(initial={ "start_date": datetime.datetime.today().strftime('%Y-%m-%d'),
+                                                    "end_date": datetime.datetime.today().strftime('%Y-%m-%d')})
         if professional_type and lic_id:
             direct_create = False
 
@@ -231,16 +236,24 @@ def create_project(request, professional_type=None, lic_id=None):
         else:
             project_form = ProjectFormDirectCreate(request.POST, request.FILES)
         milestone_formset = MilestoneFormSet(request.POST)
+        #print(project_form.start_date_day)
+        #print(project_form.end_date_day)
 
         if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
+            #print(project_form.cleaned_data)
             # print(request.POST)
             # print(milestone_formset)
             project = save_project(request, project_form, professional_type, lic_id)
+            print(1,project.start_date)
             save_milestone(request, project)
+            print(2,project.start_date)
             save_project_attachment(request, project, project_form)
+            print(3,project.start_date)
             save_project_photo(request, project)
+            print(4,project.start_date)
             success_url = reverse('display_project_overview') + project.uuid
             request.session['success_url'] = success_url
+            print(project.start_date)
             return redirect(success_url)
 
     info_dict = {'project_form': project_form, 'milestone_formset': milestone_formset, 'direct_create': direct_create}

@@ -183,17 +183,17 @@
                                     {% endif %}
                                 </div>
                             {% endif %}
-                            {#                            TODO: make username = email. show username or email only. need to overwrite view function#}
+
                             <br/>
                             <p><input type="email" name="email" required=""
                                       autofocus="autofocus"
-                                      placeholder="{% trans 'Email' %}"
+                                      placeholder="Hoome ID {% trans 'or' %} {% trans 'Email' %}"
                                       id="id_email">
                             </p>
                             <p><input type="hidden" name="username" maxlength="150"
                                       minlength="1"
                                       required=""
-                                      placeholder="{% trans 'Username' %}"
+                                      placeholder="Hoome ID"
                                       id="id_username">
                             </p>
                             <div class="hide role-selection">
