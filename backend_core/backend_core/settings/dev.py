@@ -28,6 +28,34 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#  'default': {
+#      'ENGINE': 'django.db.backends.mysql',
+#      'NAME': 'ebdb',
+#      'USER': 'hoome',
+#      'PASSWORD': 'hoome2017',
+#      'HOST': 'test.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+#      'PORT': '3306',
+#      'OPTIONS': {
+#          'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci,foreign_key_checks = 0;'
+#      }
+#  }
+# }
+# DATABASES = {
+#  'default': {
+#      'ENGINE': 'django.db.backends.mysql',
+#      'NAME': 'ebdb',
+#      'USER': 'hoome',
+#      'PASSWORD': 'hoome2017',
+#      'HOST': 'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
+#      'PORT': '3306',
+#      'OPTIONS': {
+#          'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci,foreign_key_checks = 0;'
+#      }
+#  }
+# }
+
+
 
 # TODO: During development only, change SMTP email service properties in prod setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
