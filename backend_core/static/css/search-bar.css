@@ -221,3 +221,86 @@ ul.dropdown-menu {
     box-shadow: none !important;
     border: 1px solid #ccc !important;
 }
+
+.nav-link {
+    color: white;
+
+}
+.nav-item {
+    background-color: rgba(0,0,0,.5);
+}
+
+.nav-item:active {
+    background-color: rgba(0,116,228,.75);
+}
+
+.nav-item:hover {
+    background-color: rgba(0,116,228,.5);
+}
+
+.nav-tabs {
+    list-style-type: none;
+    margin: 0;
+    padding-top: 10px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    border: none;
+}
+.nav-tabs > li {
+    display: inline-block;
+    float: none;
+}
+.nav-item {
+
+}
+
+.contractor-select {
+    background: transparent;
+}
+
+
+.selection-box {
+    list-style-type: none;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+
+}
+
+.li-item {
+    cursor: pointer;
+    color: white;
+    position: relative;
+    width: 20%;
+    padding: 8px 12px 8px 12px;
+    display: inline;
+    background-color: rgba(0,0,0,.5);
+    border-style: solid;
+    border-width: thin;
+    border-color: white;
+
+}
+
+.li-item:hover {
+    background-color: rgba(0,116,228,.5);
+}
+.search-category-word {
+    color: white;
+    border: none;
+}
+
+.inside {
+    text-decoration: none !important;
+}
+
+.active {
+    background-color: rgba(0,116,228,.75);
+}
+
+.active :hover {
+    background-color: rgba(0,116,228,.75) !important;
+}

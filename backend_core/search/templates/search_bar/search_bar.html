@@ -1,4 +1,54 @@
 {% load i18n %}
+{#<ul class="nav nav-tabs">#}
+{#    <li class="nav-item">#}
+{#        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#}
+{#            <div id="contractor-icon"></div>&nbsp;#}
+{#            <select class="contractor-select">#}
+{#                <option value="volvo"><span class="search-category-word">Contractor</span></option>#}
+{#                <option value="saab">Saab</option>#}
+{#                <option value="opel">Opel</option>#}
+{#                <option value="audi">Audi</option>#}
+{#            </select>#}
+{#        </a>#}
+{#    </li>#}
+{##}
+{#    </li>#}
+{#    <li class="nav-item">#}
+{#        <a class="nav-link" href="#"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">Designer</span></a>#}
+{#    </li>#}
+{#    <li class="nav-item">#}
+{#    <a class="nav-link" href="#"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">Architect</span></a>#}
+{#    </li>#}
+{#    <li class="nav-item">#}
+{#    <a class="nav-link" href="#"><div id="meister-icon"></div>&nbsp;<span class="search-category-word">Meister</span></a>#}
+{#    </li>#}
+{#</ul>#}
+
+<ul class="selection-box">
+    <li class="li-item">
+        <a class="inside dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <div id="contractor-icon"></div>&nbsp;
+            <select class="contractor-select search-category-word">
+                <option value="volvo">Contractor</option>
+                <option value="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+            </select>
+        </a>
+    </li>
+
+    </li>
+    <li class="li-item">
+        <a class="inside" href="#"><div id="designer-icon"></div>&nbsp;<span class="search-category-word">Designer</span></a>
+    </li>
+    <li class="li-item">
+        <a class="inside" href="#"><div id="architect-icon"></div>&nbsp;<span class="search-category-word">Architect</span></a>
+    </li>
+    <li class="li-item">
+        <a class="inside" href="#"><div id="meister-icon"></div>&nbsp;<span class="search-category-word">Meister</span></a>
+    </li>
+</ul>
+
 <form class="form" id="searchForm" action="/search" method="get">
     <div class="form-row">
         <div class="search-row">
@@ -183,6 +233,12 @@
     };
 
     $(function () {
+
+        $('.li-item').click(function(){
+            $('.li-item').removeClass('active');
+            $(this).addClass('active');
+        });
+
         $('li.search-category .dropdown').hover(
             function () {
                 $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
