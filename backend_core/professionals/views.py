@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import datetime
 
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 
 from review.utils import get_reviews, create_review
@@ -14,8 +12,6 @@ from review.forms import get_review_form
 from photos.utils import (
     get_bgimage,
     get_photos,
-    display_project_photo,
-    upload_project_photo,
     upload_photo,
 )
 from overviews.views import edit_overview
@@ -25,7 +21,6 @@ from ratings.utils import (
     get_ratings,
     create_user_rating,
 )
-from ratings.models import RATING_STAR_MAX
 from ratings.forms import get_user_rating_form
 from overviews.utils import get_overview
 from overviews.forms import get_overview_form
@@ -141,7 +136,10 @@ class ProfessionalDetail(View):
             raise Http404(_("Error Pages!"))
 
     def get(self, request, o_id):
-        self.set_info_dict(request, o_id)
+        try:
+            self.set_info_dict(request, o_id)
+        except Http404:
+            return HttpResponse(status=404)
         info_dict = self.info_dict
         template_name = self.template_name
         return render(request, template_name, {"info_dict": info_dict})

@@ -29,7 +29,7 @@ class ArchitectTests(TestCase):
             uuid='kkk',
         )
 
-    def test_view(self):
+    def test_view_detail(self):
         resp = self.client.get(path='/architect/1/')
         self.assertEqual(resp.status_code, 200)
         soup = BeautifulSoup(resp.content, 'html.parser')
@@ -41,8 +41,18 @@ class ArchitectTests(TestCase):
         lic_status = soup.find(name='td', class_='rname', text='License Status:').find_next_sibling().get_text()
         self.assertEqual(self.architect.lic_status, lic_status)
         lic_type = soup.find(name='td', class_='rname', text='License Type:').find_next_sibling().get_text()
-        self.assertEqual(self.architect.lic_type + ' ', lic_type)
-        issued_date = soup.find(name='td', class_='rname', text='Issued Date:').find_next_sibling().get_text()
-        print issued_date
-        x = date(1111, 1, 1)
-        x.strftime()
+        lic_type = lic_type.strip()
+        self.assertEqual(self.architect.lic_type, lic_type)
+        # issued_date = soup.find(name='td', class_='rname', text='Issued Date:').find_next_sibling().get_text()
+        address = soup.find(name='td', class_='rname', text='Address:').find_next_sibling().get_text()
+        street_address = address.split('\n', 1)[0].strip()
+        self.assertEqual(self.architect.street_address, street_address)
+        city_state = address.split('\n', 1)[1].strip().split(',')
+        city = city_state[0]
+        state = city_state[1]
+        self.assertEqual(self.architect.city, city)
+        self.assertEqual(self.architect.state, state)
+
+    def test_view_notfound(self):
+        resp = self.client.get(path='/architect/2/')
+        self.assertEqual(resp.status_code, 404)
