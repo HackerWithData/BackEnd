@@ -301,6 +301,6 @@ ul.dropdown-menu {
     background-color: rgba(0,116,228,.75);
 }
 
-.active :hover {
+.li-item.active:hover {
     background-color: rgba(0,116,228,.75) !important;
 }
