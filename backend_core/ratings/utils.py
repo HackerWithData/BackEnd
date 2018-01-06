@@ -15,7 +15,10 @@ def avg_rating(review, rt):
             rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type == rt]
             s += sum(rate_list)
             l += len(rate_list)
-        return s * 1.0 / l
+        try:
+            return s * 1.0 / l
+        except ZeroDivisionError:
+            return 0
     else:
         return 0
 

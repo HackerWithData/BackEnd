@@ -1,19 +1,9 @@
-import datetime
-
-
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext as _,  ugettext_lazy as _
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
 from professionals.utils import check_professional_type
-from ratings.forms import UserRatingForm
-from ratings.models import UserRating
-from ratings.utils import create_user_rating
+from ratings.models import UserRating, Rating
 from photos.models import Photo
-from photos.utils import upload_photo
 from .models import Review
-from .forms import ReviewForm
 
 
 def get_reviews(model_name, object_id, review_status):
@@ -62,4 +52,7 @@ def update_accept_review(request):
         rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
         rating.total = rating.total + r.rating_score
         rating.count = rating.count + 1
-        rating.average = round(rating.total * 1.0 / rating.count, 2)
+        if rating.count != 0:
+            rating.average = round(rating.total * 1.0 / rating.count, 2)
+        else:
+            rating.average = 0
