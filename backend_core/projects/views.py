@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
+from allauth.account.decorators import verified_email_required
 from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
@@ -33,6 +34,7 @@ from helplers import validate_hoome_id
 # TODO: need to rewrite the architecture here.
 # Create your views here.
 @login_required
+@verified_email_required
 def upload_project_attachment(request, uuid):
     template_name = 'projects/upload_project_attachment.html'  # Replace with your template.
     success_url = reverse('display_project_overview') + uuid
@@ -55,6 +57,7 @@ def upload_project_attachment(request, uuid):
 
 
 @login_required
+@verified_email_required
 def upload_project_photo(request, uuid):
     template_name = 'projects/upload_project_photo.html'  # Replace with your template.
     success_url = reverse('display_project_overview') + uuid
@@ -76,6 +79,7 @@ def upload_project_photo(request, uuid):
 
 
 @login_required
+@verified_email_required
 def display_project_overview(request):
     if request.method == "GET":
         template_name = 'projects/project_overview.html'
@@ -91,6 +95,7 @@ def display_project_overview(request):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class ProjectDetail(View):
     template_name = 'projects/project_detail.html'
 

@@ -28,8 +28,8 @@ class ProjectForm(forms.Form):
                                    widget=forms.TextInput(attrs={'placeholder': _('Choose a name for your project')}))
     project_type = forms.ChoiceField(choices=PROJECT_TYPE, label=_('Project Type*'))
     contract_price = forms.IntegerField(label=_('Contract Price*'), min_value=0)
-    start_date = forms.DateField(label=_('Start Date*'), widget=forms.SelectDateWidget())
-    end_date = forms.DateField(label=_('End Date*'), widget=forms.SelectDateWidget())
+    start_date = forms.DateField(label=_('Start Date*'), widget=forms.SelectDateWidget(years=range(2015, 2025)))
+    end_date = forms.DateField(label=_('End Date*'), widget=forms.SelectDateWidget(years=range(2015, 2025)))
     first_name = forms.CharField(label=_("Homeowner's First Name"), max_length=64, required=False)
     last_name = forms.CharField(label=_("Honemowner's Last Name"), max_length=64, required=False)
     project_description = forms.CharField(label=_('Project Description'), required=False,

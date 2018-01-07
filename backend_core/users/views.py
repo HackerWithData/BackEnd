@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.http import HttpResponse, HttpResponseServerError, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from allauth.account.decorators import verified_email_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -85,6 +86,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
 
 
 @login_required
+@verified_email_required
 def sign_up_complete_info(request, **kwargs):
     if request.user.role == CONSUMER:
         if 'success_url' in request.session:
@@ -101,6 +103,7 @@ def sign_up_complete_info(request, **kwargs):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class DashboardAfterPasswordChangeView(PasswordChangeView):
     @property
     def success_url(self):
@@ -108,6 +111,7 @@ class DashboardAfterPasswordChangeView(PasswordChangeView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class DashboardAfterPasswordSetView(PasswordSetView):
     @property
     def success_url(self):
@@ -174,6 +178,7 @@ class ProfessionalProfileAfterSignupView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class ConsumerProfileView(View):
     form_class = ConsumerProfileEditForm
     # TODO: add template
@@ -215,6 +220,7 @@ class ConsumerProfileView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class ProfessionalProfileView(View):
     form_class = ProfessionalProfileEditForm
     # TODO: add template

@@ -11,7 +11,7 @@
             {% user_display confirmation.email_address.user as user_display %}
 {#            with '<a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a>' as email#}
             <p>{% blocktrans  %}Please confirm that
-                {{ email }} is an e-mail address for user {{ user_display }}
+                {{ email }} is an e-mail address for Hoome ID {{ user_display }}
                 .{% endblocktrans %}</p>
             <br/>
             <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">

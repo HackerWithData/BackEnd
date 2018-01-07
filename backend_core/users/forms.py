@@ -4,6 +4,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
+from allauth.account.decorators import verified_email_required
 # from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
 from allauth.account.forms import SignupForm

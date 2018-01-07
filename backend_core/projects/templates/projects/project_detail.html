@@ -95,10 +95,10 @@
                 {#                <div class="panel-title">#}
                 {{ Milestone }}
                 {#                </div>#}
-                {% if user.role|stringformat:"s" == info_dict.project.created_by|stringformat:"s" %}
-                    <a href="#create-milestone"
-                       class="popup-with-form btn btn-hoome move-right">{{ Create_Milestone }}</a>
-                {% endif %}
+{#                {% if user.role|stringformat:"s" == info_dict.project.created_by|stringformat:"s" %}#}
+{#                    <a href="#create-milestone"#}
+{#                       class="popup-with-form btn btn-hoome move-right">{{ Create_Milestone }}</a>#}
+{#                {% endif %}#}
             </div>
             <div class="panel-body">
                 {% if info_dict.milestones %}

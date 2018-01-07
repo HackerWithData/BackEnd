@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from allauth.account.decorators import verified_email_required
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -21,6 +22,7 @@ from projects.utils import (PAID_TO_HOOME)
 # Create your views here.
 # TODO: Simplify this part
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class TransactionsView(View):
     form_class = TransactionForm
     initial = {
@@ -103,6 +105,7 @@ class TransactionsView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class TransactionView(View):
     form_class = TransactionForm
     initial = {
@@ -135,6 +138,7 @@ class TransactionView(View):
         return HttpResponseNotAllowed
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class TransactionHistoryView(View):
     form_class = TransactionHistoryForm
     initial = {
@@ -165,6 +169,7 @@ class TransactionHistoryView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(verified_email_required,name='dispatch')
 class TransactionHistoriesView(View):
     form_class = TransactionHistoryForm
     initial = {
@@ -195,6 +200,7 @@ class TransactionHistoriesView(View):
 
 
 @login_required
+@verified_email_required
 def project_checkout(request):
     template_name = 'transaction/checkout.html'
 
