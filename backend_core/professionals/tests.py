@@ -43,7 +43,7 @@ class ProfessionalTest(object):
         pass
 
     def set_user_ratings(self):
-        self.user_raings = {
+        self.user_ratings = {
             'quality': UserRating.objects.create(
                 review=self.review,
                 rating_type='Q',
@@ -57,7 +57,7 @@ class ProfessionalTest(object):
             'length': UserRating.objects.create(
                 review=self.review,
                 rating_type='L',
-                rating_score=7,
+                rating_score=6,
             )
         }
 
@@ -99,7 +99,7 @@ class ProfessionalTest(object):
         self.review = Review.objects.create(**self.set_review_params())
         self.set_user_ratings()
 
-    def test_professional_detail(self):
+    def test_get_professional_detail(self):
         resp = self.client.get(path=self.path)
         self.assertEqual(resp.status_code, 200)
         soup = BeautifulSoup(resp.content, 'html.parser')
@@ -125,7 +125,7 @@ class ProfessionalTest(object):
         self.assertEqual(self.professional.city, city)
         self.assertEqual(self.professional.state, state)
 
-    def test_review(self):
+    def test_get_review(self):
         resp = self.client.get(path=self.path)
         soup = BeautifulSoup(resp.content, 'html.parser')
         reviews = soup.find_all(name='div', class_='user-review')
@@ -141,9 +141,50 @@ class ProfessionalTest(object):
         user_rating = review.find(name='div', class_='user-rating').get_text()
         user_rating_detail = user_rating.replace(' ', '').split('\n')
         user_rating_detail = filter(lambda x: x != '', user_rating_detail)
-        self.assertEqual(user_rating_detail[0], 'Quality:' + str(self.user_raings.get('quality').rating_score))
-        self.assertEqual(user_rating_detail[1], 'Efficiency:' + str(self.user_raings.get('efficiency').rating_score))
-        self.assertEqual(user_rating_detail[2], 'Length:' + str(self.user_raings.get('length').rating_score))
+        self.assertEqual(user_rating_detail[0], 'Quality:' + str(self.user_ratings.get('quality').rating_score))
+        self.assertEqual(user_rating_detail[1], 'Efficiency:' + str(self.user_ratings.get('efficiency').rating_score))
+        self.assertEqual(user_rating_detail[2], 'Length:' + str(self.user_ratings.get('length').rating_score))
 
-    def test_rating_stars(self):
-        pass
+    def test_get_rating_stars(self):
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        rating = soup.find(name='div', class_='ratings_rating').find_all(name='span', class_='yellow')
+        rating = len(rating)
+        quality_rating = self.user_ratings.get('quality').rating_score
+        efficiency_rating = self.user_ratings.get('efficiency').rating_score
+        length_rating = self.user_ratings.get('length').rating_score
+        professional_rating = (quality_rating + efficiency_rating + length_rating) / 3
+        self.assertEqual(rating, professional_rating)
+
+    def test_post_review(self):
+        review_data = {
+            'last_name': 'aaa',
+            'first_name': 'qwe',
+            'county': 'bbb',
+            'q_rating': 5,
+            'e_rating': 4,
+            'l_rating': 8,
+            'project_type': 'R',
+            'project_date_day': 9,
+            'zipcode': '12345',
+            'comments': 'xcvasf',
+            'review': 'review',
+            'state': 'zxv',
+            'project_duration': 123,
+            'email': 'assaf@sla.ca',
+            'project_cost': 99999,
+            'project_date_month': 12,
+            'project_date_year': 2003,
+            'is_anonymous': 'on',
+            'street_address2': 'bbb',
+            'street_address': 'ccc',
+        }
+        resp = self.client.post(path=self.path, data=review_data)
+        self.assertEqual(resp.status_code, 302)
+        review = Review.objects.get(email=review_data.get('email'))
+        self.assertNotEqual(review, None)
+        review_data.pop('review')
+        resp = self.client.post(path=self.path, data=review_data)
+        print resp.status_code
+
+

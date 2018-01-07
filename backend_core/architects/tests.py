@@ -14,4 +14,3 @@ class ArchitectTests(ProfessionalTest, TestCase):
 
     def set_path(self):
         self.path = '/architect/1/'
-

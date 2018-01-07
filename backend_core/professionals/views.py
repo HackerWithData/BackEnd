@@ -114,7 +114,6 @@ class ProfessionalDetail(View):
         if request.POST.get('review', None):
             user_rating_form = get_user_rating_form(request.POST)
             review_form = get_review_form(request, method="POST")
-            print user_rating_form.errors
             if review_form.is_valid() and user_rating_form.is_valid():
                 review = create_review(
                     request=request,
