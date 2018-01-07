@@ -98,32 +98,44 @@ class ProfessionalTest(object):
         self.professional = self.model.objects.create(**self.set_professional_params())
         self.review = Review.objects.create(**self.set_review_params())
         self.set_user_ratings()
+        self.resp = self.client.get(path=self.path)
+        self.soup = BeautifulSoup(self.resp.content, 'html.parser')
 
-    def test_get_professional_detail(self):
-        resp = self.client.get(path=self.path)
-        self.assertEqual(resp.status_code, 200)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        lic_name = soup.find(name='span', class_='bus-name').get_text()
+    def test_get_status_code(self):
+        self.assertEqual(self.resp.status_code, 200)
+
+    def test_professional_get_lic_name(self):
+        lic_name = self.soup.find(name='span', class_='bus-name').get_text()
         self.assertEqual(self.professional.lic_name, lic_name)
-        lic_num = soup.find(name='td', class_='rname', text='License #:').find_next_sibling().get_text()
+
+    def test_professional_get_lic_num(self):
+        lic_num = self.soup.find(name='td', class_='rname', text='License #:').find_next_sibling().get_text()
         self.assertEqual(self.professional.lic_num, int(lic_num))
-        lic_status = soup.find(name='td', class_='rname', text='License Status:').find_next_sibling().get_text()
-        self.assertEqual(self.professional.lic_status, lic_status)
-        lic_type = soup.find(name='td', class_='rname', text='License Type:').find_next_sibling().get_text()
+
+    def test_professional_get_lic_type(self):
+        lic_type = self.soup.find(name='td', class_='rname', text='License Type:').find_next_sibling().get_text()
         self.assertEqual(self.professional.lic_type + ' ', lic_type)
-        issued_date = soup.find(name='td', class_='rname', text='Issued Date:').find_next_sibling().get_text()
+
+    def test_professional_get_lic_address(self):
+        address = self.soup.find(name='td', class_='rname', text='Address:').find_next_sibling().get_text()
+        address = address.replace('\n', ',', 1).replace(' ', '').replace('\n', '')
+        street_address, city, state = address.split(',')[0:3]
+        self.assertEqual(self.professional.street_address, street_address)
+        self.assertEqual(self.professional.city, city)
+        self.assertEqual(self.professional.state, state)
+
+    def test_professional_get_lic_issued_date(self):
+        issued_date = self.soup.find(name='td', class_='rname', text='Issued Date:').find_next_sibling().get_text()
         lic_issued_date = '{month}. {date}, {year}'.format(
             month=self.professional.lic_issue_date.strftime('%b'),
             date=self.professional.lic_issue_date.day,
             year=self.professional.lic_issue_date.year,
         )
         self.assertEqual(lic_issued_date, issued_date)
-        address = soup.find(name='td', class_='rname', text='Address:').find_next_sibling().get_text()
-        address = address.replace('\n', ',', 1).replace(' ', '').replace('\n', '')
-        street_address, city, state = address.split(',')[0:3]
-        self.assertEqual(self.professional.street_address, street_address)
-        self.assertEqual(self.professional.city, city)
-        self.assertEqual(self.professional.state, state)
+
+    def test_professional_get_lic_status(self):
+        lic_status = self.soup.find(name='td', class_='rname', text='License Status:').find_next_sibling().get_text()
+        self.assertEqual(self.professional.lic_status, lic_status)
 
     def test_get_review(self):
         resp = self.client.get(path=self.path)
