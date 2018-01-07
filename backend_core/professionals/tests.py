@@ -18,23 +18,7 @@ class ProfessionalTest(object):
     path = None
 
     def set_professional_params(self):
-        model_params = {
-            'lic_num': 1,
-            'lic_prefix': 'aaa',
-            'lic_name': 'bbb',
-            'lic_type': 'ccc',
-            'lic_status': 'ddd',
-            'lic_issue_date': date(2000, 1, 1),
-            'lic_expire_date': date(2222, 2, 2),
-            'street_address': 'eee',
-            'city': 'fff',
-            'county': 'ggg',
-            'state': 'hhh',
-            'country': 'iii',
-            'pos_code': 'jjj',
-            'uuid': 'kkk',
-        }
-        return model_params
+        pass
 
     def set_path(self):
         pass
@@ -101,41 +85,19 @@ class ProfessionalTest(object):
         self.resp = self.client.get(path=self.path)
         self.soup = BeautifulSoup(self.resp.content, 'html.parser')
 
-    def test_get_status_code(self):
+    def test_get_status_code_200(self):
         self.assertEqual(self.resp.status_code, 200)
+
+    def test_get_404_page(self):
+        resp = self.client.get(path=self.path_404)
+        self.assertEqual(resp.status_code, 200)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
 
     def test_professional_get_lic_name(self):
         lic_name = self.soup.find(name='span', class_='bus-name').get_text()
         self.assertEqual(self.professional.lic_name, lic_name)
-
-    def test_professional_get_lic_num(self):
-        lic_num = self.soup.find(name='td', class_='rname', text='License #:').find_next_sibling().get_text()
-        self.assertEqual(self.professional.lic_num, int(lic_num))
-
-    def test_professional_get_lic_type(self):
-        lic_type = self.soup.find(name='td', class_='rname', text='License Type:').find_next_sibling().get_text()
-        self.assertEqual(self.professional.lic_type + ' ', lic_type)
-
-    def test_professional_get_lic_address(self):
-        address = self.soup.find(name='td', class_='rname', text='Address:').find_next_sibling().get_text()
-        address = address.replace('\n', ',', 1).replace(' ', '').replace('\n', '')
-        street_address, city, state = address.split(',')[0:3]
-        self.assertEqual(self.professional.street_address, street_address)
-        self.assertEqual(self.professional.city, city)
-        self.assertEqual(self.professional.state, state)
-
-    def test_professional_get_lic_issued_date(self):
-        issued_date = self.soup.find(name='td', class_='rname', text='Issued Date:').find_next_sibling().get_text()
-        lic_issued_date = '{month}. {date}, {year}'.format(
-            month=self.professional.lic_issue_date.strftime('%b'),
-            date=self.professional.lic_issue_date.day,
-            year=self.professional.lic_issue_date.year,
-        )
-        self.assertEqual(lic_issued_date, issued_date)
-
-    def test_professional_get_lic_status(self):
-        lic_status = self.soup.find(name='td', class_='rname', text='License Status:').find_next_sibling().get_text()
-        self.assertEqual(self.professional.lic_status, lic_status)
 
     def test_get_review(self):
         resp = self.client.get(path=self.path)
@@ -195,8 +157,14 @@ class ProfessionalTest(object):
         self.assertEqual(resp.status_code, 302)
         review = Review.objects.get(email=review_data.get('email'))
         self.assertNotEqual(review, None)
+        review_data.update({'email': 'uuuu'})
+        resp = self.client.post(path=self.path, data=review_data)
+        self.assertEqual(resp.status_code, 200)
         review_data.pop('review')
         resp = self.client.post(path=self.path, data=review_data)
-        print resp.status_code
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+
 
 

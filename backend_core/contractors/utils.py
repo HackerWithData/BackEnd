@@ -41,20 +41,23 @@ def avg_rating(review, rt):
             rate_list = [i.rating_score for i in r.userrating_set.all() if i.rating_type == rt]
             s += sum(rate_list)
             l += len(rate_list)
-        return s * 1.0 / l
+        try:
+            return  s * 1.0 / l
+        except ZeroDivisionError:
+            return 0
     else:
         return 0
 
 
-def get_bh(contractor_id):
-    bh = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
-    return bh
+def get_bond_history(contractor_id):
+    bond_history = BondHistory.objects.filter(contractor_id=contractor_id).order_by('-bond_effective_date').first()
+    return bond_history
 
 
-def get_wh(contractor_id):
-    wh = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
+def get_wc_history(contractor_id):
+    wc_history = WorkerCompensationHistory.objects.filter(contractor_id=contractor_id).order_by(
         '-insur_effective_date').first()
-    return wh
+    return wc_history
 
 
 def get_complaint(contractor):

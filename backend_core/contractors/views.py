@@ -2,14 +2,14 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _, ugettext_lazy as _
+from django.shortcuts import render
 
 from .models import Contractor
 from .utils import (
     convert_hscore_to_rank,
-    avg_rating,
     get_contractor_lic_length,
-    get_bh,
-    get_wh,
+    get_bond_history,
+    get_wc_history,
     get_complaint,
 )
 from photos.utils import upload_project_photo, display_project_photo, delete_photo
@@ -28,8 +28,9 @@ class ContractorDetail(ProfessionalDetail):
         'score',
         'rank',
         'length',
-        'bh',
-        'wh',
+        'lic_type',
+        'bond_history',
+        'wc_history',
         'hscore',
         'score',
         'letter_grade',
@@ -65,11 +66,11 @@ class ContractorDetail(ProfessionalDetail):
     def get_professional_length(self, **kwargs):
         return get_contractor_lic_length(kwargs.get('instance'))
 
-    def get_professional_bh(self, **kwargs):
-        return get_bh(contractor_id=kwargs.get('o_id'))
+    def get_professional_bond_history(self, **kwargs):
+        return get_bond_history(contractor_id=kwargs.get('o_id'))
 
-    def get_professional_wh(self, **kwargs):
-        return get_wh(contractor_id=kwargs.get('o_id'))
+    def get_professional_wc_history(self, **kwargs):
+        return get_wc_history(contractor_id=kwargs.get('o_id'))
 
     def get_professional_hscore(self, **kwargs):
         return get_hscore(contractor_id=kwargs.get('o_id'), contractor=kwargs.get('instance'))
@@ -87,7 +88,7 @@ class ContractorDetail(ProfessionalDetail):
     def get_professional_complaint(self, **kwargs):
         return get_complaint(contractor=kwargs.get('instance'))
 
-#TODO: add render in import
+
 def update_accept_review(request):
     update_review(request)
     return render(request, '/')
@@ -102,6 +103,7 @@ def display_project_photos(request, o_id):
         template_name=template_name,
     )
 
+
 #TODO:
 def upload_project_photos(request, o_id):
     success_url = '/contractor/' + o_id
@@ -115,6 +117,6 @@ def upload_project_photos(request, o_id):
         template_name=template_name
     )
 
-#TODO： need to change here.
+
 def del_photo(request, contractor_id):
-    return deletes_photo(request=request, contractor_id=contractor_id)
+    return delete_photo(request=request, contractor_id=contractor_id)

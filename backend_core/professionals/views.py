@@ -135,11 +135,7 @@ class ProfessionalDetail(View):
             raise Http404(_("Error Pages!"))
 
     def get(self, request, o_id):
-        try:
-            self.set_info_dict(request, o_id)
-        except Http404:
-            return HttpResponse(status=404)
+        self.set_info_dict(request, o_id)
         info_dict = self.info_dict
         template_name = self.template_name
         return render(request, template_name, {"info_dict": info_dict})
-
