@@ -10,6 +10,8 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
+    '52.27.179.12',
+    '34.213.171.131',
     'ebdbtest.cpqxzirsz2nd.us-west-2.rds.amazonaws.com',
     'SSLLoadBalancer-2138526934.us-west-2.elb.amazonaws.com',
     '.hoome.io',
