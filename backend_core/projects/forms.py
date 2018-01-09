@@ -139,7 +139,7 @@ class ProjectFormDirectCreate(ProjectForm):
             else:
                 try:
                     user = User.objects.get(hoome_id=homeowner_hoome_id)
-                except:
+                except User.DoesNotExist:
                     raise ValidationError(message=_("Homeowener's Hoome id does not exist"),
                                           code='homeowner_hoome_id_error')
                 if user.role == PROFESSIONAL:
@@ -152,7 +152,7 @@ class ProjectFormDirectCreate(ProjectForm):
             else:
                 try:
                     user = User.objects.get(hoome_id=professional_hoome_id)
-                except:
+                except User.DoesNotExist:
                     raise ValidationError(message=_("Contractor/Meister's Hoome id does not exist"),
                                           code='professional_hoome_id_error')
                 if user.role == CONSUMER:

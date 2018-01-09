@@ -1,13 +1,14 @@
 from datetime import datetime
-from hashlib import md5
 from Crypto.Hash import HMAC, MD5
+
+from django.contrib.contenttypes.models import ContentType
 
 from .models import Transaction, TransactionHistory
 from users.utils import CONSUMER, PROFESSIONAL
 from projects.utils import get_a_uuid
 
 
-def generate_transaction_number(project_id, milestone_id):
+def generate_transaction_number(project_id=None, milestone_id=None):
     """
 
     :param project_id: current project id
@@ -16,6 +17,8 @@ def generate_transaction_number(project_id, milestone_id):
     :return: ret_md5: hashed MD5 with consumer, professional, project id and current time
     :type ret_md5: str
     """
+    if not project_id or not milestone_id:
+        return None
     utc_time = int((datetime.utcnow() - datetime(1970, 1, 1, 0, 0, 0, 0)).total_seconds())
     h = HMAC.new(b'%d|%d|%s' % (project_id, milestone_id, utc_time))
     return h.hexdigest()
@@ -27,10 +30,13 @@ def get_transactions(user):
         return transactions
     elif user.role == PROFESSIONAL:
         professional = user.professional_profiles.first().professional
-        transactions = Transaction.objects.filter(
-            content_type=ContentType.objects.get(model=professional.type.lower()),
-            object_id=int(professional.lic_num)
-        )
+        try:
+            transactions = Transaction.objects.filter(
+                content_type=ContentType.objects.get(model=professional.type.lower()),
+                object_id=int(professional.lic_num)
+            )
+        except ContentType.DoesNotExist:
+            return None
         return transactions
 
 

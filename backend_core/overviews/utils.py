@@ -1,6 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
-
 from .models import Overview
 
 

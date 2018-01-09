@@ -1,32 +1,39 @@
 import json
 import os
+import datetime
 
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _, ugettext_lazy as _
 from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 import boto
 from boto.s3.key import Key
+import pytz
 
 from .models import BackgroundPhoto, Photo
 from .forms import PhotoForm
 from users.utils import get_p_lic_num
 
 
-def get_bgimage(model_name, object_id):
+def get_bgimage(model_name=None, object_id=None):
+    if not model_name or not object_id:
+        return None
     try:
         bgimage = BackgroundPhoto.objects.get(
             content_type=ContentType.objects.get(model=model_name),
             object_id=object_id
         )
-    except:
+    except BackgroundPhoto.DoesNotExist:
         bgimage = None
     return bgimage
 
 
-def get_photos(model_name, object_id):
+def get_photos(model_name=None, object_id=None):
+    if not model_name or not object_id:
+        return None
     photos = Photo.objects.filter(
         content_type=ContentType.objects.get(model=model_name),
         object_id=object_id
@@ -36,9 +43,12 @@ def get_photos(model_name, object_id):
 
 def display_project_photo(request, o_id, model, template_name):
     if request.is_ajax() and request.method == "POST":
-        model_name = str(ContentType.objects.get_for_model(model=model).name)
-        instance = model.objects.get(lic_num=o_id)
-        project_photos = get_photos(model_name=model_name, object_id=o_id)
+        try:
+            model_name = str(ContentType.objects.get_for_model(model=model).name)
+            instance = model.objects.get(lic_num=o_id)
+            project_photos = get_photos(model_name=model_name, object_id=o_id)
+        except ObjectDoesNotExist:
+            raise Http404(_('No Pages Found.'))
         info_dict = {'project_photos': project_photos, model_name: instance}
         return render(request, template_name, {'info_dict': info_dict})
     else:
@@ -46,17 +56,19 @@ def display_project_photo(request, o_id, model, template_name):
 
 
 def upload_photo(request, o_id, model_name):
-    content_type = ContentType.objects.get(model=model_name)
+    try:
+        content_type = ContentType.objects.get(model=model_name)
+    except ContentType.DoesNotExist:
+        return HttpResponse(status=400)
     object_id = int(o_id)
     files = request.FILES.getlist('img')
     for f in files:
-        instance = Photo.objects.create(
+        Photo.objects.create(
             img=f,
             title=f.name,
             content_type=content_type,
             object_id=object_id
         )
-        instance.save()
 
 
 def upload_project_photo(request, o_id, success_url, model_name, template_name):
@@ -108,7 +120,11 @@ def delete_photo(request, contractor_id):
             data.update(json.loads(request.body))
             photo_id = data.get('id', None)
             if photo_id is not None:
-                photo = Photo.objects.get(id=photo_id)
+                try:
+                    photo = Photo.objects.get(id=photo_id)
+                except Photo.DoesNotExist:
+                    response_data = {'error': 'photo does not exist'}
+                    return HttpResponse(response_data, content_type='application/json', status=200)
                 old_pic_path = photo.img.file.name
                 if hasattr(settings, 'AWS_ACCESS_KEY_ID'):
                     s3conn = boto.connect_s3(
@@ -131,7 +147,7 @@ def delete_photo(request, contractor_id):
             response_data = {'error', 'deletion request is not from its owner'}
             return HttpResponse(response_data, content_type='application/json', status=200)
     else:
-        raise Http404
+        raise Http404(_('No Pages Found.'))
 
 
 def get_photo_list():

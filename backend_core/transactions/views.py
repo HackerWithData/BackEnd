@@ -67,7 +67,7 @@ class TransactionsView(View):
             :return:
         """
         received_json_data = json.loads(request.body)
-        project = get_project(uuid=received_json_data['project_uuid'])
+        project = get_project(uuid_=received_json_data['project_uuid'])
         milestone = get_milestone(uuid=received_json_data['milestone_uuid'])
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
         # transaction, created = Transaction.objects.get_or_create(
@@ -225,6 +225,6 @@ def project_checkout(request):
 #TODO: need to take care project_uuid here
 def project_pay(request, project_uuid):
     template_name = 'transaction/payment.html'
-    projects = get_project(uuid=project_uuid)
+    projects = get_project(uuid_=project_uuid)
     info_dict = {'project': projects}
     return render(request, template_name, {'info_dict': info_dict})

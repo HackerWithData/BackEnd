@@ -55,7 +55,7 @@ def upload_project_attachment(request, uuid):
     success_url = reverse('display_project_overview') + uuid
     form = get_project_attachment_form(request=request)
     if request.method == "POST":
-        project = get_project(uuid=uuid)
+        project = get_project(uuid_=uuid)
         status = upload_attachment(request=request, project=project, form=form)
         if status == 'upload_success':
             return redirect(success_url)
@@ -69,7 +69,7 @@ def upload_project_photo(request, uuid):
     success_url = reverse('display_project_overview') + uuid
     form = get_project_attachment_form(request)
     if request.method == "POST":
-        project = get_project(uuid=uuid)
+        project = get_project(uuid_=uuid)
         status = upload_attachment(request=request, project=project, form=form)
         if status == 'upload_success':
             return redirect(success_url)
@@ -91,34 +91,26 @@ class ProjectDetail(View):
 
     def get(self, request, uuid):
         milestone_form = get_milestone_form(request)
-        project = get_project(uuid=uuid)
-        print("0")
+        project = get_project(uuid_=uuid)
         if project.user is None:
-            print("1")
             if request.user.role == CONSUMER:
-                print("2")
                 project.user = request.user
             else:
-                print("3")
                 django_logout(request)
                 messages.warning(request, _("Please Login as Homeowner."))
                 success_url = '/project/' + uuid
                 return redirect(success_url)
         elif project.content_type is None:
-            print("4")
             if request.user.role == PROFESSIONAL:
-                print("5")
                 pro = get_professional_user(request.user)
                 project.bus_name = pro.name
                 project.content_type = ContentType.objects.get(model=pro.type.lower())
                 project.object_id = pro.lic_num
             else:
-                print("6")
                 django_logout(request)
                 messages.warning(request, _("Please Login as Professional."))
                 success_url = '/project/' + uuid
                 return redirect(success_url)
-        print("7")
         project.save()
 
         project_attachments = get_project_attachments(project=project)
@@ -155,7 +147,7 @@ class ProjectDetail(View):
         if request.POST.get('create-milestone', None):
             milestone_form = get_milestone_form(request)
             if milestone_form.is_valid():
-                project = get_project(uuid=uuid)
+                project = get_project(uuid_=uuid)
                 # TODO: need to add this condition when this function is used in other place
                 # if request.user.role == project.created_by:
                 _save_milestone(milestone_form.cleaned_data['amount'], project)
@@ -200,7 +192,7 @@ class ProjectDetail(View):
             return redirect(request.path)  #
 
 
-@check_recaptcha
+# @check_recaptcha
 def create_project(request, professional_type=None, lic_id=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
@@ -222,7 +214,8 @@ def create_project(request, professional_type=None, lic_id=None):
             direct_create = False
 
     elif request.method == "POST":
-        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
+        # if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
+        if project_form.is_valid() and milestone_formset.is_valid():
             project = save_project(request, project_form, professional_type, lic_id)
             save_milestone(request, project)
             upload_attachment(request=request, project=project, form=project_form)
@@ -241,7 +234,7 @@ def create_project(request, professional_type=None, lic_id=None):
 def edit_project(request, uuid):
     template_name = "projects/edit_project.html"
     try:
-        project = get_project(uuid=uuid)
+        project = get_project(uuid_=uuid)
     except:
         return Http404
     project_edit_form = get_project_edit_form(request=request, project=project)

@@ -2,8 +2,6 @@ from random import randint
 import random
 import string
 
-from django.db.models.aggregates import Count
-from django.core.exceptions import ObjectDoesNotExist
 
 from users.models import User, AVAILABLE, HoomeId, SIGNED
 from contractors.models import Contractor
@@ -26,8 +24,11 @@ def get_professional_user(user):
 
 
 def get_user_by_hoome_id(hoome_id):
-    user = User.objects.get(hoome_id=hoome_id)
-    return user
+    try:
+        user = User.objects.get(hoome_id=hoome_id)
+        return user
+    except User.DoesNotExist:
+        return None
 
 
 def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
@@ -100,7 +101,7 @@ def retrieve_professional_info(request):
         professional = Professional.objects.get(lic_num=lic, type=prof_type)
         professional_types = professional.professional_types.all()
         subtypes = [professional_type.subtype for professional_type in professional_types]
-    except ObjectDoesNotExist:
+    except Professional.DoesNotExist:
         return None
 
     # retrieve corresponding professional through different table

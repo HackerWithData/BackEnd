@@ -1,6 +1,5 @@
 import uuid
 
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
 from .models import (
@@ -70,9 +69,12 @@ def get_user_projects(user):
         return info_dict
 
 
-def get_project(uuid):
-    project = Project.objects.get(uuid=uuid)
-    return project
+def get_project(uuid_):
+    try:
+        project = Project.objects.get(uuid=uuid_)
+        return project
+    except Project.DoesNotExist:
+        return None
 
 
 def update_milestone(uuid=None, milestone=None, **kwargs):

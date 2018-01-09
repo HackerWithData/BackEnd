@@ -7,7 +7,9 @@ from .models import (
 )
 
 
-def avg_rating(review, rt):
+def avg_rating(review=None, rt=None):
+    if not review or not rt:
+        return None
     s = 0
     l = 0
     if review:
@@ -23,7 +25,9 @@ def avg_rating(review, rt):
         return 0
 
 
-def get_ratings(model_name, object_id, review):
+def get_ratings(model_name=None, object_id=None, review=None):
+    if not model_name or not object_id or not review:
+        return None
     rating = Rating.objects.filter(
         content_type=ContentType.objects.get(model=model_name),
         object_id=object_id,
@@ -41,9 +45,8 @@ def get_ratings(model_name, object_id, review):
 
 def create_user_rating(user_rating_form, review):
     for field in user_rating_form.cleaned_data:
-        user_rating = UserRating(
+        UserRating.objects.create(
             review=review,
             rating_type=field[0].upper(),
             rating_score=int(user_rating_form.cleaned_data[field]),
         )
-        user_rating.save()

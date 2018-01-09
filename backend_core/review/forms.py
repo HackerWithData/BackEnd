@@ -4,10 +4,10 @@ import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
 
-from projects.models import (PROJECT_TYPE, MILESTONE_STATUS, REMODEL, WAITING)
+from projects.models import PROJECT_TYPE
 from .models import Review
+from contractors.models import Contractor
 
 
 def name_validator(name):
@@ -19,11 +19,6 @@ def zipcode_validator(zipcode):
     rex = re.compile(r'^\d{5}(?:[-\s]\d{4})?$')
     if not rex.match(zipcode):
         raise ValidationError(_('zipcode format should be xxxxx or xxxxx-xxxx'), code='zipcode_error')
-
-
-# def positive_int_validator(num):
-#     if num < 0:
-#         raise ValidationError(_('cannot be a negative number'), code='cost_error')
 
 
 def email_validator(email):
@@ -50,20 +45,22 @@ class ReviewForm(forms.Form):
     is_anonymous = forms.BooleanField(label=_('Is Anonymous?'), required=False)
 
     def save(self, commit=True):
-        review = Review(comments=self.cleaned_data['comments'],
-                        first_name=self.cleaned_data['first_name'],
-                        last_name=self.cleaned_data['last_name'],
-                        project_date=self.cleaned_data['project_date'],
-                        project_type=self.cleaned_data['project_type'],
-                        project_cost=self.cleaned_data['project_cost'],
-                        project_duration=self.cleaned_data['project_duration'],
-                        email=self.cleaned_data['email'],
-                        street_address=self.cleaned_data['street_address'],
-                        street_address2=self.cleaned_data['street_address2'],
-                        county=self.cleaned_data['county'],
-                        state=self.cleaned_data['state'],
-                        zipcode=self.cleaned_data['zipcode'],
-                        is_anonymous=self.cleaned_data['is_anonymous'])
+        review = Review(
+            comments=self.cleaned_data['comments'],
+            first_name=self.cleaned_data['first_name'],
+            last_name=self.cleaned_data['last_name'],
+            project_date=self.cleaned_data['project_date'],
+            project_type=self.cleaned_data['project_type'],
+            project_cost=self.cleaned_data['project_cost'],
+            project_duration=self.cleaned_data['project_duration'],
+            email=self.cleaned_data['email'],
+            street_address=self.cleaned_data['street_address'],
+            street_address2=self.cleaned_data['street_address2'],
+            county=self.cleaned_data['county'],
+            state=self.cleaned_data['state'],
+            zipcode=self.cleaned_data['zipcode'],
+            is_anonymous=self.cleaned_data['is_anonymous']
+        )
         if commit:
             review.save()
         return review
@@ -80,7 +77,10 @@ def get_review_form(request, method, o_id=None):
         else:
             review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
         if o_id is not None:
-            review_form.initial.update({'contractor': Contractor.objects.get(pk=o_id)})
+            try:
+                review_form.initial.update({'contractor': Contractor.objects.get(pk=o_id)})
+            except Contractor.DoesNotExist:
+                pass
         return review_form
     elif method == "POST":
         review_form = ReviewForm(request.POST)

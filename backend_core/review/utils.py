@@ -6,14 +6,16 @@ from photos.models import Photo
 from .models import Review
 
 
-def get_reviews(model_name, object_id, review_status):
+def get_reviews(model_name=None, object_id=None, review_status=None):
+    if not model_name or not object_id or not review_status:
+        return None
     try:
         review = Review.objects.filter(
             content_type=ContentType.objects.get(model=model_name),
             object_id=object_id,
             review_status=review_status,
         )
-    except:
+    except ContentType.DoesNotExist:
         review = None
     return review
 
@@ -23,7 +25,10 @@ def create_review(request, o_id, review_form):
     review = review_form.save(commit=False)
     if request.user.is_authenticated():
         review.user = request.user
-    review.content_type = ContentType.objects.get(model=model_type)
+    try:
+        review.content_type = ContentType.objects.get(model=model_type)
+    except ContentType.objects.DoesNotExist:
+        pass
     review.object_id = o_id
     review.save()
     return review
@@ -34,25 +39,33 @@ def create_review_photos(request, review):
     object_id = int(review.id)
     files = request.FILES.getlist('project photos')
     for f in files:
-        instance = Photo.objects.create(
+        Photo.objects.create(
             img=f,
             title=f.name,
             content_type=content_type,
             object_id=object_id,
         )
-        instance.save()
 
 
 def update_accept_review(request):
-    review = Review.objects.get(contractor=request.contractor)
-    review.review_status = 'A'
-    review.save()
-    ur = UserRating.objects.get(review=review)
-    for r in ur:
-        rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
-        rating.total = rating.total + r.rating_score
-        rating.count = rating.count + 1
-        if rating.count != 0:
-            rating.average = round(rating.total * 1.0 / rating.count, 2)
-        else:
-            rating.average = 0
+    try:
+        review = Review.objects.get(contractor=request.contractor)
+        review.review_status = 'A'
+        review.save()
+    except Review.DoesNotExist:
+        pass
+    try:
+        ur = UserRating.objects.get(review=review)
+        for r in ur:
+            try:
+                rating = Rating.objects.get(contractor=request.contractor, rating_type=review.rating_type)
+                rating.total = rating.total + r.rating_score
+                rating.count = rating.count + 1
+                if rating.count != 0:
+                    rating.average = round(rating.total * 1.0 / rating.count, 2)
+                else:
+                    rating.average = 0
+            except Rating.DoesNotExist:
+                pass
+    except UserRating.DoesNotExist:
+        pass
