@@ -1342,7 +1342,7 @@ msgid ""
 "                %(email)s is an e-mail address for Hoome ID "
 "%(user_display)s\n"
 "                ."
-msgstr "请确认%(email)s是Hoome ID%(user_display)s的邮箱。"
+msgstr "请确认%(email)s是Hoome ID %(user_display)s的邮箱。"
 
 #: users/templates/account/email_confirm.html:19
 msgid "Confirm"
