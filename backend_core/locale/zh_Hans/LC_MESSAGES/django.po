@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-07 07:14+0000\n"
+"POT-Creation-Date: 2018-01-09 10:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -241,8 +241,8 @@ msgid "Find excellent professionals"
 msgstr "筛选优秀的装修团队"
 
 #: home/templates/home/home.html:153
-msgid "Database in California State"
-msgstr "加州数据库"
+msgid "Hoome Database"
+msgstr "Hoome 数据库"
 
 #: meisters/views.py:82 meisters/views.py:144
 #, python-brace-format
@@ -1530,13 +1530,13 @@ msgid "Log in"
 msgstr "登入"
 
 #: users/templates/account/verification_sent.html:5
-#: users/templates/account/verification_sent.html:8
+#: users/templates/account/verification_sent.html:9
 #: users/templates/account/verified_email_required.html:5
-#: users/templates/account/verified_email_required.html:8
+#: users/templates/account/verified_email_required.html:9
 msgid "Verify Your E-mail Address"
 msgstr "确认邮箱地址"
 
-#: users/templates/account/verification_sent.html:10
+#: users/templates/account/verification_sent.html:11
 msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
 "finalize the signup process. Please contact us if you do not receive it "
@@ -1545,27 +1545,43 @@ msgstr ""
 "我们已经发送邮件。请点击一下链接来完成注册操作。请联系我们，如果几分钟之内您"
 "没有收到邮件。"
 
-#: users/templates/account/verified_email_required.html:12
+#: users/templates/account/verified_email_required.html:13
+#, fuzzy
+#| msgid ""
+#| "This part of the site requires us to verify that\n"
+#| "you are who you claim to be. For this purpose, we require that you\n"
+#| "verify ownership of your e-mail address. "
 msgid ""
 "This part of the site requires us to verify that\n"
-"you are who you claim to be. For this purpose, we require that you\n"
-"verify ownership of your e-mail address. "
+"            you are who you claim to be. For this purpose, we require that "
+"you\n"
+"            verify ownership of your e-mail address. "
 msgstr "进入以下部分网页需要您确认您的邮件地址。"
 
-#: users/templates/account/verified_email_required.html:16
+#: users/templates/account/verified_email_required.html:17
+#, fuzzy
+#| msgid ""
+#| "We have sent an e-mail to you for\n"
+#| "verification. Please click on the link inside this e-mail. Please\n"
+#| "contact us if you do not receive it within a few minutes."
 msgid ""
 "We have sent an e-mail to you for\n"
-"verification. Please click on the link inside this e-mail. Please\n"
-"contact us if you do not receive it within a few minutes."
+"            verification. Please click on the link inside this e-mail. "
+"Please\n"
+"            contact us if you do not receive it within a few minutes."
 msgstr ""
 "我们已经发送邮件。请点击此邮件中的链接。请联系我们，如果几分钟之内您没有收到"
 "邮件。"
 
-#: users/templates/account/verified_email_required.html:20
-#, python-format
+#: users/templates/account/verified_email_required.html:21
+#, fuzzy, python-format
+#| msgid ""
+#| "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change "
+#| "your e-mail address</a>."
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
-"mail address</a>."
+"mail address</a>\n"
+"            ."
 msgstr ""
 "<strong>注意:</strong> 您仍然可以 <a href=\"%(email_url)s\">更改您的email</"
 "a>."
@@ -1637,6 +1653,9 @@ msgstr "证件号码不存在"
 #: users/views.py:216 users/views.py:259
 msgid "Your Profile updated."
 msgstr "您的档案已更新"
+
+#~ msgid "Database in California State"
+#~ msgstr "加州数据库"
 
 #~ msgid ""
 #~ "You don't have any project to pay right now. Please create a new\n"
