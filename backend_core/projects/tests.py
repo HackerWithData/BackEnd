@@ -5,12 +5,14 @@ from datetime import date
 from django.test import TestCase, Client
 from django.shortcuts import reverse
 
+
 from bs4 import BeautifulSoup
 
 from users.models import User, ProfessionalProfile
-from .models import Project
+from .models import Project, Milestone, WAITING
 from professionals.models import Professional
 from contractors.models import Contractor
+
 
 class ProjectTest(TestCase):
     def set_user(self):
@@ -31,7 +33,7 @@ class ProjectTest(TestCase):
             hoome_id=321,
             role='PROFESSIONAL',
         )
-        professional = Professional.objects.create(
+        self.professional_ = Professional.objects.create(
             lic_num=111,
             name='qqq',
             entity_type='Corporation',
@@ -42,7 +44,7 @@ class ProjectTest(TestCase):
             postal_code='ppp',
         )
         ProfessionalProfile.objects.create(
-            professional=professional,
+            professional=self.professional_,
             user=self.professional
         )
         self.contractor = Contractor.objects.create(**{
@@ -124,7 +126,35 @@ class ProjectTest(TestCase):
         resp = self.client.get(path=path)
         self.assertEqual(resp.status_code, 200)
         project = Project.objects.all().first()
+        milestone = Milestone.objects.all().first()
         self.assertEqual(project.user, self.consumer)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        project_info = soup.find(name='span', class_='title', text='Project Name:').find_parent().get_text()
+        project_info = filter(lambda x: x != '', project_info.replace(' ', '').split('\n'))
+        self.assertEqual(project_info[0], 'ProjectName:' + project.project_name)
+        self.assertEqual(project_info[2], self.professional_.name)
+        self.assertEqual(project_info[3], 'ProjectType:' + "REMODEL")
+        project_info = soup.find(name='span', class_='title', text='Start Date:').find_parent().get_text()
+        project_info = filter(lambda x: x != '', project_info.replace(' ', '').split('\n'))
+        start_date = '{month}.{date},{year}'.format(
+            month=project.start_date.strftime('%b'),
+            date=project.start_date.day,
+            year=project.start_date.year,
+        )
+        end_date = '{month}.{date},{year}'.format(
+            month=project.end_date.strftime('%b'),
+            date=project.end_date.day,
+            year=project.end_date.year,
+        )
+        self.assertEqual(project_info[0], 'StartDate:' + start_date)
+        self.assertEqual(project_info[1], 'EndDate:' + end_date)
+        milestone_amount = soup.find(name='table', class_='milestone-table desktop').find(name='td').find_next_sibling()
+        self.assertEqual(milestone_amount.get_text(), str(milestone.amount))
+        milestone_status = milestone_amount.find_next_sibling().get_text().strip()
+        milestone_status = eval(milestone_status.upper())
+        self.assertEqual(milestone_status, milestone.status)
+
+
 
 
 
