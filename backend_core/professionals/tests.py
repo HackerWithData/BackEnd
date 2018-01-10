@@ -205,12 +205,26 @@ class ProfessionalTest(object):
             password=self.professional_password,
         )
 
-        pic = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
-        with open(pic, 'r') as f:
+        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
+        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
+        with open(pic_1, 'r') as f:
             resp = self.client.post(path=path, data={
                 'img': f,
             })
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(BackgroundPhoto.objects.count(), 1)
-
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        bg_image = BackgroundPhoto.objects.all().first()
+        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
+        with open(pic_2, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(BackgroundPhoto.objects.count(), 1)
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        bg_image = BackgroundPhoto.objects.all().first()
+        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
 
