@@ -15,7 +15,7 @@ class MeisterDetail(ProfessionalDetail):
     data_source = 'California Contractors State License Board'
 
     fields = (
-        'bgimage',
+        'bg_image',
         'score',
         'rank',
         'full_state_name',

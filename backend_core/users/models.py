@@ -83,7 +83,7 @@ class ProfessionalProfile(models.Model):
     )
 
     class Meta:
-        unique_together = ('user','professional')
+        unique_together = ('user', 'professional')
 
 
 class ConsumerInterest(models.Model):

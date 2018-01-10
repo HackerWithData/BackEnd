@@ -192,7 +192,7 @@ class ProjectDetail(View):
             return redirect(request.path)  #
 
 
-# @check_recaptcha
+@check_recaptcha
 def create_project(request, professional_type=None, lic_id=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
@@ -214,8 +214,7 @@ def create_project(request, professional_type=None, lic_id=None):
             direct_create = False
 
     elif request.method == "POST":
-        # if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
-        if project_form.is_valid() and milestone_formset.is_valid():
+        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             project = save_project(request, project_form, professional_type, lic_id)
             save_milestone(request, project)
             upload_attachment(request=request, project=project, form=project_form)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from datetime import date
+import os
 
 from django.test import Client
 from django.contrib.contenttypes.models import ContentType
@@ -8,8 +9,10 @@ from django.contrib.contenttypes.models import ContentType
 from bs4 import BeautifulSoup
 
 from review.models import Review
-from users.models import User
+from users.models import User, ProfessionalProfile
 from ratings.models import UserRating
+from professionals.models import Professional
+from photos.models import BackgroundPhoto
 
 
 class ProfessionalTest(object):
@@ -73,6 +76,30 @@ class ProfessionalTest(object):
             password='qwer1234',
         )
 
+    def set_professional_user(self):
+        self.professional_user = User.objects.create(
+            username='nnn',
+            email='zkjxcv@pwpe.llp',
+            password='ladsjfaposf',
+            role='PROFESSIONAL',
+        )
+        self.professional_password = 'qwer1234'
+        self.professional_user.set_password(self.professional_password)
+        self.professional_user.save()
+        self.professional_ = Professional.objects.create(
+            lic_num=self.professional.lic_num,
+            name=self.professional.lic_name,
+            entity_type='ppp',
+            type=self.model.__name__.upper(),
+            state='qqq',
+            county='zzz',
+            postal_code='iii',
+        )
+        self.professional_profile = ProfessionalProfile.objects.create(
+            professional=self.professional_,
+            user=self.professional_user,
+        )
+
     def setUp(self):
         self.client = Client()
         self.set_user()
@@ -82,6 +109,7 @@ class ProfessionalTest(object):
         self.professional = self.model.objects.create(**self.set_professional_params())
         self.review = Review.objects.create(**self.set_review_params())
         self.set_user_ratings()
+        self.set_professional_user()
         self.resp = self.client.get(path=self.path)
         self.soup = BeautifulSoup(self.resp.content, 'html.parser')
 
@@ -166,5 +194,23 @@ class ProfessionalTest(object):
         error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
         self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
 
+    def test_upload_bgimage(self):
+        path = self.path + 'background-upload'
+        resp = self.client.get(path=path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+        self.client.login(
+            username=self.professional_user.username,
+            password=self.professional_password,
+        )
+
+        pic = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
+        with open(pic, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(BackgroundPhoto.objects.count(), 1)
 
 

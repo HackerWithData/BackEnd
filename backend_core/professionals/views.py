@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
@@ -10,7 +10,7 @@ from django.contrib import messages
 from review.utils import get_reviews, create_review
 from review.forms import get_review_form
 from photos.utils import (
-    get_bgimage,
+    get_bg_image,
     get_photos,
     upload_photo,
 )
@@ -34,8 +34,8 @@ class ProfessionalDetail(View):
     data_source = None
     model_name = None
 
-    def get_professional_bgimage(self, **kwargs):
-        return get_bgimage(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
+    def get_professional_bg_image(self, **kwargs):
+        return get_bg_image(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
     def get_professional_lic_type(self, **kwargs):
         return kwargs.get('instance').lic_type.split('&')

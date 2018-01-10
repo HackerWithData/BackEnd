@@ -18,17 +18,17 @@ from .forms import PhotoForm
 from users.utils import get_p_lic_num
 
 
-def get_bgimage(model_name=None, object_id=None):
+def get_bg_image(model_name=None, object_id=None):
     if not model_name or not object_id:
         return None
     try:
-        bgimage = BackgroundPhoto.objects.get(
+        bg_image = BackgroundPhoto.objects.get(
             content_type=ContentType.objects.get(model=model_name),
             object_id=object_id
         )
     except BackgroundPhoto.DoesNotExist:
-        bgimage = None
-    return bgimage
+        bg_image = None
+    return bg_image
 
 
 def get_photos(model_name=None, object_id=None):
@@ -91,10 +91,6 @@ def upload_bg_photo(request, form, model_name, o_id):
         content_type=ContentType.objects.get(model=model_name),
         object_id=o_id
     )
-    bp.img = form.cleaned_data.get('img')
-    bp.title = form.cleaned_data.get('img').name
-    bp.uploaded_at = datetime.datetime.now(pytz.timezone('UTC'))
-    bp.save()
     if not nonexist:
         old_pic_path = bp.img.file.name
         if hasattr(settings, 'AWS_ACCESS_KEY_ID'):
@@ -108,6 +104,10 @@ def upload_bg_photo(request, form, model_name, o_id):
             k.delete()
         else:
             os.remove(old_pic_path)
+    bp.img = form.cleaned_data.get('img')
+    bp.title = form.cleaned_data.get('img').name
+    bp.uploaded_at = datetime.datetime.now(pytz.timezone('UTC'))
+    bp.save()
 
 
 def delete_photo(request, contractor_id):

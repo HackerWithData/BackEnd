@@ -11,7 +11,7 @@ from professionals.views import ProfessionalDetail
 # TODO: add a overview database
 class DesignerDetail(ProfessionalDetail):
     fields = (
-        'bgimage',
+        'bg_image',
         'score',
         'rank',
         'full_state_name',

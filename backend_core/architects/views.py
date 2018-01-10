@@ -11,7 +11,7 @@ from photos.utils import upload_project_photo, display_project_photo
 # TODO: add a overview database
 class ArchitectDetail(ProfessionalDetail):
     fields = (
-        'bgimage',
+        'bg_image',
         'score',
         'rank',
         'full_state_name',
@@ -59,8 +59,6 @@ def display_project_photos(request, o_id):
 
 
 def upload_project_photos(request, o_id):
-    #print "---"
-    #print request.METHOD
     success_url = '/architect/' + o_id
     model_name = 'architect'
     template_name = 'contractor/contractor_project_photos_upload.html'

@@ -81,6 +81,7 @@ def background_photo_upload(request, o_id):
     else:
         raise Http404('No Pages Found.')
 
+
 #this funtion is deprecated
 def FileFieldUpload(request):
     template_name = 'photos/upload_multiple_files.html'  # Replace with your template.
