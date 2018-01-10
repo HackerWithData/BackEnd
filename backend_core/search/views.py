@@ -6,23 +6,18 @@ from django.shortcuts import render, redirect, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.urls import reverse
-from django.core import serializers
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import Promise
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
 
-from professionals.models import (
-    ARCHITECT,
-    DESIGNER,
-    CONTRACTOR,
-    MEISTER,
+from search_helpers import (
+    search_by_zipcode,
+    search_by_address_object_redirect_url,
+    search_by_name_or_lic,
+    DEFAULT_NUM_PER_PAGE,
 )
-from search_helpers import (search_by_zipcode,
-                            search_by_address_object_redirect_url,
-                            search_by_name_or_lic)
-from .utils import json_serial
 
 
 # TODO: solve Type <class 'django.utils.functional.__proxy__'> not serializable
@@ -43,12 +38,11 @@ def search_new(request):
             return HttpResponse(reverse('search_new') + '?page=1&' + url)
         else:
             raise UnexpectedRequest("Error: Unexpected request type for new search ajax request")
-        return HttpResponse("Ok")
     elif request.method == 'GET':
         # TODO: set default
         if ('type' in request.GET) or ('target' in request.GET) or ('zipcode' in request.GET):
-            if request.GET['type'].upper() == 'NAMEORLIC':
-                if request.GET['target'] != '' or request.GET['zipcode'] !='':
+            if request.GET.get('type', '').upper() == 'NAMEORLIC':
+                if request.GET.get('target', '') != '':
                     query_set = search_by_name_or_lic(request)
                 else:
                     messages.warning(request, _("please type something you want to search"))
@@ -58,7 +52,7 @@ def search_new(request):
 
             # TODO: set customized item number per page, default = 10
             # pagination logic
-            paginator = Paginator(query_set, 10)
+            paginator = Paginator(query_set, DEFAULT_NUM_PER_PAGE)
             page = request.GET.get('page')
             try:
                 page_query_set = paginator.page(page)
@@ -84,7 +78,6 @@ def search_new(request):
     else:
         messages.warning(request, _("please input something you want to search"))
         return redirect(request.path)
-
 
 
 def search_dispatch_test(request):

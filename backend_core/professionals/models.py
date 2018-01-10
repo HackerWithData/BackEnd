@@ -2,10 +2,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
-
-from hscore.models import Hscore
 
 
 CONTRACTOR = 'CONTRACTOR'

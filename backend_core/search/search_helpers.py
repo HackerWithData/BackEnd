@@ -3,16 +3,9 @@ import urllib
 from django.forms.models import model_to_dict
 from django.db.models import Q
 
-from contractors.models import Contractor
 from professionals.models import (
-    Professional,
-    ProfessionalType,
-    ARCHITECT,
-    DESIGNER,
     CONTRACTOR,
     PROFESSIONAL_CHOICES,
-    PROFESSIONAL_SUBTYPE_CHOICES,
-    MEISTER,
 )
 from contractors.utils import convert_hscore_to_rank
 from professionals.utils import get_professional_instance, get_professionals
@@ -26,6 +19,8 @@ from hscore.utils import get_hscore
 #     qs_prof_type = qs_prof.professionaltype_set.filter(type__icontains=target)
 #     request['target'] =
 #     return qs_prof_type
+
+DEFAULT_NUM_PER_PAGE = 10
 
 
 # Ajax POST request
@@ -44,7 +39,7 @@ def search_by_address_object_redirect_url(request):
 # GET request
 # search through zipcode
 def search_by_name_or_lic(request):
-    search_target = request.GET['target']
+    search_target = request.GET.get('target', '')
     # search target is whether a name or lic
     if search_target.isnumeric():
         name_or_lic = int(search_target)
@@ -73,10 +68,10 @@ def search_by_name_or_lic(request):
 # GET request
 # search through zipcode
 def search_by_zipcode(request):
-    search_type = request.GET['type'].upper()
-    search_target = request.GET['target']
-    zipcode = request.GET['zipcode']
-    professionals = [pc[0] for pc in PROFESSIONAL_CHOICES]
+    search_type = request.GET.get('type', '').upper()
+    search_target = request.GET.get('target', '')
+    zipcode = request.GET.get('zipcode', '')
+    professionals = (pc[0] for pc in PROFESSIONAL_CHOICES)
     if search_type.upper() not in professionals:
         raise UndefinedProfessionalType("Error: undefined professional type in search_by_zipcode")
 
@@ -105,13 +100,18 @@ def retrieve_all_kind_professional(prof_qs):
         item.update({'type': model_type.upper()})
         if model_type == 'contractor':
             hscore = get_hscore(contractor_id=instance.lic_num)
-            item.update({
-                'score': hscore.score,
-                'rank': convert_hscore_to_rank(hscore),
-            })
+            if hscore is not None:
+                item.update({
+                    'score': hscore.score,
+                    'rank': convert_hscore_to_rank(hscore),
+                })
+            else:
+                item.update({
+                    'score': None,
+                    'rank': None,
+                })
         ret_list.append(item)
-    #
-    sorted_list = sorted(ret_list, key=lambda k: k['score'] if k['type'] == CONTRACTOR else 1000, reverse=True)
+    sorted_list = sorted(ret_list, key=lambda k: k.get('score', '') if k.get('type', None) == CONTRACTOR else 1000, reverse=True)
     return sorted_list
 
 
