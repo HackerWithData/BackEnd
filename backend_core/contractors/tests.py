@@ -110,6 +110,7 @@ class ContractorTest(ProfessionalTest, TestCase):
         self.set_issurance_company()
         self.set_wc_history()
         self.set_h_score()
+        self.set_professional_user()
         self.resp = self.client.get(path=self.path)
         self.soup = BeautifulSoup(self.resp.content, 'html.parser')
 

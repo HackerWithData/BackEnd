@@ -12,7 +12,7 @@ from review.models import Review
 from users.models import User, ProfessionalProfile
 from ratings.models import UserRating
 from professionals.models import Professional
-from photos.models import BackgroundPhoto
+from photos.models import BackgroundPhoto, Photo
 
 
 class ProfessionalTest(object):
@@ -228,3 +228,34 @@ class ProfessionalTest(object):
         bg_image = BackgroundPhoto.objects.all().first()
         self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
 
+    def test_upload_project_photo(self):
+        path = self.path + 'project-photos/upload'
+        resp = self.client.get(path=path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+        self.client.login(
+            username=self.professional_user.username,
+            password=self.professional_password,
+        )
+        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
+        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
+        with open(pic_1, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(Photo.objects.count(), 1)
+        with open(pic_2, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(Photo.objects.count(), 2)
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        images = soup.find(name='div', class_='popup-gallery').find_all(name='img')
+        images = [image.get('src', '') for image in images]
+        photos = Photo.objects.all()
+        for photo in photos:
+            self.assertIn(photo.img.url, images)
