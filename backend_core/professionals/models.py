@@ -71,7 +71,13 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
 
 
 class Professional(models.Model):
+    #autoincrement key 2
+    #owner_name,csp,address,county,phone: dict {cell: fax: phone::phone2:}
+
+
+
     lic_num = models.CharField(max_length=25)
+    # bus_name
     name = models.CharField(max_length=255)
     entity_type = models.CharField(
         max_length=63,
@@ -86,8 +92,18 @@ class Professional(models.Model):
     #TODO: need to change the name to pos_code later
     county = models.CharField(max_length=63)
     postal_code = models.CharField(max_length=63, blank=True, null=True)
+""" 
+class LicenseRelation(models.Model):
+    name = models.CharField(max_length=63)
+    #Do not use the reference below because it will requite name_id which is not necessary in this case
+    #name = models.ForeignKey(Personnel, on_delete=models.CASCADE)
+    contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING, related_name='contractor')
+    related_contractor = models.ForeignKey(Contractor, on_delete=models.DO_NOTHING, related_name='related_contractor')
 
-
+    class Meta:
+        unique_together = ('name', 'contractor', 'related_contractor')
+"""
+#professional_type type,subtype: Contractor/Architect/Designer/
 class ProfessionalType(models.Model):
     professional = models.ForeignKey(
         Professional,
@@ -100,3 +116,9 @@ class ProfessionalType(models.Model):
         max_length=255,
         choices=PROFESSIONAL_SUBTYPE_CHOICES
     )
+
+
+#data collection
+
+#professional index 2, dict{"data scoure": 1}
+#professional index 2, dict{"contenttype": 1}
