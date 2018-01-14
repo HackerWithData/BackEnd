@@ -17,8 +17,6 @@ class ArchitectDetail(ProfessionalDetail):
         'full_state_name',
         'lic_type',
         'review',
-        'ratings',
-        'p_lic_num',
         'project_photos',
         'review_form',
         'user_rating_form',

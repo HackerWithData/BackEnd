@@ -24,7 +24,11 @@ from ratings.utils import (
 from ratings.forms import get_user_rating_form
 from overviews.utils import get_overview
 from overviews.forms import get_overview_form
-from .utils import get_professional_instance
+from .utils import (
+    get_professional_instance,
+    get_professional,
+    get_professional_info as get_pro_info,
+)
 
 
 class ProfessionalDetail(View):
@@ -139,3 +143,51 @@ class ProfessionalDetail(View):
         info_dict = self.info_dict
         template_name = self.template_name
         return render(request, template_name, {"info_dict": info_dict})
+
+
+class ProfessionalView(ProfessionalDetail):
+    data_source = 'California Architects Board'
+    template_name = 'professional/professional.html'
+    model_name = 'professional'
+
+    fields = (
+        'bg_image',
+        'review',
+        'project_photos',
+        'review_form',
+        'user_rating_form',
+        'overview',
+        'overview_form',
+        'info',
+    )
+
+    def get_professional_info(self, **kwargs):
+        return get_pro_info(professional=kwargs.get('instance'))
+
+    def set_info_dict(self, request, o_id):
+        model_name = self.model_name
+        instance = get_professional(id=o_id)
+        if instance is None:
+            raise Http404(_("Error Pages!"))
+        model = instance.__class__
+        kwargs = {
+            'request': request,
+            'o_id': o_id,
+            'model': model,
+            'model_name': model_name,
+            'instance': instance,
+        }
+        self.info_dict.update({model_name: instance})
+        for field in self.fields:
+            exec('field_val = self.get_professional_{field}(**kwargs)'.format(field=field))
+            kwargs.update({field: field_val})
+            self.info_dict.update({field: field_val})
+
+    def get_professional_overview(self, **kwargs):
+        pass
+
+
+    def get(self, request, o_id):
+        content = super(ProfessionalView, self).get(request, o_id)
+        print self.info_dict
+        return content
