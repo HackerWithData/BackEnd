@@ -13,6 +13,8 @@ from photos.utils import (
     get_bg_image,
     get_photos,
     upload_photo,
+    display_project_photo,
+    upload_project_photo,
 )
 from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
@@ -29,6 +31,7 @@ from .utils import (
     get_professional,
     get_professional_info as get_pro_info,
 )
+from .models import Professional
 
 
 class ProfessionalDetail(View):
@@ -158,7 +161,6 @@ class ProfessionalView(ProfessionalDetail):
         'user_rating_form',
         'overview',
         'overview_form',
-        'info',
     )
 
     def get_professional_info(self, **kwargs):
@@ -186,8 +188,29 @@ class ProfessionalView(ProfessionalDetail):
     def get_professional_overview(self, **kwargs):
         pass
 
-
     def get(self, request, o_id):
         content = super(ProfessionalView, self).get(request, o_id)
-        print self.info_dict
         return content
+
+
+def display_project_photos(request, o_id):
+    template_name = 'contractor/contractor_project_photo.html'
+    return display_project_photo(
+        request=request,
+        o_id=o_id,
+        model=Professional,
+        template_name=template_name,
+    )
+
+
+def upload_project_photos(request, o_id):
+    success_url = '/professional/' + o_id
+    model_name = 'professional'
+    template_name = 'contractor/contractor_project_photos_upload.html'
+    return upload_project_photo(
+        request=request,
+        o_id=o_id,
+        success_url=success_url,
+        model_name=model_name,
+        template_name=template_name,
+    )

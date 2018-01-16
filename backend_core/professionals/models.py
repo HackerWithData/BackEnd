@@ -9,12 +9,14 @@ CONTRACTOR = 'CONTRACTOR'
 ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
 MEISTER = 'MEISTER'
+PROFESSIONAL = 'PROFESSIONAL'
 # TODO: take care
 PROFESSIONAL_CHOICES = (
     (CONTRACTOR, _('Contractor')),
     (ARCHITECT, _('Architect')),
     (DESIGNER, _('Designer')),
-    (MEISTER, _('Meister'))
+    (MEISTER, _('Meister')),
+    (PROFESSIONAL, _('Professional')),
 )
 
 # entity type
@@ -73,10 +75,10 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
 class Professional(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     owner_name = models.CharField(max_length=255, blank=True, null=True)
-    bus_name = models.CharField(max_length=255, blank=True, null=True)
     csp = models.CharField(max_length=63, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     county = models.CharField(max_length=255, blank=True, null=True)
+    lic_status = models.CharField(max_length=30, blank=True, null=True)
     phone = models.TextField(blank=True)
     entity_type = models.CharField(
         max_length=63,
@@ -122,31 +124,5 @@ class DataCollection(models.Model):
     professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING)
     professional_info = models.TextField()
 
-
-class DataSource(models.Model):
-    class Meta:
-        abstract = True
-
-    lic_type = models.CharField(max_length=255)
-    type = models.CharField(max_length=10)
-    state_lic_num = models.CharField(max_length=127)
-    name = models.CharField(max_length=63)
-    lic_state = models.CharField(max_length=15)
-    lic_board = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    bussiness_name = models.CharField(max_length=63)
-    bussiness_name2 = models.CharField(max_length=63)
-    bussiness_lic_num = models.CharField(max_length=63)
-    phone = models.TextField()
-    email = models.EmailField()
-    lic_issue_date = models.DateField()
-    lic_expire_date = models.DateField()
-    bus_expire_date = models.DateField()
-    insur_company = models.CharField(max_length=63)
-    insur_policy = models.TextField()
-
-
-class DataSourceElapso(DataSource):
-    pass
 
 

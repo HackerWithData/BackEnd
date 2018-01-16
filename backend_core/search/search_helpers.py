@@ -78,13 +78,13 @@ def search_by_zipcode(request):
     # type search
     if search_target and search_type:
         prof_qs = get_professionals(**{
-            'postal_code': zipcode,
+            'pos_code': zipcode,
             'type': search_type,
             'professional_type__subtype': search_target,
         })
     else:
         prof_qs = get_professionals(**{
-            'postal_code': zipcode
+            'pos_code': zipcode
         })
         # prof_qs = Professional.objects.filter(postal_code=zipcode).distinct()
     # retrieve corresponding professional through different table

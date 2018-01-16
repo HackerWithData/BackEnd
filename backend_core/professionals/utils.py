@@ -41,8 +41,9 @@ def get_professional(id=None):
 
 
 def create_professional(**data):
-    phone = json.dumps(data.get('phone', ''))
-    data.update({'phone': phone})
+    if isinstance(data.get('phone', None), dict):
+        phone = json.dumps(data.get('phone', ''))
+        data.update({'phone': phone})
     Professional.objects.create(**data)
 
 

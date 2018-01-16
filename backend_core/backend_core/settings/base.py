@@ -90,6 +90,7 @@ WEB_APPS = [
     'transactions',
     'overviews',
     'meisters',
+    'datasources',
 ]
 
 INSTALLED_APPS = WEB_APPS + AUTH_APPS + PREREQ_APPS

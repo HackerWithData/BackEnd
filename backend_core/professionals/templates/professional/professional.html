@@ -10,13 +10,11 @@
             background-size: cover;
         }
     </style>
-    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
-    {{ info_dict.overview_form.media }}
     <script>
         $(document).ready(function () {
             var curHeight = $('#Summary .text').height();
             if (curHeight >= 350) {
+
                 $('#readmore').show();
             }
             else {
@@ -25,29 +23,33 @@
             }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script>
+    {{ info_dict.overview_form.media }}
+    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    {#    #TODO: what's this?#}
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% endblock %}
-
 
 {% block header %}
     <div id="masthead">
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
-                    <span class="bus-name">{{ info_dict.architect.lic_name }}</span>
-                    {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
+                    <span class="bus-name">{{ info_dict.professional.name }}</span>
+                    {% if info_dict.p_lic_num == info_dict.professional.lic_num %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
                             <span class="slider round"></span>
                         </label> {% trans 'Edit page?' %}
                     {% endif %}
+                    <br/>
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
-                            <li>{{ info_dict.architect.csp }}</li>
-                            {% if  info_dict.score %}
-                                <li id="score-popup" class='popup' onmouseover="popUp()" onclick="popUp()">
+                            <li>{{ info_dict.professional.csp }}</li>
+                            {% if info_dict.score %}
+                                <li id="score-popup" class='popup' onmouseover="popUp1()" onclick="popUp1()">
                                     {{ Score }}: {{ info_dict.score }}
-                                    <i class="fa fax1 fa-question-circle-o blue-btn" style="color:black"> </i>
-                                    <div id="Score-explaination" class="popuptext">
+                                    <div id="Score-explanation" class="popuptext">
                                         <ul>
                                             <li>{{ Work_Year }}: {{ info_dict.length }}</li>
                                             <li>{{ Arbitration }}: {{ info_dict.complaint.arbitration }}</li>
@@ -58,9 +60,15 @@
                                     </div>
                                 </li>
                             {% endif %}
-                            {% if info_dict.architect.phone %}
-                                <li>{{ Phone }}: {{ info_dict.architect.phone }}</li>
-                            {% endif %}
+                            <li id="rank-popup">
+                                {#                           class='popup' onmouseover="popUp2()" onclick="popUp2()"#}
+                                {{ Rank }}: {{ info_dict.rank }}
+                                {#                                <div id="Rank-explaination" class="popuptext">{% blocktrans %}#}
+                                {#                                    In Hoome, Contractors could be classified into 6 categories: A+++,A++,A+,A,A-,Warning.#}
+                                {#                                    {% endblocktrans %}#}
+                                {#                                </div>#}
+                            </li>
+                            <li>{{ Phone }}: {{ info_dict.professional.phone }}</li>
                         </ul>
                         <ul style="list-style-type:None;">
                             <li>
@@ -82,10 +90,12 @@
                 </div>
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
-                        <a href="{% url 'create_project' 'architect' info_dict.architect.lic_num %}"
+
+                        <a href="{% url 'create_project' 'professional' info_dict.professional.lic_num %}"
                            class="btn btn-db">{% trans 'Contract Us' %}</a>
+
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.architect.lic_num %}
+                        {% if info_dict.p_lic_num == info_dict.professional.lic_num %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
@@ -94,20 +104,17 @@
                             </div>
                         {% endif %}
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
     <!-- /cont -->
+
 {% endblock %}
 
-
 {% block content %}
-
     <!-- Begin Body -->
-    <div id="architect-content">
+    <div id="professional-content">
         <div class="container">
             <div class='menu justify-content-center' id='pro-menu'>
                 <ul class='nav nav-pills'>
@@ -127,10 +134,12 @@
                 </ul>
             </div>
             <div id="pro-content">
-                {% include "architect/architect_overview.html" %}
+                {% include "professional/professional_overview.html" %}
             </div>
         </div>
     </div>
+
+
     <form id="review-submission" action="" method="post" enctype="multipart/form-data"
           class="mfp-hide white-popup-block">
         <h1 class="section-title">{% trans 'Review us' %}</h1>
@@ -465,8 +474,6 @@
     </form>
 {% endblock %}
 
-
-
 {% block javascript %}
 
     <script>
@@ -485,16 +492,20 @@
                 $('#peek').addClass('link');
             }
             $('.height').toggleClass("heightAuto");
-
+            {#                $('#peek').addClass("nonlink");#}
         }
 
         // When the user clicks on <div>, open the popup
-        function popUp() {
-            var popup = document.getElementById("Score-explaination");
+        function popUp1() {
+            var popup = document.getElementById("Score-explanation");
             popup.classList.toggle("show");
         }
 
-        {#        TODO: simplify the function by changing naming convention#}
+        {#        function popUp2() {#}
+        {#            var popup = document.getElementById("Rank-explaination");#}
+        {#            popup.classList.toggle("show");#}
+        {#        }#}
+
 
         function projectPhotosListener() {
             if (b) {
@@ -506,7 +517,7 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },
-                    url: '{% url 'architect_project_photos' info_dict.architect.lic_num %}',
+                    url: '{% url 'professional_project_photos' info_dict.professional.lic_num %}',
                     dataType: 'html',
                 })
                     .done(function (data) {
@@ -523,7 +534,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: '{% url 'architect_review' info_dict.architect.lic_num %}',
+                    url: '{% url 'professional_review' info_dict.professional.lic_num %}',
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },
@@ -554,9 +565,8 @@
                     {#                    $('#overview-wrapper').addClass('text');#}
                     {#                    $('#overview-wrapper').addClass('height');#}
                     $('#peek').removeClass('hide');
-
                 }
-            })
+            });
 
             $('#readmore').click(function () {
                 readMore();
@@ -581,7 +591,6 @@
                     }
                 }
             });
-
 
             $('#photo .popup-gallery').magnificPopup({
                 delegate: 'a',
@@ -663,7 +672,6 @@
             $('#review a.viewmore').click(function () {
                 reviewListener();
             });
-        })
-        ;
+        });
     </script>
 {% endblock %}

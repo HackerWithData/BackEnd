@@ -27,7 +27,7 @@ def create_review(request, o_id, review_form):
         review.user = request.user
     try:
         review.content_type = ContentType.objects.get(model=model_type)
-    except ContentType.objects.DoesNotExist:
+    except ContentType.DoesNotExist:
         pass
     review.object_id = o_id
     review.save()
