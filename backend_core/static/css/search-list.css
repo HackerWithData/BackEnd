@@ -285,3 +285,40 @@
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
 }
+
+#contractor-icon {
+    background-image: url('../image/search-category-icon/contractor-black.svg');
+    height: 1.2em;
+    width: 1.2em;
+    display: inline-block;
+    background-size: contain;
+}
+
+#architect-icon {
+    background-image: url('../image/search-category-icon/architect-black.svg');
+    height: 1.2em;
+    width: 1.2em;
+    display: inline-block;
+    background-size: contain;
+    font-weight: 900;
+}
+
+#designer-icon {
+    background-image: url('../image/search-category-icon/designer-black.svg');
+    height: 1.2em;
+    width: 1.2em;
+    display: inline-block;
+    background-size: contain;
+    font-weight: 900;
+
+}
+
+#meister-icon {
+    background-image: url('../image/search-category-icon/meister-black.svg');
+    height: 1.2em;
+    width: 1.2em;
+    display: inline-block;
+    background-size: contain;
+    font-weight: 900;
+
+}
