@@ -59,7 +59,7 @@ def upload_photo(request, o_id, model_name):
     try:
         content_type = ContentType.objects.get(model=model_name)
     except ContentType.DoesNotExist:
-        return HttpResponse(status=400)
+        raise Http404(_('No Pages Found.'))
     object_id = int(o_id)
     files = request.FILES.getlist('img')
     for f in files:

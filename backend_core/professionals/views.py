@@ -9,6 +9,7 @@ from django.contrib import messages
 
 from review.utils import get_reviews, create_review
 from review.forms import get_review_form
+from review.views import submit_review as submit_review_, display_review as display_review_
 from photos.utils import (
     get_bg_image,
     get_photos,
@@ -16,6 +17,7 @@ from photos.utils import (
     display_project_photo,
     upload_project_photo,
 )
+from photos.views import background_photo_upload as backgroud_photo_upload_
 from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
 from users.utils import get_p_lic_num
@@ -122,11 +124,18 @@ class ProfessionalDetail(View):
             user_rating_form = get_user_rating_form(request.POST)
             review_form = get_review_form(request, method="POST")
             if review_form.is_valid() and user_rating_form.is_valid():
-                review = create_review(
-                    request=request,
-                    o_id=o_id,
-                    review_form=review_form,
-                )
+                try:
+                    review = create_review(
+                        request=request,
+                        o_id=o_id,
+                        review_form=review_form,
+                    )
+                except ValueError:
+                    review = create_review(
+                        request=request,
+                        o_id=info_dict.get(self.model_name).id,
+                        review_form=review_form,
+                    )
                 create_user_rating(user_rating_form=user_rating_form, review=review)
                 upload_photo(request=request, model_name='review', o_id=review.id)
                 return redirect(request.path)
@@ -166,15 +175,15 @@ class ProfessionalView(ProfessionalDetail):
     def get_professional_info(self, **kwargs):
         return get_pro_info(professional=kwargs.get('instance'))
 
-    def set_info_dict(self, request, o_id):
+    def set_info_dict(self, request, uuid):
         model_name = self.model_name
-        instance = get_professional(id=o_id)
+        instance = get_professional(uuid=uuid)
         if instance is None:
             raise Http404(_("Error Pages!"))
         model = instance.__class__
         kwargs = {
             'request': request,
-            'o_id': o_id,
+            'o_id': instance.id,
             'model': model,
             'model_name': model_name,
             'instance': instance,
@@ -188,13 +197,18 @@ class ProfessionalView(ProfessionalDetail):
     def get_professional_overview(self, **kwargs):
         pass
 
-    def get(self, request, o_id):
-        content = super(ProfessionalView, self).get(request, o_id)
-        return content
+
+def _get_professional_id_by_uuid(uuid):
+    professional = get_professional(uuid=uuid)
+    if not professional:
+        raise Http404(_("Error Pages!"))
+    o_id = professional.id
+    return o_id
 
 
-def display_project_photos(request, o_id):
+def display_project_photos(request, uuid):
     template_name = 'contractor/contractor_project_photo.html'
+    o_id = _get_professional_id_by_uuid(uuid)
     return display_project_photo(
         request=request,
         o_id=o_id,
@@ -203,8 +217,9 @@ def display_project_photos(request, o_id):
     )
 
 
-def upload_project_photos(request, o_id):
-    success_url = '/professional/' + o_id
+def upload_project_photos(request, uuid):
+    o_id = _get_professional_id_by_uuid(uuid)
+    success_url = '/professional/' + uuid
     model_name = 'professional'
     template_name = 'contractor/contractor_project_photos_upload.html'
     return upload_project_photo(
@@ -214,3 +229,18 @@ def upload_project_photos(request, o_id):
         model_name=model_name,
         template_name=template_name,
     )
+
+
+def display_review(request, uuid):
+    o_id = _get_professional_id_by_uuid(uuid)
+    return display_review_(request=request, o_id=o_id)
+
+
+def submit_review(request, uuid):
+    o_id = _get_professional_id_by_uuid(uuid)
+    return submit_review_(request=request, o_id=o_id)
+
+
+def background_photo_upload(request, uuid):
+    o_id = _get_professional_id_by_uuid(uuid)
+    return backgroud_photo_upload_(request=request, o_id=o_id)

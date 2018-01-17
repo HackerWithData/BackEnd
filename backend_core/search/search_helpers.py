@@ -42,28 +42,18 @@ def search_by_name_or_lic(request):
     search_target = request.GET.get('target', '')
     # search target is whether a name or lic
     if search_target.isnumeric():
-        name_or_lic = int(search_target)
-        prof_qs = get_professionals(*(
-            Q(name=str(name_or_lic)) | Q(lic_num=name_or_lic),
-        ))
-        # prof_qs = Professional.objects.filter(Q(name=str(name_or_lic)) | Q(lic_num=name_or_lic)).distinct()
-    # elif search_target in [i[0] for i in PROFESSIONAL_CHOICES]:
-    #     prof_qs = Professional.objects.filter(type=search_target)
-    # # name search
-    # elif search_target in [i[0] for i in PROFESSIONAL_SUBTYPE_CHOICES]:
-    #     prof_qs = Professional.objects.filter(postal_code=zipcode, type=search_type,
-    #                                           professional_type__subtype=search_target)
+        name = str(search_target)
+        lic = int(search_target)
+        prof_qs_name = get_professionals(**{'name': name})
+        prof_qs_lic = get_professionals(by_datacollection=True, **{'lic_num': lic})
+        ret = [model_to_dict(prof) for prof in prof_qs_lic] + [model_to_dict(prof) for prof in prof_qs_name]
+        return ret
     else:
         prof_qs = get_professionals(**{
             'name__icontains': search_target
         })
-        # prof_qs = Professional.objects.filter(name__icontains=search_target)
-    # no result found
-    if not prof_qs:
-        return prof_qs.values()
-
-    return retrieve_all_kind_professional(prof_qs)
-
+        ret = [model_to_dict(prof) for prof in prof_qs]
+        return ret
 
 # GET request
 # search through zipcode
@@ -86,9 +76,8 @@ def search_by_zipcode(request):
         prof_qs = get_professionals(**{
             'pos_code': zipcode
         })
-        # prof_qs = Professional.objects.filter(postal_code=zipcode).distinct()
-    # retrieve corresponding professional through different table
-    return retrieve_all_kind_professional(prof_qs)
+    ret = [model_to_dict(prof) for prof in prof_qs]
+    return ret
 
 
 def retrieve_all_kind_professional(prof_qs):

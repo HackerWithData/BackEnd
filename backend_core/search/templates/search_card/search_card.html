@@ -2,15 +2,15 @@
 {% load i18n %}
 {% trans "License #" as License_num %}
 {% trans "License Type" as License_Type %}
-<div id="searchListCard{{ professional.lic_num }}"
+<div id="searchListCard{{ professional.uuid }}"
      class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
         {# TODO: make sure the counter is correct#}
         <h5 class="mb-1">
             {{ forloop.counter }}
             <!--{{ professional.type|lower }}-->
-            <a href="{% url professional.type|lower professional.lic_num %}">
-                {{ professional.lic_name }}
+            <a href="{% url 'professional'|lower professional.uuid %}">
+                {{ professional.name }}
             </a>
         </h5>
 

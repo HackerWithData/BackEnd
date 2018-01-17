@@ -91,7 +91,7 @@
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
 
-                        <a href="{% url 'create_project' 'professional' info_dict.professional.lic_num %}"
+                        <a href="{% url 'create_project' 'professional' info_dict.professional.uuid %}"
                            class="btn btn-db">{% trans 'Contract Us' %}</a>
 
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
@@ -517,7 +517,7 @@
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },
-                    url: '{% url 'professional_project_photos' info_dict.professional.lic_num %}',
+                    url: '{% url 'professional_project_photos' info_dict.professional.uuid %}',
                     dataType: 'html',
                 })
                     .done(function (data) {
@@ -534,7 +534,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: '{% url 'professional_review' info_dict.professional.lic_num %}',
+                    url: '{% url 'professional_review' info_dict.professional.uuid %}',
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },

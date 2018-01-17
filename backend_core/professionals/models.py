@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 
@@ -92,6 +93,7 @@ class Professional(models.Model):
     lic_type = models.TextField(default='NO LIC TYPE')
     #TODO: need to change the name to pos_code later
     pos_code = models.CharField(max_length=63, blank=True, null=True)
+    uuid = models.CharField(max_length=36, default='0')
 """ 
 class LicenseRelation(models.Model):
     name = models.CharField(max_length=63)
@@ -122,7 +124,10 @@ class ProfessionalType(models.Model):
 
 class DataCollection(models.Model):
     professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING)
-    professional_info = models.TextField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=0)
+    object_id = models.PositiveIntegerField(default=0)
+    lic_num = models.CharField(max_length=127, default='0')
+
 
 
 
