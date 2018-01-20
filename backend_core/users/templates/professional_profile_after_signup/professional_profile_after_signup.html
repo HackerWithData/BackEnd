@@ -346,12 +346,20 @@
                 </div>
                 {% endif %}
                 <div data-panel="one" id="stage-one">
+                    <h4>{% trans "Find Your License In Our Database" %}</h4>
+                    <div>{% trans "If you don't have license, please skip this step." %} </div>
+                    <div class="input-license-number-container">
+                        <div class="error-container"></div>
+                        {% trans "License Number" %} : {{ form.license_num }}
+                    </div>
+                </div>
+                <div data-panel="two" id="stage-two">
                     <h4>{% trans "Choose License Type" %}</h4>
                     <div>{% trans "If you don't have license, please choose meister." %} </div>
                     <ul id="id_professional_type" class="input-professional-type-container row">
                         <li class="col-xs-3 col-sm-6 col-md-3">
                             <label for="id_professional_type_0">
-                                <input type="radio"
+                                <input type="checkbox"
                                        name="professional_type"
                                        value="CONTRACTOR"
                                        required=""
@@ -369,7 +377,7 @@
                         </li>
                         <li class="col-xs-3 col-sm-6 col-md-3">
                             <label for="id_professional_type_1">
-                                <input type="radio"
+                                <input type="checkbox"
                                        name="professional_type"
                                        value="ARCHITECT"
                                        required=""
@@ -386,7 +394,7 @@
                         </li>
                         <li class="col-xs-3 col-sm-6 col-md-3">
                             <label for="id_professional_type_2">
-                                <input type="radio"
+                                <input type="checkbox"
                                        name="professional_type"
                                        value="DESIGNER"
                                        required=""
@@ -403,7 +411,7 @@
                         </li>
                         <li class="col-xs-3 col-sm-6 col-md-3">
                             <label for="id_professional_type_3">
-                                <input type="radio"
+                                <input type="checkbox"
                                        name="professional_type"
                                        value="MEISTER"
                                        required=""
@@ -419,14 +427,6 @@
                             </label>
                         </li>
                     </ul>
-                </div>
-                <div data-panel="two" id="stage-two">
-                    <h4>{% trans "Find Your License In Our Database" %}</h4>
-                    <div>{% trans "If you don't have license, please skip this step." %} </div>
-                    <div class="input-license-number-container">
-                        <div class="error-container"></div>
-                        {% trans "License Number" %} : {{ form.license_num }}
-                    </div>
                 </div>
                 <div data-panel="three" id="stage-three">
                     <h4 >{% trans "Enter Or Modify Business Name and Entity Type" %}</h4>
@@ -629,6 +629,21 @@
                 }
             });
         });
+{#        var lic_num_founded = true;#}
+{#        $('.input-professional-type-container').click(function(){#}
+{#            var type_0 = $('#id_professional_type_0');#}
+{#            var type_1 = $('#id_professional_type_1');#}
+{#            var type_2 = $('#id_professional_type_2');#}
+{#            var type_3 = $('#id_professional_type_3');#}
+{#            if(lic_num_founded){#}
+{#                type_3.prop('checked', false);#}
+{#            }#}
+{#            if(!lic_num_founded){#}
+{#                type_0.prop('checked', false);#}
+{#                type_1.prop('checked', false);#}
+{#                type_2.prop('checked', false);#}
+{#            }#}
+{#        })#}
 
     </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import string
+import json
 
 from django import forms
 from django.utils.translation import ugettext as _
@@ -124,13 +125,11 @@ class ProfessionalInfoFillUpForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'input-license-number'}),
         initial=0
     )
-
-    professional_type = forms.ChoiceField(
+    professional_type = forms.MultipleChoiceField(
         required=True,
         choices=PROFESSIONAL_CHOICES,
-        initial=CONTRACTOR,
         label=_('Professional Type'),
-        widget=forms.RadioSelect(attrs={'class': 'input-professional-type'})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-type'})
     )
 
     professional_subtype = forms.MultipleChoiceField(
@@ -139,13 +138,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
         label=_('Field Selections'),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'input-professional-subtype'})
     )
-
-    # personal_name = forms.CharField(
-    #     required=True,
-    #     max_length=255,
-    #     label=_('Name'),
-    #     widget=forms.TextInput(attrs={'class': 'input-personal-name'})
-    # )
 
     company_name = forms.CharField(
         required=True,
@@ -195,10 +187,11 @@ class ProfessionalInfoFillUpForm(forms.Form):
         return lic_num
 
     def clean_professional_type(self):
-        professional = self.cleaned_data['professional_type']
-        if professional not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
-            raise forms.ValidationError(_('Must select a professional type'))
-        return professional
+        professionals = self.cleaned_data['professional_type']
+        for professional in professionals:
+            if professional not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
+                raise forms.ValidationError(_('Must select a professional type'))
+        return json.dumps(professionals)
 
     def clean_entity_type(self):
         entity = self.cleaned_data['entity_type']
@@ -217,7 +210,6 @@ class ProfessionalInfoFillUpForm(forms.Form):
     # TODO: validate
     def clean_professional_subtype(self):
         subtype = self.cleaned_data['professional_subtype']
-        # print subtype
         return subtype
 
     def save(self, request):
@@ -232,28 +224,29 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_entity_type = self.cleaned_data['entity_type']
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
-        # print(clean_professional_type)
+
         if str(clean_professional_type) == "MEISTER":
-            # professional_object = create_professional_corresponding_object(prof_type=clean_professional_type)
-            meister, created = Meister.objects.get_or_create(lic_name=clean_company_name,
-                                                             # bus_name=clean_company_name,
-                                                             street_address=clean_street,
-                                                             county=clean_county,
-                                                             state=clean_state,
-                                                             pos_code=clean_zipcode)
+            meister, created = Meister.objects.get_or_create(
+                lic_name=clean_company_name,
+                street_address=clean_street,
+                county=clean_county,
+                state=clean_state,
+                pos_code=clean_zipcode,
+            )
             if created:
                 meister.save()
             else:
                 pass
             # TODO: need to consider if meister is mutuailly exclusive with other type??
-            professional, created = Professional.objects.get_or_create(lic_num=meister.lic_num,
-                                                                       name=clean_company_name,
-                                                                       entity_type=clean_entity_type,
-                                                                       lic_type='&'.join(clean_professional_subtype),
-                                                                       type=clean_professional_type,
-                                                                       county=clean_county,
-                                                                       state=clean_state,
-                                                                       postal_code=clean_zipcode)
+            professional, created = Professional.objects.get_or_create(
+                name=clean_company_name,
+                entity_type=clean_entity_type,
+                lic_type='&'.join(clean_professional_subtype),
+                type=clean_professional_type,
+                county=clean_county,
+                state=clean_state,
+                pos_code=clean_zipcode
+            )
             if created:
                 professional.save()
             else:
@@ -269,7 +262,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 professional.entity_type = clean_entity_type
                 professional.county = clean_county
                 professional.state = clean_state
-                professional.postal_code = clean_zipcode
+                professional.pos_code = clean_zipcode
                 # save professional
                 professional.save()
                 professional_object = get_professional_corresponding_object_by_type_and_lic(
@@ -287,13 +280,14 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 raise MultipleSameProfessionalFound('Found Redundant Professionals')
             # create new professional
             else:
-                professional = Professional.objects.create(lic_num=clean_license_num,
-                                                           name=clean_company_name,
-                                                           entity_type=clean_entity_type,
-                                                           type=clean_professional_type,
-                                                           lic_type='&'.join(clean_professional_subtype),
-                                                           state=clean_state,
-                                                           postal_code=clean_zipcode)
+                professional = Professional.objects.create(
+                    name=clean_company_name,
+                    entity_type=clean_entity_type,
+                    type=clean_professional_type,
+                    lic_type='&'.join(clean_professional_subtype),
+                    state=clean_state,
+                    pos_code=clean_zipcode,
+                )
                 professional.save()
                 professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
                                                                                lic=clean_license_num)
@@ -398,7 +392,7 @@ class ProfessionalProfileEditForm(ProfessionalInfoFillUpForm):
 
         professional.state = clean_state
         professional.county = clean_county
-        professional.postal_code = clean_zipcode
+        professional.pos_code = clean_zipcode
         professional.entity_type = clean_entity_type
         professional.lic_type = '&'.join(current_prof_types)
         professional.save()

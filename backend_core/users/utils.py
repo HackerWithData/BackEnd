@@ -60,7 +60,7 @@ def get_p_lic_num(request):
         p_lic_num = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_lic_num = int(request.user.professional_profiles.first().professional.id)
         except:
             p_lic_num = None
     return p_lic_num

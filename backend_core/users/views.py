@@ -155,7 +155,9 @@ class ProfessionalProfileAfterSignupView(View):
             return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
+        print request.POST, "*************"
         form = self.form_class(request.POST)
+        print form.errors, "+++++++++++"
         if form.is_valid():
             form.save(request)
             professional = get_professional_user(request.user)
@@ -200,6 +202,7 @@ class ConsumerProfileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        print form.is_valid()
         if form.is_valid():
             form.save(request)
             messages.success(request, _("Your Profile updated."))
