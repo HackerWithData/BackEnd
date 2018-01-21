@@ -21,7 +21,7 @@ class MeisterDetail(ProfessionalDetail):
         'full_state_name',
         'review',
         'ratings',
-        'p_lic_num',
+        'p_id',
         'project_photos',
         'review_form',
         'user_rating_form',

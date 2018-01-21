@@ -63,7 +63,7 @@ def get_user_projects(user):
         professional = user.professional_profiles.first().professional
         projects = Project.objects.filter(
             content_type=ContentType.objects.get(model=professional.type.lower()),
-            object_id=int(professional.lic_num)
+            object_id=int(professional.id)
         ).order_by('-project_id')
         info_dict = {'projects': projects, 'professional': professional}
         return info_dict

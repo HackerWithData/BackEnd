@@ -15,7 +15,7 @@ import pytz
 
 from .models import BackgroundPhoto, Photo
 from .forms import PhotoForm
-from users.utils import get_p_lic_num
+from users.utils import get_p_id
 
 
 def get_bg_image(model_name=None, object_id=None):
@@ -72,8 +72,8 @@ def upload_photo(request, o_id, model_name):
 
 
 def upload_project_photo(request, o_id, success_url, model_name, template_name):
-    p_lic_num = get_p_lic_num(request)
-    if str(p_lic_num) == str(o_id):
+    p_id = get_p_id(request)
+    if str(p_id) == str(o_id):
         if request.method == "POST":
             form = PhotoForm(request.POST, request.FILES)
             if form.is_valid():
@@ -114,8 +114,8 @@ def delete_photo(request, contractor_id):
     if request.is_ajax() and request.method == "POST":
         if contractor_id:
             contractor_id = int(contractor_id)
-        p_lic_num = get_p_lic_num(request)
-        if p_lic_num == contractor_id:
+        p_id = get_p_id(request)
+        if p_id == contractor_id:
             data = {}
             data.update(json.loads(request.body))
             photo_id = data.get('id', None)

@@ -48,18 +48,19 @@ def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
 def get_professional_corresponding_object_by_user(user):
     professional_profile = user.professional_profiles.first()
     professional = professional_profile.professional
-    prof_type = professional.type
-    if prof_type == CONTRACTOR:
-        ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
-    elif prof_type == ARCHITECT:
-        ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
-    elif prof_type == DESIGNER:
-        ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
-    elif prof_type == MEISTER:
-        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
-    else:
-        raise UndefinedType("Error: Undefined Type in Object")
-    return ret_professional_object
+    # prof_type = professional.type
+    return professional
+    # if prof_type == CONTRACTOR:
+    #     ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == ARCHITECT:
+    #     ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == DESIGNER:
+    #     ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == MEISTER:
+    #     ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
+    # else:
+    #     raise UndefinedType("Error: Undefined Type in Object")
+    # return ret_professional_object
 
 
 def get_professional_and_professional_corresponding_object_by_user(user):
@@ -67,16 +68,17 @@ def get_professional_and_professional_corresponding_object_by_user(user):
     professional = professional_profile.professional
     ret_professional = professional
     prof_type = professional.type
-    if prof_type == CONTRACTOR:
-        ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
-    elif prof_type == ARCHITECT:
-        ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
-    elif prof_type == DESIGNER:
-        ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
-    elif prof_type == MEISTER:
-        ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
-    else:
-        raise UndefinedType("Error: Undefined Type in Object")
+    ret_professional_object = professional
+    # if prof_type == CONTRACTOR:
+    #     ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == ARCHITECT:
+    #     ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == DESIGNER:
+    #     ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
+    # elif prof_type == MEISTER:
+    #     ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
+    # else:
+    #     raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional, ret_professional_object
 
 

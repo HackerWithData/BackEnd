@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import json
 
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
@@ -12,6 +11,7 @@ from django.views import View
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.forms.models import model_to_dict
 
 from allauth.utils import import_attribute, get_user_model
 from allauth.exceptions import ImmediateHttpResponse
@@ -21,18 +21,18 @@ from allauth.account.views import PasswordChangeView, PasswordSetView, LoginView
 from allauth.account.utils import perform_login, complete_signup
 from allauth.account import app_settings
 
-from professionals.models import Professional, ProfessionalType
 from .forms import ConsumerInfoFillUpForm, ProfessionalInfoFillUpForm, ConsumerProfileEditForm, \
     ProfessionalProfileEditForm
 from .models import (
     ConsumerProfile,
-    ProfessionalProfile,
     MALE,
 )
+from professionals.utils import get_professionals, get_professional
 from .user_helpers import (retrieve_professional_info,
                            get_professional_corresponding_object_by_type_and_lic,
                            get_professional_user,
                            generate_random_hoome_id, password_generator)
+from users.models import CONSUMER, PROFESSIONAL
 from .utils import *
 
 
@@ -155,18 +155,22 @@ class ProfessionalProfileAfterSignupView(View):
             return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        print request.POST, "*************"
-        form = self.form_class(request.POST)
-        print form.errors, "+++++++++++"
-        if form.is_valid():
-            form.save(request)
-            professional = get_professional_user(request.user)
-            # reverse url name with professional type
+        if request.is_ajax():
+            data = json.loads(request.body)
+            lic_num = data.get('lic_num')
+            professionals = get_professionals(by_datacollection=True, **{'lic_num': lic_num})
+            ret = [model_to_dict(professional) for professional in professionals]
+            return HttpResponse(json.dumps(ret))
+        else:
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save(request)
+                professional = get_professional_user(request.user)
+                # reverse url name with professional type
 
-            redirect_url = reverse(professional.type.lower(), args=[professional.lic_num])
-            return redirect(redirect_url)
-
-        return render(request, self.template_name, {'form': form})
+                redirect_url = reverse('professional', args=[professional.uuid])
+                return redirect(redirect_url)
+            return render(request, self.template_name, {'form': form})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -225,17 +229,18 @@ class ProfessionalProfileView(View):
         professional = profile.professional
         subtype_list = professional.professional_types.all()
         professional_subtype_list = [item.subtype for item in subtype_list]
-        self.initial['license_num'] = professional.lic_num
+        self.initial['p_id'] = professional.id
         self.initial['company_name'] = professional.name
         self.initial['entity_type'] = professional.entity_type
         self.initial['professional_type'] = professional.type
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
         self.initial['county'] = professional.county
-        self.initial['zipcode'] = professional.postal_code
-        professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
-                                                                                    lic=professional.lic_num)
-        self.initial['street'] = professional_object.street_address
+        self.initial['zipcode'] = professional.pos_code
+        professional_object = professional
+        # professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
+        #                                                                             lic=professional.lic_num)
+        self.initial['street'] = professional_object.address
 
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})

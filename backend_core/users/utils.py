@@ -2,11 +2,10 @@ import json
 import os
 
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
 
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from users.models import CONSUMER, PROFESSIONAL
 
+from .models import ProfessionalProfile
 
 # TODO: load static file into professional subtype
 def setup_professional_type():
@@ -55,12 +54,22 @@ class UnexpectedMultipleChoice(Exception):
     pass
 
 
-def get_p_lic_num(request):
+def get_p_id(request):
     if request.user.is_anonymous():
-        p_lic_num = None
+        p_id = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.id)
+            p_id = int(request.user.professional_profiles.first().professional.id)
         except:
-            p_lic_num = None
-    return p_lic_num
+            p_id = None
+    return p_id
+
+
+def create_professional_profile(user=None, professional=None):
+    if not user or not professional:
+        return
+    try:
+        ProfessionalProfile.objects.get(user=user, professional=professional)
+    except ProfessionalProfile.DoesNotExist:
+        ProfessionalProfile.objects.create(user=user, professional=professional)
+

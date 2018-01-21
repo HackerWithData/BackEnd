@@ -14,7 +14,7 @@ from .models import (
     PAID_TO_PROFESSIONAL,
     PAID_TO_HOOME,
 )
-from users.utils import CONSUMER, PROFESSIONAL
+from users.models import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
 

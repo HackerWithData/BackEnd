@@ -6,7 +6,7 @@ from django.shortcuts import resolve_url
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.compat import is_authenticated, reverse
 
-from .utils import CONSUMER, PROFESSIONAL
+from .models import CONSUMER, PROFESSIONAL
 
 
 class MyAccountAdapter(DefaultAccountAdapter):

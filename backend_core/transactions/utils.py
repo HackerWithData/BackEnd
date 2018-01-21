@@ -4,7 +4,7 @@ from Crypto.Hash import HMAC, MD5
 from django.contrib.contenttypes.models import ContentType
 
 from .models import Transaction, TransactionHistory
-from users.utils import CONSUMER, PROFESSIONAL
+from users.models import CONSUMER, PROFESSIONAL
 from projects.utils import get_a_uuid
 
 
@@ -33,7 +33,7 @@ def get_transactions(user):
         try:
             transactions = Transaction.objects.filter(
                 content_type=ContentType.objects.get(model=professional.type.lower()),
-                object_id=int(professional.lic_num)
+                object_id=int(professional.id)
             )
         except ContentType.DoesNotExist:
             return None

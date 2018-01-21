@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
                     <span class="bus-name">{{ info_dict.professional.name }}</span>
-                    {% if info_dict.p_lic_num == info_dict.professional.lic_num %}
+                    {% if info_dict.p_id == info_dict.professional.id %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
                             <span class="slider round"></span>
@@ -95,7 +95,7 @@
                            class="btn btn-db">{% trans 'Contract Us' %}</a>
 
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_lic_num == info_dict.professional.lic_num %}
+                        {% if info_dict.p_id == info_dict.professional.id %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>

@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib.auth import (logout as django_logout)
 
-from users.utils import CONSUMER, PROFESSIONAL
+from users.models import CONSUMER, PROFESSIONAL
 from users.user_helpers import get_professional_user, get_user_by_hoome_id
 
 from .forms import (

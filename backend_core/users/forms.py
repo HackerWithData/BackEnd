@@ -1,11 +1,8 @@
 import string
-import json
 
 from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.decorators import login_required
-# from django.utils.translation import pgettext, ugettext, ugettext_lazy as _
 
 from allauth.account.forms import SignupForm
 
@@ -23,10 +20,10 @@ from professionals.models import (
     DESIGNER,
 )
 from meisters.models import Meister
+from meisters.utils import get_or_create_meister
 from .models import (
     User,
     ConsumerProfile,
-    ProfessionalProfile,
     ROLE_CHOICES,
     GENDER_CHOICES,
     MALE,
@@ -35,6 +32,13 @@ from .models import (
 from .user_helpers import get_professional_corresponding_object_by_type_and_lic, \
     create_professional_corresponding_object
 from .utils import *
+from professionals.utils import (
+    get_or_create_professional,
+    update_professional,
+    create_professional,
+    create_professional_type,
+)
+from users.utils import create_professional_profile
 
 professional_type = setup_professional_type()
 
@@ -179,19 +183,27 @@ class ProfessionalInfoFillUpForm(forms.Form):
         label=_('Postal Code'),
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
+    uuid = forms.CharField(
+        required=False,
+        max_length=36,
+        widget=forms.HiddenInput()
+    )
 
     # TODO; need to change this part since lic_num is not numberic sometimes
     def clean_license_num(self):
-        lic = self.cleaned_data['license_num']
-        lic_num = int(lic.strip(string.ascii_letters))
-        return lic_num
+        # lic = self.cleaned_data['license_num']
+        # lic_num = int(lic.strip(string.ascii_letters))
+        return None
 
     def clean_professional_type(self):
-        professionals = self.cleaned_data['professional_type']
-        for professional in professionals:
-            if professional not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
+        professional_types = self.cleaned_data['professional_type']
+        for professional_type in professional_types:
+            if professional_type not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
                 raise forms.ValidationError(_('Must select a professional type'))
-        return json.dumps(professionals)
+        if professional_types == ['MEISTER']:
+            return 'MEISTER'
+        else:
+            return professional_types
 
     def clean_entity_type(self):
         entity = self.cleaned_data['entity_type']
@@ -212,10 +224,13 @@ class ProfessionalInfoFillUpForm(forms.Form):
         subtype = self.cleaned_data['professional_subtype']
         return subtype
 
+    def clean_professional_uuid(self):
+        uuid = self.cleaned_data['uuid']
+        return uuid
+
     def save(self, request):
         exists = False
         clean_license_num = self.cleaned_data['license_num']
-        # clean_personal_name = self.cleaned_data['personal_name']
         clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
@@ -224,97 +239,37 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_entity_type = self.cleaned_data['entity_type']
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
-
+        clean_uuid = self.cleaned_data['uuid']
+        professional_data = {
+            'name': clean_company_name,
+            'entity_type': clean_entity_type,
+            'county': clean_county,
+            'address': clean_street,
+            'state': clean_state,
+            'pos_code': clean_zipcode,
+        }
         if str(clean_professional_type) == "MEISTER":
-            meister, created = Meister.objects.get_or_create(
-                lic_name=clean_company_name,
-                street_address=clean_street,
-                county=clean_county,
-                state=clean_state,
-                pos_code=clean_zipcode,
-            )
-            if created:
-                meister.save()
-            else:
-                pass
+            get_or_create_meister(**{
+                'lic_name': clean_company_name,
+                'street_address': clean_street,
+                'county': clean_county,
+                'state': clean_state,
+                'pos_code': clean_zipcode,
+            })
             # TODO: need to consider if meister is mutuailly exclusive with other type??
-            professional, created = Professional.objects.get_or_create(
-                name=clean_company_name,
-                entity_type=clean_entity_type,
-                lic_type='&'.join(clean_professional_subtype),
-                type=clean_professional_type,
-                county=clean_county,
-                state=clean_state,
-                pos_code=clean_zipcode
-            )
-            if created:
-                professional.save()
-            else:
-                pass
-
+            professional = get_or_create_professional(**professional_data)
+        elif clean_uuid:
+            professional = update_professional(uuid=clean_uuid, **professional_data)
         else:
-            professional_qs = Professional.objects.filter(lic_num=clean_license_num, type=clean_professional_type)
-            # print professional_qs
-            # find the result
-            if professional_qs.exists() and professional_qs.count() == 1:
-                exists = True
-                professional = professional_qs.first()
-                professional.entity_type = clean_entity_type
-                professional.county = clean_county
-                professional.state = clean_state
-                professional.pos_code = clean_zipcode
-                # save professional
-                professional.save()
-                professional_object = get_professional_corresponding_object_by_type_and_lic(
-                    prof_type=clean_professional_type,
-                    lic=clean_license_num)
-                professional_object.bus_name = clean_company_name
-                professional_object.entity = clean_entity_type
-                professional_object.state = clean_state
-                professional_object.county = clean_county
-                professional_object.street_address = clean_street
-                professional_object.pos_code = clean_zipcode
-                professional_object.save()
-            # multiple item for the same professional
-            elif professional_qs.count() > 1:
-                raise MultipleSameProfessionalFound('Found Redundant Professionals')
-            # create new professional
-            else:
-                professional = Professional.objects.create(
-                    name=clean_company_name,
-                    entity_type=clean_entity_type,
-                    type=clean_professional_type,
-                    lic_type='&'.join(clean_professional_subtype),
-                    state=clean_state,
-                    pos_code=clean_zipcode,
-                )
-                professional.save()
-                professional_object = create_professional_corresponding_object(prof_type=clean_professional_type,
-                                                                               lic=clean_license_num)
-                professional_object.lic_name = clean_company_name
-                professional_object.entity = clean_entity_type
-                professional_object.state = clean_state
-                professional_object.county = clean_county
-                professional_object.csp = clean_county + ' ' + clean_state + ', ' + clean_zipcode
-                professional_object.street_address = clean_street
-                professional_object.pos_code = clean_zipcode
-                professional_object.save()
-
+            professional = create_professional(**professional_data)
         user = request.user
         # TODO: Need to change code here. there is a bug here.
-        # create new profile
-        try:
-            ProfessionalProfile.objects.create(user=user, professional=professional)
-        except:
-            pass
-        professionaltypes = ProfessionalType.objects.filter(professional_id=professional.pk)
-        # create new subtypes for profile
-        existing_prof_types = [pt.subtype for pt in professionaltypes]
-        for subtype in clean_professional_subtype:
-            if subtype not in existing_prof_types:
-                ProfessionalType.objects.create(professional=professional,
-                                                type=clean_professional_type,
-                                                subtype=subtype)
+        create_professional_profile(user=user, professional=professional)
+        create_professional_type(
+            professional=professional,
+            professional_type=clean_professional_type,
+            professional_subtypes=clean_professional_subtype,
+        )
 
 
 class ConsumerProfileEditForm(ConsumerInfoFillUpForm):

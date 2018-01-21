@@ -20,7 +20,7 @@ from photos.utils import (
 from photos.views import background_photo_upload as backgroud_photo_upload_
 from overviews.views import edit_overview
 from contractors.utils import get_state_full_name
-from users.utils import get_p_lic_num
+from users.utils import get_p_id
 from ratings.utils import (
     get_ratings,
     create_user_rating,
@@ -66,8 +66,8 @@ class ProfessionalDetail(View):
             review=kwargs.get('review', None),
         )
 
-    def get_professional_p_lic_num(self, **kwargs):
-        return get_p_lic_num(kwargs.get('request'))
+    def get_professional_p_id(self, **kwargs):
+        return get_p_id(kwargs.get('request'))
 
     def get_professional_project_photos(self, **kwargs):
         return get_photos(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))

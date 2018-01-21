@@ -54,14 +54,14 @@ class BasicUploadView(View):
 # @login_required
 def background_photo_upload(request, o_id):
     if request.user.is_anonymous():
-        p_lic_num = None
+        p_id = None
     else:
         try:
-            p_lic_num = int(request.user.professional_profiles.first().professional.lic_num)
+            p_id = int(request.user.professional_profiles.first().professional.id)
         except:
-            p_lic_num = None
+            p_id = None
 
-    if str(p_lic_num) == str(o_id):
+    if str(p_id) == str(o_id):
         template_name = 'photos/background_photo_upload.html'
         if request.method == 'POST':
             model_type = check_professional_type(request)
