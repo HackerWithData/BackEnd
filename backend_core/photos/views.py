@@ -52,7 +52,7 @@ class BasicUploadView(View):
 
 
 # @login_required
-def background_photo_upload(request, o_id):
+def background_photo_upload(request, o_id, success_url=None):
     if request.user.is_anonymous():
         p_id = None
     else:
@@ -65,7 +65,7 @@ def background_photo_upload(request, o_id):
         template_name = 'photos/background_photo_upload.html'
         if request.method == 'POST':
             model_type = check_professional_type(request)
-            success_url = "/" + model_type + "/" + o_id
+            success_url = success_url or ("/" + model_type + "/" + o_id)
             form = get_bgphoto_form(request=request, method="POST")
             if form.is_valid():
                 upload_bg_photo(

@@ -175,7 +175,8 @@
                         {% trans "Street" %}:{{ form.street }} </br></br>
                         {% trans "County/City" %}:{{ form.county }} </br></br>
                         {% trans "State" %}:{{ form.state }} </br></br>
-                        {% trans "Zipcode" %}:{{ form.zipcode }} </br>
+                        {% trans "Zipcode" %}:{{ form.zipcode }} </br></br>
+                        {% trans "Phone Number" %}: {{ form.phone }} </br>
                         {{ form.uuid }}
                     </div>
                 </div>
@@ -349,6 +350,7 @@
                     $('#id_county').val(professional_selected.county);
                     $('#id_state').val(professional_selected.state);
                     $('#id_uuid').val(professional_selected.uuid);
+                    $('#id_phone').val(professional_selected.phone);
                 }
             };
             var professional_selected_id = -1;

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _,  ugettext_lazy as _
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views import View
 from django.contrib import messages
 
@@ -167,6 +167,7 @@ class ProfessionalView(ProfessionalDetail):
         'review',
         'project_photos',
         'review_form',
+        'p_id',
         'user_rating_form',
         'overview',
         'overview_form',
@@ -219,7 +220,7 @@ def display_project_photos(request, uuid):
 
 def upload_project_photos(request, uuid):
     o_id = _get_professional_id_by_uuid(uuid)
-    success_url = '/professional/' + uuid
+    success_url = reverse('professional', args=[uuid])
     model_name = 'professional'
     template_name = 'contractor/contractor_project_photos_upload.html'
     return upload_project_photo(
@@ -243,4 +244,5 @@ def submit_review(request, uuid):
 
 def background_photo_upload(request, uuid):
     o_id = _get_professional_id_by_uuid(uuid)
-    return backgroud_photo_upload_(request=request, o_id=o_id)
+    success_url = reverse('professional', args=[uuid])
+    return backgroud_photo_upload_(request=request, o_id=o_id, success_url=success_url)

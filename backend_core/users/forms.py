@@ -183,10 +183,18 @@ class ProfessionalInfoFillUpForm(forms.Form):
         label=_('Postal Code'),
         widget=forms.TextInput(attrs={'class': 'input-zipcode'})
     )
+
+    phone = forms.CharField(
+        required=True,
+        max_length=10,
+        label=_('Phone Number'),
+        widget=forms.TextInput(attrs={'class': 'input-phone'})
+
+    )
     uuid = forms.CharField(
         required=False,
         max_length=36,
-        widget=forms.HiddenInput()
+        widget=forms.HiddenInput(),
     )
 
     # TODO; need to change this part since lic_num is not numberic sometimes
@@ -219,6 +227,10 @@ class ProfessionalInfoFillUpForm(forms.Form):
             raise forms.ValidationError(_('Invalid zipcode'))
         return zip_str
 
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        return phone
+
     # TODO: validate
     def clean_professional_subtype(self):
         subtype = self.cleaned_data['professional_subtype']
@@ -236,6 +248,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_state = self.cleaned_data['state']
         clean_county = self.cleaned_data['county']
         clean_zipcode = self.cleaned_data['zipcode']
+        clean_phone = self.cleaned_data['phone']
         clean_entity_type = self.cleaned_data['entity_type']
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
@@ -246,6 +259,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
             'county': clean_county,
             'address': clean_street,
             'state': clean_state,
+            'phone': clean_phone,
             'pos_code': clean_zipcode,
         }
         if str(clean_professional_type) == "MEISTER":
