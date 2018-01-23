@@ -9,6 +9,22 @@ from allauth.compat import is_authenticated, reverse
 from .utils import CONSUMER, PROFESSIONAL
 
 
+URL_CODE = (
+    ('&', '!!!'),
+    ('?', '***'),
+)
+
+
+def url_encode(url):
+    for i in URL_CODE:
+        url = url.replace(i[0], i[1])
+
+
+def url_decode(url):
+    for i in URL_CODE:
+        url = url.replace(i[1], i[0])
+
+
 class MyAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
         assert is_authenticated(request.user)

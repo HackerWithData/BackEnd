@@ -34,6 +34,7 @@ from .user_helpers import (retrieve_professional_info,
                            get_professional_user,
                            generate_random_hoome_id, password_generator)
 from .utils import *
+from .adapter import url_encode, url_decode
 
 
 def get_adapter(request=None):
@@ -63,7 +64,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     email_address = sociallogin.account.extra_data['email']
     redirect_to = sociallogin.state.get('next', None)
     if redirect_to:
-        redirect_to = redirect_to.replace('!!!', '&').replace('***', '?')
+        url_decode(redirect_to)
     try:
         user = get_user_model().objects.get(email=email_address)
     except:
@@ -267,7 +268,7 @@ class RedirectView(object):
     def get_sociallogin_redirect_url(self):
         redirect_to = self.get_success_url()
         redirect_to = redirect_to.split('&info_url', 1)[0]
-        redirect_to = redirect_to.replace('?', '***').replace('&', '!!!')
+        url_encode(redirect_to)
         return redirect_to
 
     def passthrough_next_redirect_url(self):
