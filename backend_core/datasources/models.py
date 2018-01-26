@@ -18,7 +18,7 @@ class DataSource(models.Model):
     address = models.CharField(max_length=255)
 
 
-class DataSourceElapso(DataSource):
+class DataSourceElpaso(DataSource):
     state_lic_num = models.CharField(max_length=127)
     name2 = models.CharField(max_length=63)
     phone = models.TextField()

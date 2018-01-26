@@ -74,25 +74,21 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
 
 
 class Professional(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    owner_name = models.CharField(max_length=255, blank=True, null=True)
-    csp = models.CharField(max_length=63, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    county = models.CharField(max_length=255, blank=True, null=True)
-    lic_status = models.CharField(max_length=30, blank=True, null=True)
+    #When in search utility, there should be better way: search the joined table between Professional and professional type
+    #However, django orm doesn't support this way.
+    #TODO: if data scource doesn't have enough information. We'd better not adding this into professional row
+    name = models.CharField(max_length=63)
+    owner_name = models.CharField(max_length=63, blank=True, null=True)
+    csp = models.CharField(max_length=127)
+    address1 = models.CharField(max_length=255,)
+    address2 = models.CharField(max_length=127, blank=True, null=True)
+    county = models.CharField(max_length=63, blank=True, null=True)
+    lic_status = models.CharField(max_length=15, blank=True, null=True)
     phone = models.TextField(blank=True)
-    entity_type = models.CharField(
-        max_length=63,
-        choices=ENTITY_CHOICES
-    )
-    type = models.CharField(
-        max_length=10,
-        choices=PROFESSIONAL_CHOICES
-    )
+    entity_type = models.CharField(max_length=31,choices=ENTITY_CHOICES)
     state = models.CharField(max_length=63)
-    lic_type = models.TextField(default='NO LIC TYPE')
     #TODO: need to change the name to pos_code later
-    pos_code = models.CharField(max_length=63, blank=True, null=True)
+    pos_code = models.CharField(max_length=16)
     uuid = models.CharField(max_length=36, default='0')
 """ 
 class LicenseRelation(models.Model):
@@ -109,24 +105,17 @@ class LicenseRelation(models.Model):
 
 #professional_type type,subtype: Contractor/Architect/Designer/
 class ProfessionalType(models.Model):
-    professional = models.ForeignKey(
-        Professional,
-        on_delete=models.DO_NOTHING,
-        related_name='professional_types',
-        related_query_name='professional_type'
-    )
+    professional = models.ForeignKey(Professional,on_delete=models.DO_NOTHING,related_name='professional_types',
+                                    related_query_name='professional_type')
     type = models.CharField(max_length=10)
-    subtype = models.CharField(
-        max_length=255,
-        choices=PROFESSIONAL_SUBTYPE_CHOICES
-    )
+    subtype = models.CharField(max_length=127, choices=PROFESSIONAL_SUBTYPE_CHOICES,)
 
 
 class DataCollection(models.Model):
     professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=0)
-    object_id = models.PositiveIntegerField(default=0)
-    lic_num = models.CharField(max_length=127, default='0')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    lic_num = models.CharField(max_length=63)
 
 
 

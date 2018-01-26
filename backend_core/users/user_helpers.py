@@ -2,11 +2,10 @@ from random import randint
 import random
 import string
 
-
 from users.models import User, AVAILABLE, HoomeId, SIGNED
-from contractors.models import Contractor
-from designers.models import Designer
-from architects.models import Architect
+#from contractors.models import Contractor
+#from designers.models import Designer
+#from architects.models import Architect
 from meisters.models import Meister
 from professionals.models import (
     Professional,
@@ -30,71 +29,44 @@ def get_user_by_hoome_id(hoome_id):
     except User.DoesNotExist:
         return None
 
-
+#TODO: need to change the logic here. Here we want to search the data collection table by lic_num
 def get_professional_corresponding_object_by_type_and_lic(prof_type, lic):
-    if prof_type == CONTRACTOR:
-        ret_professional_object = Contractor.objects.get(lic_num=lic)
-    elif prof_type == ARCHITECT:
-        ret_professional_object = Architect.objects.get(lic_num=lic)
-    elif prof_type == DESIGNER:
-        ret_professional_object = Designer.objects.get(lic_num=lic)
-    elif prof_type == MEISTER:
-        ret_professional_object = Meister.objects.get(lic_num=lic)
-    else:
+    try:
+        ret_professional_object = Professional.objects.get(lic_num=lic)
+    except:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
 
-
+#TODO: need to change the logic here. Here we want to search the data collection table by lic_num
 def get_professional_corresponding_object_by_user(user):
     professional_profile = user.professional_profiles.first()
     professional = professional_profile.professional
     # prof_type = professional.type
-    return professional
-    # if prof_type == CONTRACTOR:
-    #     ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == ARCHITECT:
-    #     ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == DESIGNER:
-    #     ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == MEISTER:
-    #     ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
-    # else:
-    #     raise UndefinedType("Error: Undefined Type in Object")
-    # return ret_professional_object
+    try:
+        ret_professional_object = professional
+    except:
+        raise UndefinedType("Error: Undefined Type in Object")
+    return ret_professional_object
 
-
+#TODO: need to change the logic here. Here we want to search the data collection table by lic_num
 def get_professional_and_professional_corresponding_object_by_user(user):
     professional_profile = user.professional_profiles.first()
     professional = professional_profile.professional
     ret_professional = professional
     prof_type = professional.type
-    ret_professional_object = professional
-    # if prof_type == CONTRACTOR:
-    #     ret_professional_object = Contractor.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == ARCHITECT:
-    #     ret_professional_object = Architect.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == DESIGNER:
-    #     ret_professional_object = Designer.objects.get(lic_num=professional.lic_num)
-    # elif prof_type == MEISTER:
-    #     ret_professional_object = Meister.objects.get(lic_num=professional.lic_num)
-    # else:
-    #     raise UndefinedType("Error: Undefined Type in Object")
+    try:
+        ret_professional_object = professional
+    except:
+     raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional, ret_professional_object
 
-
+#TODO: need to change the logic here. Here we want to search the data collection table by lic_num
 def create_professional_corresponding_object(prof_type, lic):
-    if prof_type == CONTRACTOR:
-        ret_professional_object = Contractor.objects.create(lic_num=lic, lic_status="Active")
-    elif prof_type == ARCHITECT:
-        ret_professional_object = Architect.objects.create(lic_num=lic, lic_status="Active")
-    elif prof_type == DESIGNER:
-        ret_professional_object = Designer.objects.create(lic_num=lic)
-    elif prof_type == MEISTER:
-        ret_professional_object = Meister.objects.get(lic_num=lic)
-    else:
+    try:
+        ret_professional_object = Professional.objects.get(lic_num=lic)
+    except:
         raise UndefinedType("Error: Undefined Type in Object")
     return ret_professional_object
-
 
 def retrieve_professional_info(request):
     prof_type = request.GET['type'].upper()

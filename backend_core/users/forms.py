@@ -198,15 +198,11 @@ class ProfessionalInfoFillUpForm(forms.Form):
     )
 
     # TODO; need to change this part since lic_num is not numberic sometimes
-    def clean_license_num(self):
-        # lic = self.cleaned_data['license_num']
-        # lic_num = int(lic.strip(string.ascii_letters))
-        return None
 
     def clean_professional_type(self):
         professional_types = self.cleaned_data['professional_type']
-        for professional_type in professional_types:
-            if professional_type not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
+        for pt in professional_types:
+            if pt not in [choice[0] for choice in PROFESSIONAL_CHOICES]:
                 raise forms.ValidationError(_('Must select a professional type'))
         if professional_types == ['MEISTER']:
             return 'MEISTER'
@@ -218,7 +214,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         if entity not in [choice[0] for choice in ENTITY_CHOICES]:
             raise forms.ValidationError(_('Must select a entity type'))
         return entity
-
+    #TODO: the logic of zipcode, need to change here
     def clean_zipcode(self):
         zipcode = self.cleaned_data['zipcode']
         zip_num = int(zipcode.strip(string.ascii_letters))
@@ -242,7 +238,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
 
     def save(self, request):
         exists = False
-        clean_license_num = self.cleaned_data['license_num']
+        #clean_license_num = self.cleaned_data['license_num']
         clean_company_name = self.cleaned_data['company_name']
         clean_street = self.cleaned_data['street']
         clean_state = self.cleaned_data['state']
@@ -252,6 +248,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         clean_entity_type = self.cleaned_data['entity_type']
         clean_professional_type = self.cleaned_data['professional_type']
         clean_professional_subtype = self.cleaned_data['professional_subtype']
+        #There is no need to use clean_uuid
         clean_uuid = self.cleaned_data['uuid']
         professional_data = {
             'name': clean_company_name,
@@ -270,7 +267,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
                 'state': clean_state,
                 'pos_code': clean_zipcode,
             })
-            # TODO: need to consider if meister is mutuailly exclusive with other type??
+            # TODO: need to consider if meister is mutually exclusive with other type??
             professional = get_or_create_professional(**professional_data)
         elif clean_uuid:
             professional = update_professional(uuid=clean_uuid, **professional_data)

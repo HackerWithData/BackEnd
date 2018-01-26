@@ -19,8 +19,8 @@
 
         @media (min-width: 768px) {
             .sign-up-professional-img {
-                height: 200px;
-                width: 200px;
+                height: 100px;
+                width: 100px;
             }
         }
 
@@ -60,10 +60,10 @@
 
             <div class="panels">
                 {% if form.errors or form.non_field_errors %}
-                <div class="alert alert-warning">
-                    {% for field in form %} {{ field.errors|escape }}{% endfor %}
-                    {{ form.non_field_errors }}
-                </div>
+                    <div class="alert alert-warning">
+                        {% for field in form %} {{ field.errors|escape }}{% endfor %}
+                        {{ form.non_field_errors }}
+                    </div>
                 {% endif %}
                 <div data-panel="one" id="stage-one">
                     <h4>{% trans "Find Your License In Our Database" %}</h4>
@@ -151,11 +151,11 @@
                     </ul>
                 </div>
                 <div data-panel="three" id="stage-three">
-                    <h4 >{% trans "Enter Or Modify Business Name and Entity Type" %}</h4>
-{#                    <h4 class="meister-hide">{% trans "Enter Or Modify BusName and Entity Type" %}</h4>#}
+                    <h4>{% trans "Enter Or Modify Business Name and Entity Type" %}</h4>
+                    {#                    <h4 class="meister-hide">{% trans "Enter Or Modify BusName and Entity Type" %}</h4>#}
                     <div class="input-company-info-container">
                         <div class="error-container"></div>
-{#                        {% trans "Your Name" %} : {{ form.personal_name }} </br></br>#}
+                        {#                        {% trans "Your Name" %} : {{ form.personal_name }} </br></br>#}
                         {% trans "Business Name" %} : {{ form.company_name }} </br></br>
                         {% trans "Entity Type" %} : {{ form.entity_type }}
                     </div>
@@ -298,9 +298,10 @@
                 });
             });
 
-{#            @@@@@#}
+            {#            @@@@@#}
+
             var professionals_info;
-            $('#id_license_num').bind('input propertychange', function() {
+            $('#id_license_num').bind('input propertychange', function () {
                 var lic_num = $(this).val();
                 $.ajax({
                     type: "POST",
@@ -311,39 +312,42 @@
                     data: JSON.stringify({'lic_num': lic_num}),
                     contentType: "application/json;",
                     dataType: "json"
-                }).done(function(data){
-                    if(data.length > 0) {
+                }).done(function (data) {
+                    if (data.length > 0) {
                         professionals_info = data;
                         for (var i in professionals_info) {
                             var professional = professionals_info[i];
-                            $("#professionals_info").append(
-                                '<input type="radio" name="professional_selection" value=' + i  + '>' +
-                                    'name: ' + professional.name +
-                                    '\t address: ' + professional.address +
-                                    '\t type: ' + professional.type + '<br/>'
-                            );
+                            $("#professionals_info").html('');
+                            $("#professionals_info").append('<label class="radio control-label"><input type="radio" name="professional_selection" value=' + i + '>' + professional.name + '</label>');
                         }
                     }
-                    else{
+{#'<div class="radio"><label><input type="radio" name="professional_selection" value=' + i + '>' +#}
+{#'name: ' + professional.name +#}
+{#'<br/> address: ' + professional.address1#}
+{#{% if professional.address2 %}+','+ professional.address2 {% endif %}#}
+{#+#}
+{#{% if professional.csp %}'<br/>' + professional.csp + {% endif %} '<br/></label></div>'#}
+                    else {
                         $("#professionals_info").html('');
                     }
                 });
             });
+{#            #TODO:need to check this logics#}
             var select_professional = function (pro_query_id) {
                 var type_0 = $('#id_professional_type_0');
                 var type_1 = $('#id_professional_type_1');
                 var type_2 = $('#id_professional_type_2');
                 var type_3 = $('#id_professional_type_3');
                 professional_selected_id = Number(pro_query_id);
-                if(professional_selected_id === -1){
+                if (professional_selected_id === -1) {
                     type_0.prop('checked', false);
                     type_1.prop('checked', false);
                     type_2.prop('checked', false);
                     type_3.prop('checked', true);
-                } else if(professional_selected_id >= 0){
+                } else if (professional_selected_id >= 0) {
                     type_3.prop('checked', false);
                     var professional_selected = professionals_info[professional_selected_id];
-                    console.log(professional_selected);
+{#                    console.log(professional_selected);#}
                     $('#id_company_name').val(professional_selected.name);
                     $('#id_zipcode').val(professional_selected.pos_code);
                     $('#id_street').val(professional_selected.address);
@@ -355,9 +359,9 @@
             };
             var professional_selected_id = -1;
             select_professional(professional_selected_id);
-            $('#professionals_info').click(function(){
+            $('#professionals_info').click(function () {
                 var id = $('input[name="professional_selection"]:checked').val();
-                if(typeof id !== 'undefined'){
+                if (typeof id !== 'undefined') {
                     select_professional(id);
                 }
             });

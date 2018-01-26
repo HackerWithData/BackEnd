@@ -3,13 +3,10 @@ import urllib
 from django.forms.models import model_to_dict
 from django.db.models import Q
 
-from professionals.models import (
-    CONTRACTOR,
-    PROFESSIONAL_CHOICES,
-)
-from contractors.utils import convert_hscore_to_rank
+from professionals.models import (CONTRACTOR, PROFESSIONAL_CHOICES,)
+
 from professionals.utils import get_professional_instance, get_professionals
-from hscore.utils import get_hscore
+from hscore.utils import get_hscore, convert_hscore_to_rank
 # Ajax POST request
 # def search_by_address_object(request):
 #     zipcode = int(request['address']['address_components'][6]['short_name'])

@@ -19,7 +19,7 @@ from boto.s3.key import Key
 from professionals.utils import check_professional_type
 from forms import PhotoForm, FileFieldForm, BackgroundPhotoForm
 from models import Photo, FileField, BackgroundPhoto
-from contractors.models import Contractor
+
 from .utils import (
     get_photo_list,
     upload_bg_photo,
@@ -31,7 +31,7 @@ from .forms import (
 
 # Create your views here.
 
-
+'''
 class BasicUploadView(View):
     def get(self, request):
         photos_list = get_photo_list()
@@ -49,7 +49,7 @@ class BasicUploadView(View):
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
-
+'''
 
 # @login_required
 def background_photo_upload(request, o_id, success_url=None):

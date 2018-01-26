@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from projects.models import PROJECT_TYPE
 from .models import Review
-from contractors.models import Contractor
+from professionals.models import Professional
 
 
 def name_validator(name):
@@ -65,21 +65,20 @@ class ReviewForm(forms.Form):
             review.save()
         return review
 
-
+#TODO: need to review here for covnert contractr/architect/designers to professional
 def get_review_form(request, method, o_id=None):
     if method == "GET":
         if request.user.is_authenticated:
             review_form = ReviewForm(initial={
                 'first_name': request.user.first_name,
                 'last_name': request.user.last_name,
-                'project_date': datetime.datetime.today().strftime('%Y-%m-%d'),
-            })
+                'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
         else:
             review_form = ReviewForm(initial={'project_date': datetime.datetime.today().strftime('%Y-%m-%d')})
         if o_id is not None:
             try:
-                review_form.initial.update({'contractor': Contractor.objects.get(pk=o_id)})
-            except Contractor.DoesNotExist:
+                review_form.initial.update({'contractor': Professional.objects.get(pk=o_id)})
+            except Professional.DoesNotExist:
                 pass
         return review_form
     elif method == "POST":

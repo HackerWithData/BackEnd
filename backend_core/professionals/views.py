@@ -19,7 +19,7 @@ from photos.utils import (
 )
 from photos.views import background_photo_upload as backgroud_photo_upload_
 from overviews.views import edit_overview
-from contractors.utils import get_state_full_name
+
 from users.utils import get_p_id
 from ratings.utils import (
     get_ratings,
@@ -33,6 +33,7 @@ from .utils import (
     get_professional,
     get_professional_info as get_pro_info,
 )
+from .utils import get_state_full_name
 from .models import Professional
 
 

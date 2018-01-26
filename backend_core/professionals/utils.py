@@ -11,6 +11,10 @@ from professionals.models import (
 )
 from projects.utils import get_a_uuid
 
+# TODO: need to change in the future
+def get_state_full_name(state):
+    FullName = "California"
+    return FullName
 
 def check_professional_type(request):
     for i in [j[0] for j in PROFESSIONAL_CHOICES]:

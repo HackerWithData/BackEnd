@@ -136,7 +136,7 @@ class ConsumerProfileAfterSignupView(View):
 
         return render(request, self.template_name, {'form': form})
 
-
+#add security check the refer is signup/page
 @method_decorator(login_required, name='dispatch')
 class ProfessionalProfileAfterSignupView(View):
     form_class = ProfessionalInfoFillUpForm
@@ -155,6 +155,7 @@ class ProfessionalProfileAfterSignupView(View):
             return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
+        #TODO： add more logic here and check lic_num
         if request.is_ajax():
             data = json.loads(request.body)
             lic_num = data.get('lic_num')

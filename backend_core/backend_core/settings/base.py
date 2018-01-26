@@ -52,7 +52,7 @@ PREREQ_APPS = [
     'haystack',
     'storages',
     'tinymce',
-    'rest_framework',
+    #'rest_framework',
     'widget_tweaks'
     # 'django_scss',
 ]
@@ -72,7 +72,7 @@ AUTH_APPS = [
 
 WEB_APPS = [
     # 'social_django',
-    'contractors',
+    #'contractors',
     'home',
     'users',
     'photos',
@@ -80,8 +80,8 @@ WEB_APPS = [
     'ratings',
     'search',
     'professionals',
-    'architects',
-    'designers',
+    #'architects',
+    #'designers',
     'rule',
     'career',
     'dashboard',
