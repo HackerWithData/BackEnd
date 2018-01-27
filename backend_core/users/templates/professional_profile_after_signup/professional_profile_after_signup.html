@@ -172,7 +172,8 @@
                     <h4>{% trans "Enter Or Modify Your Company Address" %}</h4>
                     <div class="input-address-container">
                         <div class="error-container"></div>
-                        {% trans "Street" %}:{{ form.street }} </br></br>
+{#                        #TODO: need to chake here. from street to address#}
+                        {% trans "Street Address" %}:{{ form.address1 }} </br></br>
                         {% trans "County/City" %}:{{ form.county }} </br></br>
                         {% trans "State" %}:{{ form.state }} </br></br>
                         {% trans "Zipcode" %}:{{ form.zipcode }} </br></br>
@@ -314,10 +315,12 @@
                     dataType: "json"
                 }).done(function (data) {
                     if (data.length > 0) {
+{#                        #TODO: clear previous content if possible#}
+                        $("#professionals_info").html('');
                         professionals_info = data;
                         for (var i in professionals_info) {
                             var professional = professionals_info[i];
-                            $("#professionals_info").html('');
+
                             $("#professionals_info").append('<label class="radio control-label"><input type="radio" name="professional_selection" value=' + i + '>' + professional.name + '</label>');
                         }
                     }
@@ -332,7 +335,7 @@
                     }
                 });
             });
-{#            #TODO:need to check this logics#}
+{#            #TODO:need to check this logics, here is a bug for multiple choice #}
             var select_professional = function (pro_query_id) {
                 var type_0 = $('#id_professional_type_0');
                 var type_1 = $('#id_professional_type_1');

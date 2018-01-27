@@ -17,6 +17,7 @@ from search_helpers import (
     search_by_address_object_redirect_url,
     search_by_name_or_lic,
     DEFAULT_NUM_PER_PAGE,
+    postprocess_professional,
 )
 
 
@@ -28,7 +29,8 @@ class LazyEncoder(DjangoJSONEncoder):
         return super(LazyEncoder, self).default(obj)
 
 
-#TODO: need to consider this one nothing typed?
+#TODO: runing 2 types of search in parrell using multiprocessing????
+#
 def search_new(request):
     if request.is_ajax():
         # TODO: deal with json data
@@ -49,7 +51,8 @@ def search_new(request):
                     return redirect(request.path)
             else:
                 query_set = search_by_zipcode(request)
-
+            #this code is used for clean the professional code and used for do some security reason like remove the professional pk
+            query_set = postprocess_professional(query_set)
             # TODO: set customized item number per page, default = 10
             # pagination logic
             paginator = Paginator(query_set, DEFAULT_NUM_PER_PAGE)

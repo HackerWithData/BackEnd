@@ -9,9 +9,9 @@
         <h5 class="mb-1">
             {{ forloop.counter }}
             <!--{{ professional.type|lower }}-->
-            <a href="{% url 'professional'|lower professional.uuid %}">
+{#            <a href="{% url 'professional'|lower professional.uuid %}">#}
                 {{ professional.name }}
-            </a>
+{#            </a>#}
         </h5>
 
     {{ License_num }}: {{ professional.lic_num }} </br>

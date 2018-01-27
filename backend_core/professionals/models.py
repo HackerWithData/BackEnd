@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-
 CONTRACTOR = 'CONTRACTOR'
 ARCHITECT = 'ARCHITECT'
 DESIGNER = 'DESIGNER'
@@ -74,22 +73,24 @@ PROFESSIONAL_SUBTYPE_CHOICES = (
 
 
 class Professional(models.Model):
-    #When in search utility, there should be better way: search the joined table between Professional and professional type
-    #However, django orm doesn't support this way.
-    #TODO: if data scource doesn't have enough information. We'd better not adding this into professional row
+    # When in search utility, there should be better way: search the joined table between Professional and professional type
+    # However, django orm doesn't support this way.
+    # TODO: if data scource doesn't have enough information. We'd better not adding this into professional row
     name = models.CharField(max_length=63)
     owner_name = models.CharField(max_length=63, blank=True, null=True)
     csp = models.CharField(max_length=127)
-    address1 = models.CharField(max_length=255,)
+    address1 = models.CharField(max_length=255, )
     address2 = models.CharField(max_length=127, blank=True, null=True)
     county = models.CharField(max_length=63, blank=True, null=True)
     lic_status = models.CharField(max_length=15, blank=True, null=True)
     phone = models.TextField(blank=True)
-    entity_type = models.CharField(max_length=31,choices=ENTITY_CHOICES)
+    entity_type = models.CharField(max_length=31, choices=ENTITY_CHOICES)
     state = models.CharField(max_length=63)
-    #TODO: need to change the name to pos_code later
+    # TODO: need to change the name to pos_code later
     pos_code = models.CharField(max_length=16)
     uuid = models.CharField(max_length=36, default='0')
+
+
 """ 
 class LicenseRelation(models.Model):
     name = models.CharField(max_length=63)
@@ -103,20 +104,18 @@ class LicenseRelation(models.Model):
 """
 
 
-#professional_type type,subtype: Contractor/Architect/Designer/
+# professional_type type,subtype: Contractor/Architect/Designer/
 class ProfessionalType(models.Model):
-    professional = models.ForeignKey(Professional,on_delete=models.DO_NOTHING,related_name='professional_types',
-                                    related_query_name='professional_type')
+    professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING, related_name='professional_types',
+                                     related_query_name='professional_type')
     type = models.CharField(max_length=10)
-    subtype = models.CharField(max_length=127, choices=PROFESSIONAL_SUBTYPE_CHOICES,)
+    subtype = models.CharField(max_length=127, choices=PROFESSIONAL_SUBTYPE_CHOICES, )
 
 
 class DataCollection(models.Model):
-    professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING)
+    professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING,
+                                     related_name='professional_datacollections',
+                                     related_query_name='professional_datacollection')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     lic_num = models.CharField(max_length=63)
-
-
-
-
