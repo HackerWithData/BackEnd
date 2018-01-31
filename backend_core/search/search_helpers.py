@@ -109,6 +109,11 @@ def search_by_type(request):
     })
     return prof_qs
 
+
+def check_none(result,DEFAULT_VALUE=0):
+    if result is None:
+        result = DEFAULT_VALUE
+    return int(result)
 #TODO: This part changed as required
 #TODO: and remove professional id later and show uuid probably
 def postprocess_professional(prof_qs):
@@ -133,7 +138,9 @@ def postprocess_professional(prof_qs):
                 'rank': None,
             })
         ret_list.append(item)
-    sorted_list = sorted(ret_list, key=lambda k: k.get('score', '') if k.get('type', None) == CONTRACTOR else 1000, reverse=True)
+    #TODO: need to change later
+
+    sorted_list = sorted(ret_list, key=lambda k: (k.get('lic_status', ''),-1*check_none(k.get('score'))))
     return sorted_list
 
 
