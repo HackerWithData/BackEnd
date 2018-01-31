@@ -68,7 +68,6 @@ def search_new(request):
 
             get_copy = request.GET.copy()
             parameters = get_copy.pop('page', True) and get_copy.urlencode()
-
         else:
             return redirect('home_index')
 

@@ -115,9 +115,9 @@ def postprocess_professional(prof_qs):
     ret_list = []
     #TODO: this for loop would slow down the whole process. There might be another way to improve
     for professional in prof_qs:
-        model_type = '|'.join([i.type.lower() for i in ProfessionalType.objects.filter(professional_id=professional.pk)])
+        model_type = '|'.join([i.type.lower() for i in ProfessionalType.objects.filter(professional=professional)])
         item = model_to_dict(professional)
-        item.update({'type': model_type.upper()})
+        item.update({'type': model_type.title()})
         try:
             hscore = get_hscore(professional=professional.pk)
         except:

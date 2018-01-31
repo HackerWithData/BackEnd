@@ -79,24 +79,11 @@ class ProfessionalDetail(View):
     def get_professional_user_rating_form(self, **kwargs):
         return get_user_rating_form()
 
-    def get_professional_overview(self, **kwargs):
-        return get_overview(
-            model_name=kwargs.get('model_name'),
-            object_id=kwargs.get('o_id'),
-            message=self.get_overview_message(**kwargs)
-        )
-
-    def get_professional_overview_form(self, **kwargs):
-        return get_overview_form(data=kwargs.get('overview', None))
-
     def get_professional_score(self, **kwargs):
         return None
 
     def get_professional_rank(self, **kwargs):
         return None
-
-    def get_overview_message(self, **kwargs):
-        return ""
 
     def set_info_dict(self, request, o_id):
         model_name = self.model_name
@@ -116,6 +103,18 @@ class ProfessionalDetail(View):
             exec('field_val = self.get_professional_{field}(**kwargs)'.format(field=field))
             kwargs.update({field: field_val})
             self.info_dict.update({field: field_val})
+    #TODO: need to change here with below views
+    def get_professional_overview(self, **kwargs):
+        return get_overview(
+            model_name=kwargs.get('model_name'),
+            object_id=kwargs.get('o_id'),
+            message=self.get_overview_message(**kwargs)
+        )
+
+    def get_professional_overview_form(self, **kwargs):
+        return get_overview_form(data=kwargs.get('overview', None))
+    def get_overview_message(self, **kwargs):
+        return ""
 
     def post(self, request, o_id):
         self.set_info_dict(request, o_id)
@@ -157,8 +156,11 @@ class ProfessionalDetail(View):
         template_name = self.template_name
         return render(request, template_name, {"info_dict": info_dict})
 
-
+#TODO: check every source is correctly referenced
+#TODO: add missing source
+#TODO: correct the wrong reference source.
 class ProfessionalView(ProfessionalDetail):
+    #TODO: this would be change later
     data_source = 'California Architects Board'
     template_name = 'professional/professional.html'
     model_name = 'professional'
@@ -197,7 +199,22 @@ class ProfessionalView(ProfessionalDetail):
             self.info_dict.update({field: field_val})
 
     def get_professional_overview(self, **kwargs):
-        pass
+        message = _(
+            """{lic_name} is a {type} located in {csp} . The company holds a license number 
+                    according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+                    is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
+                     like to know {lic_name} more, please contact us and we will share more information and data about this
+                      contractor to you."""
+        ).format(
+            type=kwargs.get('type'),
+            lic_name=kwargs.get('instance').name,
+            csp=kwargs.get('instance').csp,
+            data_source=self.data_source,
+            score=kwargs.get('score'),
+            rank=kwargs.get('letter_grade'),
+            full_state_name=kwargs.get('full_state_name'),
+        )
+        return message
 
 
 def _get_professional_id_by_uuid(uuid):
