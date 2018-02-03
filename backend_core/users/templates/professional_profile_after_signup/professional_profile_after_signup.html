@@ -173,7 +173,8 @@
                     <div class="input-address-container">
                         <div class="error-container"></div>
 {#                        #TODO: need to chake here. from street to address#}
-                        {% trans "Street Address" %}:{{ form.address1 }} </br></br>
+                        {% trans "Street Address 1" %}:{{ form.address1 }} </br></br>
+                        {% trans "Street Address 2" %}:{{ form.address2 }} </br></br>
                         {% trans "County/City" %}:{{ form.county }} </br></br>
                         {% trans "State" %}:{{ form.state }} </br></br>
                         {% trans "Zipcode" %}:{{ form.zipcode }} </br></br>
@@ -353,7 +354,8 @@
 {#                    console.log(professional_selected);#}
                     $('#id_company_name').val(professional_selected.name);
                     $('#id_zipcode').val(professional_selected.pos_code);
-                    $('#id_street').val(professional_selected.address);
+                    $('#id_address1').val(professional_selected.address1);
+                    $('#id_address2').val(professional_selected.address2);
                     $('#id_county').val(professional_selected.county);
                     $('#id_state').val(professional_selected.state);
                     $('#id_uuid').val(professional_selected.uuid);

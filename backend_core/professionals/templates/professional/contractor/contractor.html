@@ -35,8 +35,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-lg-9 head-info">
-                    <span class="bus-name">{{ info_dict.professional.name }}</span>
-                    {% if info_dict.p_id == info_dict.professional.id %}
+                    <span class="bus-name">{{ info_dict.contractor.lic_name }}</span>
+                    {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
                         <label class="switch">
                             <input id="edit" type="checkbox" class="off">
                             <span class="slider round"></span>
@@ -45,7 +45,7 @@
                     <br/>
                     <div class="horizontal-list">
                         <ul style="list-style-type:None;">
-                            <li>{{ info_dict.professional.csp }}</li>
+                            <li>{{ info_dict.contractor.csp }}</li>
                             {% if info_dict.score %}
                                 <li id="score-popup" class='popup' onmouseover="popUp1()" onclick="popUp1()">
                                     {{ Score }}: {{ info_dict.score }}
@@ -68,7 +68,7 @@
                                 {#                                    {% endblocktrans %}#}
                                 {#                                </div>#}
                             </li>
-                            <li>{{ Phone }}: {{ info_dict.professional.phone }}</li>
+                            <li>{{ Phone }}: {{ info_dict.contractor.phone }}</li>
                         </ul>
                         <ul style="list-style-type:None;">
                             <li>
@@ -91,10 +91,11 @@
                 <div class="col-md-3 col-lg-3 header-btn-wrapper">
                     <div class="bus-btn">
 
-                        <a href="{% url 'professional_create_project' info_dict.professional.uuid %}"
+                        <a href="{% url 'create_project' 'contractor' info_dict.contractor.lic_num %}"
                            class="btn btn-db">{% trans 'Contract Us' %}</a>
+
                         <a href="#review-submission" class="popup-with-form btn btn-db">{{ Review_us }}</a>
-                        {% if info_dict.p_id == info_dict.professional.id %}
+                        {% if info_dict.p_lic_num == info_dict.contractor.lic_num %}
                             <div class='hide' id="edit-btn">
                                 <a href="{{ request.path }}project-photos/upload"
                                    class='btn btn-hoome'>{% trans 'Project Photo Upload' %}</a>
@@ -113,7 +114,7 @@
 
 {% block content %}
     <!-- Begin Body -->
-    <div id="professional-content">
+    <div id="contractor-content">
         <div class="container">
             <div class='menu justify-content-center' id='pro-menu'>
                 <ul class='nav nav-pills'>
@@ -133,7 +134,7 @@
                 </ul>
             </div>
             <div id="pro-content">
-                {% include "professional/professional_overview.html" %}
+                {% include "contractor/contractor_overview.html" %}
             </div>
         </div>
     </div>
@@ -505,13 +506,13 @@
         {#            popup.classList.toggle("show");#}
         {#        }#}
 
-
         function projectPhotosListener() {
             if (b) {
                 $('#pro-content').html(b);
             }
             else {
                 $.ajax({
+
                     type: "POST",
                     beforeSend: function (request) {
                         request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));

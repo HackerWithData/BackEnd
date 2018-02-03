@@ -158,13 +158,19 @@ class ProfessionalInfoFillUpForm(forms.Form):
         widget=forms.RadioSelect(attrs={'class': 'input-entity-type'})
     )
 
-    street = forms.CharField(
+    address1 = forms.CharField(
         required=True,
-        max_length=128,
-        label=_('Street'),
+        max_length=255,
+        label=_('Address 1'),
         widget=forms.TextInput(attrs={'class': 'input-street'})
     )
 
+    address2 = forms.CharField(
+        required=True,
+        max_length=127,
+        label=_('Address 2'),
+        widget=forms.TextInput(attrs={'class': 'input-street'})
+    )
     state = forms.CharField(
         required=True,
         max_length=32,
@@ -240,7 +246,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
         exists = False
         #clean_license_num = self.cleaned_data['license_num']
         clean_company_name = self.cleaned_data['company_name']
-        clean_street = self.cleaned_data['street']
+        clean_address1 = self.cleaned_data['address1']
+        clean_address2 = self.cleaned_data['address2']
         clean_state = self.cleaned_data['state']
         clean_county = self.cleaned_data['county']
         clean_zipcode = self.cleaned_data['zipcode']
@@ -254,7 +261,8 @@ class ProfessionalInfoFillUpForm(forms.Form):
             'name': clean_company_name,
             'entity_type': clean_entity_type,
             'county': clean_county,
-            'address': clean_street,
+            'address1': clean_address1,
+            'address2': clean_address2,
             'state': clean_state,
             'phone': clean_phone,
             'pos_code': clean_zipcode,
@@ -262,7 +270,7 @@ class ProfessionalInfoFillUpForm(forms.Form):
         if str(clean_professional_type) == "MEISTER":
             get_or_create_meister(**{
                 'lic_name': clean_company_name,
-                'street_address': clean_street,
+                'street_address': clean_address1 + clean_address2,
                 'county': clean_county,
                 'state': clean_state,
                 'pos_code': clean_zipcode,

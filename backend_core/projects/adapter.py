@@ -62,7 +62,9 @@ def save_project(request, project_form, professional_type=None, lic_id=None):
             project.user = request.user
         project.content_type = content_type
         project.object_id = lic_id
-        project.bus_name = professional.lic_name
+        project.bus_name = getattr(professional, 'name')
+        if not project.bus_name:
+            project.bus_name = getattr(professional, 'lic_name')
     else:
         if project_form.cleaned_data['created_by'] == CONSUMER:
             pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))

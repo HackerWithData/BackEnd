@@ -45,7 +45,7 @@ def display_project_photo(request, o_id, model, template_name):
     if request.is_ajax() and request.method == "POST":
         try:
             model_name = str(ContentType.objects.get_for_model(model=model).name)
-            instance = model.objects.get(lic_num=o_id)
+            instance = model.objects.get(pk=o_id)
             project_photos = get_photos(model_name=model_name, object_id=o_id)
         except ObjectDoesNotExist:
             raise Http404(_('No Pages Found.'))

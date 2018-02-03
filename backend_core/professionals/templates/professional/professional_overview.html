@@ -27,21 +27,12 @@
             <div class="panel-body">
                 <table>
                     <tr>
-                        <td class="rname">{{ License_num }}:</td>
-                        <td>{{ info_dict.architect.lic_num }}</td>
-                    </tr>
-                    <tr>
                         <td class="rname">{{ License_Status }}:</td>
-                        <td>{{ info_dict.architect.lic_status }}</td>
+                        <td>{{ info_dict.professional.lic_status }}</td>
                     </tr>
                     <tr>
                         <td class="rname">{{ License_Type }}:</td>
-                        <td>{% for item in info_dict.lic_type %}{{ item }}<br> {% endfor %}</td>
-                    </tr>
-
-                    <tr>
-                        <td class="rname">{{ Issued_Date }}:</td>
-                        <td>{{ info_dict.architect.lic_issue_date }}</td>
+                        <td>{{ info_dict.professional.entity_type }}</td>
                     </tr>
                     {% if info_dict.architect.lic_expire_date and info_dict.architect.lic_expire_date != '' %}
                         <tr>
@@ -51,8 +42,8 @@
                     {% endif %}
                     <tr>
                         <td class="rname">{{ Address }}:</td>
-                        <td>{{ info_dict.architect.street_address }} <br/>
-                            {{ info_dict.architect.city }},{{ info_dict.architect.state }},{{ info_dict.architect.postal_code }}
+                        <td>{{ info_dict.professional.address1 }} {{ info_dict.professional.address2 }} <br/>
+                            {{ info_dict.professional.csp }}
                         </td>
                     </tr>
                 </table>

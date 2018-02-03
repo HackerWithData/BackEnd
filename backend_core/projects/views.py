@@ -203,6 +203,8 @@ def create_project(request, professional_type=None, lic_id=None):
     """
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
     direct_create = True
+    model = ContentType.objects.get(model=professional_type).model_class()
+    instance = model.objects.get(pk=lic_id)
     project_form = get_project_form(
         request=request,
         professional_type=professional_type,
@@ -225,6 +227,7 @@ def create_project(request, professional_type=None, lic_id=None):
         'project_form': project_form,
         'milestone_formset': milestone_formset,
         'direct_create': direct_create,
+        professional_type: instance,
     }
     return render(request, template_name, {'info_dict': info_dict})
 

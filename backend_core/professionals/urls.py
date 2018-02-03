@@ -7,6 +7,7 @@ from .views import (
     submit_review,
     display_review,
     background_photo_upload,
+    professional_create_project,
 )
 
 uuid = r'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})'
@@ -24,4 +25,6 @@ urlpatterns = [
         background_photo_upload, name='professional_background_photos_upload'),
     url(r'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/project-photos/upload$',
         upload_project_photos, name='professional_project_photos_upload'),
+    url(r'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/create-project/$',
+        professional_create_project, name='professional_create_project'),
 ]

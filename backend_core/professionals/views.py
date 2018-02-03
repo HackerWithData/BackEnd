@@ -18,8 +18,6 @@ from photos.utils import (
     upload_project_photo,
 )
 from photos.views import background_photo_upload as backgroud_photo_upload_
-from overviews.views import edit_overview
-
 from users.utils import get_p_id
 from ratings.utils import (
     get_ratings,
@@ -28,6 +26,8 @@ from ratings.utils import (
 from ratings.forms import get_user_rating_form
 from overviews.utils import get_overview
 from overviews.forms import get_overview_form
+from overviews.views import edit_overview
+from projects.views import create_project
 from .utils import (
     get_professional_instance,
     get_professional,
@@ -168,6 +168,7 @@ class ProfessionalView(ProfessionalDetail):
     fields = (
         'bg_image',
         'review',
+        'ratings',
         'project_photos',
         'review_form',
         'p_id',
@@ -200,8 +201,7 @@ class ProfessionalView(ProfessionalDetail):
 
     def get_professional_overview(self, **kwargs):
         message = _(
-            """{lic_name} is a {type} located in {csp} . The company holds a license number 
-                    according to {data_source}. According to real-time data analysis, this licensed contractor's hoome score 
+            """{lic_name} is located in {csp}. According to real-time dat.a analysis, this licensed contractor's hoome score 
                     is {score} and is rated as {rank}. The License is verified as active when we checked last time. If you would
                      like to know {lic_name} more, please contact us and we will share more information and data about this
                       contractor to you."""
@@ -264,3 +264,8 @@ def background_photo_upload(request, uuid):
     o_id = _get_professional_id_by_uuid(uuid)
     success_url = reverse('professional', args=[uuid])
     return backgroud_photo_upload_(request=request, o_id=o_id, success_url=success_url)
+
+
+def professional_create_project(request, uuid):
+    o_id = _get_professional_id_by_uuid(uuid)
+    return create_project(request, professional_type='professional', lic_id=o_id)
