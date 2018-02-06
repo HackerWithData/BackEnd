@@ -6,6 +6,7 @@
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap-grid.css">
     {#    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">#}
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
@@ -72,13 +73,14 @@
                     <div class="input-license-number-container">
                         <div class="error-container"></div>
                         {% trans "License Number" %} : {{ form.license_num|attr:"ng-model:professional.licNum" }}
-                        <div id="professionals_info" style="font-size:20px"></div>
-                        <ul ng-repeat="p in prodata">
-                            <li>{[{ p.owner_name }]}</li>
-                            <li>{[{ p.name }]}</li>
-                            <li>{[{ p.entity_type }]}</li>
-                            <li>{[{ p.address1 }]} {[{ p.address2 }]}</li>
-                        </ul>
+                        <div class="form-group" style="font-family: Arial">
+                            <label for="sel1">Professional Info:</label>
+                                <select class="form-control" id="pro-selection" style="width: 50%; margin-left: 25%" ng-model="proId">
+                                    <option ng-repeat="p in prodata" value="{[{ $index }]}">
+                                        name: {[{ p.name }]}  address: {[{ p.address1 }]} {[{ p.address2 }]}
+                                    </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div data-panel="two" id="stage-two">
@@ -91,14 +93,14 @@
                                        name="professional_type"
                                        value="CONTRACTOR"
                                        required=""
-                                       checked=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_0">
+                                       id="id_professional_type_0"
+                                       ng-model="professional.protype.contractor">
                                 <figure>
                                     <img class='sign-up-professional-img' alt="contractor"
                                          active="{% static 'image/sign-up-info-icon/contractor.png' %}"
                                          inactive="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}"
-                                         src="{% static 'image/sign-up-info-icon/contractor.png' %}">
+                                         src="{% static 'image/sign-up-info-icon/contractor-inactive.png' %}">
                                     <figcaption>{{ Contractor }}</figcaption>
                                 </figure>
                             </label>
@@ -110,7 +112,8 @@
                                        value="ARCHITECT"
                                        required=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_1">
+                                       id="id_professional_type_1"
+                                       ng-model="professional.protype.architect">
                                 <figure>
                                     <img class='sign-up-professional-img' alt="architect"
                                          active="{% static 'image/sign-up-info-icon/architect.png' %}"
@@ -127,7 +130,8 @@
                                        value="DESIGNER"
                                        required=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_2">
+                                       id="id_professional_type_2"
+                                       ng-model="professional.protype.designer">
                                 <figure>
                                     <img class='sign-up-professional-img' alt="designer"
                                          active="{% static 'image/sign-up-info-icon/designer.png' %}"
@@ -144,7 +148,8 @@
                                        value="MEISTER"
                                        required=""
                                        class="input-professional-type-container"
-                                       id="id_professional_type_3">
+                                       id="id_professional_type_3"
+                                       ng-model="professional.protype.meister">
                                 <figure>
                                     <img class='sign-up-professional-img' alt="meister"
                                          active="{% static 'image/sign-up-info-icon/meister.svg' %}"
@@ -162,8 +167,8 @@
                     <div class="input-company-info-container">
                         <div class="error-container"></div>
                         {#                        {% trans "Your Name" %} : {{ form.personal_name }} </br></br>#}
-                        {% trans "Business Name" %} : {{ form.company_name }} </br></br>
-                        {% trans "Entity Type" %} : {{ form.entity_type }}
+                        {% trans "Business Name" %} : {{ form.company_name|attr:"ng-model:professional.company_name" }} </br></br>
+                        {% trans "Entity Type" %} : {{ form.entity_type|attr:"ng-model:professional.entity_type" }}
                     </div>
                 </div>
                 <div data-panel="four" id="stage-four">
@@ -179,26 +184,16 @@
                     <div class="input-address-container">
                         <div class="error-container"></div>
 {#                        #TODO: need to chake here. from street to address#}
-                        {% trans "Street Address 1" %}:{{ form.address1 }} </br></br>
-                        {% trans "Street Address 2" %}:{{ form.address2 }} </br></br>
-                        {% trans "County/City" %}:{{ form.county }} </br></br>
-                        {% trans "State" %}:{{ form.state }} </br></br>
-                        {% trans "Zipcode" %}:{{ form.zipcode }} </br></br>
-                        {% trans "Phone Number" %}: {{ form.phone }} </br>
+                        {% trans "Street Address 1" %}:{{ form.address1|attr:"ng-model:professional.address1" }} </br></br>
+                        {% trans "Street Address 2" %}:{{ form.address2|attr:"ng-model:professional.address2" }} </br></br>
+                        {% trans "County/City" %}:{{ form.county|attr:"ng-model:professional.county" }} </br></br>
+                        {% trans "State" %}:{{ form.state|attr:"ng-model:professional.state" }} </br></br>
+                        {% trans "Zipcode" %}:{{ form.zipcode|attr:"ng-model:professional.zipcode" }} </br></br>
+                        {% trans "Phone Number" %}: {{ form.phone|attr:"ng-model:professional.phone" }} </br>
                         {{ form.uuid }}
                     </div>
                 </div>
             </div>
-            {#            <div class="button-container next-button">#}
-            {#                <button type="submit" id="next" class="button-cube">#}
-            {#                    <div class="front">#}
-            {#                        {% trans "Next" %}#}
-            {#                    </div>#}
-            {#                    <div class="bottom">#}
-            {#                        {% trans "Next" %}#}
-            {#                    </div>#}
-            {#                </button>#}
-            {#            </div>#}
             <div style="width:100%;">
                 <button type="submit" id="next" class="btn btn-hoome"
                         style="display:table ;margin: 0 auto;">{% trans "Next" %}</button>
@@ -326,18 +321,53 @@
                 });
                 return deferred.promise;
             };
+            service.proAssign = function(professional, proSelected, protype){
+                if(proSelected !== null){
+                    professional.address1 = proSelected.address1;
+                    professional.address2 = proSelected.address2;
+                    professional.zipcode = proSelected.pos_code;
+                    professional.county = proSelected.county;
+                    professional.state = proSelected.state;
+                    professional.phone = proSelected.phone;
+                    professional.company_name = proSelected.owner_name;
+                    professional.entity_type = proSelected.entity_type;
+                    professional.protype.meister = false;
+                } else{
+                    professional.address1 = '';
+                    professional.address2 = '';
+                    professional.zipcode = '';
+                    professional.county = '';
+                    professional.state = '';
+                    professional.phone = '';
+                    professional.company_name = '';
+                    professional.entity_type = null;
+                    professional.protype.architect = false;
+                    professional.protype.contractor = false;
+                    professional.protype.designer = false;
+                }
+            };
             return service;
         });
 
         pro.controller('professionalCtrl', ["$scope", "proFunc", function($scope, proFunc){
-            $scope.professional = {};
+            $scope.professional = {'protype': {}};
             $scope.prodata = {};
+            $scope.proId = null;
             $scope.$watch('professional.licNum', function(){
                var proSearch = proFunc.proSearch($scope.professional.licNum);
                proSearch.then(function(data){
                    $scope.prodata = data;
                });
             });
+
+            $scope.$watch('proId', function(){
+                if ($scope.proId !== null) {
+                    proFunc.proAssign($scope.professional, $scope.prodata[$scope.proId]);
+                } else {
+                    proFunc.proAssign($scope.professional, null);
+                }
+            });
+
         }]);
 
     </script>
