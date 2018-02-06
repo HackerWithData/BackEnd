@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
+{% load widget_tweaks %}
 {% load i18n %}
 
 {% block metainfo %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
     {#    <link rel="stylesheet" href="{% static 'css/rotate-button.css' %}">#}
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <style>
         .input-license-number-container input, .input-company-info-container input, .input-address-container input {
             height: 30px;
@@ -38,9 +39,9 @@
 {% endblock %}
 {#!!!!!#}
 {% block content %}
-    <div class="container container-sign-up-professional-profile-form">
+    <div class="container container-sign-up-professional-profile-form" ng-app="pro">
         <form class="sign-up-professional-profile-form" id="professionalProfileForm" method="post"
-              action="{% url 'account_professional_profile_after_signup' %}">
+              action="{% url 'account_professional_profile_after_signup' %}" ng-controller="professionalCtrl">
             {% csrf_token %}
             <input id="one" type="radio" class="stages-radio-input" name="stage" checked="checked"/>
             <input id="two" type="radio" class="stages-radio-input" name="stage"/>
@@ -70,9 +71,14 @@
                     <div>{% trans "If you don't have license, please skip this step." %}</div>
                     <div class="input-license-number-container">
                         <div class="error-container"></div>
-                        {% trans "License Number" %} : {{ form.license_num }}
-                        <div id="professionals_info"></div>
-                        <input type="hidden" name="professional_selection" value='-1'/>
+                        {% trans "License Number" %} : {{ form.license_num|attr:"ng-model:professional.licNum" }}
+                        <div id="professionals_info" style="font-size:20px"></div>
+                        <ul ng-repeat="p in prodata">
+                            <li>{[{ p.owner_name }]}</li>
+                            <li>{[{ p.name }]}</li>
+                            <li>{[{ p.entity_type }]}</li>
+                            <li>{[{ p.address1 }]} {[{ p.address2 }]}</li>
+                        </ul>
                     </div>
                 </div>
                 <div data-panel="two" id="stage-two">
@@ -299,79 +305,40 @@
                     return $(this).attr('inactive');
                 });
             });
-
-            {#            @@@@@#}
-
-            var professionals_info;
-            $('#id_license_num').bind('input propertychange', function () {
-                var lic_num = $(this).val();
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'account_professional_profile_after_signup' %}",
-                    beforeSend: function (request) {
-                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                    },
-                    data: JSON.stringify({'lic_num': lic_num}),
-                    contentType: "application/json;",
-                    dataType: "json"
-                }).done(function (data) {
-                    if (data.length > 0) {
-{#                        #TODO: clear previous content if possible#}
-                        $("#professionals_info").html('');
-                        professionals_info = data;
-                        for (var i in professionals_info) {
-                            var professional = professionals_info[i];
-
-                            $("#professionals_info").append('<label class="radio control-label"><input type="radio" name="professional_selection" value=' + i + '>' + professional.name + '</label>');
-                        }
-                    }
-{#'<div class="radio"><label><input type="radio" name="professional_selection" value=' + i + '>' +#}
-{#'name: ' + professional.name +#}
-{#'<br/> address: ' + professional.address1#}
-{#{% if professional.address2 %}+','+ professional.address2 {% endif %}#}
-{#+#}
-{#{% if professional.csp %}'<br/>' + professional.csp + {% endif %} '<br/></label></div>'#}
-                    else {
-                        $("#professionals_info").html('');
-                    }
-                });
-            });
-{#            #TODO:need to check this logics, here is a bug for multiple choice #}
-            var select_professional = function (pro_query_id) {
-                var type_0 = $('#id_professional_type_0');
-                var type_1 = $('#id_professional_type_1');
-                var type_2 = $('#id_professional_type_2');
-                var type_3 = $('#id_professional_type_3');
-                professional_selected_id = Number(pro_query_id);
-                if (professional_selected_id === -1) {
-                    type_0.prop('checked', false);
-                    type_1.prop('checked', false);
-                    type_2.prop('checked', false);
-                    type_3.prop('checked', true);
-                } else if (professional_selected_id >= 0) {
-                    type_3.prop('checked', false);
-                    var professional_selected = professionals_info[professional_selected_id];
-{#                    console.log(professional_selected);#}
-                    $('#id_company_name').val(professional_selected.name);
-                    $('#id_zipcode').val(professional_selected.pos_code);
-                    $('#id_address1').val(professional_selected.address1);
-                    $('#id_address2').val(professional_selected.address2);
-                    $('#id_county').val(professional_selected.county);
-                    $('#id_state').val(professional_selected.state);
-                    $('#id_uuid').val(professional_selected.uuid);
-                    $('#id_phone').val(professional_selected.phone);
-                }
-            };
-            var professional_selected_id = -1;
-            select_professional(professional_selected_id);
-            $('#professionals_info').click(function () {
-                var id = $('input[name="professional_selection"]:checked').val();
-                if (typeof id !== 'undefined') {
-                    select_professional(id);
-                }
-            });
         });
 
+        var pro = angular.module('pro', []);
+        pro.config(function($interpolateProvider, $httpProvider){
+            $interpolateProvider.startSymbol('{[{');
+            $interpolateProvider.endSymbol('}]}');
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        });
+
+        pro.factory('proFunc', function($http, $q){
+            var service = {};
+            service.proSearch = function(licNum){
+                var data = {'lic_num': licNum};
+                var deferred = $q.defer();
+                $http.post('/accounts/signup/info/profession/', data).then(function(result){
+                    deferred.resolve(result.data);
+                });
+                return deferred.promise;
+            };
+            return service;
+        });
+
+        pro.controller('professionalCtrl', ["$scope", "proFunc", function($scope, proFunc){
+            $scope.professional = {};
+            $scope.prodata = {};
+            $scope.$watch('professional.licNum', function(){
+               var proSearch = proFunc.proSearch($scope.professional.licNum);
+               proSearch.then(function(data){
+                   $scope.prodata = data;
+               });
+            });
+        }]);
 
     </script>
 {% endblock %}

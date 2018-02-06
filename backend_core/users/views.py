@@ -158,9 +158,11 @@ class ProfessionalProfileAfterSignupView(View):
         #TODO： add more logic here and check lic_num
         if request.is_ajax():
             data = json.loads(request.body)
+            print data, "*******"
             lic_num = data.get('lic_num')
             professionals = get_professionals(by_datacollection=True, **{'lic_num': lic_num})
             ret = [model_to_dict(professional) for professional in professionals]
+            print ret
             return HttpResponse(json.dumps(ret))
         else:
             form = self.form_class(request.POST)
