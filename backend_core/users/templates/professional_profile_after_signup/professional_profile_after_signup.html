@@ -190,7 +190,7 @@
                         {% trans "State" %}:{{ form.state|attr:"ng-model:professional.state" }} </br></br>
                         {% trans "Zipcode" %}:{{ form.zipcode|attr:"ng-model:professional.zipcode" }} </br></br>
                         {% trans "Phone Number" %}: {{ form.phone|attr:"ng-model:professional.phone" }} </br>
-                        {{ form.uuid }}
+                        {{ form.uuid|attr:"ng-model:professional.uuid"|attr:"ng-value:professional.uuid" }}
                     </div>
                 </div>
             </div>
@@ -313,6 +313,11 @@
 
         pro.factory('proFunc', function($http, $q){
             var service = {};
+            var imgMeister = angular.element('img[alt="meister"]');
+            var imgArchitect = angular.element('img[alt="architect"]');
+            var imgDesigner = angular.element('img[alt="designer"]');
+            var imgContractor = angular.element('img[alt="contractor"]');
+
             service.proSearch = function(licNum){
                 var data = {'lic_num': licNum};
                 var deferred = $q.defer();
@@ -321,7 +326,7 @@
                 });
                 return deferred.promise;
             };
-            service.proAssign = function(professional, proSelected, protype){
+            service.proAssign = function(professional, proSelected){
                 if(proSelected !== null){
                     professional.address1 = proSelected.address1;
                     professional.address2 = proSelected.address2;
@@ -331,7 +336,9 @@
                     professional.phone = proSelected.phone;
                     professional.company_name = proSelected.owner_name;
                     professional.entity_type = proSelected.entity_type;
+                    professional.uuid = proSelected.uuid;
                     professional.protype.meister = false;
+                    imgMeister.prop('src', imgMeister.attr('inactive'));
                 } else{
                     professional.address1 = '';
                     professional.address2 = '';
@@ -344,22 +351,44 @@
                     professional.protype.architect = false;
                     professional.protype.contractor = false;
                     professional.protype.designer = false;
+                    imgMeister.prop('src', imgMeister.attr('active'));
+                    imgArchitect.prop('src', imgArchitect.attr('inactive'));
+                    imgDesigner.prop('src', imgDesigner.attr('inactive'));
+                    imgContractor.prop('src', imgContractor.attr('inactive'));
+                }
+            };
+            service.proTypeCtrl = function(protype, proId){
+                if(proId === null){
+                    protype.meister = true;
+                    protype.architect = false;
+                    protype.contractor = false;
+                    protype.designer = false;
+                    imgMeister.prop('src', imgMeister.attr('active'));
+                    imgArchitect.prop('src', imgArchitect.attr('inactive'));
+                    imgDesigner.prop('src', imgDesigner.attr('inactive'));
+                    imgContractor.prop('src', imgContractor.attr('inactive'));
+                } else{
+                    protype.meister = false;
+                    imgMeister.prop('src', imgMeister.attr('inactive'));
                 }
             };
             return service;
         });
 
-        pro.controller('professionalCtrl', ["$scope", "proFunc", function($scope, proFunc){
+        pro.controller('professionalCtrl', ["$scope", "$timeout", "proFunc", function($scope, $timeout, proFunc){
             $scope.professional = {'protype': {}};
             $scope.prodata = {};
             $scope.proId = null;
-            $scope.$watch('professional.licNum', function(){
-               var proSearch = proFunc.proSearch($scope.professional.licNum);
-               proSearch.then(function(data){
-                   $scope.prodata = data;
-               });
+            $scope.$watch('professional.licNum', function(newVal, oldVal){
+                if(newVal !== oldVal){
+                    $timeout(function() {
+                        var proSearch = proFunc.proSearch($scope.professional.licNum);
+                        proSearch.then(function(data){
+                            $scope.prodata = data;
+                        })
+                    }, 500);
+                }
             });
-
             $scope.$watch('proId', function(){
                 if ($scope.proId !== null) {
                     proFunc.proAssign($scope.professional, $scope.prodata[$scope.proId]);
@@ -367,8 +396,9 @@
                     proFunc.proAssign($scope.professional, null);
                 }
             });
-
+            $scope.$watch('professional.protype', function(){
+                proFunc.proTypeCtrl($scope.professional.protype, $scope.proId);
+            }, true);
         }]);
-
     </script>
 {% endblock %}
