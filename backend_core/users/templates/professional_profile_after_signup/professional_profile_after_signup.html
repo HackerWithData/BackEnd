@@ -36,6 +36,30 @@
                 font-size: 10px;
             }
         }
+
+        #pro-list {
+            margin-left: 35%;
+            width: 300px;
+            max-height: 200px;
+            border: 1px solid #dedede;
+            border-radius: 3px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .pro-results {
+          background: antiquewhite;
+          padding: 10px;
+        }
+
+    .isselected{
+        background: yellow;
+    }
+
+    .unselected{
+        background: white;
+    }
+
     </style>
 {% endblock %}
 {#!!!!!#}
@@ -73,13 +97,10 @@
                     <div class="input-license-number-container">
                         <div class="error-container"></div>
                         {% trans "License Number" %} : {{ form.license_num|attr:"ng-model:professional.licNum" }}
-                        <div class="form-group" style="font-family: Arial">
-                            <label for="sel1">Professional Info:</label>
-                                <select class="form-control" id="pro-selection" style="width: 50%; margin-left: 25%" ng-model="proId">
-                                    <option ng-repeat="p in prodata" value="{[{ $index }]}">
-                                        name: {[{ p.name }]}  address: {[{ p.address1 }]} {[{ p.address2 }]}
-                                    </option>
-                            </select>
+                        <div id="pro-list" ng-show="prodata.length > 0">
+                            <div class="pro-results" ng-class="{isselected:$index===proId, unselected: $index!==proId}" ng-repeat="pro in prodata" ng-click="proSelect($index)">
+                                name: {[{ pro.name }]}  address: {[{ pro.address1 }]} {[{ pro.address2 }]} {[{$index}]}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -386,19 +407,22 @@
                         proSearch.then(function(data){
                             $scope.prodata = data;
                         })
-                    }, 500);
-                }
-            });
-            $scope.$watch('proId', function(){
-                if ($scope.proId !== null) {
-                    proFunc.proAssign($scope.professional, $scope.prodata[$scope.proId]);
-                } else {
-                    proFunc.proAssign($scope.professional, null);
+                    }, 800);
                 }
             });
             $scope.$watch('professional.protype', function(){
                 proFunc.proTypeCtrl($scope.professional.protype, $scope.proId);
             }, true);
+            $scope.$watch('prodata.length', function(){
+                if($scope.prodata.length === 0){
+                    proFunc.proAssign($scope.professional, null);
+                }
+            });
+            $scope.proSelect = function(proId){
+                console.log(proId);
+                $scope.proId = proId;
+                proFunc.proAssign($scope.professional, $scope.prodata[$scope.proId]);
+            }
         }]);
     </script>
 {% endblock %}
