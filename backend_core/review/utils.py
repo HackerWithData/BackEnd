@@ -6,30 +6,21 @@ from photos.models import Photo
 from .models import Review
 
 
-def get_reviews(model_name=None, object_id=None, review_status=None):
-    if not model_name or not object_id or not review_status:
+def get_reviews(professional, review_status=None):
+    if not professional or not review_status:
         return None
-    try:
-        review = Review.objects.filter(
-            content_type=ContentType.objects.get(model=model_name),
-            object_id=object_id,
-            review_status=review_status,
-        )
-    except ContentType.DoesNotExist:
-        review = None
+    review = Review.objects.filter(
+        professional=professional,
+        review_status=review_status,
+    )
     return review
 
 
-def create_review(request, o_id, review_form):
-    model_type = check_professional_type(request)
+def create_review(request, professional, review_form):
     review = review_form.save(commit=False)
     if request.user.is_authenticated():
         review.user = request.user
-    try:
-        review.content_type = ContentType.objects.get(model=model_type)
-    except ContentType.DoesNotExist:
-        pass
-    review.object_id = o_id
+    review.professional = professional
     review.save()
     return review
 

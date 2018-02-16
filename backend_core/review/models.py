@@ -8,9 +8,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from photos.models import Photo
 from projects.models import (PROJECT_TYPE)
-
+from professionals.models import Professional
 
 # Create your models here.
+
 
 #TODO: need to rewrite this part. Way too dumb
 class Review(models.Model):
@@ -22,12 +23,10 @@ class Review(models.Model):
         (ACCEPTED, 'ACCEPTED'),
         (REJECTED, 'REJECTED'),
     )
-
     STATE_CHOICES = (
         (True, u"Yes"),
         (False, u"No"),
     )
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     project_type = models.CharField(max_length=255, choices=PROJECT_TYPE, )
     project_date = models.DateField()
@@ -45,9 +44,7 @@ class Review(models.Model):
     review_date = models.DateTimeField(default=timezone.now)
     # photo
     photo = GenericRelation(Photo)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, default=None)
-    object_id = models.PositiveIntegerField(default=1)
-    content_object = GenericForeignKey('content_type', 'object_id')
+    professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING, null=True)
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     email = models.CharField(max_length=255)

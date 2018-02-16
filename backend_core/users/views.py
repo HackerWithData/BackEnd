@@ -29,7 +29,6 @@ from .models import (
 )
 from professionals.utils import get_professionals, get_professional
 from .user_helpers import (retrieve_professional_info,
-                           get_professional_corresponding_object_by_type_and_lic,
                            get_professional_user,
                            generate_random_hoome_id, password_generator)
 from users.models import CONSUMER, PROFESSIONAL
@@ -168,7 +167,6 @@ class ProfessionalProfileAfterSignupView(View):
                 form.save(request)
                 professional = get_professional_user(request.user)
                 # reverse url name with professional type
-
                 redirect_url = reverse('professional', args=[professional.uuid])
                 return redirect(redirect_url)
             return render(request, self.template_name, {'form': form})
@@ -233,15 +231,12 @@ class ProfessionalProfileView(View):
         self.initial['p_id'] = professional.id
         self.initial['company_name'] = professional.name
         self.initial['entity_type'] = professional.entity_type
-        self.initial['professional_type'] = professional.type
         self.initial['professional_subtype'] = professional_subtype_list
         self.initial['state'] = professional.state
         self.initial['county'] = professional.county
         self.initial['zipcode'] = professional.pos_code
         professional_object = professional
-        # professional_object = get_professional_corresponding_object_by_type_and_lic(prof_type=professional.type,
-        #                                                                             lic=professional.lic_num)
-        self.initial['street'] = professional_object.address
+        self.initial['street'] = professional_object.address1
 
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})

@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^photo_upload/(?P<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/$', upload_project_photo, name='upload_project_photo'),
     # TODO: need to write a more secure link
     url(r'^create/$', create_project, name='create_project_direct'),
-    url(r'^create/(.*?)/(.*?)/$', create_project, name='create_project'),
+    url(r'^create/(?P<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})/$', create_project, name='create_project'),
     url(r'^edit/(?P<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})$', edit_project,
         name='edit_project'),
 

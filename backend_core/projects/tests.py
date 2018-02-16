@@ -11,64 +11,49 @@ from bs4 import BeautifulSoup
 from users.models import User, ProfessionalProfile
 from .models import Project, Milestone, WAITING
 from professionals.models import Professional
-from contractors.models import Contractor
 
 
 class ProjectTest(TestCase):
-    def set_user(self):
+    def _set_user(self):
         self.consumer_password = 'zlxvnlzdgf'
-        self.consumer = User.objects.create(
+        self.consumer_user = User.objects.create(
             username='abcde',
             email='zxca@avc.za',
             password=self.consumer_password,
             hoome_id=123,
             role='CONSUMER',
         )
-        self.consumer.set_password(self.consumer_password)
-        self.consumer.save()
-        self.professional = User.objects.create(
+        self.consumer_user.set_password(self.consumer_password)
+        self.consumer_user.save()
+        self.professional_user = User.objects.create(
             username='qwer',
             email='oqjc@alz.xc',
             password='nvcmxalo',
             hoome_id=321,
             role='PROFESSIONAL',
         )
-        self.professional_ = Professional.objects.create(
-            lic_num=111,
-            name='qqq',
+        self.professional = Professional.objects.create(
+            name='zzz',
+            owner_name='xxx',
+            csp='bbb',
+            address1='ccc',
+            address2='ddd',
+            county='qqq',
+            lic_status='A',
+            phone='123456789',
             entity_type='Corporation',
-            type='CONTRACTOR',
-            state='xxx',
-            lic_type='rrr',
-            county='iii',
-            postal_code='ppp',
+            state='xvaqwe',
+            pos_code='12345',
+            uuid='db9d6282-344c-4541-8b10-88f66e57878a',
         )
         ProfessionalProfile.objects.create(
-            professional=self.professional_,
-            user=self.professional
+            professional=self.professional,
+            user=self.professional_user
         )
-        self.contractor = Contractor.objects.create(**{
-            'lic_num': 111,
-            'lic_name': 'bbb',
-            'lic_type': 'ccc',
-            'lic_status': 'zzz',
-            'lic_issue_date': date(2000, 1, 1),
-            'lic_expire_date': date(2222, 2, 2),
-            'entity': 'aaa',
-            'street_address': 'eee',
-            'csp': 'fff',
-            'state': 'hhh',
-            'pos_code': 'jjj',
-            'phone': 'yyy',
-            'bus_info_add': 'xxx',
-            'lic_status_add': 'www',
-            'dba': 'iii',
-            'uuid': 'kkk',
-        })
 
     def set_project_data(self):
         self.project_data = {
-            'created_by': self.consumer.role,
+            'created_by': self.consumer_user.role,
             'professional_hoome_id': 321,
             'project_name': 'zzz',
             'project_type': 'R',
@@ -91,8 +76,9 @@ class ProjectTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.set_user()
-        self.create_project_path = '/project/create/'
+        self._set_user()
+        self.create_project_path_direct = '/project/create/'
+        self.create_project_path = '/project/create/{uuid}/'.format(uuid=self.professional.uuid)
         self.project_detail_path = '/project/{uuid}/'
         self.set_project_data()
 
@@ -120,19 +106,19 @@ class ProjectTest(TestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp.url, reverse('account_login') + '?next=/project/{uuid}/'.format(uuid=project.uuid))
         self.client.login(
-            username=self.consumer.username,
+            username=self.consumer_user.username,
             password=self.consumer_password,
         )
         resp = self.client.get(path=path)
         self.assertEqual(resp.status_code, 200)
         project = Project.objects.all().first()
         milestone = Milestone.objects.all().first()
-        self.assertEqual(project.user, self.consumer)
+        self.assertEqual(project.user, self.consumer_user)
         soup = BeautifulSoup(resp.content, 'html.parser')
         project_info = soup.find(name='span', class_='title', text='Project Name:').find_parent().get_text()
         project_info = filter(lambda x: x != '', project_info.replace(' ', '').split('\n'))
         self.assertEqual(project_info[0], 'ProjectName:' + project.project_name)
-        self.assertEqual(project_info[2], self.professional_.name)
+        self.assertEqual(project_info[2], self.professional.name)
         self.assertEqual(project_info[3], 'ProjectType:' + "REMODEL")
         project_info = soup.find(name='span', class_='title', text='Start Date:').find_parent().get_text()
         project_info = filter(lambda x: x != '', project_info.replace(' ', '').split('\n'))
@@ -154,9 +140,11 @@ class ProjectTest(TestCase):
         milestone_status = eval(milestone_status.upper())
         self.assertEqual(milestone_status, milestone.status)
 
-
-
-
-
-
-
+    def test_project_post_direct(self):
+        project_num = Project.objects.count()
+        self.assertEqual(project_num, 0)
+        resp = self.client.post(path=self.create_project_path_direct, data=self.project_data)
+        self.assertEqual(resp.status_code, 302)
+        project = Project.objects.all().order_by('created_at').first()
+        self.assertEqual(resp.url, '/project/' + project.uuid)
+        self.assertEqual(project.user, None)

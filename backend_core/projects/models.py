@@ -3,13 +3,12 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.translation import ugettext_lazy as _
 
 from users.models import CONSUMER, ROLE_CHOICES
-
+from professionals.models import Professional
 
 # Create your models here.
 # TODO: Consider cache ?? Interesting!
@@ -50,15 +49,14 @@ PROJECT_TYPE = ((REMODEL, _('REMODEL')),
     (NEW_BUILT, _("NEW BUILT HOUSE")),
 )
 
+
 class Project(models.Model):
     project_id = models.BigAutoField(primary_key=True)
     project_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     bus_name = models.CharField(max_length=255, blank=True)
-    content_type = models.ForeignKey(ContentType, on_delete=models.DO_NOTHING, null=True)
-    object_id = models.PositiveIntegerField(null=True)
-    content_object = GenericForeignKey('content_type', 'object_id')
+    professional = models.ForeignKey(Professional, on_delete=models.DO_NOTHING, null=True)
     # user.id how to get user id
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     # Project Type choice field
@@ -81,7 +79,7 @@ class Project(models.Model):
     created_by = models.CharField(default=CONSUMER, choices=ROLE_CHOICES, max_length=16)
 
     class Meta:
-        unique_together = ('project_id', 'content_type', 'object_id', 'user')
+        unique_together = ('project_id', 'professional', 'user')
 
 
 class ProjectAttachment(models.Model):

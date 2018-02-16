@@ -165,9 +165,9 @@ class MilestoneForm(forms.Form):
     amount = forms.IntegerField(min_value=500, required=True)
 
 
-def get_project_form(request, professional_type=None, lic_id=None):
+def get_project_form(request, uuid=None):
     if request.method == "GET":
-        if professional_type and lic_id:
+        if uuid:
             if request.user.is_authenticated:
                 project_form = ProjectForm(
                     initial={
@@ -181,7 +181,7 @@ def get_project_form(request, professional_type=None, lic_id=None):
             project_form = ProjectFormDirectCreate()
         return project_form
     elif request.method == "POST":
-        if professional_type and lic_id:
+        if uuid:
             project_form = ProjectForm(request.POST, request.FILES)
         else:
             project_form = ProjectFormDirectCreate(request.POST, request.FILES)

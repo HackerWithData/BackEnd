@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from professionals.models import (CONTRACTOR, PROFESSIONAL_CHOICES,ProfessionalType)
 
-from professionals.utils import get_professional_instance, get_professionals
+from professionals.utils import get_professionals
 from hscore.utils import get_hscore, convert_hscore_to_rank
 # Ajax POST request
 # def search_by_address_object(request):

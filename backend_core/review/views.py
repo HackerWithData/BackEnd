@@ -19,7 +19,7 @@ from .utils import (
 )
 
 
-def submit_review(request, o_id):
+def submit_review(request, professional):
     template_name = r'review/submit_review.html'
     if request.method == "POST":
         user_rating_form = get_user_rating_form(request.POST)
@@ -28,7 +28,7 @@ def submit_review(request, o_id):
         if review_form.is_valid() and user_rating_form.is_valid():
             review = create_review(
                 request=request,
-                o_id=o_id,
+                professional=professional,
                 review_form=review_form
             )
             create_user_rating(user_rating_form=user_rating_form, review=review)
@@ -40,16 +40,14 @@ def submit_review(request, o_id):
     review_form = get_review_form(
         request=request,
         method="GET",
-        o_id=o_id
     )
     info_dict = {'review_form': review_form, "user_rating_form": user_rating_form, }
     return render(request, template_name, {"info_dict": info_dict})
 
 
-def display_review(request, o_id):
+def display_review(request, professional):
     if request.is_ajax() and request.method == "POST":
         template_name = r'review/display_review.html'
-        model_name = check_professional_type(request)
         review = get_reviews(model_name=model_name, object_id=o_id, review_status='A')
         info_dict = {"review": review}
         return render(request, template_name, {"info_dict": info_dict})

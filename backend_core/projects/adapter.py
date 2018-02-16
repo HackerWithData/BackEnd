@@ -1,14 +1,11 @@
 import re
 
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 
 from .utils import get_a_uuid
 
 from .models import (
-    Project,
     ProjectPhoto,
-    ProjectAttachment,
     Milestone,
     WAITING,
     PAID_TO_PROFESSIONAL,
@@ -49,39 +46,30 @@ def save_milestone(request, project):
         _save_milestone(amount=request.POST[item[1]], project=project)
 
 
-def save_project(request, project_form, professional_type=None, lic_id=None):
+def save_project(request, project_form, professional=None):
     project = project_form.save_project(commit=False)
     # pro means the professional in Professional model
-    if professional_type and lic_id:
-        content_type = ContentType.objects.get(model=professional_type.lower())
-        lic_id = int(lic_id)
-        professional = content_type.get_object_for_this_type(pk=lic_id)
-        # save project
+    if professional:
         project = project_form.save_project(commit=False)
         if request.user.is_authenticated:  # when user is logged in
             project.user = request.user
-        project.content_type = content_type
-        project.object_id = lic_id
+        project.professional = professional
         project.bus_name = getattr(professional, 'name')
         if not project.bus_name:
             project.bus_name = getattr(professional, 'lic_name')
     else:
         if project_form.cleaned_data['created_by'] == CONSUMER:
-            pro = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
-            project.content_type = ContentType.objects.get(model=pro.type.lower())
-            project.object_id = pro.lic_num
-            project.bus_name = pro.name
+            professional = get_professional_user(get_user_by_hoome_id(project_form.cleaned_data['professional_hoome_id']))
+            project.professional = professional
+            project.bus_name = professional.name
             if request.user.is_authenticated:  # when user is logged in
                 project.user = request.user
-
         elif project_form.cleaned_data['created_by'] == PROFESSIONAL:
             project.user = get_user_by_hoome_id(project_form.cleaned_data['homeowner_hoome_id'])
             if request.user.is_authenticated:  # when user is logged in
-                pro = get_professional_user(request.user)
-                project.content_type = ContentType.objects.get(model=pro.type.lower())
-                project.object_id = pro.lic_num
-                project.bus_name = pro.name
-
+                professional = get_professional_user(request.user)
+                project.professional = professional
+                project.bus_name = professional.name
     project.save()
     return project
 

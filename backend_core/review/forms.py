@@ -65,6 +65,7 @@ class ReviewForm(forms.Form):
             review.save()
         return review
 
+
 #TODO: need to review here for covnert contractr/architect/designers to professional
 def get_review_form(request, method, o_id=None):
     if method == "GET":

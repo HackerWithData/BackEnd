@@ -45,6 +45,7 @@ from .utils import (
     get_project_photos,
 )
 from helplers import validate_hoome_id
+from professionals.utils import get_professional
 
 # TODO: need to rewrite the architecture here.
 
@@ -100,12 +101,11 @@ class ProjectDetail(View):
                 messages.warning(request, _("Please Login as Homeowner."))
                 success_url = '/project/' + uuid
                 return redirect(success_url)
-        elif project.content_type is None:
+        elif project.professional is None:
             if request.user.role == PROFESSIONAL:
-                pro = get_professional_user(request.user)
-                project.bus_name = pro.name
-                project.content_type = ContentType.objects.get(model=pro.type.lower())
-                project.object_id = pro.lic_num
+                professional = get_professional_user(request.user)
+                project.bus_name = professional.name
+                project.professional = professional
             else:
                 django_logout(request)
                 messages.warning(request, _("Please Login as Professional."))
@@ -123,21 +123,18 @@ class ProjectDetail(View):
         if request.user.role == CONSUMER:
             if request.user == project.user:
                 flag = True
-                professional = project.content_type.get_object_for_this_type(pk=project.object_id)
+                professional = project.professional
         elif request.user.role == PROFESSIONAL:
             professional = request.user.professional_profiles.first().professional
-            ct = ContentType.objects.get(model=professional.type.lower())
-            lic_num = ct.get_object_for_this_type(lic_num=professional.lic_num).pk
             # caution
             # print(type(lic_num)) type: int
             # print(type(project.object_id)) type: unicode
-            if ct == project.content_type and str(lic_num) == str(project.object_id):
+            if professional == project.professional:
                 flag = True
         if flag:
             info_dict = {'project': project, 'professional': professional, 'project_attachments': project_attachments,
                          'project_photos': project_photos, 'transactions': transactions,
-                         'milestone_form': milestone_form, 'milestones': milestones,
-                         'content_type': str(project.content_type)}
+                         'milestone_form': milestone_form, 'milestones': milestones}
 
             return render(request, self.template_name, {'info_dict': info_dict})
         else:
@@ -192,38 +189,32 @@ class ProjectDetail(View):
             return redirect(request.path)  #
 
 
-@check_recaptcha
-def create_project(request, professional_type=None, lic_id=None):
+# @check_recaptcha
+def create_project(request, uuid=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
     :param request:
-    :param professional_type:
-    :param lic_id:
+    :param uuid:
     :return:
     """
     template_name = 'projects/project_direct_create.html'  # Replace with your template.
     direct_create = True
-    try:
-        model = ContentType.objects.get(model=professional_type).model_class()
-    except ContentType.DoesNotExist:
-        model = None
-    try:
-        instance = model.objects.get(pk=lic_id)
-    except:
-        instance = None
+    professional = get_professional(uuid=uuid)
     project_form = get_project_form(
         request=request,
-        professional_type=professional_type,
-        lic_id=lic_id
+        uuid=uuid,
     )
     milestone_formset = get_milestone_formset(request)
     if request.method == "GET":
-        if professional_type and lic_id:
+        if uuid:
             direct_create = False
-
     elif request.method == "POST":
-        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
-            project = save_project(request, project_form, professional_type, lic_id)
+        if (True or request.recaptcha_is_valid) and project_form.is_valid() and milestone_formset.is_valid():
+            project = save_project(
+                request=request,
+                project_form=project_form,
+                professional=professional,
+            )
             save_milestone(request, project)
             upload_attachment(request=request, project=project, form=project_form)
             save_project_photo(request, project)
@@ -233,7 +224,7 @@ def create_project(request, professional_type=None, lic_id=None):
         'project_form': project_form,
         'milestone_formset': milestone_formset,
         'direct_create': direct_create,
-        professional_type: instance,
+        'professional': professional,
     }
     return render(request, template_name, {'info_dict': info_dict})
 

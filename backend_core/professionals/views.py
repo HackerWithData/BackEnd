@@ -29,7 +29,6 @@ from overviews.forms import get_overview_form
 from overviews.views import edit_overview
 from projects.views import create_project
 from .utils import (
-    get_professional_instance,
     get_professional,
     get_professional_info as get_pro_info,
 )
@@ -47,13 +46,9 @@ class ProfessionalDetail(View):
     def get_professional_bg_image(self, **kwargs):
         return get_bg_image(model_name=kwargs.get('model_name'), object_id=kwargs.get('o_id'))
 
-    def get_professional_lic_type(self, **kwargs):
-        return kwargs.get('instance').lic_type.split('&')
-
     def get_professional_review(self, **kwargs):
         return get_reviews(
-            model_name=kwargs.get('model_name'),
-            object_id=kwargs.get('o_id'),
+            professional=kwargs.get('instance'),
             review_status=kwargs.get('review_status', 'A'),
         )
 
@@ -85,71 +80,12 @@ class ProfessionalDetail(View):
     def get_professional_rank(self, **kwargs):
         return None
 
-    def set_info_dict(self, request, o_id):
-        model_name = self.model_name
-        instance = get_professional_instance(model_type=model_name, lic_num=o_id)
-        if instance is None:
-            raise Http404(_("Error Pages!"))
-        model = instance.__class__
-        kwargs = {
-            'request': request,
-            'o_id': o_id,
-            'model': model,
-            'model_name': model_name,
-            'instance': instance,
-        }
-        self.info_dict.update({model_name: instance})
-        for field in self.fields:
-            exec('field_val = self.get_professional_{field}(**kwargs)'.format(field=field))
-            kwargs.update({field: field_val})
-            self.info_dict.update({field: field_val})
-
-    #TODO: need to change here with below views
-    def get_professional_overview(self, **kwargs):
-        return get_overview(
-            model_name=kwargs.get('model_name'),
-            object_id=kwargs.get('o_id'),
-            message=self.get_overview_message(**kwargs)
-        )
-
     def get_professional_overview_form(self, **kwargs):
         return get_overview_form(data=kwargs.get('overview', None))
 
     def get_overview_message(self, **kwargs):
         return ""
 
-    def post(self, request, o_id):
-        self.set_info_dict(request, o_id)
-        info_dict = self.info_dict
-        template_name = self.template_name
-        if request.POST.get('review', None):
-            user_rating_form = get_user_rating_form(request.POST)
-            review_form = get_review_form(request, method="POST")
-            if review_form.is_valid() and user_rating_form.is_valid():
-                review = create_review(
-                    request=request,
-                    o_id=info_dict.get(self.model_name).pk,
-                    review_form=review_form,
-                )
-                create_user_rating(user_rating_form=user_rating_form, review=review)
-                upload_photo(request=request, model_name='review', o_id=review.id)
-                return redirect(request.path)
-            else:
-                info_dict['review_form'] = review_form
-                info_dict["user_rating_form"] = user_rating_form
-                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
-                return render(request, template_name, {"info_dict": info_dict})
-        elif request.POST.get('overview', None):
-            edit_overview(request, o_id)
-            return redirect(request.path)
-        else:
-            raise Http404(_("Error Pages!"))
-
-    def get(self, request, o_id):
-        self.set_info_dict(request, o_id)
-        info_dict = self.info_dict
-        template_name = self.template_name
-        return render(request, template_name, {"info_dict": info_dict})
 
 #TODO: check every source is correctly referenced
 #TODO: add missing source
@@ -211,6 +147,39 @@ class ProfessionalView(ProfessionalDetail):
         )
         return message
 
+    def post(self, request, uuid):
+        self.set_info_dict(request, uuid)
+        info_dict = self.info_dict
+        template_name = self.template_name
+        if request.POST.get('review', None):
+            user_rating_form = get_user_rating_form(request.POST)
+            review_form = get_review_form(request, method="POST")
+            if review_form.is_valid() and user_rating_form.is_valid():
+                review = create_review(
+                    request=request,
+                    professional=info_dict.get(self.model_name),
+                    review_form=review_form,
+                )
+                create_user_rating(user_rating_form=user_rating_form, review=review)
+                upload_photo(request=request, model_name='review', o_id=review.id)
+                return redirect(request.path)
+            else:
+                info_dict['review_form'] = review_form
+                info_dict["user_rating_form"] = user_rating_form
+                messages.warning(request, _('Submit Failed. Please verify your content is correct.'))
+                return render(request, template_name, {"info_dict": info_dict})
+        elif request.POST.get('overview', None):
+            edit_overview(request, uuid)
+            return redirect(request.path)
+        else:
+            raise Http404(_("Error Pages!"))
+
+    def get(self, request, o_id):
+        self.set_info_dict(request, o_id)
+        info_dict = self.info_dict
+        template_name = self.template_name
+        return render(request, template_name, {"info_dict": info_dict})
+
 
 def _get_professional_id_by_uuid(uuid):
     professional = get_professional(uuid=uuid)
@@ -246,13 +215,13 @@ def upload_project_photos(request, uuid):
 
 
 def display_review(request, uuid):
-    o_id = _get_professional_id_by_uuid(uuid)
-    return display_review_(request=request, o_id=o_id)
+    professional = get_professional(uuid=uuid)
+    return display_review_(request=request, professional=professional)
 
 
 def submit_review(request, uuid):
-    o_id = _get_professional_id_by_uuid(uuid)
-    return submit_review_(request=request, o_id=o_id)
+    professional = get_professional(uuid=uuid)
+    return submit_review_(request=request, professional=professional)
 
 
 def background_photo_upload(request, uuid):
@@ -262,5 +231,4 @@ def background_photo_upload(request, uuid):
 
 
 def professional_create_project(request, uuid):
-    o_id = _get_professional_id_by_uuid(uuid)
-    return create_project(request, professional_type='professional', lic_id=o_id)
+    return create_project(request, uuid=uuid)

@@ -31,10 +31,7 @@ def get_transactions(user):
     elif user.role == PROFESSIONAL:
         professional = user.professional_profiles.first().professional
         try:
-            transactions = Transaction.objects.filter(
-                content_type=ContentType.objects.get(model=professional.type.lower()),
-                object_id=int(professional.id)
-            )
+            transactions = Transaction.objects.filter(professional=professional)
         except ContentType.DoesNotExist:
             return None
         return transactions
