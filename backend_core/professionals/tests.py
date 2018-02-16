@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from datetime import date
+import os
 
 from django.test import Client, TestCase
 from django.contrib.contenttypes.models import ContentType
@@ -161,17 +162,70 @@ class ProfessionalViewTest(TestCase):
         self.assertIn('Length : ' + self.review_data.get('l_rating'), user_rating)
         self.assertIn('Efficiency : ' + self.review_data.get('e_rating'), user_rating)
 
-    def test_upload_image(self):
+    def test_upload_bgimage(self):
+        path = self.path + 'background-upload'
+        resp = self.client.get(path=path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
         self.client.login(
             username=self.user.username,
             password=self.password,
         )
-        resp = self.client.get(self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        photo_upload_urls = soup.find_all(name='a', class_='btn btn-hoome')
-        project_photo_upload_url, bg_image_upload_url = [url.get('href') for url in photo_upload_urls]
 
-        resp_project = self.client.get(project_photo_upload_url)
-        self.assertEqual(resp_project.status_code, 200)
+        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
+        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
+        with open(pic_1, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(BackgroundPhoto.objects.count(), 1)
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        bg_image = BackgroundPhoto.objects.all().first()
+        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
+        with open(pic_2, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(BackgroundPhoto.objects.count(), 1)
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        bg_image = BackgroundPhoto.objects.all().first()
+        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
+
+    def test_upload_project_photo(self):
+        path = self.path + 'project-photos/upload'
+        resp = self.client.get(path=path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
+        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+        self.client.login(
+            username=self.user.username,
+            password=self.password,
+        )
+        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
+        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
+        with open(pic_1, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(Photo.objects.count(), 1)
+        with open(pic_2, 'r') as f:
+            resp = self.client.post(path=path, data={
+                'img': f,
+            })
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(Photo.objects.count(), 2)
+        resp = self.client.get(path=self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        images = soup.find(name='div', class_='popup-gallery').find_all(name='img')
+        images = [image.get('src', '') for image in images]
+        photos = Photo.objects.all()
+        for photo in photos:
+            self.assertIn(photo.img.url, images)
 
 
