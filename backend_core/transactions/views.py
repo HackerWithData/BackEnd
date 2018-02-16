@@ -70,21 +70,12 @@ class TransactionsView(View):
         project = get_project(uuid_=received_json_data['project_uuid'])
         milestone = get_milestone(uuid=received_json_data['milestone_uuid'])
         # TODO: should change here because should save to the model at the time. change get or create to get and models()
-        # transaction, created = Transaction.objects.get_or_create(
-        #     project=project,
-        #     user=project.user,
-        #     milestone=milestone,
-        #     content_type=project.content_type,
-        #     object_id=project.object_id,
-        #     transaction_key=received_json_data['transaction_key']
-        # )
         transaction, created = get_or_create_transaction(
             **{
                 'project': project,
                 'user': project.user,
                 'milestone': milestone,
-                'content_type': project.content_type,
-                'object_id': project.object_id,
+                'professional': project.professional,
                 'transaction_key': received_json_data['transaction_key']
         })
 
