@@ -24,7 +24,6 @@ from ratings.utils import (
     create_user_rating,
 )
 from ratings.forms import get_user_rating_form
-from overviews.utils import get_overview
 from overviews.forms import get_overview_form
 from overviews.views import edit_overview
 from projects.views import create_project

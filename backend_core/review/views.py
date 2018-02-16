@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import datetime
 
-from django.views import View
 from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password
-from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseNotFound, Http404
+from django.http import Http404
 
 from ratings.forms import get_user_rating_form
 from ratings.utils import create_user_rating
-from professionals.utils import check_professional_type
 from .forms import get_review_form
 from .utils import (
     create_review,

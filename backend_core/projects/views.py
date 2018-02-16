@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseNotFound, Http404
+from django.http import Http404
 from django.shortcuts import render, redirect, reverse
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import View
@@ -12,7 +11,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth import (logout as django_logout)
 
 from users.models import CONSUMER, PROFESSIONAL
-from users.user_helpers import get_professional_user, get_user_by_hoome_id
+from users.user_helpers import get_professional_user
 
 from .forms import (
     get_milestone_form,
@@ -34,7 +33,6 @@ from .models import (
     PAYMENT_REQUEST,
 )
 from .utils import (
-    get_a_uuid,
     upload_project_attachment as upload_attachment,
     get_user_projects,
     get_project,
@@ -44,7 +42,6 @@ from .utils import (
     get_project_attachments,
     get_project_photos,
 )
-from helplers import validate_hoome_id
 from professionals.utils import get_professional
 
 # TODO: need to rewrite the architecture here.
@@ -189,7 +186,7 @@ class ProjectDetail(View):
             return redirect(request.path)  #
 
 
-# @check_recaptcha
+@check_recaptcha
 def create_project(request, uuid=None):
     """
     This function is used for creating project by clicing contract us in Contractor/Designer/Architect Detail Page
@@ -209,7 +206,7 @@ def create_project(request, uuid=None):
         if uuid:
             direct_create = False
     elif request.method == "POST":
-        if (True or request.recaptcha_is_valid) and project_form.is_valid() and milestone_formset.is_valid():
+        if request.recaptcha_is_valid and project_form.is_valid() and milestone_formset.is_valid():
             project = save_project(
                 request=request,
                 project_form=project_form,

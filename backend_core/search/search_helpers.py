@@ -1,7 +1,6 @@
 import urllib
 
 from django.forms.models import model_to_dict
-from django.db.models import Q
 
 from professionals.models import (CONTRACTOR, PROFESSIONAL_CHOICES,ProfessionalType)
 
@@ -110,7 +109,7 @@ def search_by_type(request):
     return prof_qs
 
 
-def check_none(result,DEFAULT_VALUE=0):
+def check_none(result, DEFAULT_VALUE=0):
     if result is None:
         result = DEFAULT_VALUE
     return int(result)

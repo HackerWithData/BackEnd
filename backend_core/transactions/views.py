@@ -3,23 +3,16 @@ from __future__ import unicode_literals
 import json
 from datetime import datetime
 
-from django.contrib import messages
-from django.http import HttpResponse, Http404, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from projects.utils import (
-    get_a_uuid,
-    get_project,
-    get_user_projects,
-)
-from users.models import CONSUMER, PROFESSIONAL
+from projects.utils import get_user_projects
 from .forms import TransactionForm, TransactionHistoryForm
 from .utils import (
     get_transactions,
-    generate_transaction_number,
     get_or_create_transaction,
     generate_transaction_uuid,
     create_transaction_history,

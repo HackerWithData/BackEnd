@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.contrib import messages
-from django.contrib.contenttypes.models import ContentType
 
 from professionals.utils import check_professional_type
 from .forms import OverviewForm
-from .models import Overview
 from .utils import get_or_create_overview
 
 
