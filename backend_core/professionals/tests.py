@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from datetime import date
-import os
 
-from django.test import Client
+from django.test import Client, TestCase
 from django.contrib.contenttypes.models import ContentType
 
 from bs4 import BeautifulSoup
@@ -11,251 +10,168 @@ from bs4 import BeautifulSoup
 from review.models import Review
 from users.models import User, ProfessionalProfile
 from ratings.models import UserRating
-from professionals.models import Professional
+from professionals.models import Professional, DataCollection
+from datasources.models import DataSourceElpaso
 from photos.models import BackgroundPhoto, Photo
+from projects.models import PROJECT_TYPE
 
 
-class ProfessionalTest(object):
+class ProfessionalViewTest(TestCase):
+    uuid = 'db9d6282-344c-4541-8b10-88f66e57878a'
 
-    model = None
-    path = None
+    def _set_path(self):
+        self.path = '/professional/{uuid}/'.format(uuid=self.uuid)
+        self.path_404 = '/professional/97caaf5f-b40f-43d4-86a1-639e0b657d8e/'
 
-    def set_professional_params(self):
-        pass
+    def _set_datasource(self):
+        DataSourceElpaso.objects.create(
+            lic_num=123,
+            lic_type='Architect',
+            type='Architect',
+            name='ppp',
+            lic_state='zxc',
+            lic_board='lll',
+            lic_status='ooo',
+            address='nnn',
+            state_lic_num='iii',
+            name2='ttt',
+            phone=123456678,
+            email='zxcvukiha@sdk.ckka',
+            lic_issue_date=date(2000, 1, 1),
+            lic_expire_date=date(2222, 2, 2),
+            bus_expire_date=date(2333, 3, 3),
+            insur_company='xiooq',
+            insur_policy='zoiooq',
+        )
 
-    def set_path(self):
-        pass
+    def _set_datacollection(self):
+        DataCollection.objects.create(
+            object_id=1,
+            lic_num=123,
+            content_type_id=ContentType.objects.get(model='datasourceelpaso').id,
+            professional_id=1
+        )
 
-    def set_model(self):
-        pass
+    def _set_professional(self):
+        self.professional = Professional.objects.create(
+            name='zzz',
+            owner_name='xxx',
+            csp='bbb',
+            address1='ccc',
+            address2='ddd',
+            county='qqq',
+            lic_status='A',
+            phone='123456789',
+            entity_type='Corporation',
+            state='xvaqwe',
+            pos_code='12345',
+            uuid='db9d6282-344c-4541-8b10-88f66e57878a',
+        )
 
-    def set_user_ratings(self):
-        self.user_ratings = {
-            'quality': UserRating.objects.create(
-                review=self.review,
-                rating_type='Q',
-                rating_score=9,
-            ),
-            'efficiency': UserRating.objects.create(
-                review=self.review,
-                rating_type='E',
-                rating_score=8,
-            ),
-            'length': UserRating.objects.create(
-                review=self.review,
-                rating_type='L',
-                rating_score=6,
-            )
-        }
+    def _set_client(self):
+        self.client = Client()
 
-    def set_review_params(self):
-        review_params = {
-            'user': self.user,
-            'project_type': 'R',
-            'project_date': date(2001, 12, 11),
-            'street_address': 'zzz',
-            'street_address2': 'yyy',
-            'county': 'xxx',
-            'state': 'www',
-            'zipcode': 'vvv',
-            'project_zipcode': 'uuu',
-            'project_cost': 88,
-            'project_duration': 99,
-            'comments': 'ttt',
-            'is_anonymous': False,
-            'review_status': 'A',
-            'object_id': self.professional.lic_num,
-            'content_type_id': ContentType.objects.get_for_model(model=self.model).id,
-        }
-        return review_params
-
-    def set_user(self):
-        self.user = User.objects.create_user(
+    def _set_user(self):
+        self.password = 'zlxvnlzdgf'
+        self.user = User.objects.create(
             username='abcde',
             email='zxca@avc.za',
-            password='qwer1234',
-        )
-
-    def set_professional_user(self):
-        self.professional_user = User.objects.create(
-            username='nnn',
-            email='zkjxcv@pwpe.llp',
-            password='ladsjfaposf',
+            password='qqq',
+            hoome_id=123,
             role='PROFESSIONAL',
         )
-        self.professional_password = 'qwer1234'
-        self.professional_user.set_password(self.professional_password)
-        self.professional_user.save()
-        self.professional_ = Professional.objects.create(
-            lic_num=self.professional.lic_num,
-            name=self.professional.lic_name,
-            entity_type='ppp',
-            type=self.model.__name__.upper(),
-            state='qqq',
-            county='zzz',
-            postal_code='iii',
-        )
-        self.professional_profile = ProfessionalProfile.objects.create(
-            professional=self.professional_,
-            user=self.professional_user,
+        self.user.set_password(self.password)
+        self.user.save()
+        ProfessionalProfile.objects.create(
+            professional=self.professional,
+            user=self.user
         )
 
     def setUp(self):
-        self.client = Client()
-        self.set_user()
-        self.set_professional_params()
-        self.set_path()
-        self.set_model()
-        self.professional = self.model.objects.create(**self.set_professional_params())
-        self.review = Review.objects.create(**self.set_review_params())
-        self.set_user_ratings()
-        self.set_professional_user()
-        self.resp = self.client.get(path=self.path)
-        self.soup = BeautifulSoup(self.resp.content, 'html.parser')
+        self._set_datacollection()
+        self._set_datasource()
+        self._set_professional()
+        self._set_path()
+        self._set_client()
+        self._set_user()
 
-    def test_get_status_code_200(self):
-        self.assertEqual(self.resp.status_code, 200)
-
-    def test_get_404_page(self):
-        resp = self.client.get(path=self.path_404)
+    def test_professional_view(self):
+        resp = self.client.get(path=self.path)
         self.assertEqual(resp.status_code, 200)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
-        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
-
-    def test_professional_get_lic_name(self):
-        lic_name = self.soup.find(name='span', class_='bus-name').get_text()
-        self.assertEqual(self.professional.lic_name, lic_name)
-
-    def test_get_review(self):
-        resp = self.client.get(path=self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        reviews = soup.find_all(name='div', class_='user-review')
-        self.assertEqual(len(reviews), 1)
-        review = reviews[0]
-        review_detail = review.find(name='div', class_='main-spec').get_text()
-        review_detail = review_detail.replace(' ', '').split('\n')
-        review_detail = filter(lambda x: x != '', review_detail)
-        self.assertEqual(review_detail[0], 'ProjectCost:' + str(self.review.project_cost))
-        self.assertEqual(review_detail[1], 'ProjectType:REMODEL')
-        self.assertEqual(review_detail[2], 'ProjectDuration:' + str(self.review.project_duration))
-        self.assertEqual(review_detail[3], self.review.comments)
-        user_rating = review.find(name='div', class_='user-rating').get_text()
-        user_rating_detail = user_rating.replace(' ', '').split('\n')
-        user_rating_detail = filter(lambda x: x != '', user_rating_detail)
-        self.assertEqual(user_rating_detail[0], 'Quality:' + str(self.user_ratings.get('quality').rating_score))
-        self.assertEqual(user_rating_detail[1], 'Efficiency:' + str(self.user_ratings.get('efficiency').rating_score))
-        self.assertEqual(user_rating_detail[2], 'Length:' + str(self.user_ratings.get('length').rating_score))
-
-    def test_get_rating_stars(self):
-        resp = self.client.get(path=self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        rating = soup.find(name='div', class_='ratings_rating').find_all(name='span', class_='yellow')
-        rating = len(rating)
-        quality_rating = self.user_ratings.get('quality').rating_score
-        efficiency_rating = self.user_ratings.get('efficiency').rating_score
-        length_rating = self.user_ratings.get('length').rating_score
-        professional_rating = (quality_rating + efficiency_rating + length_rating) / 3
-        self.assertEqual(rating, professional_rating)
+        resp_404 = self.client.get(path=self.path_404)
+        soup_404 = BeautifulSoup(resp_404.content, 'html.parser')
+        self.assertEqual(
+            soup_404.find(name='div', class_='container header-gap').find(name='h1').get_text(), 'Page Not Found'
+        )
+        soup = BeautifulSoup(resp.content, "html.parser")
+        self.assertEqual(soup.find(name='span', class_='bus-name').get_text(), self.professional.name)
+        contact_info = soup.find(name='div', class_='horizontal-list').get_text()
+        self.assertIn(self.professional.csp, contact_info)
+        self.assertIn(self.professional.phone, contact_info)
+        business_info = soup.find_all(name='td', class_='rname')
+        lic_status = business_info[0].find_next_sibling().get_text()
+        self.assertEqual(lic_status, self.professional.lic_status)
+        lic_type = business_info[1].find_next_sibling().get_text()
+        self.assertEqual(lic_type, self.professional.entity_type)
+        address_info = business_info[2].find_next_sibling().get_text()
+        address, csp = address_info.split('\n', 1)
+        address = address.strip()
+        csp = csp.strip()
+        self.assertEqual(address, self.professional.address1 + ' ' + self.professional.address2)
+        self.assertEqual(csp, self.professional.csp)
 
     def test_post_review(self):
-        review_data = {
-            'last_name': 'aaa',
-            'first_name': 'qwe',
-            'county': 'bbb',
-            'q_rating': 5,
-            'e_rating': 4,
-            'l_rating': 8,
-            'project_type': 'R',
-            'project_date_day': 9,
-            'zipcode': '12345',
-            'comments': 'xcvasf',
-            'review': 'review',
-            'state': 'zxv',
-            'project_duration': 123,
-            'email': 'assaf@sla.ca',
-            'project_cost': 99999,
+        self.review_data = {
+            'comments': 'pp',
+            'first_name': 'oo',
+            'last_name': 'ii',
+            'project_date_year': 1999,
             'project_date_month': 12,
-            'project_date_year': 2003,
-            'is_anonymous': 'on',
-            'street_address2': 'bbb',
-            'street_address': 'ccc',
+            'project_date_day': 3,
+            'project_type': 'R',
+            'project_cost': '654321',
+            'project_duration': '99',
+            'email': 'ww@ee.cc',
+            'street_address': 'uu',
+            'street_address2': 'tt',
+            'county': 'mm',
+            'state': 'nn',
+            'zipcode': '12345',
+            'is_anonymous': False,
+            'review': 'review',
+            'q_rating': '6',
+            'l_rating': '7',
+            'e_rating': '7',
         }
-        resp = self.client.post(path=self.path, data=review_data)
+        resp = self.client.post(path=self.path, data=self.review_data)
         self.assertEqual(resp.status_code, 302)
-        review = Review.objects.get(email=review_data.get('email'))
-        self.assertNotEqual(review, None)
-        review_data.update({'email': 'uuuu'})
-        resp = self.client.post(path=self.path, data=review_data)
-        self.assertEqual(resp.status_code, 200)
-        review_data.pop('review')
-        resp = self.client.post(path=self.path, data=review_data)
+        self.assertEqual(Review.objects.count(), 1)
+        resp = self.client.get(self.path)
         soup = BeautifulSoup(resp.content, 'html.parser')
-        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
-        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+        reviews = soup.find_all(name='div', class_='user-review')
+        review = reviews[0].find(name='div', class_='main-spec').get_text()
+        user_rating = reviews[0].find(name='div', class_='user-rating').get_text()
+        project_type = [i[1] for i in PROJECT_TYPE if i[0] == self.review_data.get('project_type')][0]
+        project_type = str(project_type)
+        self.assertIn('Project Cost: ' + self.review_data.get('project_cost'), review)
+        self.assertIn('Project Type: ' + project_type, review)
+        self.assertIn('Project Duration: ' + self.review_data.get('project_duration'), review)
+        self.assertIn(self.review_data.get('comments'), review)
+        self.assertIn('Quality : ' + self.review_data.get('q_rating'), user_rating)
+        self.assertIn('Length : ' + self.review_data.get('l_rating'), user_rating)
+        self.assertIn('Efficiency : ' + self.review_data.get('e_rating'), user_rating)
 
-    def test_upload_bgimage(self):
-        path = self.path + 'background-upload'
-        resp = self.client.get(path=path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
-        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
+    def test_upload_image(self):
         self.client.login(
-            username=self.professional_user.username,
-            password=self.professional_password,
+            username=self.user.username,
+            password=self.password,
         )
+        resp = self.client.get(self.path)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        photo_upload_urls = soup.find_all(name='a', class_='btn btn-hoome')
+        project_photo_upload_url, bg_image_upload_url = [url.get('href') for url in photo_upload_urls]
 
-        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
-        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
-        with open(pic_1, 'r') as f:
-            resp = self.client.post(path=path, data={
-                'img': f,
-            })
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(BackgroundPhoto.objects.count(), 1)
-        resp = self.client.get(path=self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        bg_image = BackgroundPhoto.objects.all().first()
-        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
-        with open(pic_2, 'r') as f:
-            resp = self.client.post(path=path, data={
-                'img': f,
-            })
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(BackgroundPhoto.objects.count(), 1)
-        resp = self.client.get(path=self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        bg_image = BackgroundPhoto.objects.all().first()
-        self.assertIn(bg_image.img.url, soup.find(name='style').get_text())
+        resp_project = self.client.get(project_photo_upload_url)
+        self.assertEqual(resp_project.status_code, 200)
 
-    def test_upload_project_photo(self):
-        path = self.path + 'project-photos/upload'
-        resp = self.client.get(path=path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        error_message = soup.find(name='div', class_='container header-gap').find(name='p').get_text().strip()
-        self.assertEqual(error_message, 'Hoome cannot find the page per your request, Please try again.')
-        self.client.login(
-            username=self.professional_user.username,
-            password=self.professional_password,
-        )
-        pic_1 = str(os.getcwd()) + '/static/image/background-pic/home-gradient.png'
-        pic_2 = str(os.getcwd()) + '/static/image/background-pic/home-gradient-2.png'
-        with open(pic_1, 'r') as f:
-            resp = self.client.post(path=path, data={
-                'img': f,
-            })
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(Photo.objects.count(), 1)
-        with open(pic_2, 'r') as f:
-            resp = self.client.post(path=path, data={
-                'img': f,
-            })
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(Photo.objects.count(), 2)
-        resp = self.client.get(path=self.path)
-        soup = BeautifulSoup(resp.content, 'html.parser')
-        images = soup.find(name='div', class_='popup-gallery').find_all(name='img')
-        images = [image.get('src', '') for image in images]
-        photos = Photo.objects.all()
-        for photo in photos:
-            self.assertIn(photo.img.url, images)
+

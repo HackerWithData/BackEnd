@@ -103,6 +103,7 @@ class ProfessionalDetail(View):
             exec('field_val = self.get_professional_{field}(**kwargs)'.format(field=field))
             kwargs.update({field: field_val})
             self.info_dict.update({field: field_val})
+
     #TODO: need to change here with below views
     def get_professional_overview(self, **kwargs):
         return get_overview(
@@ -113,6 +114,7 @@ class ProfessionalDetail(View):
 
     def get_professional_overview_form(self, **kwargs):
         return get_overview_form(data=kwargs.get('overview', None))
+
     def get_overview_message(self, **kwargs):
         return ""
 
@@ -124,18 +126,11 @@ class ProfessionalDetail(View):
             user_rating_form = get_user_rating_form(request.POST)
             review_form = get_review_form(request, method="POST")
             if review_form.is_valid() and user_rating_form.is_valid():
-                try:
-                    review = create_review(
-                        request=request,
-                        o_id=o_id,
-                        review_form=review_form,
-                    )
-                except ValueError:
-                    review = create_review(
-                        request=request,
-                        o_id=info_dict.get(self.model_name).id,
-                        review_form=review_form,
-                    )
+                review = create_review(
+                    request=request,
+                    o_id=info_dict.get(self.model_name).pk,
+                    review_form=review_form,
+                )
                 create_user_rating(user_rating_form=user_rating_form, review=review)
                 upload_photo(request=request, model_name='review', o_id=review.id)
                 return redirect(request.path)
@@ -226,7 +221,7 @@ def _get_professional_id_by_uuid(uuid):
 
 
 def display_project_photos(request, uuid):
-    template_name = 'contractor/contractor_project_photo.html'
+    template_name = 'professional/professional_project_photo.html'
     o_id = _get_professional_id_by_uuid(uuid)
     return display_project_photo(
         request=request,
@@ -240,7 +235,7 @@ def upload_project_photos(request, uuid):
     o_id = _get_professional_id_by_uuid(uuid)
     success_url = reverse('professional', args=[uuid])
     model_name = 'professional'
-    template_name = 'contractor/contractor_project_photos_upload.html'
+    template_name = 'professional/professional_project_photos_upload.html'
     return upload_project_photo(
         request=request,
         o_id=o_id,
